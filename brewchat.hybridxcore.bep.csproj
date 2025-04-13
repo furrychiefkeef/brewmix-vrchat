@@ -59,6 +59,27 @@
     <Reference Include="Il2CppInterop.Runtime">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\core\Il2CppInterop.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Il2CppMicrosoft.Bcl.TimeProvider">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Il2CppMicrosoft.Bcl.TimeProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppMicrosoft.Extensions.DependencyInjection">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Il2CppMicrosoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppMicrosoft.Extensions.DependencyInjection.Abstractions">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Il2CppMicrosoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppMicrosoft.Extensions.Logging">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Il2CppMicrosoft.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppMicrosoft.Extensions.Logging.Abstractions">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Il2CppMicrosoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppMicrosoft.Extensions.Options">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Il2CppMicrosoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppMicrosoft.Extensions.Primitives">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Il2CppMicrosoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="Il2CppMono.Security">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Il2CppMono.Security.dll</HintPath>
     </Reference>
@@ -67,6 +88,9 @@
     </Reference>
     <Reference Include="Il2CppSystem">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Il2CppSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Collections.Immutable">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Il2CppSystem.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppSystem.Configuration">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Il2CppSystem.Configuration.dll</HintPath>
@@ -115,6 +139,9 @@
     </Reference>
     <Reference Include="Il2CppSystem.Xml">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Il2CppSystem.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Xml.Linq">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Il2CppSystem.Xml.Linq.dll</HintPath>
     </Reference>
     <Reference Include="io.sentry.unity.runtime">
       <HintPath>..\..\tools\medicine-deob\bin\Debug\net6.0\interop\io.sentry.unity.runtime.dll</HintPath>
@@ -495,7 +522,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /Y &quot;C:\Users\riot\Documents\Repository\VS\csharp\mods\brewmix-vrchat\bin\x64\Release\net6.0\brewchat.hybridxcore.bep.dll&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\plugins\&quot; || echo &quot;XCOPY failed with error code %25errorlevel%25&quot;&#xD;&#xA;start steam://rungameid/438100" />
+    <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\plugins\&quot;&#xD;&#xA;start steam://rungameid/438100" />
   </Target>
 
 </Project>

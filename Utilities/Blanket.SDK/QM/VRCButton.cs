@@ -1,5 +1,6 @@
 ﻿using BlanketSDK.Utilities;
 using UnityEngine;
+using UnityEngine.UI;
 using VRC.Localization;
 using VRC.UI.Elements.Controls;
 
@@ -17,16 +18,16 @@ internal class VRCButton : Root
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCButton(Transform parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null)
     {
-        if (!Button()) throw new("button has moved to a different location or index contact: @drywrld");
+        if (!Button()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= _Fallback_Dashboard_Group_QM_Buttons().transform;
 
         Transform? obj = UnityEngine.Object.Instantiate(Button(), parent);
         obj.name = $" {Guid.NewGuid().ToString()}-<Blanket.SDK.SINGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS
-        VRCButtonHandle _0 = obj.GetComponentInChildren<VRCButtonHandle>();
-        TextMeshProUGUIEx _1 = obj.GetComponentInChildren<TextMeshProUGUIEx>(); 
-        ImageEx _2 = obj.GetComponentInChildren<ImageEx>();
+        VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();
+        TextMeshProUGUIEx _1 = obj.GetComponentInChildren<TextMeshProUGUIEx>(true);
+        Image _2 = obj.GetChild(3).GetChild(0).GetComponent<Image>();
         ToolTip _3 = obj.GetComponent<ToolTip>();
         #endregion
 
@@ -43,13 +44,14 @@ internal class VRCButton : Root
         #endregion
 
         #region IMAGE_EX COMPONENT
+        _2.overrideSprite = sprite;
         _2.sprite = sprite;
         #endregion
 
         #region TOOLTIP COMPONENT
 
-        UnityEngine.Object.DestroyImmediate(obj.GetComponent<ToolTip>(), true);
-        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.Localize();
+        UnityEngine.Object.DestroyImmediate(obj.GetComponent<ToolTip>());
+        if (_3.GetType() == typeof(ToolTip))  _3._localizableString = tooltip.Localize(); 
         #endregion
 
     }
