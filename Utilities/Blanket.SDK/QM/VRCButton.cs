@@ -43,7 +43,7 @@ internal class VRCButton : Root
         _1.richText = true;
         #endregion
 
-        #region IMAGE_EX COMPONENT
+        #region IMAGE COMPONENT
         _2.overrideSprite = sprite;
         _2.sprite = sprite;
         #endregion

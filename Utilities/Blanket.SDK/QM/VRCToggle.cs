@@ -38,7 +38,7 @@ internal class VRCToggle : Root
         _1.richText = true;
         #endregion
 
-        #region IMAGE_EX COMPONENT
+        #region IMAGE || IMAGE_EX COMPONENT
         _2on.sprite = sprite_on;
         _2off.sprite = sprite_off;
         #endregion
