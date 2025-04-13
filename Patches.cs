@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using brewchat.Cheat;
+﻿using Brewchat.Cheat;
 using HarmonyLib;
 
 using VRC.Core;
@@ -22,6 +20,7 @@ namespace brewchat.hybridxcore.bep
             {
                 UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel,true);
                 __instance.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
+
                 QM.Apply();
                 Entry.Log.LogMessage("Menu Created");
             }

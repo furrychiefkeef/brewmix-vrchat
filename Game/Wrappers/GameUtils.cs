@@ -1,10 +1,16 @@
 ﻿using UnityEngine;
 using VRC.Localization;
+using VRC.UI.Client;
+using VRC.UI.Client.HUD;
 
-namespace brewchat.hybridxcore.bep.Game.Wrappers;
+namespace Brewchat.Game.Wrappers;
 
 internal class GameUtils
 {
+    public class GameCamera
+    {
+        public static Camera camera => Camera.main;
+    }
     public class PlayerModel
     {
         public static VRC.Player Get() => VRC.Player.prop_Player_0;
@@ -30,17 +36,73 @@ internal class GameUtils
 
 
     }
+    public class World
+    {
+        public static bool IsWorldLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.field_Internal_Static_ApiWorld_0 != null;
+    }
     public class HUD
     {
-        public static void Notifcation(string? name, string? desc, Sprite? sprite)
+     #region NOTIFICATION MANAGER
+        #region HUD_V2
+        
+        private static Hud_UserEventCarousel _carousel;
+        private static float _lastCheckTime;
+        private const float CacheTimeout = 30f;
+
+        private static Hud_UserEventCarousel GetCarousel()
+        {
+            if (_carousel != null && Time.realtimeSinceStartup - _lastCheckTime < CacheTimeout)
+                return _carousel;
+
+            _lastCheckTime = Time.realtimeSinceStartup;
+
+            foreach (var carousel in UnityEngine.Object.FindObjectsOfType<Hud_UserEventCarousel>())
+            {
+                if (carousel?.field_Private_List_1_MonoBehaviourPublicObteCaSiImSidiCaSiUnique_0.Count != 0)
+                    return _carousel = carousel;
+            }
+            return _carousel;
+        }
+        public static void ToastV1(string content, Sprite sprite = null, int duration = 3)
+        {
+            try
+            {
+                GetCarousel()?.Method_Private_Void_LocalizableString_Sprite_Single_0(content.Localize(), sprite, duration);
+            }
+            catch (Exception ex) { Debug.LogError($"[NotificationManager] Message error: {ex.Message}"); }
+        }
+        public static void ToastV2(string? title, string? content = null, Sprite? sprite = null, int duration = 4)
         {
             VRC.UI.Client.HUD.HudController
                 .field_Public_Static_HudController_0
                 .notification
                 .Method_Public_Void_Sprite_LocalizableString_LocalizableString_Single_Object1PublicTYBoTYUnique_1_Boolean_0
-                (default, name.Localize(), desc.Localize());
+                (sprite, title.Localize(), content.Localize(), duration);
         }
+        #endregion
 
+        #region HUD_V1
+        public static void PopUp(string? title = null, string? content = null, int duration = 10)
+        {
+            VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
+                .Method_Public_Void_LocalizableString_LocalizableString_Single_0
+                (title.Localize(), content.Localize(), duration);    
+        }
+        #endregion
+
+    }
+    #endregion
+
+    public class VRChatUtils
+    {
+        public static class InputManager
+        {
+            public static VRCInput GetInput(string name)
+            {
+                VRCInput? r = VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name];
+                return r;
+            }
+        } 
     }
 }
 

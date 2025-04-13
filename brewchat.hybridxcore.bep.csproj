@@ -182,6 +182,21 @@
     <Reference Include="Sentry.Unity.Native">
       <HintPath>..\..\tools\medicine-deob\bin\Debug\net6.0\interop\Sentry.Unity.Native.dll</HintPath>
     </Reference>
+    <Reference Include="UniTask">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\UniTask.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask.Addressables">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\UniTask.Addressables.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask.DOTween">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\UniTask.DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask.Linq">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\UniTask.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="UniTask.TextMeshPro">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\UniTask.TextMeshPro.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.AI.Navigation">
       <HintPath>..\..\tools\medicine-deob\bin\Debug\net6.0\interop\Unity.AI.Navigation.dll</HintPath>
     </Reference>
@@ -519,6 +534,7 @@
 
   <ItemGroup>
     <Folder Include="Utilities\Blanket.SDK\MM\" />
+    <Folder Include="Utilities\Blanket.SDK\S\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

@@ -1,37 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Syrup.IMGUI;
-
+﻿using Syrup.IMGUI;
 using BlanketSDK.QM;
-using BlanketSDK.Utilities;
-using UnityEngine;
-using brewchat.hybridxcore.bep.Game.Wrappers;
-namespace brewchat.Cheat;
+
+using Brewchat.Game.Wrappers;
+namespace Brewchat.Cheat;
 
 internal class QM
 {
     public static void Apply()
     {
-
-
-        new VRCButton(null, "ae", "smart", () =>
+        new VRCButton(null, "test", "smart", () =>
         {
-            GameUtils.HUD.Notifcation("TEST", "TEST", null);
-        });
-
-        new VRCToggle(null, "ac", "smart", "lart", (x) =>
+            GameUtils.HUD.ToastV1("TEST");
+        }); 
+        new VRCButton(null, "test2", "smart", () =>
         {
-            if (x)
-            {
-                sconsole.SLog($"WOAH A BUTTON WAS CLICKED GET STARTED ON THE REAL WORK {x}");
-            }
-            else
-            {
-                sconsole.SLog($"WOAH A BUTTON WAS CLICKED GET STARTED ON THE REAL WORK {x}");
-            }
-        });
+            GameUtils.HUD.PopUp("funny bitch");
+        }); 
+
     }
 }

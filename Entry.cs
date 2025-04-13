@@ -1,12 +1,7 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using Mono.Cecil;
+
 using BepInEx.Unity.IL2CPP;
-using VRC.UI.Client.HUD;
-using VRC.Localization;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
 
