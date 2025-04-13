@@ -28,6 +28,7 @@ internal class VRCButton : Root
         VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();
         TextMeshProUGUIEx _1 = obj.GetComponentInChildren<TextMeshProUGUIEx>(true);
         Image _2 = obj.GetChild(3).GetChild(0).GetComponent<Image>();
+        UnityEngine.Object.DestroyImmediate(obj.GetComponent<ToolTip>());
         ToolTip _3 = obj.GetComponent<ToolTip>();
         #endregion
 
@@ -43,15 +44,13 @@ internal class VRCButton : Root
         _1.richText = true;
         #endregion
 
-        #region IMAGE COMPONENT
+        #region IMAGE || IMAGE_EX COMPONENT
         _2.overrideSprite = sprite;
         _2.sprite = sprite;
         #endregion
 
         #region TOOLTIP COMPONENT
-
-        UnityEngine.Object.DestroyImmediate(obj.GetComponent<ToolTip>());
-        if (_3.GetType() == typeof(ToolTip))  _3._localizableString = tooltip.Localize(); 
+        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.Localize(); 
         #endregion
 
     }

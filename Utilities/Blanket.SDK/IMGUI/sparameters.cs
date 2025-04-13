@@ -40,12 +40,12 @@ namespace Syrup
         // Avoid IL2CPP issues by using direct method
         
             public static string[] CArray = {
-                "#770832",
                 "#ffffff",
-                "#EFA523", 
-                "#9185E6",
-                "#770832",
-                "#5bd840"
+                "#ffffff",
+                "#ffffff", 
+                "#ffffff",
+                "#ffffff",
+                "#ffffff"
             };
 
         }
