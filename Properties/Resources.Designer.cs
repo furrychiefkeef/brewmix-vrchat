@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace brewchat.Properties {
+namespace brewchat.hybridxcore.bep.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace brewchat.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("brewchat.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("brewchat.hybridxcore.bep.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,25 @@ namespace brewchat.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] cfg {
+            get {
+                object obj = ResourceManager.GetObject("cfg", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @drywrld.
+        /// </summary>
+        internal static string D_Contact {
+            get {
+                return ResourceManager.GetString("D-Contact", resourceCulture);
             }
         }
     }

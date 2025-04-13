@@ -1,0 +1,12 @@
+﻿/*global using GamelikeInputController = MonoBehaviour2PublicSiTrUnique;
+global using HighlightsFXStandalone = MonoBehaviour2PublicSealedReInCoInhireInblreSiUnique;
+global using HudController = MonoBehaviourPublicObnoObmousCaObhuGa_gUnique;
+global using LoadBalancingClient = ObjectPublicIPhotonPeerListenerObStNuStOb1CoObBoDiUnique;
+*/
+
+global using ImageEx = ImagePublicVoObVeBoVeOnBoVoObVeUnique;
+global using VRCPlus = ObjectPublicStBoStDaBo1StILBo1Unique;
+global using VRCTrackingSteam = MonoBehaviour1PublicObTrGaTrMaGaStTrQuGaUnique;
+global using ToggleEx = TogglePublicIMoveHandlerIEventSystemHandlerIPointerDownHandlerIPointerUpHandlerIPointerEnterHandlerIPointerExitHandlerISelectHandlerIDeselectHandlerSt_cBo_sObToBoObStUnique;
+global using VRCPrint = MonoBehaviour1PublicMeprCacafrCabaVRpiCaUnique;
+global using VRCDrone = MonoBehaviour1PublicObVRObTrGaObCoTrpiObUnique;
