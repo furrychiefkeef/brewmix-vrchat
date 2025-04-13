@@ -15,7 +15,7 @@ internal class VRCButton : Root
     /// <param name="tooltip">The tooltip text for the button.</param>
     /// <param name="func">The action to execute when the button is clicked.</param>
     /// <param name="sprite">An optional sprite to display on the button.</param>
-    public VRCButton(Transform? parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null)
+    public VRCButton(Transform parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null)
     {
         if (!Button()) throw new("button has moved to a different location or index contact: @drywrld");
         parent ??= _Fallback_Dashboard_Group_QM_Buttons().transform;
