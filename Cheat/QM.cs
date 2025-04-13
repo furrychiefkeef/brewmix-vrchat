@@ -12,10 +12,17 @@ internal class QM
         {
             GameUtils.HUD.ToastV1("TEST");
         }); 
+        
         new VRCButton(null, "test2", "smart", () =>
         {
-            GameUtils.HUD.PopUp("funny bitch");
+            GameUtils.HUD.LoadingPopUp("funny bitch", "bitch", "bitcah", () => { GameUtils.HUD.ToastV1("TEST"); },null);
+
         }); 
+        
+        new VRCButton(null, "test2", "smart", () =>
+        {
+            GameUtils.HUD.LoadingPopUp2("funny bitch", "bitch", "bitcah", () => { GameUtils.HUD.ToastV1("TEST"); }, null);
+        });
 
     }
 }
