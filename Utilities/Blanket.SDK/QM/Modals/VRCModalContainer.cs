@@ -59,13 +59,13 @@ namespace BlanketSDK.QM.Modals
                 BUTTONCLICKED_EVENT_0.AddListener(func);
                 #endregion
                 #region BUTTONS_MODAL_CONTAINER
-                VRCButtonHandle _2 = obj.GetChild(3).GetChild(0).GetComponent<VRCButtonHandle>();
+                VRCButtonHandle _2_ButtonClose = obj.GetChild(1).GetChild(3).GetChild(0).GetComponent<VRCButtonHandle>();
 
                 #endregion
 
                 #region BUTTONS_MODAL_CONTAINER_UNUSED
-                VRCButtonHandle _2_ButtonYes = obj.GetChild(3).GetChild(1).GetComponent<VRCButtonHandle>();
-                VRCButtonHandle _2_ButtonNo = obj.GetChild(3).GetChild(2).GetComponent<VRCButtonHandle>();
+                VRCButtonHandle _2_ButtonYes = obj.GetChild(1).GetChild(3).GetChild(1).GetComponent<VRCButtonHandle>();
+                VRCButtonHandle _2_ButtonNo = obj.GetChild(1).GetChild(3).GetChild(2).GetComponent<VRCButtonHandle>();
                 #endregion
             }
         }
