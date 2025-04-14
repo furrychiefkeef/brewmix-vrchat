@@ -1,4 +1,6 @@
-﻿using Brewchat.Game.Wrappers;
+﻿using Brewchat.Game.Monobehaviours;
+using Brewchat.Game.Wrappers;
+using VRC.Core;
 using VRC.UI.Core.Styles;
 
 namespace Brewchat.Cheat.Modules
@@ -16,8 +18,8 @@ namespace Brewchat.Cheat.Modules
                 switch (player.field_Private_Player_0.field_Public_Player_0.prop_VRCPlayerApi_0.IsUserInVR())
                 {
                     case true:
-
                     case false:
+                        player.gameObject.GetOrAddComponent<FlyManager>();
                         break;
                 }
             }

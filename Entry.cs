@@ -4,20 +4,18 @@ using Brewchat.Cheat.Modules;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
 
-[BepInPlugin("brewchat.mod.com", "brew", "3.0.0")]
+[BepInPlugin("brewchat.mod.com", "brew", "4.0.0")]
 public class Entry : BasePlugin
 {
     Harmony h = new("brew@UZI5eGVK1BeA1ajf6dC2kWoAhPhvw5e4Dlg2nxGA.patches");
     public override void Load()
     {
-       
         #region LIB
         ClassInjector.RegisterTypeInIl2Cpp<Syrup.IMGUI.simgui>(); 
         ClassInjector.RegisterTypeInIl2Cpp<Brewchat.Game.Monobehaviours.Toolbox>();
         ClassInjector.RegisterTypeInIl2Cpp<CSS>();
         h.PatchAll();
         #endregion
-
     }
 }
 

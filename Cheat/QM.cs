@@ -4,7 +4,6 @@ using BlanketSDK.QM;
 using Brewchat.Game.Wrappers;
 using BlanketSDK.Utilities;
 using BlanketSDK.QM.Modals;
-using VRC.UI.Core.Styles;
 namespace Brewchat.Cheat;
 
 internal class QM
@@ -13,6 +12,7 @@ internal class QM
     {
         try
         {
+            sconsole.SLog("Menu Created");
             var modal = new VRCModalContainer("Hello World");
             var a = new VRCButton(Root._Fallback_Dashboard_Group_QM_Buttons(), "OPEN ME", "smart", () => modal.Open());
 
@@ -24,10 +24,6 @@ internal class QM
         catch(Exception e)
         {
             sconsole.SError(e.Message);
-        }
-        finally
-        {
-            sconsole.SLog("Menu Created");
         }
     }
 }

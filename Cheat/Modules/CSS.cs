@@ -1,5 +1,7 @@
 ﻿
 
+using Brewchat.Game.Wrappers;
+using UnityEngine;
 using VRC.UI.Core.Styles;
 
 namespace Brewchat.Cheat.Modules;
@@ -8,9 +10,79 @@ internal class CSS : UnityEngine.MonoBehaviour
 {
     public void Runtime()
     {
-        foreach (var item in UnityEngine.Object.FindObjectsOfType<StyleEngine>())
+        Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppArrayBase<StyleEngine>? A = GameObject.FindObjectsOfType<StyleEngine>();
+        foreach (var item in A)
         {
-            item.field_Private_Dictionary_2_String_Color_0["highlight"] = UnityEngine.Color.green;
+
+
+            // Using random colors for each key in the dictionary
+            item.field_Private_Dictionary_2_String_Color_0["Active"] = EngineUtils.Conversion.HexToColor("ff0072");
+            item.field_Private_Dictionary_2_String_Color_0["Active2"] = EngineUtils.Conversion.HexToColor("ff0072");
+            item.field_Private_Dictionary_2_String_Color_0["BottomTabSelected"] = new UnityEngine.Color(0.9f, 0.1f, 0.8f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Subheader"] = new UnityEngine.Color(0.7f, 0.9f, 0.2f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Hover"] = UnityEngine.Color.yellow;
+            item.field_Private_Dictionary_2_String_Color_0["ActiveDark"] = EngineUtils.Conversion.HexToColor("ff0072");
+            item.field_Private_Dictionary_2_String_Color_0["BottomTabHover"] = new UnityEngine.Color(0.8f, 0.3f, 0.5f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["IconActive"] = UnityEngine.Color.magenta;
+            item.field_Private_Dictionary_2_String_Color_0["IconWhite"] = new UnityEngine.Color(0.95f, 0.95f, 0.95f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["IconHover"] = new UnityEngine.Color(1f, 0.8f, 0.2f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["CategorySelectorIcon"] = new UnityEngine.Color(0.4f, 0.6f, 0.8f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["IconHighlight"] = new UnityEngine.Color(1f, 0.5f, 0f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["IconInactive"] = new UnityEngine.Color(0.6f, 0.6f, 0.6f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["IconGrey"] = new UnityEngine.Color(0.5f, 0.5f, 0.5f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["NavigationButton"] = new UnityEngine.Color(0.3f, 0.7f, 0.9f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["ButtonHover"] = new UnityEngine.Color(0.2f, 0.4f, 0.8f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["ButtonHoverTeal"] = new UnityEngine.Color(0f, 0.8f, 0.8f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["ButtonBorder"] = new UnityEngine.Color(0.3f, 0.3f, 0.3f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["ButtonHighlight"] = new UnityEngine.Color(0.9f, 0.7f, 0.1f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["ButtonBg"] = new UnityEngine.Color(0.15f, 0.15f, 0.15f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["ButtonCell"] = new UnityEngine.Color(0.25f, 0.25f, 0.25f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["ButtonQMSelected"] = new UnityEngine.Color(0.1f, 0.6f, 0.9f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["WingBG"] = new UnityEngine.Color(0.12f, 0.12f, 0.15f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["ButtonOutline"] = new UnityEngine.Color(0.4f, 0.4f, 0.4f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["WhiteBG"] = new UnityEngine.Color(0.9f, 0.9f, 0.9f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["NavigationBG"] = new UnityEngine.Color(0.18f, 0.18f, 0.2f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Outline"] = new UnityEngine.Color(0.7f, 0.7f, 0.7f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["BG"] = EngineUtils.Conversion.HexToColor("ff0072");
+            item.field_Private_Dictionary_2_String_Color_0["BottomTab"] = EngineUtils.Conversion.HexToColor("ff0072");
+            item.field_Private_Dictionary_2_String_Color_0["Backgrounds"] = EngineUtils.Conversion.HexToColor("ff0072");
+/*            item.field_Private_Dictionary_2_String_Color_0["Font1"] = new UnityEngine.Color(0.9f, 0.9f, 0.9f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Font2"] = new UnityEngine.Color(0.8f, 0.8f, 0.8f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Font3"] = new UnityEngine.Color(0.7f, 0.7f, 0.7f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Font4"] = new UnityEngine.Color(0.6f, 0.6f, 0.6f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Font5"] = new UnityEngine.Color(0.5f, 0.5f, 0.5f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Font6"] = new UnityEngine.Color(0.4f, 0.4f, 0.4f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Font7"] = new UnityEngine.Color(0.85f, 0.7f, 0.5f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Font8"] = new UnityEngine.Color(0.7f, 0.5f, 0.85f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Font9"] = new UnityEngine.Color(0.5f, 0.85f, 0.7f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Font10"] = new UnityEngine.Color(0.6f, 0.8f, 0.2f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Font11"] = new UnityEngine.Color(0.2f, 0.6f, 0.8f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Font12"] = new UnityEngine.Color(0.8f, 0.2f, 0.6f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["AlertBg"] = new UnityEngine.Color(0.9f, 0.2f, 0.2f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["NegativeBalance"] = new UnityEngine.Color(0.95f, 0.3f, 0.3f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["PositiveBalance"] = new UnityEngine.Color(0.3f, 0.95f, 0.3f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Subtext4"] = new UnityEngine.Color(0.5f, 0.5f, 0.55f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["VRCPlusTutorial"] = new UnityEngine.Color(0.95f, 0.8f, 0.2f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Yellow"] = new UnityEngine.Color(1f, 0.92f, 0.16f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Trusted"] = new UnityEngine.Color(0.2f, 0.4f, 1f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Blue"] = new UnityEngine.Color(0.15f, 0.6f, 0.95f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["TextHighlight"] = new UnityEngine.Color(0.9f, 0.9f, 0.2f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Known"] = new UnityEngine.Color(0.3f, 0.8f, 0.4f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Notification"] = new UnityEngine.Color(1f, 0.3f, 0.3f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["DisabledRedBg"] = new UnityEngine.Color(0.5f, 0.2f, 0.2f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["FriendRequest"] = new UnityEngine.Color(0.1f, 0.7f, 0.3f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["VRChatPlusYellow"] = new UnityEngine.Color(1f, 0.84f, 0f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["FriendSafeAlert"] = new UnityEngine.Color(0.2f, 0.8f, 0.8f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["DiscountBG"] = new UnityEngine.Color(0.2f, 0.5f, 0.2f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Black"] = new UnityEngine.Color(0.05f, 0.05f, 0.05f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["NearBlack"] = new UnityEngine.Color(0.1f, 0.1f, 0.1f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Grey1"] = new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Grey2"] = new UnityEngine.Color(0.3f, 0.3f, 0.3f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Grey3"] = new UnityEngine.Color(0.4f, 0.4f, 0.4f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Grey4"] = new UnityEngine.Color(0.5f, 0.5f, 0.5f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["Grey5"] = new UnityEngine.Color(0.6f, 0.6f, 0.6f, 1f);
+            item.field_Private_Dictionary_2_String_Color_0["White"] = UnityEngine.Color.white;*/
+
         }
     }
 }

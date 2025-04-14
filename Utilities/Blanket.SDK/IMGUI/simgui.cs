@@ -1,7 +1,6 @@
 
 using System;
 using System.Drawing;
-
 using Syrup;
 using Syrup.IMGUI;
 using UnityEngine;
@@ -40,7 +39,7 @@ public class simgui : MonoBehaviour
     void Start()
     {
        
-        sconsole.SLog($" {console_flag} HI!!!! <color=#9185E6><b>{Environment.UserName}</b></color> !!! get ready to make some noise :D ");
+        sconsole.SLog($"{ Guid.NewGuid().ToString() } {console_flag} HI!!!! <color=#9185E6><b>{Environment.UserName}</b></color> !!! get ready to make some noise :D");
     }
     void Update() => KeysHandler();
 
