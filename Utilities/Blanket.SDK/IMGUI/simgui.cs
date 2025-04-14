@@ -6,6 +6,7 @@ using Syrup;
 using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.Rendering;
+using VRC.Fonts;
 namespace Syrup.IMGUI;
 
 
@@ -23,6 +24,7 @@ public class simgui : MonoBehaviour
     private string v = string.Empty;
     public Texture2D texture;
 
+ 
     public static Vector2 scrollPosition = Vector2.zero;
     private float SH = 0;
 
@@ -37,6 +39,7 @@ public class simgui : MonoBehaviour
 
     void Start()
     {
+       
         sconsole.SLog($" {console_flag} HI!!!! <color=#9185E6><b>{Environment.UserName}</b></color> !!! get ready to make some noise :D ");
     }
     void Update() => KeysHandler();
@@ -50,11 +53,11 @@ public class simgui : MonoBehaviour
                 new Rect(0, 0, Screen.width, 470),
                 scrollPosition,
                 new Rect(0, 0, console_container_rect.width, SH)
-            );
+            ,false,false,GUIStyle.none,GUIStyle.none);
 
             for (int i = 0; i < sconsole.text.Count; i++)
             {
-                GUI.Label(new Rect(x, yOffset + i * y, console_container_rect.width - 20, float.MaxValue), sconsole.text[i], sparameters._Text(fontSize));
+                GUI.Label(new Rect(x, yOffset + i * y, console_container_rect.width - 20, float.MaxValue), sconsole.text[i], sparameters.Text(fontSize));
             }
             GUI.EndScrollView();
         }

@@ -6,6 +6,7 @@ using VRC.UI.Elements.Controls;
 
 using BlanketSDK.Utilities;
 using UnityEngine.UI;
+using BlanketSDK.QM.Modals;
 namespace BlanketSDK.QM;
 
 internal class VRCToggle : Root
@@ -48,4 +49,5 @@ internal class VRCToggle : Root
         _3._alternateLocalizableString = tooltip_off.Localize();
         #endregion
     }
+    public VRCToggle(VRCModalContainer parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.container, name, tooltip_on, tooltip_off, func, sprite_on, sprite_off) { }
 }

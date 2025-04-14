@@ -2,27 +2,32 @@
 using BlanketSDK.QM;
 
 using Brewchat.Game.Wrappers;
+using BlanketSDK.Utilities;
+using BlanketSDK.QM.Modals;
+using VRC.UI.Core.Styles;
 namespace Brewchat.Cheat;
 
 internal class QM
 {
     public static void Apply()
     {
-        new VRCButton(null, "test", "smart", () =>
+        try
         {
-            GameUtils.HUD.ToastV1("TEST");
-        }); 
-        
-        new VRCButton(null, "test2", "smart", () =>
-        {
-            GameUtils.HUD.LoadingPopUp("funny bitch", "bitch", "bitcah", () => { GameUtils.HUD.ToastV1("TEST"); },null);
+            var modal = new VRCModalContainer("Hello World");
+            var a = new VRCButton(Root._Fallback_Dashboard_Group_QM_Buttons(), "OPEN ME", "smart", () => modal.Open());
 
-        }); 
-        
-        new VRCButton(null, "test2", "smart", () =>
+            var e = new VRCButton(modal, "OPEN ME", "smart", () =>
+            {
+                sconsole.SLog("it works");
+            });
+        }
+        catch(Exception e)
         {
-            GameUtils.HUD.LoadingPopUp2("funny bitch", "bitch", "bitcah", () => { GameUtils.HUD.ToastV1("TEST"); }, null);
-        });
-
+            sconsole.SError(e.Message);
+        }
+        finally
+        {
+            sconsole.SLog("Menu Created");
+        }
     }
 }

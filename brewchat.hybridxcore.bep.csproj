@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -464,6 +464,9 @@
     <Reference Include="UnityEngine.XRModule">
       <HintPath>..\..\tools\medicine-deob\bin\Debug\net6.0\interop\UnityEngine.XRModule.dll</HintPath>
     </Reference>
+    <Reference Include="vrc-oscquery-lib">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\vrc-oscquery-lib.dll</HintPath>
+    </Reference>
     <Reference Include="VRC.Core.Networking.Codec">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.Core.Networking.Codec.dll</HintPath>
     </Reference>
@@ -476,11 +479,47 @@
     <Reference Include="VRC.Dynamics">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.Dynamics.dll</HintPath>
     </Reference>
+    <Reference Include="VRC.SDK3.Depthkit">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.SDK3.Depthkit.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.SDK3.Dynamics.Constraint">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.SDK3.Dynamics.Constraint.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.SDK3.Dynamics.Contact">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.SDK3.Dynamics.Contact.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.SDK3.Dynamics.PhysBone">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.SDK3.Dynamics.PhysBone.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.SDKBase.Editor.BuildPipeline">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.SDKBase.Editor.BuildPipeline.dll</HintPath>
+    </Reference>
     <Reference Include="VRC.SDKInterface">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.SDKInterface.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.Udon.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.ClientBindings">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.Udon.ClientBindings.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Common">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.Udon.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Security">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.Udon.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Serialization.AOT">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.Udon.Serialization.AOT.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Serialization.OdinSerializer">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.Udon.Serialization.OdinSerializer.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.VM">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.Udon.VM.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.VRCWrapperModules">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.Udon.VRCWrapperModules.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.Wrapper">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.Udon.Wrapper.dll</HintPath>
@@ -502,6 +541,9 @@
     </Reference>
     <Reference Include="VRCCore-Standalone">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRCCore-Standalone.dll</HintPath>
+    </Reference>
+    <Reference Include="VRCEconomy">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRCEconomy.dll</HintPath>
     </Reference>
     <Reference Include="VRCSDK2">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRCSDK2.dll</HintPath>
@@ -534,7 +576,6 @@
 
   <ItemGroup>
     <Folder Include="Utilities\Blanket.SDK\MM\" />
-    <Folder Include="Utilities\Blanket.SDK\S\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

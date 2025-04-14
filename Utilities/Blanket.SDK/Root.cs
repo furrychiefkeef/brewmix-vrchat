@@ -8,6 +8,7 @@ internal class Root
 
     public static GameObject QuickMenu() => UnityEngine.Object.FindObjectOfType<QuickMenu>().transform.GetChild(0).gameObject;
     public static GameObject MainMenu() => UnityEngine.Object.FindObjectOfType<MainMenu>().transform.GetChild(0).gameObject;
+
     #region VRChat Objects
     public static Transform QMParent() => QuickMenu().transform.FindChild("Container/Window/QMParent");
     public static Transform MenuDashboard() => QuickMenu().transform.FindChild("Container/Window/QMParent/Menu_Dashboard");
@@ -19,7 +20,6 @@ internal class Root
     public static Transform MenuDevTools() => QuickMenu().transform.FindChild("Container/Window/QMParent/Menu_DevTools");
     public static Transform SelectedUser_Local() => QuickMenu().transform.FindChild("Container/Window/QMParent/Menu_SelectedUser_Local");
     #endregion
-
     #region QM
     public static Transform Button() => MenuDashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions/Button_Respawn");
     public static Transform Toggle() => MenuDevTools().transform.FindChild("Scrollrect/Viewport/VerticalLayoutGroup/Buttons/Button_Tag");

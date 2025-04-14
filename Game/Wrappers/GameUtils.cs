@@ -105,14 +105,14 @@ internal class GameUtils
                 .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_Action_1_VRCUiPopup_0
                 (title.Localize(), content.Localize(), button_text.Localize(), func, idk);
 
-        } 
+        }
 
         #endregion
 
+        #endregion
     }
-    #endregion
 
-    public class VRChatUtils
+        public class VRChatUtils
     {
         public static class InputManager
         {

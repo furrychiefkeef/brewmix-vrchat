@@ -1,4 +1,5 @@
-﻿using BlanketSDK.Utilities;
+﻿using BlanketSDK.QM.Modals;
+using BlanketSDK.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.Localization;
@@ -54,5 +55,6 @@ internal class VRCButton : Root
         #endregion
 
     }
+    public VRCButton(VRCModalContainer parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.container, name, tooltip, func, sprite) { }
 }
 /*  UnityEngine.UI.Button _0 = obj.GetComponentInChildren<UnityEngine.UI.Button>(); depercated*/

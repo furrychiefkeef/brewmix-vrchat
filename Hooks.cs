@@ -1,6 +1,6 @@
 ﻿using Brewchat.Cheat;
 using HarmonyLib;
-
+using Syrup.IMGUI;
 using VRC.Core;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
@@ -9,7 +9,7 @@ using VRC.UI.Elements.Menus;
 namespace brewchat.hybridxcore.bep
 {
     [HarmonyPatch]
-    internal class Patches
+    internal class Hooks
     {
 
         static bool _ui = false;
@@ -22,7 +22,7 @@ namespace brewchat.hybridxcore.bep
                 __instance.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
 
                 QM.Apply();
-                Entry.Log.LogMessage("Menu Created");
+                
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using UnityEngine;
+using VRC.Fonts;
 
 namespace Syrup
 {
@@ -8,18 +9,14 @@ namespace Syrup
     {
         // Adding direct access to a fallback font for emergencies
         
-        static sparameters()
-        {
-           
-        }
+ 
         
-        public static GUIStyle _Text(int fontSize)
+        public static GUIStyle Text(int fontSize)
         {
             GUIStyle _text = new GUIStyle();
             
             try
             {
-                // First try to get the font from FontManager
                 _text.fontSize = fontSize;
                 _text.normal.textColor = Color.white;
                 _text.wordWrap = true;
