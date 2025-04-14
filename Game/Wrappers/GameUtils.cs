@@ -43,6 +43,7 @@ internal class GameUtils
     public class HUD
     {
      #region NOTIFICATION MANAGER
+
         #region HUD_V2
         
         private static Hud_UserEventCarousel? _carousel;

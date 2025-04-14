@@ -12,6 +12,7 @@ public class Entry : BasePlugin
     public static ManualLogSource Log;
     public override void Load()
     {
+       
         #region LIB
         ClassInjector.RegisterTypeInIl2Cpp<Syrup.IMGUI.simgui>();
         h.PatchAll();
