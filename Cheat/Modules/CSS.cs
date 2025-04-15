@@ -4,7 +4,9 @@ using Brewchat.Game.Wrappers;
 using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.UI;
+using VRC.UI;
 using VRC.UI.Core.Styles;
+using VRC.UI.Elements;
 
 namespace Brewchat.Cheat.Modules;
 internal class CSS : UnityEngine.MonoBehaviour
@@ -68,16 +70,20 @@ internal class CSS : UnityEngine.MonoBehaviour
         #endregion
 
         #region QUICKMENU_BG
-
-        Root.QMParent().GetChild(0).GetComponent<Image>().sprite = EngineUtils
+        Root.QMParent().GetChild(0).GetComponent<VRC.UI.ImageEx>().sprite = EngineUtils
             .Assets.Data_LoadSprite("https://github.com/z-ryo/fake-cdn/blob/master/GmVTVqlbIAElnaf.png?raw=true");
         #endregion
         
         #region MAINMENU_BG
-        Root.MMParent().GetChild(0).GetComponent<Image>().sprite = EngineUtils
-            .Assets.Data_LoadSprite("https://github.com/z-ryo/fake-cdn/blob/master/GmVTVqlbIAElnaf.png?raw=true");
-        #endregion
+        /*Root.MMParent().GetChild(0).GetComponent<VRC.UI.ImageEx>().*/
+        ImageEx? IMAGE_EX = Root.MMParent().GetChild(0).GetComponent<VRC.UI.ImageEx>();
         
+        var SPRITE_CHEAT =  EngineUtils.Assets.Data_LoadSprite("https://github.com/z-ryo/fake-cdn/blob/master/GmVTVqlbIAElnaf.png?raw=true");
+        IMAGE_EX.sprite = SPRITE_CHEAT;
+        
+        Root.MMParent().GetChild(0).GetComponent<VRCUIBackground>()
+            .field_Private_Image_0 = IMAGE_EX;
+        #endregion
         
         #region STYLE_ENGINE
         Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppArrayBase<StyleEngine>? VRC_UI = GameObject.FindObjectsOfType<StyleEngine>();
@@ -87,6 +93,7 @@ internal class CSS : UnityEngine.MonoBehaviour
             {
                 File.AppendAllText("wordplay",$"{key.key}\n");
             }
+
             item.field_Private_Dictionary_2_String_Color_0["Highlight"] = EngineUtils.Conversion.HexToColor("604b55"); 
             item.field_Private_Dictionary_2_String_Color_0["Active"] = EngineUtils.Conversion.HexToColor("604b55");
             item.field_Private_Dictionary_2_String_Color_0["Active2"] = EngineUtils.Conversion.HexToColor("604b55");
@@ -158,8 +165,6 @@ internal class CSS : UnityEngine.MonoBehaviour
             item.field_Private_Dictionary_2_String_Color_0["Grey4"] = new UnityEngine.Color(0.5f, 0.5f, 0.5f, 1f);
             item.field_Private_Dictionary_2_String_Color_0["Grey5"] = new UnityEngine.Color(0.6f, 0.6f, 0.6f, 1f); 
             item.field_Private_Dictionary_2_String_Color_0["White"] = UnityEngine.Color.white;
-                        
-
         }
         #endregion
     }

@@ -1,7 +1,6 @@
 ﻿using Syrup.IMGUI;
 using BlanketSDK.QM;
 
-using Brewchat.Game.Wrappers;
 using BlanketSDK.Utilities;
 using BlanketSDK.QM.Modals;
 namespace Brewchat.Cheat;
@@ -13,13 +12,11 @@ internal class QM
         try
         {
             sconsole.SLog("Menu Created");
-            var modal = new VRCModalContainer("Hello World");
-            var a = new VRCButton(Root._Fallback_Dashboard_Group_QM_Buttons(), "OPEN ME", "smart", () => modal.Open());
+            VRCModalContainer? Modal = new VRCModalContainer("Hello World");
+            VRCButton? a = new VRCButton(Root._Fallback_Dashboard_Group_QM_Buttons(), "OPEN ME", "smart", () => Modal.Open());
 
-            var e = new VRCButton(modal, "OPEN ME", "smart", () =>
-            {
-                sconsole.SLog("it works");
-            });
+            VRCButton? e = new VRCButton(Modal, "OPEN ME", "smart", 
+                () => sconsole.SLog("OPEN ME"));
         }
         catch(Exception e)
         {
