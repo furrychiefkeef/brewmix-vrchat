@@ -1,14 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.XR;
 using VRC.UI.Elements;
 
 namespace BlanketSDK.Utilities;
 
 internal class Root
 {
-    public static GameObject TCAME() => UnityEngine.Object.FindObjectOfType<UserInterface>().gameObject;
-    public static GameObject QuickMenu() => UnityEngine.Object.FindObjectOfType<QuickMenu>().transform.GetChild(0).gameObject;
-    public static GameObject MainMenu() => UnityEngine.Object.FindObjectOfType<MainMenu>().transform.GetChild(0).gameObject;
+    #region USER_INTERFACE
+    protected static GameObject USERINTERFACE() => UnityEngine.Object.FindObjectOfType<UserInterface>().gameObject;
+    protected static GameObject SCREENSPACE_OVERLAY_UNSCALEDUI() => GameObject.Find("UnscaledUI");
+    
+    protected static GameObject QuickMenu() => UnityEngine.Object.FindObjectOfType<QuickMenu>().transform.GetChild(0).gameObject;
+    protected static GameObject MainMenu() => UnityEngine.Object.FindObjectOfType<MainMenu>().transform.GetChild(0).gameObject;
+    #endregion
 
+    
+    
     #region VRChat Objects
     public static Transform QMParent() => QuickMenu().transform.FindChild("Container/Window/QMParent");
     public static Transform MenuDashboard() => QuickMenu().transform.FindChild("Container/Window/QMParent/Menu_Dashboard");
@@ -19,7 +26,21 @@ internal class Root
     public static Transform MenuSettings() => QuickMenu().transform.FindChild("Container/Window/QMParent/Menu_QM_GeneralSettings");
     public static Transform MenuDevTools() => QuickMenu().transform.FindChild("Container/Window/QMParent/Menu_DevTools");
     public static Transform SelectedUser_Local() => QuickMenu().transform.FindChild("Container/Window/QMParent/Menu_SelectedUser_Local");
+    
     #endregion
+    public static Transform ActionMenu(string position)
+    {
+        switch (XRDevice.isPresent)
+        {
+            case true:
+                return SCREENSPACE_OVERLAY_UNSCALEDUI().transform.FindChild($"UnscaledUI/ActionMenu/Container/{position}/ActionMenu");
+                break;
+            case false:
+                return SCREENSPACE_OVERLAY_UNSCALEDUI().transform.FindChild($"ActionMenu/Container/{position}/ActionMenu");
+                break;
+        }
+    }
+    
     #region QM
     public static Transform Button() => MenuDashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions/Button_Respawn");
     public static Transform Toggle() => MenuDevTools().transform.FindChild("Scrollrect/Viewport/VerticalLayoutGroup/Buttons/Button_Tag");
@@ -27,7 +48,8 @@ internal class Root
 
     public static Transform FourButtons_Modal() => QMParent().transform.FindChild("Modal_QM_ChangeShieldLevel");
     public static Transform Slider() => QMParent().transform.FindChild("QM");
-    public static GameObject ActionMenu(string position) => GameObject.Find($"UnscaledUI/ActionMenu/Container/{position}/ActionMenu");
+
+   
     #endregion
     #region Fallback
     public static Transform _Fallback_Dashboard_Group_QM_Buttons() => MenuDashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions");
