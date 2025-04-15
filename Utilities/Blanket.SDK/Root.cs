@@ -13,8 +13,6 @@ internal class Root
     protected static GameObject QuickMenu() => UnityEngine.Object.FindObjectOfType<QuickMenu>().transform.GetChild(0).gameObject;
     protected static GameObject MainMenu() => UnityEngine.Object.FindObjectOfType<MainMenu>().transform.GetChild(0).gameObject;
     #endregion
-
-    
     
     #region VRChat Objects
     public static Transform QMParent() => QuickMenu().transform.FindChild("Container/Window/QMParent");
