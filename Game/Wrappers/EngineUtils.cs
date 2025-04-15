@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Brewchat.Game.Wrappers
 {
@@ -11,21 +13,22 @@ namespace Brewchat.Game.Wrappers
     {
         public static class Conversion
         {
+            
+            
             public static Color HexToColor(string hex)
             {
                 // Remove # if present
                 if (hex.StartsWith("#"))
                     hex = hex.Substring(1);
-
-                // Handle different hex formats
-                if (hex.Length == 6) // RRGGBB format
+               
+                if (hex.Length == 6)
                 {
                     byte r = Convert.ToByte(hex.Substring(0, 2), 16);
                     byte g = Convert.ToByte(hex.Substring(2, 2), 16);
                     byte b = Convert.ToByte(hex.Substring(4, 2), 16);
                     return new Color(r / 255f, g / 255f, b / 255f, 1f);
                 }
-                else if (hex.Length == 8) // RRGGBBAA format
+                else if (hex.Length == 8) 
                 {
                     byte r = Convert.ToByte(hex.Substring(0, 2), 16);
                     byte g = Convert.ToByte(hex.Substring(2, 2), 16);
@@ -42,14 +45,34 @@ namespace Brewchat.Game.Wrappers
         {
             public static Texture2D LoadTexture(string dir)
             {
-                // Implement depending on your mod framework
-                // This is a simplified example
-                byte[] fileData = File.ReadAllBytes(dir);
-                Texture2D texture = new Texture2D(2048, 2048);
-                texture.LoadImage(fileData);
-                texture.name = Path.GetFileNameWithoutExtension(dir);
+                Texture2D? texture = null;
+                if (File.Exists(dir))
+                {
+                    byte[]? data = File.ReadAllBytes(dir);
+                    Texture2D _texture = new Texture2D(2048, 2048);
+                    texture.LoadImage(data);
+                    if (texture != null) texture.name = Path.GetFileNameWithoutExtension(dir);
+                    texture = _texture;
+                    return texture;
+                }
                 return texture;
             }
+            public static Texture2D LoadWebTexture(string dir)
+            {
+                Texture2D? texture = null;
+                if (File.Exists(dir))
+                {
+                    byte[]? data = File.ReadAllBytes(dir);
+                    Texture2D _texture = new Texture2D(2048, 2048);
+                    texture.LoadImage(data);
+                    if (texture != null) texture.name = Path.GetFileNameWithoutExtension(dir);
+                    texture = _texture;
+                    return texture;
+                }
+                return texture;
+            }
+
+            
             public static Sprite LoadSprite(string dir) => LoadTexture(dir).ToSprite();
         }
     }

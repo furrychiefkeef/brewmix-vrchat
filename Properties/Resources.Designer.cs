@@ -62,9 +62,39 @@ namespace brewchat.hybridxcore.bep.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] background_main {
+        internal static byte[] action_menu_bg {
             get {
-                object obj = ResourceManager.GetObject("background_main", resourceCulture);
+                object obj = ResourceManager.GetObject("action-menu_bg", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] action_menu_bg_joystick {
+            get {
+                object obj = ResourceManager.GetObject("action-menu_bg_joystick", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] action_menu_divider {
+            get {
+                object obj = ResourceManager.GetObject("action-menu_divider", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] action_menu_radial_bg {
+            get {
+                object obj = ResourceManager.GetObject("action-menu_radial_bg", resourceCulture);
                 return ((byte[])(obj));
             }
         }
