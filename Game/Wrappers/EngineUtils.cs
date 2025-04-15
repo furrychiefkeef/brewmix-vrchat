@@ -55,6 +55,19 @@ namespace Brewchat.Game.Wrappers
                 texture.LoadImage(fileData);
                 return texture;
             }
+            
+        }
+    }
+    public static class TextureExtensions
+    {
+        public static Sprite ToSprite(this Texture2D texture)
+        {
+            // Create a sprite from the texture using default game settings
+            return Sprite.Create(
+                texture, 
+                new Rect(0, 0, texture.width, texture.height), 
+                Vector2.zero // Using game's default settings
+            );
         }
     }
 }

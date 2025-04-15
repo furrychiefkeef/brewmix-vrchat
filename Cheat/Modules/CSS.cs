@@ -2,12 +2,13 @@
 using BlanketSDK.Utilities;
 using Brewchat.Game.Wrappers;
 using UnityEngine;
+using UnityEngine.UI;
 using VRC.UI.Core.Styles;
 
 namespace Brewchat.Cheat.Modules;
 internal class CSS : UnityEngine.MonoBehaviour
 {
-    public  Texture? texture { get; set; }
+    
     public void Runtime()
     {
         File.WriteAllText("wordplay", "");
@@ -18,15 +19,24 @@ internal class CSS : UnityEngine.MonoBehaviour
         
         if (obj != null)
         {
+            foreach (Transform divider_objects in obj.transform.GetChild(0).GetChild(2).transform)
+            {
+                if(divider_objects.name.Contains("Divider")){}
+                Image image = divider_objects.GetComponent<Image>();
+                if (image != null)image.color = EngineUtils.Conversion.HexToColor("604b55");
+            }
             PedalGraphic? Center_Removable = obj.transform.GetChild(0).GetChild(0).GetComponent<PedalGraphic>();
             UnityEngine.Object.DestroyImmediate(Center_Removable,true);    
             
             PedalGraphic Action_Menu_GRAPHICS_BG = obj.transform.GetChild(0).GetChild(1).GetComponent<PedalGraphic>();
             UnityEngine.UI.Image Action_Menu_GRAPHICS_CURSOR = obj.transform.GetChild(0).GetChild(4).GetComponent<UnityEngine.UI.Image>();
             
-            texture = EngineUtils.Assets.LoadTextureFromModAssets($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\radial.png");
-            Action_Menu_GRAPHICS_BG._texture = texture; 
+            Action_Menu_GRAPHICS_BG._texture = EngineUtils.Assets
+                .LoadTextureFromModAssets($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\VRC-UI\\action-menu_bg.png");
             
+            Action_Menu_GRAPHICS_CURSOR.sprite = EngineUtils.Assets
+                .LoadTextureFromModAssets($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\VRC-UI\\action-menu_joystick.png").ToSprite();
+                
             Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("604b55");
             Action_Menu_GRAPHICS_CURSOR.color = EngineUtils.Conversion.HexToColor("604b55");
         }
@@ -38,7 +48,6 @@ internal class CSS : UnityEngine.MonoBehaviour
         Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppArrayBase<StyleEngine>? A = GameObject.FindObjectsOfType<StyleEngine>();
         foreach (var item in A)
         {
-
             foreach (var key in item.field_Private_Dictionary_2_String_Color_0)
             {
                 File.AppendAllText("wordplay",$"{key.key}\n");
