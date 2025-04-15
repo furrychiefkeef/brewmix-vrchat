@@ -5,6 +5,7 @@ using BlanketSDK.Utilities;
 using Brewchat.Game.Wrappers;
 using UnityEngine;
 using VRC.UI.Core.Styles;
+using Il2CppSystem.Collections.Generic;
 
 namespace Brewchat.Cheat.Modules;
 
@@ -16,8 +17,9 @@ internal class CSS : UnityEngine.MonoBehaviour
         
         #region ActionMenu
 
-        GameObject? obj = Root.ActionMenu("MenuR");
+        Transform? obj = Root.ActionMenu("MenuR");
         ActionMenu? _ActionMenu = obj.GetComponent<ActionMenu>();
+        
         if (obj != null)
         {
             PedalGraphic? Center_Removable = obj.transform.GetChild(0).GetChild(0).GetComponent<PedalGraphic>();
@@ -37,12 +39,7 @@ internal class CSS : UnityEngine.MonoBehaviour
         foreach (var item in A)
         {
 
-            /*foreach (string? key in item.field_Private_Dictionary_2_String_Color_0._keys)
-            {
-                File.WriteAllText("wrongton", $"\n{key}");
-            }*/
-            
-            // Using random colors for each key in the dictionary
+            // Using random colors for each key in the dictionaryi
             item.field_Private_Dictionary_2_String_Color_0["Highlight"] = EngineUtils.Conversion.HexToColor("604b55"); 
             item.field_Private_Dictionary_2_String_Color_0["Active"] = EngineUtils.Conversion.HexToColor("604b55");
             item.field_Private_Dictionary_2_String_Color_0["Active2"] = EngineUtils.Conversion.HexToColor("604b55");

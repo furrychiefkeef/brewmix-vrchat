@@ -32,10 +32,8 @@ internal class Root
         {
             case true:
                 return SCREENSPACE_OVERLAY_UNSCALEDUI().transform.FindChild($"ActionMenu/Container/{position}/ActionMenu");
-                break;
             case false:
                 return GameObject.Find($"ActionMenu/Container/{position}/ActionMenu").transform;
-                break;
         }
     }
     
