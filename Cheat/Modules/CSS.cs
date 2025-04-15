@@ -1,6 +1,7 @@
 ﻿
 
 using System.Reflection;
+using BlanketSDK.Utilities;
 using Brewchat.Game.Wrappers;
 using UnityEngine;
 using VRC.UI.Core.Styles;
@@ -9,18 +10,23 @@ namespace Brewchat.Cheat.Modules;
 
 internal class CSS : UnityEngine.MonoBehaviour
 {
+    public  Texture? texture { get; set; }
     public void Runtime()
     {
         #region ActionMenu
-        /*GameObject? _ActionMenu = GameObject.FindObjectOfType<ActionMenu>().gameObject;
-        if (_ActionMenu != null)
+
+        GameObject? obj = Root.ActionMenu("MenuR");
+        ActionMenu? _ActionMenu = obj.GetComponent<ActionMenu>();
+        if (obj != null)
         {
-            Texture2D texture = null;
-            PedalGraphic Action_Menu_GRAPHICS = _ActionMenu.GetComponentInChildren<PedalGraphic>(true);
+
+            GameObject? Center_Removable = obj.transform.GetChild(0).GetChild(0).gameObject;
+            UnityEngine.Object.DestroyImmediate(Center_Removable);    
+            PedalGraphic Action_Menu_GRAPHICS = obj.transform.GetChild(0).GetChild(1).GetComponent<PedalGraphic>();
             texture = EngineUtils.Assets.LoadTextureFromModAssets($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\radial.png");
             Action_Menu_GRAPHICS._texture = texture; 
-            Action_Menu_GRAPHICS.color = EngineUtils.Conversion.HexToColor("604b55"); 
-        }*/
+            Action_Menu_GRAPHICS.color = EngineUtils.Conversion.HexToColor("604b55");
+        }
        
         #endregion
     

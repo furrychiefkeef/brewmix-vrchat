@@ -5,7 +5,7 @@ namespace BlanketSDK.Utilities;
 
 internal class Root
 {
-
+    public static GameObject TCAME() => UnityEngine.Object.FindObjectOfType<UserInterface>().gameObject;
     public static GameObject QuickMenu() => UnityEngine.Object.FindObjectOfType<QuickMenu>().transform.GetChild(0).gameObject;
     public static GameObject MainMenu() => UnityEngine.Object.FindObjectOfType<MainMenu>().transform.GetChild(0).gameObject;
 
@@ -26,8 +26,8 @@ internal class Root
     public static Transform CarouselButton() => SelectedUser_Local().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_AvatarActions");
 
     public static Transform FourButtons_Modal() => QMParent().transform.FindChild("Modal_QM_ChangeShieldLevel");
-    public static Transform Slider() => QMParent().transform.FindChild();
-    public static Transform ActionMenu(string position) => QMParent().transform.FindChild("QM");
+    public static Transform Slider() => QMParent().transform.FindChild("QM");
+    public static GameObject ActionMenu(string position) => GameObject.Find($"UnscaledUI/ActionMenu/Container/{position}/ActionMenu");
     #endregion
     #region Fallback
     public static Transform _Fallback_Dashboard_Group_QM_Buttons() => MenuDashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions");
