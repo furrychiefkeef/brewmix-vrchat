@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using BlanketSDK.Utilities;
 using Brewchat.Game.Wrappers;
-using Cysharp.Threading.Tasks.Linq;
 using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,7 +20,6 @@ internal class CSS : UnityEngine.MonoBehaviour
         if (obj != null)
         {
             Il2CppSystem.Object divider_container = obj.transform.GetChild(0).GetChild(2);
-
 
             Il2CppSystem.Collections.IEnumerable childrenCollection = divider_container.Cast<Il2CppSystem.Collections.IEnumerable>();
             if (childrenCollection == null)
