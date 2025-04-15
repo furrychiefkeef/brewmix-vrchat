@@ -14,7 +14,6 @@ namespace Brewchat.Game.Wrappers
         public static class Conversion
         {
             
-            
             public static Color HexToColor(string hex)
             {
                 // Remove # if present
@@ -45,30 +44,18 @@ namespace Brewchat.Game.Wrappers
         {
             public static Texture2D LoadTexture(string dir)
             {
-                Texture2D? texture = null;
-                if (File.Exists(dir))
-                {
-                    byte[]? data = File.ReadAllBytes(dir);
-                    Texture2D _texture = new Texture2D(2048, 2048);
-                    texture.LoadImage(data);
-                    if (texture != null) texture.name = Path.GetFileNameWithoutExtension(dir);
-                    texture = _texture;
-                    return texture;
-                }
+                byte[] data = File.ReadAllBytes(dir);
+                Texture2D texture = new Texture2D(2048, 2048);
+                texture.LoadImage(data);
+                if (texture != null) texture.name = Path.GetFileNameWithoutExtension(dir);
                 return texture;
             }
             public static Texture2D LoadWebTexture(string dir)
             {
-                Texture2D? texture = null;
-                if (File.Exists(dir))
-                {
-                    byte[]? data = File.ReadAllBytes(dir);
-                    Texture2D _texture = new Texture2D(2048, 2048);
-                    texture.LoadImage(data);
-                    if (texture != null) texture.name = Path.GetFileNameWithoutExtension(dir);
-                    texture = _texture;
-                    return texture;
-                }
+                byte[] data = File.ReadAllBytes(dir);
+                Texture2D texture = new Texture2D(2048, 2048);
+                texture.LoadImage(data);
+                if (texture != null) texture.name = Path.GetFileNameWithoutExtension(dir);
                 return texture;
             }
 
