@@ -1,14 +1,10 @@
-﻿
-
-using System.Reflection;
+﻿using System.Reflection;
 using BlanketSDK.Utilities;
 using Brewchat.Game.Wrappers;
 using UnityEngine;
 using VRC.UI.Core.Styles;
-using Il2CppSystem.Collections.Generic;
 
 namespace Brewchat.Cheat.Modules;
-
 internal class CSS : UnityEngine.MonoBehaviour
 {
     public  Texture? texture { get; set; }
@@ -17,7 +13,7 @@ internal class CSS : UnityEngine.MonoBehaviour
         File.WriteAllText("wordplay", "");
         #region ActionMenu
 
-        /*Transform? obj = Root.ActionMenu("MenuR");
+        Transform? obj = Root.ActionMenu("MenuR");
         ActionMenu? _ActionMenu = obj.GetComponent<ActionMenu>();
         
         if (obj != null)
@@ -25,11 +21,15 @@ internal class CSS : UnityEngine.MonoBehaviour
             PedalGraphic? Center_Removable = obj.transform.GetChild(0).GetChild(0).GetComponent<PedalGraphic>();
             UnityEngine.Object.DestroyImmediate(Center_Removable,true);    
             
-            PedalGraphic Action_Menu_GRAPHICS = obj.transform.GetChild(0).GetChild(1).GetComponent<PedalGraphic>();
+            PedalGraphic Action_Menu_GRAPHICS_BG = obj.transform.GetChild(0).GetChild(1).GetComponent<PedalGraphic>();
+            UnityEngine.UI.Image Action_Menu_GRAPHICS_CURSOR = obj.transform.GetChild(0).GetChild(4).GetComponent<UnityEngine.UI.Image>();
+            
             texture = EngineUtils.Assets.LoadTextureFromModAssets($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\radial.png");
-            Action_Menu_GRAPHICS._texture = texture; 
-            Action_Menu_GRAPHICS.color = EngineUtils.Conversion.HexToColor("604b55");
-        }*/
+            Action_Menu_GRAPHICS_BG._texture = texture; 
+            
+            Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("604b55");
+            Action_Menu_GRAPHICS_CURSOR.color = EngineUtils.Conversion.HexToColor("604b55");
+        }
        
         #endregion
     
@@ -42,7 +42,6 @@ internal class CSS : UnityEngine.MonoBehaviour
             foreach (var key in item.field_Private_Dictionary_2_String_Color_0)
             {
                 File.AppendAllText("wordplay",$"{key.key}\n");
-                return;
             }
             // Using random colors for each key in the dictionaryi
             item.field_Private_Dictionary_2_String_Color_0["Highlight"] = EngineUtils.Conversion.HexToColor("604b55"); 

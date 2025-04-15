@@ -28,13 +28,14 @@ internal class Root
     #endregion
     public static Transform ActionMenu(string position)
     {
-        switch (XRDevice.isPresent)
+        return SCREENSPACE_OVERLAY_UNSCALEDUI().transform.FindChild($"ActionMenu/Container/{position}/ActionMenu");
+        /*switch (XRDevice.isPresent)
         {
             case true:
-                return SCREENSPACE_OVERLAY_UNSCALEDUI().transform.FindChild($"ActionMenu/Container/{position}/ActionMenu");
+                
             case false:
                 return GameObject.Find($"ActionMenu/Container/{position}/ActionMenu").transform;
-        }
+        }*/
     }
     
     #region QM
