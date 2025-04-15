@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 using BlanketSDK.Utilities;
 using Brewchat.Game.Wrappers;
+using Cysharp.Threading.Tasks.Linq;
+using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Core.Styles;
@@ -8,7 +10,6 @@ using VRC.UI.Core.Styles;
 namespace Brewchat.Cheat.Modules;
 internal class CSS : UnityEngine.MonoBehaviour
 {
-    
     public void Runtime()
     {
         File.WriteAllText("wordplay", "");
@@ -19,11 +20,36 @@ internal class CSS : UnityEngine.MonoBehaviour
         
         if (obj != null)
         {
-            foreach (Transform divider_objects in obj.transform.GetChild(0).GetChild(2).transform)
+            Il2CppSystem.Object divider_container = obj.transform.GetChild(0).GetChild(2);
+
+
+            Il2CppSystem.Collections.IEnumerable childrenCollection = divider_container.Cast<Il2CppSystem.Collections.IEnumerable>();
+            if (childrenCollection == null)
             {
-                if(divider_objects.name.Contains("Divider")){}
-                Image image = divider_objects.GetComponent<Image>();
-                if (image != null)image.color = EngineUtils.Conversion.HexToColor("604b55");
+
+                sconsole.SError($"Container children collection is null");
+                return;
+            }
+            
+            foreach (var dividerObj in childrenCollection)
+            {
+                if (dividerObj == null) continue;
+                Transform dividerTransform = dividerObj.Cast<Transform>();
+                if (dividerTransform == null) continue;
+                
+                var dividers = dividerTransform.GetComponentsInChildren<Transform>(true)
+                    .Where(t => t != null && t.name == "Divider(Clone)")
+                    .ToArray();
+    
+                foreach (var divider in dividers)
+                {
+                    Image image = divider.GetComponentInChildren<Image>(true);
+                    if (image != null)
+                    { 
+                        image.color = EngineUtils.Conversion.HexToColor("604b55");
+                        image.sprite = EngineUtils.Assets.LoadTexture($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\VRC-UI\\action-menu_divider.png").ToSprite();
+                    }
+                }
             }
             PedalGraphic? Center_Removable = obj.transform.GetChild(0).GetChild(0).GetComponent<PedalGraphic>();
             UnityEngine.Object.DestroyImmediate(Center_Removable,true);    
@@ -32,10 +58,10 @@ internal class CSS : UnityEngine.MonoBehaviour
             UnityEngine.UI.Image Action_Menu_GRAPHICS_CURSOR = obj.transform.GetChild(0).GetChild(4).GetComponent<UnityEngine.UI.Image>();
             
             Action_Menu_GRAPHICS_BG._texture = EngineUtils.Assets
-                .LoadTextureFromModAssets($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\VRC-UI\\action-menu_bg.png");
+                .LoadTexture($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\VRC-UI\\action-menu_bg.png");
             
             Action_Menu_GRAPHICS_CURSOR.sprite = EngineUtils.Assets
-                .LoadTextureFromModAssets($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\VRC-UI\\action-menu_joystick.png").ToSprite();
+                .LoadTexture($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\VRC-UI\\action-menu_joystick.png").ToSprite();
                 
             Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("604b55");
             Action_Menu_GRAPHICS_CURSOR.color = EngineUtils.Conversion.HexToColor("604b55");
@@ -45,8 +71,8 @@ internal class CSS : UnityEngine.MonoBehaviour
     
         
         #region STYLE_ENGINE
-        Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppArrayBase<StyleEngine>? A = GameObject.FindObjectsOfType<StyleEngine>();
-        foreach (var item in A)
+        Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppArrayBase<StyleEngine>? VRC_UI = GameObject.FindObjectsOfType<StyleEngine>();
+        foreach (StyleEngine? item in VRC_UI)
         {
             foreach (var key in item.field_Private_Dictionary_2_String_Color_0)
             {

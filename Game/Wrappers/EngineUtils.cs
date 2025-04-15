@@ -40,22 +40,26 @@ namespace Brewchat.Game.Wrappers
         }
         public static class Assets
         {
-            public static Sprite MakeSpriteAsset()
-            {
-                Sprite? sprite = null;
-                return sprite;
-
-            }
-            public static Texture2D LoadTextureFromModAssets(string path)
+            public static Texture2D LoadTexture(string dir)
             {
                 // Implement depending on your mod framework
                 // This is a simplified example
-                byte[] fileData = File.ReadAllBytes(path);
+                byte[] fileData = File.ReadAllBytes(dir);
                 Texture2D texture = new Texture2D(2048, 2048);
                 texture.LoadImage(fileData);
+                texture.name = Path.GetFileNameWithoutExtension(dir);
                 return texture;
             }
-            
+            public static Sprite LoadSprite(string dir)
+            {
+                // Implement depending on your mod framework
+                // This is a simplified example
+                byte[] fileData = File.ReadAllBytes(dir);
+                Texture2D texture = new Texture2D(2048, 2048);
+                texture.LoadImage(fileData);
+                texture.name = Path.GetFileNameWithoutExtension(dir);
+                return texture.ToSprite();
+            }
         }
     }
     public static class TextureExtensions
