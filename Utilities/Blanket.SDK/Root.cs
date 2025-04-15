@@ -26,6 +26,8 @@ internal class Root
     public static Transform CarouselButton() => SelectedUser_Local().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_AvatarActions");
 
     public static Transform FourButtons_Modal() => QMParent().transform.FindChild("Modal_QM_ChangeShieldLevel");
+    public static Transform Slider() => QMParent().transform.FindChild();
+    public static Transform ActionMenu(string position) => QMParent().transform.FindChild("QM");
     #endregion
     #region Fallback
     public static Transform _Fallback_Dashboard_Group_QM_Buttons() => MenuDashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions");

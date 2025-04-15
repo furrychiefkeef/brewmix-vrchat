@@ -51,7 +51,7 @@ namespace Brewchat.Game.Wrappers
                 // Implement depending on your mod framework
                 // This is a simplified example
                 byte[] fileData = File.ReadAllBytes(path);
-                Texture2D texture = new Texture2D(2, 2);
+                Texture2D texture = new Texture2D(2048, 2048);
                 texture.LoadImage(fileData);
                 return texture;
             }
