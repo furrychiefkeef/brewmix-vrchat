@@ -70,14 +70,12 @@ internal class CSS : UnityEngine.MonoBehaviour
         #region QUICKMENU_BG
 
         Root.QMParent().GetChild(0).GetComponent<Image>().sprite = EngineUtils
-            .Assets.LoadSprite(
-                $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\VRC-UI\\vrc-bg_qm.png");
+            .Assets.Data_LoadSprite("https://github.com/z-ryo/fake-cdn/blob/master/GmVTVqlbIAElnaf.png?raw=true");
         #endregion
         
         #region MAINMENU_BG
         Root.MMParent().GetChild(0).GetComponent<Image>().sprite = EngineUtils
-            .Assets.LoadSprite(
-                $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\VRC-UI\\vrc-bg_qm.png");
+            .Assets.Data_LoadSprite("https://github.com/z-ryo/fake-cdn/blob/master/GmVTVqlbIAElnaf.png?raw=true");
         #endregion
         
         

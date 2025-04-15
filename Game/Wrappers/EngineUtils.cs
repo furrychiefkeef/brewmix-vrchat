@@ -50,9 +50,9 @@ namespace Brewchat.Game.Wrappers
                 if (texture != null) texture.name = Path.GetFileNameWithoutExtension(dir);
                 return texture;
             }
-            public static Texture2D LoadWebTexture(string dir)
+            public static Texture2D Data_LoadTexture(string dir)
             {
-                byte[] data = File.ReadAllBytes(dir);
+                byte[] data = new WebClient().DownloadData(dir);
                 Texture2D texture = new Texture2D(2048, 2048);
                 texture.LoadImage(data);
                 if (texture != null) texture.name = Path.GetFileNameWithoutExtension(dir);
@@ -61,6 +61,7 @@ namespace Brewchat.Game.Wrappers
 
             
             public static Sprite LoadSprite(string dir) => LoadTexture(dir).ToSprite();
+            public static Sprite Data_LoadSprite(string dir) => Data_LoadTexture(dir).ToSprite();
         }
     }
     public static class TextureExtensions
