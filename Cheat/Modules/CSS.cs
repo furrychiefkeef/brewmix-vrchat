@@ -19,9 +19,9 @@ internal class CSS : UnityEngine.MonoBehaviour
         ActionMenu? _ActionMenu = obj.GetComponent<ActionMenu>();
         if (obj != null)
         {
-
-            GameObject? Center_Removable = obj.transform.GetChild(0).GetChild(0).gameObject;
-            UnityEngine.Object.DestroyImmediate(Center_Removable);    
+            PedalGraphic? Center_Removable = obj.transform.GetChild(0).GetChild(0).GetComponent<PedalGraphic>();
+            UnityEngine.Object.DestroyImmediate(Center_Removable,true);    
+            
             PedalGraphic Action_Menu_GRAPHICS = obj.transform.GetChild(0).GetChild(1).GetComponent<PedalGraphic>();
             texture = EngineUtils.Assets.LoadTextureFromModAssets($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\radial.png");
             Action_Menu_GRAPHICS._texture = texture; 
@@ -36,10 +36,10 @@ internal class CSS : UnityEngine.MonoBehaviour
         foreach (var item in A)
         {
 
-            foreach (string? key in item.field_Private_Dictionary_2_String_Color_0._keys)
+            /*foreach (string? key in item.field_Private_Dictionary_2_String_Color_0._keys)
             {
                 File.WriteAllText("wrongton", $"\n{key}");
-            }
+            }*/
             
             // Using random colors for each key in the dictionary
             item.field_Private_Dictionary_2_String_Color_0["Highlight"] = EngineUtils.Conversion.HexToColor("604b55"); 
