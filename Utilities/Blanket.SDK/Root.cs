@@ -31,10 +31,10 @@ internal class Root
         switch (XRDevice.isPresent)
         {
             case true:
-                return SCREENSPACE_OVERLAY_UNSCALEDUI().transform.FindChild($"UnscaledUI/ActionMenu/Container/{position}/ActionMenu");
+                return SCREENSPACE_OVERLAY_UNSCALEDUI().transform.FindChild($"ActionMenu/Container/{position}/ActionMenu");
                 break;
             case false:
-                return SCREENSPACE_OVERLAY_UNSCALEDUI().transform.FindChild($"ActionMenu/Container/{position}/ActionMenu");
+                return GameObject.Find($"ActionMenu/Container/{position}/ActionMenu").transform;
                 break;
         }
     }
