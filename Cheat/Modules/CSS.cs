@@ -14,10 +14,10 @@ internal class CSS : UnityEngine.MonoBehaviour
     public  Texture? texture { get; set; }
     public void Runtime()
     {
-        
+        File.WriteAllText("wordplay", "");
         #region ActionMenu
 
-        Transform? obj = Root.ActionMenu("MenuR");
+        /*Transform? obj = Root.ActionMenu("MenuR");
         ActionMenu? _ActionMenu = obj.GetComponent<ActionMenu>();
         
         if (obj != null)
@@ -29,7 +29,7 @@ internal class CSS : UnityEngine.MonoBehaviour
             texture = EngineUtils.Assets.LoadTextureFromModAssets($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\radial.png");
             Action_Menu_GRAPHICS._texture = texture; 
             Action_Menu_GRAPHICS.color = EngineUtils.Conversion.HexToColor("604b55");
-        }
+        }*/
        
         #endregion
     
@@ -39,6 +39,11 @@ internal class CSS : UnityEngine.MonoBehaviour
         foreach (var item in A)
         {
 
+            foreach (var key in item.field_Private_Dictionary_2_String_Color_0)
+            {
+                File.AppendAllText("wordplay",$"{key.key}\n");
+                return;
+            }
             // Using random colors for each key in the dictionaryi
             item.field_Private_Dictionary_2_String_Color_0["Highlight"] = EngineUtils.Conversion.HexToColor("604b55"); 
             item.field_Private_Dictionary_2_String_Color_0["Active"] = EngineUtils.Conversion.HexToColor("604b55");
