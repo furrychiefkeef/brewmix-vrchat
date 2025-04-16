@@ -23,7 +23,7 @@ internal class VRCButton : Root
         parent ??= _Fallback_Dashboard_Group_QM_Buttons().transform;
 
         Transform? obj = UnityEngine.Object.Instantiate(Button(), parent);
-        obj.name = $" {Guid.NewGuid().ToString()}-<Blanket.SDK.SINGLE_BUTTON-{name}";
+        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.SINGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS
         VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();

@@ -112,7 +112,7 @@ internal class GameUtils
         #endregion
     }
 
-        public class VRChatUtils
+    public class VRChatUtils
     {
         public static class InputManager
         {

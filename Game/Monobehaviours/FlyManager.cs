@@ -1,11 +1,34 @@
-﻿using UnityEngine;
+﻿using Brewchat.Game.Wrappers;
+using UnityEngine;
+using UnityEngine.XR;
 
 namespace Brewchat.Game.Monobehaviours;
 
 internal class FlyManager : UnityEngine.MonoBehaviour
 {
-    void Update()
+    public bool fly { get; set; }
+    
+    void LateUpdate()
     {
+        float speed = (float)(Input.GetKey(KeyCode.LeftShift) ? (Config.FlySpeed * 5f) : Config.FlySpeed)!;
 
+        if (transform != null)
+        {
+            Vector3 direction = Vector3.zero;
+
+            /*switch (XRDevice.isPresent)
+            {
+                case true:
+                    direction +=  
+            }*/
+            if (Input.GetKey(KeyCode.Q)) direction += Vector3.down;
+            if (Input.GetKey(KeyCode.E)) direction += Vector3.up;
+                
+            direction += GameUtils.GameCamera.camera.transform.forward * GameUtils.VRChatUtils.InputManager.GetInput("Vertical").prop_Single_2;
+            direction += GameUtils.GameCamera.camera.transform.right   * GameUtils.VRChatUtils.InputManager.GetInput("Horizontal").prop_Single_2;
+            direction.Normalize(); 
+            transform.position += direction * speed * Time.deltaTime;
+        }
     }
 }
+

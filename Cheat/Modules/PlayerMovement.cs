@@ -1,5 +1,8 @@
 ﻿using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
+using UnityEngine;
+using VRC;
+using VRC.Animation;
 using VRC.Core;
 using VRC.UI.Core.Styles;
 
@@ -7,20 +10,27 @@ namespace Brewchat.Cheat.Modules
 {
     internal class PlayerMovement
     {
-        static bool isVR;
         public static void Fly(bool s)
         {
-            var player = GameUtils.PlayerModel.Get();
-            if (!player && !RoomManager.field_Internal_Static_ApiWorld_0.Method_Public_Static_Boolean_Object_PDM_0()) return;
+            Player player = GameUtils.PlayerModel.Get();
+            if (!player && !GameUtils.World.IsWorldLoaded()) return;
             else
             {
-
-                switch (player.field_Private_Player_0.field_Public_Player_0.prop_VRCPlayerApi_0.IsUserInVR())
+                CharacterController? CHAR = player.gameObject.GetComponent<UnityEngine.CharacterController>();
+                VRCMotionState? MOTION_STATE = player.gameObject.GetComponent<VRC.Animation.VRCMotionState>();
+                FlyManager? flyManager = player.gameObject.GetOrAddComponent<FlyManager>();
+                if (s)
                 {
-                    case true:
-                    case false:
-                        player.gameObject.GetOrAddComponent<FlyManager>();
-                        break;
+                        flyManager.enabled = true;
+                        MOTION_STATE.enabled = false;
+                        CHAR.enabled = false;
+                }
+                else
+                {
+                    flyManager.enabled = true;
+                    MOTION_STATE.enabled = true;
+                    CHAR.enabled = true;
+                    UnityEngine.Object.DestroyImmediate(flyManager);
                 }
             }
         }

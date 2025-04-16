@@ -3,6 +3,8 @@ using BlanketSDK.QM;
 
 using BlanketSDK.Utilities;
 using BlanketSDK.QM.Modals;
+using Brewchat.Cheat.Modules;
+
 namespace Brewchat.Cheat;
 
 internal class QM
@@ -11,12 +13,11 @@ internal class QM
     {
         try
         {
-            sconsole.SLog("Menu Created");
-            VRCModalContainer? Modal = new VRCModalContainer("Hello World");
-            VRCButton? a = new VRCButton(Root._Fallback_Dashboard_Group_QM_Buttons(), "OPEN ME", "smart", () => Modal.Open());
-
-            VRCButton? e = new VRCButton(Modal, "OPEN ME", "smart", 
-                () => sconsole.SLog("OPEN ME"));
+            sconsole.SLog("Created The QuickMenu+BlanketSDK.UI");
+            VRCModalContainer? Modal = new VRCModalContainer("Player+Movement");
+            VRCButton? a = new VRCButton(Root._Fallback_Dashboard_Group_QM_Buttons(), "Player", "Modify The Player", () => Modal.Open());
+            VRCToggle? Fly_Toggle = new VRCToggle(Modal, "Fly", "Fly On", "Fly Off", (x) =>  PlayerMovement.Fly(x));
+                
         }
         catch(Exception e)
         {
