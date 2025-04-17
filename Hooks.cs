@@ -3,7 +3,9 @@ using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
+using ExitGames.Client.Photon;
 using HarmonyLib;
+using Photon.Pun;
 using Syrup.IMGUI;
 using VRC.Core;
 using VRC.UI.Elements;
@@ -47,7 +49,20 @@ namespace brewchat.hybridxcore.bep
         {
             
         }
-        #endregion
+        /*[HarmonyPostfix, HarmonyPatch(typeof(ChatBubbleRateLimiter), nameof(ChatBubbleRateLimiter.field_Private_Single_0), MethodType.Getter | MethodType.Setter)]
+        public static float RateLimiterBypass__HOOK(ref ChatBubbleRateLimiter __instance, ref float __result)
+        {
+            
+            if (__instance != null && __instance.gameObject != null)
+            {
+                __result = 0;
+                sconsole.SLog($"RATE LIMITER BYPASSED CHECK DEBUG: {__result}");
+                return __result;
+            }
+            return __result;
+        }
+        #endregion*/
        
     }
+    #endregion
 }

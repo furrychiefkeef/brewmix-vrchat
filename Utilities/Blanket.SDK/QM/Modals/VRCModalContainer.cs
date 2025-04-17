@@ -28,7 +28,7 @@ namespace BlanketSDK.QM.Modals
             #region LOGIC_REQUIRED
 
             _obj.GetComponent<QMSafetyPage>().enabled = true;
-            _obj.GetComponent<MonoBehaviourPublicReVoOnBoVo65AwVoBo65Unique>().enabled = true;
+            _obj.GetComponent<MenuPanelRect>().enabled = true;
             _obj.GetComponent<VRCRectMask2D>().enabled = true;
             _obj.GetComponent<GraphicRaycaster>().enabled = true;
             _obj.GetComponent<Canvas>().enabled = true;
@@ -93,7 +93,7 @@ namespace BlanketSDK.QM.Modals
         public VRCModalContainer Open()
         {
             _obj.GetComponent<QMSafetyPage>().enabled = true;
-            _obj.GetComponent<MonoBehaviourPublicReVoOnBoVo65AwVoBo65Unique>().enabled = true;
+            _obj.GetComponent<MenuPanelRect>().enabled = true;
             _obj.GetComponent<VRCRectMask2D>().enabled = true;
             _obj.GetComponent<GraphicRaycaster>().enabled = true;
             _obj.GetComponent<Canvas>().enabled = true;

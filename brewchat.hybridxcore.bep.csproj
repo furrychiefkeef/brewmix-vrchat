@@ -46,6 +46,9 @@
     <Reference Include="DOTween">
       <HintPath>..\..\tools\medicine-deob\bin\Debug\net6.0\interop\DOTween.dll</HintPath>
     </Reference>
+    <Reference Include="Epic.OnlineServices">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Epic.OnlineServices.dll</HintPath>
+    </Reference>
     <Reference Include="Facepunch.Steamworks.Win64">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Facepunch.Steamworks.Win64.dll</HintPath>
     </Reference>
@@ -469,6 +472,9 @@
     <Reference Include="UnityEngine.XRModule">
       <HintPath>..\..\tools\medicine-deob\bin\Debug\net6.0\interop\UnityEngine.XRModule.dll</HintPath>
     </Reference>
+    <Reference Include="Valve.Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\Valve.Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="vrc-oscquery-lib">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\vrc-oscquery-lib.dll</HintPath>
     </Reference>
@@ -483,6 +489,9 @@
     </Reference>
     <Reference Include="VRC.Dynamics">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.Dynamics.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Logging">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.Logging.dll</HintPath>
     </Reference>
     <Reference Include="VRC.SDK3.Depthkit">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRC.SDK3.Depthkit.dll</HintPath>
@@ -561,6 +570,12 @@
     </Reference>
     <Reference Include="VRCSDKBase">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\VRCSDKBase.dll</HintPath>
+    </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\websocket-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="WebTransMtn">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\WebTransMtn.dll</HintPath>
     </Reference>
   </ItemGroup>
 

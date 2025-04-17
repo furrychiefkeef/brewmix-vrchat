@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using VRC;
 using VRC.Localization;
 using VRC.UI.Client;
 using VRC.UI.Client.HUD;
@@ -36,7 +37,7 @@ internal class GameUtils
 
 
     }
-    public class World
+    public class World  
     {
         public static bool IsWorldLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.field_Internal_Static_ApiWorld_0 != null;
     }
@@ -95,7 +96,7 @@ internal class GameUtils
         {
             VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
                 .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_LocalizableString_Action_Action_1_VRCUiPopup_0
-                (title.Localize(), content.Localize(), button_text.Localize(), func, button_text.Localize(), null,null);
+                    (title.Localize(), content.Localize(), button_text.Localize(), func, button_text.Localize(), null,null);
 
         }
 
