@@ -7,6 +7,8 @@ using VRC.UI.Elements.Controls;
 using BlanketSDK.Utilities;
 using UnityEngine.UI;
 using BlanketSDK.QM.Modals;
+using VRC.UI;
+
 namespace BlanketSDK.QM;
 
 internal class VRCToggle : Root
@@ -22,8 +24,8 @@ internal class VRCToggle : Root
         #region REQUIRED_COMPONENTS
         UnityEngine.UI.Toggle _0 = obj.GetComponent<UnityEngine.UI.Toggle>();
         TextMeshProUGUIEx _1 = obj.GetComponentInChildren<TextMeshProUGUIEx>();
-        Image _2on = obj.GetChild(2).GetChild(1).GetComponent<Image>();
-        Image _2off = obj.GetChild(2).GetChild(0).GetComponent<Image>();
+        ImageEx _2on = obj.GetChild(2).GetChild(1).GetComponent<ImageEx>();
+        ImageEx _2off = obj.GetChild(2).GetChild(0).GetComponent<ImageEx>();
         ToolTip _3 = obj.GetComponent<ToolTip>();
         #endregion
 

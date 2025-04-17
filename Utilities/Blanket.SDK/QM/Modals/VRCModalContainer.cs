@@ -90,7 +90,7 @@ namespace BlanketSDK.QM.Modals
         }
 
 
-        public VRCModalContainer Open()
+        public void Open()
         {
             _obj.GetComponent<QMSafetyPage>().enabled = true;
             _obj.GetComponent<MenuPanelRect>().enabled = true;
@@ -100,12 +100,7 @@ namespace BlanketSDK.QM.Modals
             _obj.GetComponent<CanvasGroup>().enabled = true;
             _obj.gameObject.SetActive(true);
             ModalLogic.Method_Protected_Void_Boolean_TransitionType_0(true, UIPage.TransitionType.InPlace);
-            return this;
         }
-        VRCModalContainer Close()
-        {
-            ModalLogic.Method_Protected_Void_Boolean_TransitionType_0(false, UIPage.TransitionType.Bottom);
-            return this;
-        }
+        void Close() => ModalLogic.Method_Protected_Void_Boolean_TransitionType_0(false, UIPage.TransitionType.Bottom);
     }
 }

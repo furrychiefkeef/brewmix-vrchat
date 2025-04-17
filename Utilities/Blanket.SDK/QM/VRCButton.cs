@@ -3,6 +3,7 @@ using BlanketSDK.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.Localization;
+using VRC.UI;
 using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.QM;
@@ -28,7 +29,7 @@ internal class VRCButton : Root
         #region REQUIRED_COMPONENTS
         VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();
         TextMeshProUGUIEx _1 = obj.GetComponentInChildren<TextMeshProUGUIEx>(true);
-        Image _2 = obj.GetChild(3).GetChild(0).GetComponent<Image>();
+        ImageEx _2 = obj.GetChild(3).GetChild(0).GetComponent<ImageEx>();
         UnityEngine.Object.DestroyImmediate(obj.GetComponent<ToolTip>());
         ToolTip _3 = obj.GetComponent<ToolTip>();
         #endregion

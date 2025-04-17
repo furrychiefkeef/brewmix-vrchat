@@ -79,12 +79,12 @@ internal class GameUtils
             VRC.UI.Client.HUD.HudController
                 .field_Public_Static_HudController_0
                 .notification
-                .Method_Public_Void_Sprite_LocalizableString_LocalizableString_Single_Object1PublicTYBoTYUnique_1_Boolean_0
+                ?.Method_Public_Void_Sprite_LocalizableString_LocalizableString_Single_Object1PublicTYBoTYUnique_1_Boolean_0
                 (sprite, title.Localize(), content.Localize(), duration);
+        #region HUD_V1
         }
         #endregion
 
-        #region HUD_V1
         public static void PopUp(string? title = null, string? content = null, float duration = 10)
         {
             VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
@@ -119,7 +119,7 @@ internal class GameUtils
         {
             public static VRCInput GetInput(string name)
             {
-                VRCInput? r = VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name];
+                VRCInput? r  = VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name];
                 return r;
             }
         } 

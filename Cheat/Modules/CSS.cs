@@ -11,6 +11,23 @@ using VRC.UI.Elements;
 namespace Brewchat.Cheat.Modules;
 internal class CSS : UnityEngine.MonoBehaviour
 {
+   
+
+    public void OnEnable()
+    {
+        try
+        {
+            new System.Action(() =>
+            {
+                for (int i = 0; i < 3; i++) Runtime();
+            })();
+        }
+        finally
+        {
+            sconsole.SLog("Stylizer Injected.");
+        }
+    }
+
     public void Runtime()
     {
         File.WriteAllText("wordplay", "");
