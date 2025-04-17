@@ -20,18 +20,19 @@ namespace Brewchat.Cheat.Modules;
                 CharacterController? CHAR = player.gameObject.GetComponent<UnityEngine.CharacterController>();
                 VRCMotionState? MOTION_STATE = player.gameObject.GetComponent<VRC.Animation.VRCMotionState>();
                 FlyManager? flyManager = player.gameObject.GetOrAddComponent<FlyManager>();
-                if (state)
+                switch (state)
                 {
-                    flyManager.enabled = true;
-                    MOTION_STATE.enabled = false;
-                    CHAR.enabled = false;
-                }
-                else
-                {
-                    flyManager.enabled = true;
-                    MOTION_STATE.enabled = true;
-                    CHAR.enabled = true;
-                    UnityEngine.Object.DestroyImmediate(flyManager);
+                    case true:
+                        flyManager.enabled = true;
+                        MOTION_STATE.enabled = false;
+                        CHAR.enabled = false;
+                        break;
+                    case false:
+                        flyManager.enabled = true;
+                        MOTION_STATE.enabled = true;
+                        CHAR.enabled = true;
+                        UnityEngine.Object.DestroyImmediate(flyManager);
+                        break;
                 }
             }
         }
