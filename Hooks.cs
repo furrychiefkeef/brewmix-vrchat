@@ -21,7 +21,7 @@ namespace brewchat.hybridxcore.bep
         static bool _ui = false;
         #region Player_Hooks
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
-        public static void PlayerModel_Initalized_HOOK(ref QuickMenu __instance)
+        public static void PlayerModel_Initalize_HOOK(ref QuickMenu __instance)
         {
             if (__instance.gameObject != null && !_ui)
             {
@@ -32,18 +32,13 @@ namespace brewchat.hybridxcore.bep
                 
             }
         }  
+        
         #region API
         [HarmonyPostfix, HarmonyPatch(typeof(VRCPlusStatus), nameof(VRCPlusStatus.prop_Object1PublicTYBoTYUnique_1_Boolean_0), MethodType.Getter)]
         public static void ExSpoof_VRChatPlus_HOOK(ref Object1PublicTYBoTYUnique<bool> __result)
         {
             if (__result != null && !APIUser.CurrentUser.isSupporter)
                 __result.prop_TYPE_0 = true;
-        }
-        [HarmonyPostfix, HarmonyPatch(typeof(APIUser), nameof(APIUser.isAdult), MethodType.Getter)]
-        public static void Spoof_Badge_Test(ref bool __result)
-        {
-            if (APIUser.CurrentUser != null)
-                __result = true;
         }
         #endregion
         #endregion

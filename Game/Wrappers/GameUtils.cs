@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using VRC;
 using VRC.Localization;
+using VRC.SDKBase;
 using VRC.UI.Client;
 using VRC.UI.Client.HUD;
 
@@ -18,14 +19,32 @@ internal class GameUtils
 
         public static class Motion
         {
-            public static void Run_Speed(float v = 4) => Get().field_Private_VRCPlayerApi_0.SetRunSpeed(v);
-            public static void Walk_Speed(float v = 2) => Get().field_Private_VRCPlayerApi_0.SetWalkSpeed(v);
-            public static void Jump_Impulse(float v = 4) => Get().field_Private_VRCPlayerApi_0.SetJumpImpulse(v);
-            public static void Velocity(Vector3 v) => Get().field_Private_VRCPlayerApi_0.SetVelocity(v);
+            public static VRCPlayerApi Run_Speed(float v = 2f)
+            {
+                VRCPlayerApi? player = Get().field_Private_VRCPlayerApi_0;
+                player.SetRunSpeed(v); return player;
+            }
+            public static VRCPlayerApi Walk_Speed(float v = 2f)
+            {
+                VRCPlayerApi? player = Get().field_Private_VRCPlayerApi_0;
+                player.SetWalkSpeed(v); return player;
+            }
+
+            public static VRCPlayerApi Jump_Impulse(float v = 3f)
+            {
+                VRCPlayerApi? player = Get().field_Private_VRCPlayerApi_0;
+                player.SetJumpImpulse(v); return player;
+            }
+
+            public static VRCPlayerApi Velocity(Vector3 v)
+            {
+                VRCPlayerApi? player = Get().field_Private_VRCPlayerApi_0;
+                player.SetVelocity(v); return player;
+            }
         }
         public static class Avatar
         {
-            public static void AvatarScale(float v = 4) => Get().field_Private_VRCPlayerApi_0.SetAvatarEyeHeightByMeters(v);
+            public static void AvatarScale(float v = 4f) => Get().field_Private_VRCPlayerApi_0.SetAvatarEyeHeightByMeters(v);
             public static void AllowAvatarScaling(bool v = true) => Get().field_Private_VRCPlayerApi_0.SetManualAvatarScalingAllowed(v);
             public static void AvatarScaleMax(float v) => Get().field_Private_VRCPlayerApi_0.SetAvatarEyeHeightMaximumByMeters(v);
             public static void AvatarScaleMin(float v) => Get().field_Private_VRCPlayerApi_0.SetAvatarEyeHeightMinimumByMeters(v);

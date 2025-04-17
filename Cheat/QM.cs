@@ -16,21 +16,19 @@ internal class QM
         try
         {
             
-            VRCModalContainer? Modal = new VRCModalContainer("Player+Movement");
-            var acee = new VRCSmallButton(Modal, "Injectiion", () => sconsole.SLog("passion_fruit") );
+            VRCModalContainer? Modal = new("Player+Movement");
+            VRCSmallButton acee = new(Modal, "Injectiion", () => sconsole.SLog("passion_fruit") );
 
-            VRCButton? a = new VRCButton(Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "Player", "Modify The Player",
+            #region Modal_1
+            VRCButton? a = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "Player", "Modify The Player",
                 () => Modal.Open());
-            VRCToggle? Fly_Toggle = new VRCToggle(Modal, "Fly", "Fly On", "Fly Off", (x) => PlayerMovement.Fly(x));
+            VRCToggle? Fly_Toggle = new(Modal, "Fly", "Fly On", "Fly Off", (x) => PlayerMovement.Fly(x));
+            VRCToggle? Force_Jump = new(Modal,"Force Jump On", "Force Jump Off", "Fly Off", (x) => PlayerMovement.ForceJump(x));
+            #endregion
+       
 
         }
-        catch (Exception e)
-        {
-            sconsole.SError(e.Message);
-        }
-        finally
-        {
-            sconsole.SLog("Created The QuickMenu+BlanketSDK.UI");
-        }
+        catch (Exception e) { sconsole.SError(e.StackTrace.ToString()); }
+        finally{sconsole.SLog("Created The QuickMenu+BlanketSDK.UI");}
     }
 }

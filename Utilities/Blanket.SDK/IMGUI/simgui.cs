@@ -21,9 +21,7 @@ public class simgui : MonoBehaviour
     bool CONSOLE_UI; 
     int fontSize = 14;
     private string v = string.Empty;
-    public Texture2D texture;
-
- 
+    
     public static Vector2 scrollPosition = Vector2.zero;
     private float SH = 0;
 
@@ -38,7 +36,6 @@ public class simgui : MonoBehaviour
 
     void Start()
     {
-       
         sconsole.SLog($"{ Guid.NewGuid().ToString() } {console_flag} HI!!!! <color=#9185E6><b>{Environment.UserName}</b></color> !!! get ready to make some noise :D");
     }
     void Update() => KeysHandler();

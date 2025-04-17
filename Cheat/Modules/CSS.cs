@@ -20,8 +20,6 @@ internal class CSS : UnityEngine.MonoBehaviour
 
     public void Runtime()
     {
-       
-
         var B = GameObject.FindObjectOfType<BackgroundDesignMenu>();
         if (B != null)
         {
