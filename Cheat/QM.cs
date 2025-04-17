@@ -17,7 +17,7 @@ internal class QM
         {
             
             VRCModalContainer? Modal = new VRCModalContainer("Player+Movement");
-            var acee = new VRCSmallButton(Modal, "Open Discord", () => Process.Start("https://discord.com"));
+            var acee = new VRCSmallButton(Modal, "Injectiion", () => sconsole.SLog("passion_fruit") );
 
             VRCButton? a = new VRCButton(Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "Player", "Modify The Player",
                 () => Modal.Open());

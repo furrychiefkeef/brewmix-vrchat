@@ -11,6 +11,16 @@ using VRC.UI;
 namespace BlanketSDK.QM;
 internal class VRCToggle : Root
 {
+    /// <summary>
+    ///  VRCButton this is used to create a TOGGLE_QUICKMENU_BUTTON
+    /// </summary>
+    /// <param name="parent">The parent transform where the button will be placed.</param>
+    /// <param name="name">The display name of the button.</param>
+    /// <param name="tooltip_on">The tooltip text for the button.</param>
+    /// <param name="tooltip_off">The tooltip text for the button.</param>
+    /// <param name="func">The action to execute when the button is clicked.</param>
+    /// <param name="sprite_on">An optional sprite to display on the button.</param>
+    /// <param name="sprite_off">An optional sprite to display on the button.</param>
     public VRCToggle(Transform? parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, Sprite? sprite_on = null, Sprite? sprite_off = null)
     {
         if (!QuickMenu() | !ToggleButton()) throw new($"toggle has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
@@ -20,7 +30,7 @@ internal class VRCToggle : Root
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.TOGGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS
-        UnityEngine.UI.Toggle _0 = obj.GetComponent<UnityEngine.UI.Toggle>();
+        UnityEngine.UI.Toggle _0 = obj.GetComponent<VRCToggleHandle>();
         TextMeshProUGUIEx _1 = obj.GetComponentInChildren<TextMeshProUGUIEx>();
         ImageEx _2on = obj.GetChild(2).GetChild(1).GetComponent<ImageEx>();
         ImageEx _2off = obj.GetChild(2).GetChild(0).GetComponent<ImageEx>();

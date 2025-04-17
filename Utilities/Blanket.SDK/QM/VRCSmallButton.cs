@@ -8,7 +8,15 @@ using VRC.UI.Elements.Controls;
 namespace BlanketSDK.QM;
 
 internal class VRCSmallButton : Root
-{
+{  
+    /// <summary>
+    ///  VRCSmallButton this is used to create a SMALLBUTTON_QUICKMENU_BUTTON
+    /// </summary>
+    /// <param name="parent">The parent transform where the button will be placed.</param>
+    /// <param name="name">The display name of the button.</param>
+    /// <param name="tooltip">The tooltip text for the button.</param>
+    /// <param name="func">The action to execute when the button is clicked.</param>
+    /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCSmallButton(Transform parent, string? tooltip, System.Action func, Sprite? sprite = null)
     {
         if (!QuickMenu() | !ExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
