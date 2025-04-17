@@ -10,15 +10,14 @@ using BlanketSDK.QM.Modals;
 using VRC.UI;
 
 namespace BlanketSDK.QM;
-
 internal class VRCToggle : Root
 {
     public VRCToggle(Transform? parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, Sprite? sprite_on = null, Sprite? sprite_off = null)
     {
-        if (!Toggle()) throw new($"toggle has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        parent ??= _Fallback_Dashboard_Group_QM_Buttons().transform;
+        if (!ToggleButton()) throw new($"toggle has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        parent ??= _Fallback_Dashboard_Group_QM_UI_Buttons().transform;
 
-        Transform? obj = UnityEngine.Object.Instantiate(Toggle(), parent);
+        Transform? obj = UnityEngine.Object.Instantiate(ToggleButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.TOGGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS

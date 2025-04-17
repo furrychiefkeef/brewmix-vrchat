@@ -20,10 +20,10 @@ internal class VRCButton : Root
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCButton(Transform parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null)
     {
-        if (!Button()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        parent ??= _Fallback_Dashboard_Group_QM_Buttons().transform;
+        if (!SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        parent ??= _Fallback_Dashboard_Group_QM_UI_Buttons().transform;
 
-        Transform? obj = UnityEngine.Object.Instantiate(Button(), parent);
+        Transform? obj = UnityEngine.Object.Instantiate(SingleButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.SINGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS
