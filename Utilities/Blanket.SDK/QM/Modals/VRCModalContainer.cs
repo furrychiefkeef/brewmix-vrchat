@@ -12,18 +12,18 @@ namespace BlanketSDK.QM.Modals
 {
     internal class VRCModalContainer : Root
     {
-        public static Transform? _obj;
+        public Transform? _obj = null;
         public static QMSafetyPage ModalLogic;
-        public Transform? container;
+        public Transform? parent_menu;
+        public Transform? parent_rightbuttons;
         public VRCModalContainer(string? header, Sprite? sprite = null)
         {
-            if (!QuickMenu() && FourButtons_Modal()) throw new($"modal or quickmenu has moved to a different location or been altered: " +
+            if (!QuickMenu() | !FourButtons_Modal()) throw new($"modal or quickmenu has moved to a different location or been altered: " +
                 $"{brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-         
             _obj = UnityEngine.Object.Instantiate(FourButtons_Modal(), QMParent());
 
             _obj.gameObject.SetActive(false);
-            _obj.name = $"[Skate_QM_Modal]->{header}";
+            _obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MODAL_CONTAINER-{header}";
 
             #region LOGIC_REQUIRED
 
@@ -47,10 +47,11 @@ namespace BlanketSDK.QM.Modals
             #endregion
 
             #region RIGHT_CONTAINER
-            /* VRCButtonHandle _0 = RIGHT_CONTAINER.GetComponentInChildren<VRCButtonHandle>();
-             UnityEngine.UI.Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_0 = _0.onClick;
-             BUTTONCLICKED_EVENT_0.RemoveAllListeners();
-             BUTTONCLICKED_EVENT_0.AddListener(func);*/
+
+            Transform _0 = RIGHT_CONTAINER;
+             if (_0.transform == null) UnityEngine.Object.DestroyImmediate(_0);
+             else if (parent_rightbuttons == null) UnityEngine.Object.DestroyImmediate(RIGHT_CONTAINER);
+             parent_rightbuttons = _0.transform;
             #endregion
 
             #region REQUIRED_COMPONENTS
@@ -60,8 +61,8 @@ namespace BlanketSDK.QM.Modals
 
             #region BUTTON_CONTAINER_LOGIC_FOR_API
             Transform BUTTON_SHEILD_LEVEL_CONTAINER = _obj.GetChild(1).GetChild(2).DestroyChildren();
-            if (container == null) UnityEngine.Object.DestroyImmediate(BUTTON_SHEILD_LEVEL_CONTAINER);
-            container = BUTTON_SHEILD_LEVEL_CONTAINER.transform;
+            if (parent_menu == null) UnityEngine.Object.DestroyImmediate(BUTTON_SHEILD_LEVEL_CONTAINER);
+            parent_menu = BUTTON_SHEILD_LEVEL_CONTAINER.transform;
             #endregion
 
             #endregion

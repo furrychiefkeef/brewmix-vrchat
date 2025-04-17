@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using UnityEngine.Networking;
 
 namespace Brewchat.Game.Wrappers
@@ -13,7 +14,6 @@ namespace Brewchat.Game.Wrappers
     {
         public static class Conversion
         {
-            
             public static Color HexToColor(string hex)
             {
                 // Remove # if present
@@ -77,6 +77,3 @@ namespace Brewchat.Game.Wrappers
         }
     }
 }
-
-
-

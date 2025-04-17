@@ -5,7 +5,6 @@ using VRC.Localization;
 using VRC.UI.Elements.Controls;
 
 using BlanketSDK.Utilities;
-using UnityEngine.UI;
 using BlanketSDK.QM.Modals;
 using VRC.UI;
 
@@ -14,8 +13,8 @@ internal class VRCToggle : Root
 {
     public VRCToggle(Transform? parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, Sprite? sprite_on = null, Sprite? sprite_off = null)
     {
-        if (!ToggleButton()) throw new($"toggle has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        parent ??= _Fallback_Dashboard_Group_QM_UI_Buttons().transform;
+        if (!QuickMenu() | !ToggleButton()) throw new($"toggle has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        parent ??= _Fallback_Dashboard_Group_QM_UI_Buttons();
 
         Transform? obj = UnityEngine.Object.Instantiate(ToggleButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.TOGGLE_BUTTON-{name}";
@@ -50,5 +49,5 @@ internal class VRCToggle : Root
         _3._alternateLocalizableString = tooltip_off.Localize();
         #endregion
     }
-    public VRCToggle(VRCModalContainer parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.container, name, tooltip_on, tooltip_off, func, sprite_on, sprite_off) { }
+    public VRCToggle(VRCModalContainer parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.parent_menu, name, tooltip_on, tooltip_off, func, sprite_on, sprite_off) { }
 }

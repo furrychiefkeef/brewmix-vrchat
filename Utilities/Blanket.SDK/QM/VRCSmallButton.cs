@@ -1,4 +1,5 @@
-﻿using BlanketSDK.Utilities;
+﻿using BlanketSDK.QM.Modals;
+using BlanketSDK.Utilities;
 using UnityEngine;
 using VRC.Localization;
 using VRC.UI;
@@ -10,8 +11,8 @@ internal class VRCSmallButton : Root
 {
     public VRCSmallButton(Transform parent, string? tooltip, System.Action func, Sprite? sprite = null)
     {
-        if (!ExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        parent ??= _Fallback_Dashboard_Group_QM_UI_Buttons().transform;
+        if (!QuickMenu() | !ExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        parent ??= _Fallback_Dashboard_Group_QM_UI_ExpandButtons();
         UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(ExpandButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.EXPANDSMALL_BUTTON";
 
@@ -35,4 +36,5 @@ internal class VRCSmallButton : Root
         _2._localizableString = tooltip.Localize();
         #endregion
     }
+    public VRCSmallButton(VRCModalContainer parent, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.parent_rightbuttons, tooltip, func, sprite) { }
 }

@@ -20,8 +20,8 @@ internal class VRCButton : Root
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCButton(Transform parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null)
     {
-        if (!SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        parent ??= _Fallback_Dashboard_Group_QM_UI_Buttons().transform;
+        if (!QuickMenu() | !SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        parent ??= _Fallback_Dashboard_Group_QM_UI_Buttons();
 
         Transform? obj = UnityEngine.Object.Instantiate(SingleButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.SINGLE_BUTTON-{name}";
@@ -56,6 +56,6 @@ internal class VRCButton : Root
         #endregion
 
     }
-    public VRCButton(VRCModalContainer parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.container, name, tooltip, func, sprite) { }
+    public VRCButton(VRCModalContainer parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.parent_menu, name, tooltip, func, sprite) { }
 }
 /*  UnityEngine.UI.Button _0 = obj.GetComponentInChildren<UnityEngine.UI.Button>(); depercated*/

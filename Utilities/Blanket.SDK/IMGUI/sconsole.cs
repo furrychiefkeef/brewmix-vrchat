@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Syrup.IMGUI;
 internal static class sconsole
 {
-    static string _App = "BREW";
+    static string _App = "brewchat";
     const string _Version = "v2024.2.11";
 
     static string GetTime() => DateTime.Now.ToString("hh:mm:ss:fff");
@@ -18,6 +18,7 @@ internal static class sconsole
     public static void clr() => text.Clear();
     public static string SLog(string msg)
     {
+        
         log(
             $"<color={ColorPalette.CArray[3]}>[{GetTime()}]</color>" +
 /*            $"[{_Version}]" +*/

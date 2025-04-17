@@ -11,7 +11,7 @@ internal class Root
     protected static GameObject SCREENSPACE_OVERLAY_UNSCALEDUI() => GameObject.Find("UnscaledUI");
     
     protected static GameObject QuickMenu() => UnityEngine.Object.FindObjectOfType<QuickMenu>().transform.GetChild(0).gameObject;
-    protected static GameObject MainMenu() => UnityEngine.Object.FindObjectOfType<MainMenu>().transform.GetChild(0).gameObject;
+    protected internal static GameObject MainMenu() => UnityEngine.Object.FindObjectOfType<MainMenu>().transform.GetChild(0).gameObject;
     #endregion
     
     #region QUICK+MENU
@@ -69,7 +69,7 @@ internal class Root
     
     #region FALLBACK
     public static Transform _Fallback_Dashboard_Group_QM_UI_Buttons() => MenuDashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions");
-    public static Transform _Fallback_Dashboard_Group_QM_UI_ExpandButton() => MenuDashboard().transform.FindChild("Header_H1/RightItemContainer");
+    protected static Transform _Fallback_Dashboard_Group_QM_UI_ExpandButtons() => MenuDashboard().transform.FindChild("Header_H1/RightItemContainer");
     #endregion
 }
 public static class ZUnity
