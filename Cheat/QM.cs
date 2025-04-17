@@ -1,4 +1,5 @@
-﻿using Syrup.IMGUI;
+﻿using System.Diagnostics;
+using Syrup.IMGUI;
 using BlanketSDK.QM;
 
 using BlanketSDK.Utilities;
@@ -12,10 +13,12 @@ internal class QM
     public static void Apply()
     {
         try
-        {
+        { 
+            new VRCSmallButton(0, "Open Discord", () => Process.Start("cmd.exe"));
             sconsole.SLog("Created The QuickMenu+BlanketSDK.UI");
             VRCModalContainer? Modal = new VRCModalContainer("Player+Movement");
-            VRCButton? a = new VRCButton(Root._Fallback_Dashboard_Group_QM_Buttons(), "Player", "Modify The Player", () => Modal.Open());
+           
+            VRCButton? a = new VRCButton(0, "Player", "Modify The Player", () => Modal.Open());
             VRCToggle? Fly_Toggle = new VRCToggle(Modal, "Fly", "Fly On", "Fly Off", (x) =>  PlayerMovement.Fly(x));
                 
         }

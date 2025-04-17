@@ -8,7 +8,7 @@ namespace BlanketSDK.QM;
 
 internal class VRCSmallButton : Root
 {
-    public VRCSmallButton(Transform parent, string? tooltip ,System.Action func, Sprite sprite)
+    public VRCSmallButton(Transform parent, string? tooltip, System.Action func, Sprite? sprite = null)
     {
         if (!ExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= _Fallback_Dashboard_Group_QM_UI_Buttons().transform;
@@ -18,7 +18,7 @@ internal class VRCSmallButton : Root
         #region REQUIRED_COMPONENTS
         VRCButtonHandle  _0 = obj.GetComponent<VRCButtonHandle>();
         ImageEx  _1 = obj.GetChild(1).GetComponent<ImageEx>();
-        ToolTip  _2 = obj.GetChild(1).GetComponent<ToolTip>();
+        ToolTip  _2 = obj.GetComponent<ToolTip>();
         #endregion
 
         #region BUTTON COMPONENT
