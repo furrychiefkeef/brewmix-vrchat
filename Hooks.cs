@@ -19,27 +19,23 @@ namespace brewchat.hybridxcore.bep
     internal class Hooks
     {
         static bool _ui = false;
+        
         #region Player_Hooks
+
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
         public static void PlayerModel_Initalize_HOOK(ref QuickMenu __instance)
         {
-            try
+            if (__instance.gameObject != null && !_ui)
             {
-                if (__instance.gameObject != null && !_ui)
-                {
-                    UnityEngine.Object.DestroyImmediate(
-                        UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
-                    __instance.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
-                    __instance.gameObject.GetOrAddComponent<CSS>();
-                    QM.Apply();
-                }
+                UnityEngine.Object.DestroyImmediate(
+                    UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
+                __instance.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
+                __instance.gameObject.GetOrAddComponent<CSS>();
+                QM.Apply();
             }
-            catch (Exception e)
-            {
-                Console.Write(e);
-            }
-        }  
-        
+        }
+
+
         #region API
         [HarmonyPostfix, HarmonyPatch(typeof(VRCPlusStatus), nameof(VRCPlusStatus.prop_Object1PublicTYBoTYUnique_1_Boolean_0), MethodType.Getter)]
         public static void ExSpoof_VRChatPlus_HOOK(ref Object1PublicTYBoTYUnique<bool> __result)
@@ -47,18 +43,13 @@ namespace brewchat.hybridxcore.bep
             if (__result != null && !APIUser.CurrentUser.isSupporter)
                 __result.prop_TYPE_0 = true;
         }  
-        [HarmonyPostfix, HarmonyPatch(typeof(VRC.Print), nameof(VRCPlusStatus.prop_Object1PublicTYBoTYUnique_1_Boolean_0), MethodType.Getter)]
-        public static void VC(ref Object1PublicTYBoTYUnique<bool> __result)
+        [HarmonyPostfix, HarmonyPatch(typeof(VRC.Print), nameof(VRC.Print.prop_FlatBufferNetworkSerializer_0), MethodType.Setter)]
+        public static void BlockPrinting(ref bool __result)
         {
-            if (__result != null && !APIUser.CurrentUser.isSupporter)
-                __result.prop_TYPE_0 = true;
-            
+            __result = false;
         }
         #endregion
         #endregion
-
-
-     
         
         #region UpdateHook
         #endregion
