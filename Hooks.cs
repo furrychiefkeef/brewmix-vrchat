@@ -41,13 +41,8 @@ namespace brewchat.hybridxcore.bep
         public static void ExSpoof_VRChatPlus_HOOK(ref Object1PublicTYBoTYUnique<bool> __result)
         {
             if (__result != null && !APIUser.CurrentUser.isSupporter)
-                __result.prop_TYPE_0 = true;
+                        __result.prop_TYPE_0 = true;
         }  
-        [HarmonyPostfix, HarmonyPatch(typeof(VRC.Print), nameof(VRC.Print.prop_FlatBufferNetworkSerializer_0), MethodType.Setter)]
-        public static void BlockPrinting(ref bool __result)
-        {
-            __result = false;
-        }
         #endregion
         #endregion
         

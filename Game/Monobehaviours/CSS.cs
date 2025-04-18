@@ -25,15 +25,14 @@ internal class CSS : UnityEngine.MonoBehaviour
 
     public void Runtime()
     {
-        var B = GameObject.FindObjectOfType<BackgroundDesignMenu>();
+        /*var B = GameObject.FindObjectOfType<BackgroundDesignMenu>();
         if (B != null)
         {
-            foreach (Il2CppSystem.ValueTuple<ImageRadioButtonSelector, InterfacePublicAbstractLoSpBogeMaLogeSpBoVoUnique> VARIABLE in B.field_Private_List_1_ValueTuple_2_ImageRadioButtonSelector_InterfacePublicAbstractLoSpBogeMaLogeSpBoVoUnique_0.ToArray())
+            foreach (var VARIABLE in B..ToArray())
             {
-                ImageRadioButtonSelector selector = VARIABLE.Item1;
-                /*InterfacePublicAbstractLoSpBogeMaLogeSpBoVoUnique item2 = VARIABLE.Item2.Cast<>();*/
+                
             }
-        }
+        }*/
 
        
         
