@@ -136,11 +136,7 @@ internal class GameUtils
     {
         public static class InputManager
         {
-            public static VRCInput GetInput(string name)
-            {
-                VRCInput? r  = VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name];
-                return r;
-            }
+            public static VRCInput GetInput(string name) => VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name];
         } 
     }
 }

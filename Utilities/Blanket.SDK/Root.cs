@@ -42,14 +42,13 @@ internal class Root
     #region UNSCALED+MENU
     public static Transform ActionMenu(string position)
     {
-        return SCREENSPACE_OVERLAY_UNSCALEDUI().transform.FindChild($"ActionMenu/Container/{position}/ActionMenu");
-        /*switch (XRDevice.isPresent)
+        switch (XRDevice.isPresent)
         {
             case true:
-
+                return SCREENSPACE_OVERLAY_UNSCALEDUI().transform.FindChild($"ActionMenu/Container/{position}/ActionMenu");
             case false:
                 return GameObject.Find($"ActionMenu/Container/{position}/ActionMenu").transform;
-        }*/
+        }
     }
     #endregion
     

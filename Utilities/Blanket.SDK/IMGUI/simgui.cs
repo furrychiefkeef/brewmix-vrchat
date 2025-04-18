@@ -27,7 +27,7 @@ public class simgui : MonoBehaviour
 
     #region RectTransform
     float yOffset = 5;
-    float y = 15.1f;
+    float y = 13f;
 
     float xOffset = 0;
     float x = 5;

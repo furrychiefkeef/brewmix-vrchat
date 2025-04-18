@@ -25,7 +25,7 @@ internal static class sconsole
     public static void clr() => text.Clear();
     public static string print(string msg, int v)
     {
-        internal_log($"<color=#3b3b3b>{GetTime()}</color>) <{states[v]}> | {msg}");
+        internal_log($"<color=#ffffff>{GetTime()}</color> {states[v]} | {msg}");
         /*log(
             $"<color={ColorPalette.CArray[3]}>[{GetTime()}]</color>" +
 /*            $"[{_Version}]" +#1#

@@ -8,14 +8,19 @@ using VRC.UI;
 using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
-using VRC.DataModel.Textures;
+
 namespace Brewchat.Cheat.Modules;
 internal class CSS : UnityEngine.MonoBehaviour
 {
-    public void OnEnable()
+    public static CSS? Instance { get; private set; }
+    private void Awake()
     {
-        /*try { Runtime(); }
-        finally { sconsole.SLog("Stylizer Injected."); }*/
+        if (Instance is null)
+        {
+            Instance = this;
+            UnityEngine.Object.DontDestroyOnLoad(this);
+        }
+        else UnityEngine.Object.Destroy(this);
     }
 
     public void Runtime()
@@ -26,9 +31,7 @@ internal class CSS : UnityEngine.MonoBehaviour
             foreach (Il2CppSystem.ValueTuple<ImageRadioButtonSelector, InterfacePublicAbstractLoSpBogeMaLogeSpBoVoUnique> VARIABLE in B.field_Private_List_1_ValueTuple_2_ImageRadioButtonSelector_InterfacePublicAbstractLoSpBogeMaLogeSpBoVoUnique_0.ToArray())
             {
                 ImageRadioButtonSelector selector = VARIABLE.Item1;
-                InterfacePublicAbstractLoSpBogeMaLogeSpBoVoUnique item2 = VARIABLE.Item2;
-                
-              
+                /*InterfacePublicAbstractLoSpBogeMaLogeSpBoVoUnique item2 = VARIABLE.Item2.Cast<>();*/
             }
         }
 
