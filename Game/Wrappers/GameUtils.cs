@@ -85,7 +85,7 @@ internal class GameUtils
             return _carousel;
         }
 
-        public static void ToastV1(string content, Sprite? sprite = null, float duration = 3)
+        public static void ToastV1(string content, float duration = 3f, Sprite? sprite = null)
         {
             try
             {
@@ -93,7 +93,7 @@ internal class GameUtils
             }
             catch (Exception ex) { Debug.LogError($"[NotificationManager] Message error: {ex.Message}"); }
         }
-        public static void ToastV2(string? title, string? content = null, Sprite? sprite = null, float duration = 4)
+        public static void ToastV2(string? title, string? content = null, float duration = 2f, Sprite? sprite = null)
         {
             VRC.UI.Client.HUD.HudController
                 .field_Public_Static_HudController_0
@@ -104,14 +104,14 @@ internal class GameUtils
         }
         #endregion
 
-        public static void PopUp(string? title = null, string? content = null, float duration = 10)
+        public static void PopUp(string? title = null, string? content = null, float duration = 10f)
         {
             VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
                 .Method_Public_Void_LocalizableString_LocalizableString_Single_0
                 (title.Localize(), content.Localize(), duration);
         }
        
-        public static void LoadingPopUp2(string? title, string? content, string? button_text, System.Action func, System.Action<VRCUiPopup> idk, float duration = 10)
+        public static void LoadingPopUp2(string? title, string? content, string? button_text, System.Action func, System.Action<VRCUiPopup> idk, float duration = 10f)
         {
             VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
                 .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_LocalizableString_Action_Action_1_VRCUiPopup_0
@@ -119,7 +119,7 @@ internal class GameUtils
 
         }
 
-        public static void LoadingPopUp(string? title, string? content, string? button_text, System.Action func, System.Action<VRCUiPopup> idk, float duration = 10)
+        public static void LoadingPopUp(string? title, string? content, string? button_text, System.Action func, System.Action<VRCUiPopup> idk, float duration = 10f)
         {
             VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
                 .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_Action_1_VRCUiPopup_0

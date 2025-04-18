@@ -27,13 +27,15 @@ namespace Brewchat.Cheat.Modules;
                         MOTION_STATE.enabled = false;
                         CHAR.enabled = false;
                         break;
-                    case false:
+                    case false: 
                         flyManager.enabled = true;
                         MOTION_STATE.enabled = true;
                         CHAR.enabled = true;
                         UnityEngine.Object.DestroyImmediate(flyManager);
                         break;
                 }
+                sconsole.print($"[LOCAL_PLAYER] Fly is Set to {state}",1);
+                GameUtils.HUD.ToastV2("Player+Movement",$"Fly is set to {state}");
             }
         }
 
@@ -52,7 +54,8 @@ namespace Brewchat.Cheat.Modules;
                         player_motion.SetJumpImpulse(0);
                         break;
                 }
-                sconsole.SLog($"Jump Impluse Set to {state}");
+                sconsole.print($"Jump+Impulse is set to {state}",1);
+                GameUtils.HUD.ToastV2("Player+Movement",$"Jump+Impulse is set to {state}");
             }
         }
     }

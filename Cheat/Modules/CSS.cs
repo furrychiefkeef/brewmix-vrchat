@@ -63,7 +63,7 @@ internal class CSS : UnityEngine.MonoBehaviour
             if (childrenCollection == null)
             {
 
-                sconsole.SError($"Container children collection is null");
+                sconsole.print($"Container children collection is null",2);
                 return;
             }
             

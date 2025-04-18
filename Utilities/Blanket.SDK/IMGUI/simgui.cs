@@ -36,7 +36,7 @@ public class simgui : MonoBehaviour
 
     void Start()
     {
-        sconsole.SLog($"{ Guid.NewGuid().ToString() } {console_flag} HI!!!! <color=#9185E6><b>{Environment.UserName}</b></color> !!! get ready to make some noise :D");
+        sconsole.print($"{ Guid.NewGuid().ToString() } {console_flag} HI!!!! <color=#9185E6><b>{Environment.UserName}</b></color> !!! get ready to make some noise :D",0);
     }
     void Update() => KeysHandler();
 
@@ -62,7 +62,7 @@ public class simgui : MonoBehaviour
     void KeysHandler()
     {
         if (UnityEngine.Input.GetKeyDown(KeyCode.Home)) CONSOLE_UI = !CONSOLE_UI;
-        if (UnityEngine.Input.GetKeyDown(KeyCode.PageUp)) { sconsole.clr(); sconsole.SLog("clear!"); }
+        if (UnityEngine.Input.GetKeyDown(KeyCode.PageUp)) { sconsole.clr(); sconsole.internal_log("clear!"); sconsole.clr(); }
     }
 }
 

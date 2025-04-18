@@ -17,7 +17,7 @@ internal class QM
         {
             
             VRCModalContainer? Modal = new("Player+Movement");
-            VRCSmallButton acee = new(Modal, "Injectiion", () => sconsole.SLog("passion_fruit") );
+            VRCSmallButton acee = new(Modal, "Injection", () => sconsole.print("passion_fruit",1) );
 
             #region Modal_1
             VRCButton? a = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "Player", "Modify The Player",
@@ -28,7 +28,7 @@ internal class QM
        
 
         }
-        catch (Exception e) { sconsole.SError(e.StackTrace.ToString()); }
-        finally{sconsole.SLog("Created The QuickMenu+BlanketSDK.UI");}
+        catch (Exception e) { sconsole.print(e.StackTrace.ToString(),2); }
+        finally{sconsole.print("Created The QuickMenu+BlanketSDK.UI",1);}
     }
 }
