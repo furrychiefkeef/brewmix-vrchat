@@ -19,7 +19,7 @@ internal class CSS : UnityEngine.MonoBehaviour
         {
             Instance = this;
             UnityEngine.Object.DontDestroyOnLoad(this);
-        }
+        }   
         else UnityEngine.Object.Destroy(this);
     }
 
