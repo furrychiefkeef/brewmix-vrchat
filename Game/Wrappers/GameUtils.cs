@@ -60,9 +60,25 @@ internal class GameUtils
     {
         public static bool IsWorldLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.field_Internal_Static_ApiWorld_0 != null;
     }
-    public class HUD
+
+    public class UI
     {
-     #region NOTIFICATION MANAGER
+        public class Shaders
+        {
+            public class Parallax
+            {
+                /*public static Material? ThreeLayer(this Texture texture)
+                {
+                    Material material
+                    rm_m.SetTexture("_ParallaxBackground", texture);
+                    rm_m.SetTexture("_ParallaxMidground", texture);
+                    rm_m.SetTexture("_ParallaxForeground", texture);
+                }*/
+            }
+        }
+      public class HUD
+      {
+        #region NOTIFICATION MANAGER
 
         #region HUD_V2
         
@@ -130,7 +146,10 @@ internal class GameUtils
         #endregion
 
         #endregion
+      }
     }
+
+   
 
     public class VRChatUtils
     {

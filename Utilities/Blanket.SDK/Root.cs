@@ -6,6 +6,17 @@ namespace BlanketSDK.Utilities;
 
 internal class Root
 {
+
+    #region Advanced
+
+    public static GameObject[] AdvancedMenus =
+    {
+        UnityEngine.Object.FindObjectOfType<QuickMenu>().transform.GetChild(0).gameObject,
+        UnityEngine.Object.FindObjectOfType<MainMenu>().transform.GetChild(0).gameObject
+    };
+    
+
+    #endregion
     #region USER_INTERFACE
     protected static GameObject USERINTERFACE() => UnityEngine.Object.FindObjectOfType<UserInterface>().gameObject;
     protected static GameObject SCREENSPACE_OVERLAY_UNSCALEDUI() => GameObject.Find("UnscaledUI");
@@ -42,13 +53,14 @@ internal class Root
     #region UNSCALED+MENU
     public static Transform ActionMenu(string position)
     {
-        switch (XRDevice.isPresent)
+        return SCREENSPACE_OVERLAY_UNSCALEDUI().transform.FindChild($"ActionMenu/Container/{position}/ActionMenu");
+        /*switch (!XRDevice.isPresent)
         {
             case true:
-                return SCREENSPACE_OVERLAY_UNSCALEDUI().transform.FindChild($"ActionMenu/Container/{position}/ActionMenu");
+                
             case false:
                 return GameObject.Find($"ActionMenu/Container/{position}/ActionMenu").transform;
-        }
+        }*/
     }
     #endregion
     

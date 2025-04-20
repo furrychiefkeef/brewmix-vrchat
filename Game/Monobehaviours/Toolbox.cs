@@ -18,11 +18,11 @@ internal class Toolbox : UnityEngine.MonoBehaviour
     
     public void PopUpLoading()
     {
-        GameUtils.HUD.LoadingPopUp("","","",null,null);
+        GameUtils.UI.HUD.LoadingPopUp("","","",null,null);
     }
     public void PopUp2Loading()
     {
-        GameUtils.HUD.LoadingPopUp2("", "", "", null, null);
+        GameUtils.UI.HUD.LoadingPopUp2("", "", "", null, null);
     }
 }
 

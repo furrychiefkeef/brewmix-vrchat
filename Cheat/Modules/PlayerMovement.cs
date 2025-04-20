@@ -36,7 +36,7 @@ namespace Brewchat.Cheat.Modules;
                         break;
                 }
                 sconsole.print($"[LOCAL_PLAYER] Fly is Set to {state}",1);
-                GameUtils.HUD.ToastV2("Player+Movement",$"Fly is set to {state}");
+                GameUtils.UI.HUD.ToastV2("Player+Movement",$"Fly is set to {state}");
             }
         }
 
@@ -56,7 +56,7 @@ namespace Brewchat.Cheat.Modules;
                         break;
                 }
                 sconsole.print($"Jump+Impulse is set to {state}",1);
-                GameUtils.HUD.ToastV2("Player+Movement",$"Jump+Impulse is set to {state}");
+                GameUtils.UI.HUD.ToastV2("Player+Movement",$"Jump+Impulse is set to {state}");
             }
         }
     }

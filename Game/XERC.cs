@@ -1,12 +1,23 @@
 ﻿using Brewchat.Game.Wrappers;
+using Syrup.IMGUI;
 using UnityEngine;
 using VRC.UI.Elements;
 using Object = UnityEngine.Object;
 
 namespace brewchat.hybridxcore.bep.Game;
 
-public class XERC
+public static class XERC
 {
-    public static bool isInQM() => Object.FindObjectOfType<QuickMenu>().enabled = true;
-}
+    private static MainMenu cachedMainMenu;
 
+    public static bool IsInMainMenu
+    {
+        get
+        {
+            if (cachedMainMenu == null)
+                cachedMainMenu = UnityEngine.Object.FindObjectOfType<MainMenu>();
+
+            return cachedMainMenu != null && cachedMainMenu.enabled;
+        }
+    }
+}

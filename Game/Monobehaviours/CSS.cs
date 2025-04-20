@@ -25,20 +25,36 @@ internal class CSS : UnityEngine.MonoBehaviour
 
     public void Runtime()
     {
-        var B = GameObject.Find("Canvas_QuickMenu(Clone)/CanvasGroup/Container/Window/QMParent/BackgroundLayer01").GetComponent<ImageEx>();
-        if (B != null)
+
+        var mm_renderer = Root.MMParent().transform.FindChild("BackgroundLayer01").GetComponent<ImageEx>();
+        var qm_renderer = Root.QMParent().transform.FindChild("BackgroundLayer01").GetComponent<ImageEx>();
+        
+        if (mm_renderer != null)
         { 
             Texture texture = EngineUtils.Assets.Data_LoadTexture_0("https://github.com/riotlu/fake-cdn/blob/master/GmVTVqlbIAElnaf.png?raw=true");
             texture.name = "BREWCHAT";
-            var T = B.material;
-            B.material.mainTexture = texture;
-            B.material.SetTextureImpl(0, texture);
-            sconsole.print($"SHADER KEYWORD {T.shaderKeywords.ToString()}", 0);
-            sconsole.print($"SHADER _MATERIAL {T.shader.name.ToString()}", 0);
-      
+            ImageEx? rm = mm_renderer;
+            var rm_m = rm.material;
+            rm_m.mainTexture = texture;
+            
+            rm_m.SetTexture("_ParallaxBackground", texture);
+            rm_m.SetTexture("_ParallaxMidground", texture);
+            rm_m.SetTexture("_ParallaxForeground", texture);
         }
         
-        /*
+        if (qm_renderer != null)
+        { 
+            Texture texture = EngineUtils.Assets.Data_LoadTexture_0("https://github.com/riotlu/fake-cdn/blob/master/GmVTVqlbIAElnaf.png?raw=true");
+            texture.name = "BREWCHAT";
+            ImageEx? rm = qm_renderer;
+            var rm_m = rm.material;
+            rm_m.mainTexture = texture;
+            
+            rm_m.SetTexture("_ParallaxBackground", texture);
+            rm_m.SetTexture("_ParallaxMidground", texture);
+            rm_m.SetTexture("_ParallaxForeground", texture);
+        }
+        
         #region MAINMENU_BG
         
         ImageEx? IMAGE_EX = Root.MMParent().GetChild(0).GetComponent<VRC.UI.ImageEx>();
@@ -99,12 +115,11 @@ internal class CSS : UnityEngine.MonoBehaviour
             Action_Menu_GRAPHICS_CURSOR.sprite = EngineUtils.Assets
                 .LoadTexture($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\VRC-UI\\action-menu_joystick.png").ToSprite();
                 
-            Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("604b55");
-            Action_Menu_GRAPHICS_CURSOR.color = EngineUtils.Conversion.HexToColor("604b55");
+            Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("#604b55");
+            Action_Menu_GRAPHICS_CURSOR.color = EngineUtils.Conversion.HexToColor("#604b55");
         }
        
         #endregion
-        */
         
         #region STYLE_ENGINE+QM+MM
         
