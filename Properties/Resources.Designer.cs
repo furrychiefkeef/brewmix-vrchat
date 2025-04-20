@@ -107,5 +107,15 @@ namespace brewchat.hybridxcore.bep.Properties {
                 return ResourceManager.GetString("D-Contact", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Logo {
+            get {
+                object obj = ResourceManager.GetObject("Logo", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

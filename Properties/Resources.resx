@@ -118,6 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\logo.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="action-menu_bg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\action-menu_bg.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -133,4 +136,5 @@
   <data name="D-Contact" xml:space="preserve">
     <value>@drywrld</value>
   </data>
+  
 </root>

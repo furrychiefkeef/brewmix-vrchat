@@ -1,62 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
-using UnityEngine.Networking;
 
 namespace Brewchat.Game.Wrappers
 {
-    internal class EngineUtils
+    internal static class EngineUtils
     {
         public static class Conversion
         {
             public static Color HexToColor(string hex)
             {
-                // Remove # if present
-                if (hex.StartsWith("#"))
-                    hex = hex.Substring(1);
-               
-                if (hex.Length == 6)
-                {
-                    byte r = Convert.ToByte(hex.Substring(0, 2), 16);
-                    byte g = Convert.ToByte(hex.Substring(2, 2), 16);
-                    byte b = Convert.ToByte(hex.Substring(4, 2), 16);
-                    return new Color(r / 255f, g / 255f, b / 255f, 1f);
-                }
-                else if (hex.Length == 8) 
-                {
-                    byte r = Convert.ToByte(hex.Substring(0, 2), 16);
-                    byte g = Convert.ToByte(hex.Substring(2, 2), 16);
-                    byte b = Convert.ToByte(hex.Substring(4, 2), 16);
-                    byte a = Convert.ToByte(hex.Substring(6, 2), 16);
-                    return new Color(r / 255f, g / 255f, b / 255f, a / 255f);
-                }
-
-                Debug.LogError("Invalid hex color format: " + hex);
-                return Color.white;
+                ColorUtility.TryParseHtmlString(hex, out Color color);
+                return color;
             }
+            
         }
         public static class Assets
         {
             public static Texture2D LoadTexture(string dir)
             {
                 byte[] data = File.ReadAllBytes(dir);
-                Texture2D texture = new Texture2D(2048, 2048);
+                Texture2D texture = new Texture2D(0, 0);
                 texture.LoadImage(data);
                 if (texture != null) texture.name = Path.GetFileNameWithoutExtension(dir);
                 return texture;
             }
             public static Texture2D Data_LoadTexture(string dir)
             {
-                byte[] data = new WebClient().DownloadData(dir);
-                Texture2D texture = new Texture2D(2048, 2048);
-                texture.LoadImage(data);
-                if (texture != null) texture.name = Path.GetFileNameWithoutExtension(dir);
-                return texture;
+                HttpClient http = new();
+                byte[] data = http.GetByteArrayAsync(dir).GetAwaiter().GetResult();
+                Texture2D texture2D = new Texture2D(0, 0);
+                texture2D.LoadImage(data);
+                texture2D.name = Path.GetFileNameWithoutExtension(dir);
+                return texture2D; 
+            }
+
+            public static Texture? Data_LoadTexture_0(string dir)
+            {
+                HttpClient http = new();
+                byte[] data = http.GetByteArrayAsync(dir).GetAwaiter().GetResult();
+                Texture2D texture2D = new Texture2D(0, 0);
+                texture2D.LoadImage(data);
+                texture2D.name = Path.GetFileNameWithoutExtension(dir);
+                return texture2D; 
             }
 
             
@@ -77,3 +62,31 @@ namespace Brewchat.Game.Wrappers
         }
     }
 }
+
+
+/*public static Color HexToColor(string hex)
+{
+             
+    // Remove # if present
+    if (hex.StartsWith("#"))
+        hex = hex.Substring(1);
+               
+    if (hex.Length == 6)
+    {
+        byte r = Convert.ToByte(hex.Substring(0, 2), 16);
+        byte g = Convert.ToByte(hex.Substring(2, 2), 16);
+        byte b = Convert.ToByte(hex.Substring(4, 2), 16);
+        return new Color(r / 255f, g / 255f, b / 255f, 1f);
+    }
+    else if (hex.Length == 8) 
+    {
+        byte r = Convert.ToByte(hex.Substring(0, 2), 16);
+        byte g = Convert.ToByte(hex.Substring(2, 2), 16);
+        byte b = Convert.ToByte(hex.Substring(4, 2), 16);
+        byte a = Convert.ToByte(hex.Substring(6, 2), 16);
+        return new Color(r / 255f, g / 255f, b / 255f, a / 255f);
+    }
+
+    Debug.LogError("Invalid hex color format: " + hex);
+    return Color.white;
+}*/

@@ -30,7 +30,6 @@ namespace brewchat.hybridxcore.bep
                 UnityEngine.Object.DestroyImmediate(
                     UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
                 __instance.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
-                __instance.gameObject.GetOrAddComponent<CSS>();
                 QM.Apply();
             }
         }

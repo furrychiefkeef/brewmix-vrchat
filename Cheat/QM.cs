@@ -21,8 +21,7 @@ internal class QM
             VRCSmallButton acee = new(Modal, "Injection", () => sconsole.print("passion_fruit",1) );
 
             #region Modal_1
-            VRCButton? a = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "Player", "Modify The Player",
-                () => Modal.Open());
+            VRCButton? a = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "Player", "Modify The Player", () => Modal.Open());
             
             VRCToggle? Fly_Toggle = new(Modal, "Fly", "Fly On", "Fly Off", (x) => PlayerMovement.Fly(x));
             VRCToggle? Force_Jump = new(Modal,"Force Jump On", "Force Jump Off", "Fly Off", (x) => PlayerMovement.ForceJump(x));
