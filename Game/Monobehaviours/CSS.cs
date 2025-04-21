@@ -49,7 +49,7 @@ internal class CSS : UnityEngine.MonoBehaviour
             ImageEx? rm = qm_renderer;
             var rm_m = rm.material;
             rm_m.mainTexture = texture;
-            
+        
             rm_m.SetTexture("_ParallaxBackground", texture);
             rm_m.SetTexture("_ParallaxMidground", texture);
             rm_m.SetTexture("_ParallaxForeground", texture);
@@ -113,7 +113,7 @@ internal class CSS : UnityEngine.MonoBehaviour
                 .LoadTexture($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\VRC-UI\\action-menu_bg.png");
             
             Action_Menu_GRAPHICS_CURSOR.sprite = EngineUtils.Assets
-                .LoadTexture($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\VRC-UI\\action-menu_joystick.png").ToSprite();
+                .LoadTexture($"{brewchat.hybridxcore.bep.Properties.Resources.action_menu_bg_joystick}").ToSprite();
                 
             Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("#C60E7B");
             Action_Menu_GRAPHICS_CURSOR.color = EngineUtils.Conversion.HexToColor("#C60E7B");
