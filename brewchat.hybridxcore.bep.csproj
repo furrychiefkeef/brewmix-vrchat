@@ -597,7 +597,9 @@
   <ItemGroup>
     <Folder Include="Utilities\Blanket.SDK\MM\" />
   </ItemGroup>
-
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\action-menu_joystick.png" />
+  </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\mods\&quot;&#xA;start steam://rungameid/438100" />
   </Target>

@@ -127,14 +127,16 @@
   <data name="action-menu_divider" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\action-menu_divider.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="action-menu_bg_joystick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="action-menu_joystick" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\action-menu_joystick.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="action-menu_radial_bg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-  <value>..\Assets\action-menu_radial_bg.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-</data>
+    <value>..\Assets\action-menu_radial_bg.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="D-Contact" xml:space="preserve">
     <value>@drywrld</value>
   </data>
-  
+  <data name="blackstar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blackstar.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

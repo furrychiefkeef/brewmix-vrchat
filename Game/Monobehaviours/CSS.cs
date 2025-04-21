@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using VRC.UI;
 using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
+using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
 namespace Brewchat.Cheat.Modules;
 internal class CSS : UnityEngine.MonoBehaviour
@@ -31,7 +32,7 @@ internal class CSS : UnityEngine.MonoBehaviour
 
         if (qm_renderer != null)
         { 
-            Texture? texture = EngineUtils.Assets.Data_LoadTexture_0("https://github.com/riotlu/fake-cdn/blob/master/GmVTVqlbIAElnaf.png?raw=true");
+            Texture? texture = EngineUtils.Assets.Data_LoadTexture("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy.png?raw=true");
             Image? rm = qm_renderer.field_Private_Image_0;
             Material? rm_m = rm.material;
             rm_m.mainTexture = texture;
@@ -42,7 +43,7 @@ internal class CSS : UnityEngine.MonoBehaviour
         var mm_renderer = Root.MMParent().GetComponentInChildren<VRCUIBackground>();
         if (mm_renderer != null)
         { 
-            Texture? texture = EngineUtils.Assets.Data_LoadTexture_0("https://github.com/riotlu/fake-cdn/blob/master/GmVTVqlbIAElnaf.png?raw=true");
+            Texture? texture = EngineUtils.Assets.Data_LoadTexture("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy.png?raw=true");
             Image? rm = mm_renderer.field_Private_Image_0;
             Material? rm_m = rm.material;
             rm_m.mainTexture = texture;
@@ -58,6 +59,7 @@ internal class CSS : UnityEngine.MonoBehaviour
         
         if (obj != null)
         {
+            /*
             Il2CppSystem.Object divider_container = obj.transform.GetChild(0).GetChild(2);
 
             Il2CppSystem.Collections.IEnumerable childrenCollection = divider_container.Cast<Il2CppSystem.Collections.IEnumerable>();
@@ -67,48 +69,55 @@ internal class CSS : UnityEngine.MonoBehaviour
                 sconsole.print($"Container children collection is null",2);
                 return;
             }
-            
+
+
+
+            PedalGraphic? Center_Removable = obj.transform.GetChild(0).GetChild(0).GetComponent<PedalGraphic>();
+            UnityEngine.Object.DestroyImmediate(Center_Removable,true);
+
+           #region action-menu_divider.png
             foreach (var dividerObj in childrenCollection)
             {
                 if (dividerObj == null) continue;
                 Transform dividerTransform = dividerObj.Cast<Transform>();
                 if (dividerTransform == null) continue;
-                
+
                 var dividers = dividerTransform.GetComponentsInChildren<Transform>(true)
                     .Where(t => t != null && t.name == "Divider(Clone)")
                     .ToArray();
-    
+
                 foreach (Transform? divider in dividers)
                 {
                     Image image = divider.GetComponentInChildren<Image>(true);
                     if (image != null)
-                    { 
+                    {
                         image.color = EngineUtils.Conversion.HexToColor("#C60E7B");
                         image.sprite = EngineUtils.Assets.LoadTexture($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\VRC-UI\\action-menu_divider.png").ToSprite();
                     }
                 }
             }
-            PedalGraphic? Center_Removable = obj.transform.GetChild(0).GetChild(0).GetComponent<PedalGraphic>();
-            UnityEngine.Object.DestroyImmediate(Center_Removable,true);    
+            #endregion
+            */
+
+            
+            /*PedalGraphic Action_Menu_GRAPHICS_BG = obj.transform.GetChild(0).GetChild(1).GetComponent<PedalGraphic>();
+            Action_Menu_GRAPHICS_BG._texture = ResourcesManipulator.GetTextureFromResources("action-menu_bg.png");
+            Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("#C60E7B");*/
             
             PedalGraphic Action_Menu_GRAPHICS_BG = obj.transform.GetChild(0).GetChild(1).GetComponent<PedalGraphic>();
-            UnityEngine.UI.Image Action_Menu_GRAPHICS_CURSOR = obj.transform.GetChild(0).GetChild(4).GetComponent<UnityEngine.UI.Image>();
-            
-            Action_Menu_GRAPHICS_BG._texture = EngineUtils.Assets
-                .LoadTexture($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\Brew\\VRC-UI\\action-menu_bg.png");
-            
-            Action_Menu_GRAPHICS_CURSOR.sprite = EngineUtils.Assets
-                .LoadTexture($"{brewchat.hybridxcore.bep.Properties.Resources.action_menu_bg_joystick}").ToSprite();
-                
+            Action_Menu_GRAPHICS_BG._texture = ResourcesManipulator.GetTextureFromResources("action-menu_bg.png");
             Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("#C60E7B");
+            
+            UnityEngine.UI.Image Action_Menu_GRAPHICS_CURSOR = obj.transform.GetChild(0).GetChild(4).GetComponent<UnityEngine.UI.Image>();
+            Action_Menu_GRAPHICS_CURSOR.sprite = ResourcesManipulator.GetTextureFromResources("action-menu_joystick.png").ToSprite();
             Action_Menu_GRAPHICS_CURSOR.color = EngineUtils.Conversion.HexToColor("#C60E7B");
         }
-       
+
         #endregion
 
         #region STYLE_ENGINE+QM+MM_COLORS
         
-        Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppArrayBase<StyleEngine>? VRC_UI = GameObject.FindObjectsOfType<StyleEngine>();
+        Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppArrayBase<StyleEngine>? VRC_UI = UnityEngine.Object.FindObjectsOfType<StyleEngine>();
         foreach (StyleEngine? X in VRC_UI)
         {
             X.field_Private_Dictionary_2_String_Color_0["Highlight"] = EngineUtils.Conversion.HexToColor("#C60E7B"); 

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Brewchat.Game.Wrappers
@@ -12,41 +13,38 @@ namespace Brewchat.Game.Wrappers
                 ColorUtility.TryParseHtmlString(hex, out Color color);
                 return color;
             }
-            
         }
         public static class Assets
         {
             public static Texture2D LoadTexture(string dir)
             {
-                byte[] data = File.ReadAllBytes(dir);
-                Texture2D texture = new Texture2D(0, 0);
+                byte[] data = File.ReadAllBytesAsync(dir).GetAwaiter().GetResult();
+                Texture2D texture = new(0, 0);
                 texture.LoadImage(data);
                 if (texture != null) texture.name = Path.GetFileNameWithoutExtension(dir);
+                return texture;
+            }
+            public static Texture2D LoadTexture(byte[] data)
+            {
+                Texture2D texture = new(0, 0);
+                texture.LoadImage(data);
+                if (texture != null) texture.name = "resources.dev";
                 return texture;
             }
             public static Texture2D Data_LoadTexture(string dir)
             {
                 HttpClient http = new();
                 byte[] data = http.GetByteArrayAsync(dir).GetAwaiter().GetResult();
-                Texture2D texture2D = new Texture2D(0, 0);
+                Texture2D texture2D = new(0, 0);
                 texture2D.LoadImage(data);
                 texture2D.name = Path.GetFileNameWithoutExtension(dir);
-                return texture2D; 
+                return texture2D;
             }
-
-            public static Texture? Data_LoadTexture_0(string dir)
-            {
-                HttpClient http = new();
-                byte[] data = http.GetByteArrayAsync(dir).GetAwaiter().GetResult();
-                Texture2D texture2D = new Texture2D(0, 0);
-                texture2D.LoadImage(data);
-                texture2D.name = Path.GetFileNameWithoutExtension(dir);
-                return texture2D; 
-            }
-
-            
-            public static Sprite LoadSprite(string dir) => LoadTexture(dir).ToSprite();
-            public static Sprite Data_LoadSprite(string dir) => Data_LoadTexture(dir).ToSprite();
+  
+            public static Sprite LoadSprite(string dir) 
+                => LoadTexture(dir).ToSprite();
+            public static Sprite Data_LoadSprite(string dir) 
+                => Data_LoadTexture(dir).ToSprite();
         }
     }
     public static class TextureExtensions
