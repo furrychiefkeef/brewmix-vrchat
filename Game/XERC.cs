@@ -1,15 +1,10 @@
-﻿using Brewchat.Game.Wrappers;
-using Syrup.IMGUI;
-using UnityEngine;
-using VRC.UI.Elements;
-using Object = UnityEngine.Object;
+﻿using VRC.UI.Elements;
 
 namespace brewchat.hybridxcore.bep.Game;
 
 public static class XERC
 {
     static MainMenu? cache;
-
     public static bool IsInMainMenu
     {
         get
