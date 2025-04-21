@@ -1,13 +1,13 @@
 ﻿using System.Reflection;
 using BlanketSDK.Utilities;
 using Brewchat.Game.Wrappers;
+using MaterialEditing.UI;
 using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI;
 using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
-using VRC.UI.Elements.Controls;
 
 namespace Brewchat.Cheat.Modules;
 internal class CSS : UnityEngine.MonoBehaviour
@@ -18,54 +18,39 @@ internal class CSS : UnityEngine.MonoBehaviour
         if (Instance is null)
         {
             Instance = this;
-            UnityEngine.Object.DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this);
         }   
-        else UnityEngine.Object.Destroy(this);
+        else Destroy(this);
     }
 
     public void Runtime()
     {
+        
+        #region QM_BG
+        var qm_renderer = Root.QMParent().GetComponentInChildren<VRCUIBackground>();
 
-        var mm_renderer = Root.MMParent().transform.FindChild("BackgroundLayer01").GetComponent<ImageEx>();
-        var qm_renderer = Root.QMParent().transform.FindChild("BackgroundLayer01").GetComponent<ImageEx>();
-        
-        if (mm_renderer != null)
-        { 
-            Texture texture = EngineUtils.Assets.Data_LoadTexture_0("https://github.com/riotlu/fake-cdn/blob/master/GmVTVqlbIAElnaf.png?raw=true");
-            texture.name = "BREWCHAT";
-            ImageEx? rm = mm_renderer;
-            var rm_m = rm.material;
-            rm_m.mainTexture = texture;
-            
-            rm_m.SetTexture("_ParallaxBackground", texture);
-            rm_m.SetTexture("_ParallaxMidground", texture);
-            rm_m.SetTexture("_ParallaxForeground", texture);
-        }
-        
         if (qm_renderer != null)
         { 
-            Texture texture = EngineUtils.Assets.Data_LoadTexture_0("https://github.com/riotlu/fake-cdn/blob/master/GmVTVqlbIAElnaf.png?raw=true");
-            texture.name = "BREWCHAT";
-            ImageEx? rm = qm_renderer;
-            var rm_m = rm.material;
+            Texture? texture = EngineUtils.Assets.Data_LoadTexture_0("https://github.com/riotlu/fake-cdn/blob/master/GmVTVqlbIAElnaf.png?raw=true");
+            Image? rm = qm_renderer.field_Private_Image_0;
+            Material? rm_m = rm.material;
             rm_m.mainTexture = texture;
-        
-            rm_m.SetTexture("_ParallaxBackground", texture);
-            rm_m.SetTexture("_ParallaxMidground", texture);
-            rm_m.SetTexture("_ParallaxForeground", texture);
+            rm_m.Background_Parallax(texture);
         }
-        
-        #region MAINMENU_BG
-        
-        ImageEx? IMAGE_EX = Root.MMParent().GetChild(0).GetComponent<VRC.UI.ImageEx>();
-        
-        var SPRITE_CHEAT =  EngineUtils.Assets.Data_LoadSprite("https://github.com/riotlu/fake-cdn/blob/master/GmVTVqlbIAElnaf.png?raw=true");
-        IMAGE_EX.sprite = SPRITE_CHEAT;
-        
-        Root.MMParent().GetChild(0).GetComponent<VRCUIBackground>()
-            .field_Private_Image_0 = IMAGE_EX;
         #endregion
-        
+        #region MM_BG
+        var mm_renderer = Root.MMParent().GetComponentInChildren<VRCUIBackground>();
+        if (mm_renderer != null)
+        { 
+            Texture? texture = EngineUtils.Assets.Data_LoadTexture_0("https://github.com/riotlu/fake-cdn/blob/master/GmVTVqlbIAElnaf.png?raw=true");
+            Image? rm = mm_renderer.field_Private_Image_0;
+            Material? rm_m = rm.material;
+            rm_m.mainTexture = texture;
+            rm_m.Background_Parallax(texture);
+
+        }
+        #endregion
+
         #region ActionMenu
 
         Transform? obj = Root.ActionMenu("MenuR");
@@ -120,8 +105,8 @@ internal class CSS : UnityEngine.MonoBehaviour
         }
        
         #endregion
-        
-        #region STYLE_ENGINE+QM+MM
+
+        #region STYLE_ENGINE+QM+MM_COLORS
         
         Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppArrayBase<StyleEngine>? VRC_UI = GameObject.FindObjectsOfType<StyleEngine>();
         foreach (StyleEngine? X in VRC_UI)
