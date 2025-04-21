@@ -1,13 +1,8 @@
-﻿using Brewchat;
-using Brewchat.Cheat;
+﻿using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
-using Brewchat.Game.Monobehaviours;
-using Brewchat.Game.Wrappers;
-using ExitGames.Client.Photon;
+
 using HarmonyLib;
-using Photon.Pun;
-using Sentry.Unity.NativeUtils;
-using Syrup.IMGUI;
+
 using VRC.Core;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
@@ -25,7 +20,7 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
         public static void PlayerModel_Initalize_HOOK(ref QuickMenu __instance)
         {
-            if (__instance.gameObject != null && !_ui)
+            if (__instance != null && !_ui)
             {
                 UnityEngine.Object.DestroyImmediate(
                     UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);

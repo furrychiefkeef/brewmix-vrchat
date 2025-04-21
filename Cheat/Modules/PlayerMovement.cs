@@ -5,7 +5,6 @@ using UnityEngine;
 using VRC;
 using VRC.Animation;
 using VRC.Core;
-using VRC.UI.Core.Styles;
 
 namespace Brewchat.Cheat.Modules;
 

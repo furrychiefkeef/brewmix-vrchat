@@ -14,13 +14,13 @@ internal class GameUtils
     {
     public static class Events
     {
-        static object? cache;
+        static Component? cache;
         public static bool IsInMainMenu
         {
             get
             {
                 if (cache is null) cache = UnityEngine.Object.FindObjectOfType<MainMenu>();
-                return cache != null && cache.enabled;
+                return cache != null && cacheenabled;
             }
         }
         public static bool IsInQuickMenu
@@ -31,7 +31,6 @@ internal class GameUtils
                 return cache != null && cache.enabled;
             }
         }
-    }
     }
     public class GameCamera
     {

@@ -1,7 +1,5 @@
 ﻿using Brewchat.Game.Wrappers;
 using UnityEngine;
-using UnityEngine.XR;
-using VRC.UI.Elements;
 
 namespace Brewchat.Game.Monobehaviours;
 
