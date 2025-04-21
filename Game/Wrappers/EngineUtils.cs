@@ -1,5 +1,7 @@
 ﻿using System.Net;
+using System.Reflection;
 using Cysharp.Threading.Tasks;
+using Syrup.IMGUI;
 using UnityEngine;
 
 namespace Brewchat.Game.Wrappers
@@ -16,6 +18,35 @@ namespace Brewchat.Game.Wrappers
         }
         public static class Assets
         {
+            internal static Texture2D? LoadTexture(string img_name, int p)
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string? resourcePath = assembly.GetManifestResourceNames()
+                    .FirstOrDefault(r => r.EndsWith(img_name));
+
+                if (resourcePath == null)
+                {
+                    sconsole.internal_log($"Resource '{img_name}' not found in assembly.");
+                    return null;
+                }
+
+                using (Stream? stream = assembly.GetManifestResourceStream(resourcePath))
+                {
+                    if (stream == null)
+                    {
+                        sconsole.internal_log("Resource stream was null.");
+                        return null;
+                    }
+
+                    byte[] buffer = new byte[stream.Length];
+                    stream.ReadAsync(buffer, 0, buffer.Length).GetAwaiter().GetResult();
+                    Texture2D tex = new Texture2D(0, 0);
+                    if (tex.LoadImage(buffer))
+                        return tex;
+                    else
+                        return null;
+                }
+            }
             public static Texture2D LoadTexture(string dir)
             {
                 byte[] data = File.ReadAllBytesAsync(dir).GetAwaiter().GetResult();

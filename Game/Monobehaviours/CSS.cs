@@ -5,10 +5,8 @@ using MaterialEditing.UI;
 using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.UI;
-using VRC.UI;
 using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
-using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
 namespace Brewchat.Cheat.Modules;
 internal class CSS : UnityEngine.MonoBehaviour
@@ -59,7 +57,6 @@ internal class CSS : UnityEngine.MonoBehaviour
         
         if (obj != null)
         {
-            /*
             Il2CppSystem.Object divider_container = obj.transform.GetChild(0).GetChild(2);
 
             Il2CppSystem.Collections.IEnumerable childrenCollection = divider_container.Cast<Il2CppSystem.Collections.IEnumerable>();
@@ -72,8 +69,7 @@ internal class CSS : UnityEngine.MonoBehaviour
 
 
 
-            PedalGraphic? Center_Removable = obj.transform.GetChild(0).GetChild(0).GetComponent<PedalGraphic>();
-            UnityEngine.Object.DestroyImmediate(Center_Removable,true);
+          
 
            #region action-menu_divider.png
             foreach (var dividerObj in childrenCollection)
@@ -96,24 +92,20 @@ internal class CSS : UnityEngine.MonoBehaviour
                     }
                 }
             }
-            #endregion
-            */
-
+          
             
-            /*PedalGraphic Action_Menu_GRAPHICS_BG = obj.transform.GetChild(0).GetChild(1).GetComponent<PedalGraphic>();
-            Action_Menu_GRAPHICS_BG._texture = ResourcesManipulator.GetTextureFromResources("action-menu_bg.png");
-            Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("#C60E7B");*/
-            
-            PedalGraphic? Center_Removable = obj.transform.GetChild(0).GetChild(0).GetComponent<PedalGraphic>();
-            UnityEngine.Object.DestroyImmediate(Center_Removable,true);    
             
             PedalGraphic Action_Menu_GRAPHICS_BG = obj.transform.GetChild(0).GetChild(1).GetComponent<PedalGraphic>();
-            Action_Menu_GRAPHICS_BG._texture = ResourcesManipulator.GetTextureFromResources("action-menu_bg.png");
+            Action_Menu_GRAPHICS_BG._texture = EngineUtils.Assets.LoadTexture("action-menu_bg.png", 0);
             Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("#C60E7B");
             
             UnityEngine.UI.Image Action_Menu_GRAPHICS_CURSOR = obj.transform.GetChild(0).GetChild(4).GetComponent<UnityEngine.UI.Image>();
-            Action_Menu_GRAPHICS_CURSOR.sprite = ResourcesManipulator.GetTextureFromResources("action-menu_joystick.png").ToSprite();
+            Action_Menu_GRAPHICS_CURSOR.sprite = EngineUtils.Assets.LoadTexture("action-menu_joystick.png",0).ToSprite();
             Action_Menu_GRAPHICS_CURSOR.color = EngineUtils.Conversion.HexToColor("#C60E7B");
+            PedalGraphic? Center_Removable = obj.transform.GetChild(0).GetChild(0).GetComponent<PedalGraphic>();
+            
+            UnityEngine.Object.DestroyImmediate(Center_Removable,true);
+            #endregion
         }
 
         #endregion

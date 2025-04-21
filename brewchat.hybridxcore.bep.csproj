@@ -600,6 +600,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Assets\action-menu_joystick.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\action-menu_bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\action-menu_radial_bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\action-menu_divider.png" />
+  </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\mods\&quot;&#xA;start steam://rungameid/438100" />
   </Target>
