@@ -1,5 +1,4 @@
 ﻿using Brewchat.Game.Wrappers;
-using brewchat.hybridxcore.bep.Game;
 using UnityEngine;
 using UnityEngine.XR;
 using VRC.UI.Elements;
@@ -14,7 +13,7 @@ internal class FlyManager : UnityEngine.MonoBehaviour
     {
         float speed = (float)(Input.GetKey(KeyCode.LeftShift) ? (Config.FlySpeed * 5f) : Config.FlySpeed)!;
 
-        if (transform == null || XERC.IsInMainMenu) return;
+        if (transform is null || GameUtils.Gameplay.Events.IsInMainMenu) return;
         Vector3 direction = Vector3.zero;
         if (Input.GetKey(KeyCode.Q)) direction += Vector3.down;
         if (Input.GetKey(KeyCode.E)) direction += Vector3.up;

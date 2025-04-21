@@ -4,11 +4,35 @@ using VRC.Localization;
 using VRC.SDKBase;
 using VRC.UI.Client;
 using VRC.UI.Client.HUD;
+using VRC.UI.Elements;
 
 namespace Brewchat.Game.Wrappers;
 
 internal class GameUtils
 {
+    public class Gameplay
+    {
+    public static class Events
+    {
+        static object? cache;
+        public static bool IsInMainMenu
+        {
+            get
+            {
+                if (cache is null) cache = UnityEngine.Object.FindObjectOfType<MainMenu>();
+                return cache != null && cache.enabled;
+            }
+        }
+        public static bool IsInQuickMenu
+        {
+            get
+            {
+                if (cache is null) cache = UnityEngine.Object.FindObjectOfType<QuickMenu>();
+                return cache != null && cache.enabled;
+            }
+        }
+    }
+    }
     public class GameCamera
     {
         public static Camera camera => Camera.main;
@@ -156,6 +180,13 @@ internal class GameUtils
         public static class InputManager
         {
             public static VRCInput GetInput(string name) => VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name];
+            public static VRCInput GetInput(Enum name) => VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name.ToString()];
+            
+            public enum Get
+            {
+                Horizontial,
+                Vertical,
+            }
         } 
     }
 }
