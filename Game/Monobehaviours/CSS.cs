@@ -104,6 +104,9 @@ internal class CSS : UnityEngine.MonoBehaviour
             Action_Menu_GRAPHICS_BG._texture = ResourcesManipulator.GetTextureFromResources("action-menu_bg.png");
             Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("#C60E7B");*/
             
+            PedalGraphic? Center_Removable = obj.transform.GetChild(0).GetChild(0).GetComponent<PedalGraphic>();
+            UnityEngine.Object.DestroyImmediate(Center_Removable,true);    
+            
             PedalGraphic Action_Menu_GRAPHICS_BG = obj.transform.GetChild(0).GetChild(1).GetComponent<PedalGraphic>();
             Action_Menu_GRAPHICS_BG._texture = ResourcesManipulator.GetTextureFromResources("action-menu_bg.png");
             Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("#C60E7B");
