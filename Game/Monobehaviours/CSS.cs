@@ -24,31 +24,42 @@ internal class CSS : UnityEngine.MonoBehaviour
 
     public void Runtime()
     {
+
+        foreach (GameObject gameobject in Root.AdvancedMenus.ToList())
+        {
+            var render =  gameobject.GetComponentInChildren<VRCUIBackground>();
+            if (render is null) return;
+            Texture? texture = EngineUtils.Assets.Data_LoadTexture("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy_1.png?raw=true");
+            Image? rm = render.field_Private_Image_0;
+            Material? rm_m = rm.material;
+            rm_m.mainTexture = texture;
+            rm_m.Background_Parallax(texture);
+        }
         
         #region QM_BG
-        var qm_renderer = Root.QMParent().GetComponentInChildren<VRCUIBackground>();
+       /*var qm_renderer = Root.AdvancedMenus[0].GetComponentInChildren<VRCUIBackground>();
 
-        if (qm_renderer != null)
-        { 
-            Texture? texture = EngineUtils.Assets.Data_LoadTexture("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy.png?raw=true");
-            Image? rm = qm_renderer.field_Private_Image_0;
-            Material? rm_m = rm.material;
-            rm_m.mainTexture = texture;
-            rm_m.Background_Parallax(texture);
-        }
-        #endregion
-        #region MM_BG
-        var mm_renderer = Root.MMParent().GetComponentInChildren<VRCUIBackground>();
-        if (mm_renderer != null)
-        { 
-            Texture? texture = EngineUtils.Assets.Data_LoadTexture("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy.png?raw=true");
-            Image? rm = mm_renderer.field_Private_Image_0;
-            Material? rm_m = rm.material;
-            rm_m.mainTexture = texture;
-            rm_m.Background_Parallax(texture);
+      if (qm_renderer != null)
+      {
+          Texture? texture = EngineUtils.Assets.Data_LoadTexture("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy_1.png?raw=true");
+          Image? rm = qm_renderer.field_Private_Image_0;
+          Material? rm_m = rm.material;
+          rm_m.mainTexture = texture;
+          rm_m.Background_Parallax(texture);
+      }
+      #endregion
+      #region MM_BG
+      var mm_renderer = Root.MMParent().GetComponentInChildren<VRCUIBackground>();
+      if (mm_renderer != null)
+      {
+          Texture? texture = EngineUtils.Assets.Data_LoadTexture("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy_1.png?raw=true");
+          Image? rm = mm_renderer.field_Private_Image_0;
+          Material? rm_m = rm.material;
+          rm_m.mainTexture = texture;
+          rm_m.Background_Parallax(texture);
 
-        }
-        #endregion
+      }*/
+      #endregion
 
         #region ActionMenu
 

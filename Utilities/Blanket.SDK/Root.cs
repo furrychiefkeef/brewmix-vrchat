@@ -17,6 +17,8 @@ internal class Root
     
 
     #endregion
+    
+    #region Basic
     #region USER_INTERFACE
     protected static GameObject USERINTERFACE() => UnityEngine.Object.FindObjectOfType<UserInterface>().gameObject;
     protected static GameObject SCREENSPACE_OVERLAY_UNSCALEDUI() => GameObject.Find("UnscaledUI");
@@ -73,14 +75,14 @@ internal class Root
 
     public static Transform FourButtons_Modal() => QMParent().transform.FindChild("Modal_QM_ChangeShieldLevel");
     public static Transform Slider() => QMParent().transform.FindChild("QM");
-
-
+    
    
     #endregion
     
     #region FALLBACK
     public static Transform _Fallback_Dashboard_Group_QM_UI_Buttons() => MenuDashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions");
     protected static Transform _Fallback_Dashboard_Group_QM_UI_ExpandButtons() => MenuDashboard().transform.FindChild("Header_H1/RightItemContainer");
+    #endregion
     #endregion
 }
 public static class ZUnity
