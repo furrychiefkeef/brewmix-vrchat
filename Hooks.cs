@@ -5,6 +5,7 @@ using HarmonyLib;
 using sysPuller;
 using VRC.Core;
 using VRC.Udon;
+using VRC.UI.Core;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
 
@@ -18,7 +19,7 @@ namespace brewchat.hybridxcore.bep
         static bool OnlineUILoaded = false;
         
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
-        public static void ApplicationDomain_Initalize_HOOK(ref VRCUiPageLoading __instance)
+        public static void ApplicationDomain_Initalize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance != null && !OfflineUILoaded)
             {
@@ -30,19 +31,16 @@ namespace brewchat.hybridxcore.bep
 
         #region Player_Hooks
 
-        [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Awake))]
-        public static void PlayerModel_Initalize_HOOK(ref QuickMenu __instance)
+        [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
+        public static void PlayerModel_Initalize_HOOK(ref QuickMenu? __instance)
         {
-            if (__instance != null && !OnlineUILoaded)
-            {
-                UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
-                __instance.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
-                CSS.Online();
-                QM.Apply();
-            }
+            if (__instance is null) return;
+            UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
+            __instance.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
+            CSS.Online();
+            QM.Apply();
         }
-
-
+        
         #region API
         [HarmonyPostfix, HarmonyPatch(typeof(VRCPlusStatus), nameof(VRCPlusStatus.prop_Object1PublicTYBoTYUnique_1_Boolean_0), MethodType.Getter)]
         public static void ExSpoof_VRChatPlus_HOOK(ref Object1PublicTYBoTYUnique<bool> __result)

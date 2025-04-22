@@ -16,7 +16,6 @@ internal class QM
     {
         try
         {
-            
             VRCModalContainer? Modal = new("Player+Movement");
             VRCSmallButton acee = new(Modal, "Injection", () => sconsole.print("passion_fruit",1) );
 
