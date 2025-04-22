@@ -100,7 +100,7 @@ internal class CSS : UnityEngine.MonoBehaviour
                     Image image = divider.GetComponentInChildren<Image>(true);
                     if (image != null)
                     {
-                        image.color = EngineUtils.Conversion.HexToColor("#C60E7B");
+                        image.color = EngineUtils.Conversion.HexToColor("#c60e7b");
                         image.sprite = EngineUtils.Assets.INTERNAL_Texture(ResourcesManipulator.GetEmbeddedFile("action-menu_divider.png")).ToSprite();
                     }
                 }
@@ -110,7 +110,7 @@ internal class CSS : UnityEngine.MonoBehaviour
             
             PedalGraphic Action_Menu_GRAPHICS_BG = obj.transform.GetChild(0).GetChild(1).GetComponent<PedalGraphic>();
             Action_Menu_GRAPHICS_BG._texture = EngineUtils.Assets.INTERNAL_Texture(ResourcesManipulator.GetEmbeddedFile("action-menu_bg.png"));
-            Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("#C60E7B");
+            Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("#c60e7b");
             
             UnityEngine.UI.Image Action_Menu_GRAPHICS_CURSOR = obj.transform.GetChild(0).GetChild(4).GetComponent<UnityEngine.UI.Image>();
             Action_Menu_GRAPHICS_CURSOR.sprite = EngineUtils.Assets.INTERNAL_Texture(ResourcesManipulator.GetEmbeddedFile("action-menu_joystick.png")).ToSprite();
@@ -128,38 +128,38 @@ internal class CSS : UnityEngine.MonoBehaviour
         Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppArrayBase<StyleEngine>? VRC_UI = UnityEngine.Object.FindObjectsOfType<StyleEngine>();
         foreach (StyleEngine? X in VRC_UI)
         {
-            X.field_Private_Dictionary_2_String_Color_0["Highlight"] = EngineUtils.Conversion.HexToColor("#C60E7B"); 
-            X.field_Private_Dictionary_2_String_Color_0["Active"] = EngineUtils.Conversion.HexToColor("#C60E7B");
-            X.field_Private_Dictionary_2_String_Color_0["Active2"] = EngineUtils.Conversion.HexToColor("#C60E7B");
+            X.field_Private_Dictionary_2_String_Color_0["Highlight"] = EngineUtils.Conversion.HexToColor("#c60e7b"); 
+            X.field_Private_Dictionary_2_String_Color_0["Active"] = EngineUtils.Conversion.HexToColor("#c60e7b");
+            X.field_Private_Dictionary_2_String_Color_0["Active2"] = EngineUtils.Conversion.HexToColor("#c60e7b");
             X.field_Private_Dictionary_2_String_Color_0["BottomTabSelected"] = new UnityEngine.Color(0.9f, 0.1f, 0.8f, 1f);
-            X.field_Private_Dictionary_2_String_Color_0["Subheader"] = EngineUtils.Conversion.HexToColor("#C60E7B");
-            X.field_Private_Dictionary_2_String_Color_0["Hover"] = EngineUtils.Conversion.HexToColor("#C60E7B");
-            X.field_Private_Dictionary_2_String_Color_0["ActiveDark"] = EngineUtils.Conversion.HexToColor("#C60E7B");
+            X.field_Private_Dictionary_2_String_Color_0["Subheader"] = EngineUtils.Conversion.HexToColor("#c60e7b");
+            X.field_Private_Dictionary_2_String_Color_0["Hover"] = EngineUtils.Conversion.HexToColor("#c60e7b");
+            X.field_Private_Dictionary_2_String_Color_0["ActiveDark"] = EngineUtils.Conversion.HexToColor("#c60e7b");
             X.field_Private_Dictionary_2_String_Color_0["BottomTabHover"] = new UnityEngine.Color(0.8f, 0.3f, 0.5f, 1f);
-            X.field_Private_Dictionary_2_String_Color_0["IconActive"] = EngineUtils.Conversion.HexToColor("#C60E7B");
+            X.field_Private_Dictionary_2_String_Color_0["IconActive"] = EngineUtils.Conversion.HexToColor("#c60e7b");
             X.field_Private_Dictionary_2_String_Color_0["IconWhite"] = new UnityEngine.Color(0.95f, 0.95f, 0.95f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["IconHover"] = new UnityEngine.Color(1f, 0.8f, 0.2f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["CategorySelectorIcon"] = new UnityEngine.Color(0.8f, 0.3f, 0.5f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["IconHighlight"] = new UnityEngine.Color(1f, 0.5f, 0f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["IconInactive"] = new UnityEngine.Color(0.6f, 0.6f, 0.6f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["IconGrey"] = new UnityEngine.Color(0.5f, 0.5f, 0.5f, 1f);
-            X.field_Private_Dictionary_2_String_Color_0["NavigationButton"] = EngineUtils.Conversion.HexToColor("#C60E7B");
-            X.field_Private_Dictionary_2_String_Color_0["ButtonHover"] = EngineUtils.Conversion.HexToColor("#C60E7B");
-            X.field_Private_Dictionary_2_String_Color_0["ButtonHoverTeal"] = EngineUtils.Conversion.HexToColor("#C60E7B");
+            X.field_Private_Dictionary_2_String_Color_0["NavigationButton"] = EngineUtils.Conversion.HexToColor("#c60e7b");
+            X.field_Private_Dictionary_2_String_Color_0["ButtonHover"] = EngineUtils.Conversion.HexToColor("#c60e7b");
+            X.field_Private_Dictionary_2_String_Color_0["ButtonHoverTeal"] = EngineUtils.Conversion.HexToColor("#c60e7b");
             X.field_Private_Dictionary_2_String_Color_0["ButtonBorder"] = new UnityEngine.Color(0.3f, 0.3f, 0.3f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["ButtonHighlight"] = new UnityEngine.Color(0.9f, 0.7f, 0.1f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["ButtonBg"] = new UnityEngine.Color(0.15f, 0.15f, 0.15f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["ButtonCell"] = new UnityEngine.Color(0.25f, 0.25f, 0.25f, 1f);
-            X.field_Private_Dictionary_2_String_Color_0["ButtonQMSelected"] = EngineUtils.Conversion.HexToColor("#C60E7B");
+            X.field_Private_Dictionary_2_String_Color_0["ButtonQMSelected"] = EngineUtils.Conversion.HexToColor("#c60e7b");
             X.field_Private_Dictionary_2_String_Color_0["WingBG"] = new UnityEngine.Color(0.12f, 0.12f, 0.15f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["ButtonOutline"] = new UnityEngine.Color(0.4f, 0.4f, 0.4f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["WhiteBG"] = new UnityEngine.Color(0.9f, 0.9f, 0.9f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["NavigationBG"] = new UnityEngine.Color(0.18f, 0.18f, 0.2f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["Outline"] = new UnityEngine.Color(0.7f, 0.7f, 0.7f, 1f);
-            X.field_Private_Dictionary_2_String_Color_0["BG"] = EngineUtils.Conversion.HexToColor("#C60E7B");
-            X.field_Private_Dictionary_2_String_Color_0["MenuBG"] = EngineUtils.Conversion.HexToColor("#C60E7B");
-            X.field_Private_Dictionary_2_String_Color_0["BottomTab"] = EngineUtils.Conversion.HexToColor("#C60E7B");
-            X.field_Private_Dictionary_2_String_Color_0["Backgrounds"] = EngineUtils.Conversion.HexToColor("#C60E7B");
+            X.field_Private_Dictionary_2_String_Color_0["BG"] = EngineUtils.Conversion.HexToColor("#c60e7b");
+            X.field_Private_Dictionary_2_String_Color_0["MenuBG"] = EngineUtils.Conversion.HexToColor("#c60e7b");
+            X.field_Private_Dictionary_2_String_Color_0["BottomTab"] = EngineUtils.Conversion.HexToColor("#c60e7b");
+            X.field_Private_Dictionary_2_String_Color_0["Backgrounds"] = EngineUtils.Conversion.HexToColor("#c60e7b");
             X.field_Private_Dictionary_2_String_Color_0["Font1"] = new UnityEngine.Color(0.9f, 0.9f, 0.9f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["Font2"] = new UnityEngine.Color(0.8f, 0.8f, 0.8f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["Font3"] = new UnityEngine.Color(0.7f, 0.7f, 0.7f, 1f);
