@@ -22,7 +22,6 @@ internal class QM
 
             #region Modal_1
             VRCButton? a = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "Player", "Modify The Player", () => Modal.Open());
-            VRCButton? c = new(Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "Load CSS", "Modify The Player", () => CSS.Instance.Runtime());
             
             VRCToggle? Fly_Toggle = new(Modal, "Fly", "Fly On", "Fly Off", (x) =>
             {

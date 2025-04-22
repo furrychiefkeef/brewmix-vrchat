@@ -15,13 +15,14 @@ using Logger = Cpp2IL.Core.Logging.Logger;
 public class Entry : BasePlugin
 {
     Harmony h = new("brew@UZI5eGVK1BeA1ajf6dC2kWoAhPhvw5e4Dlg2nxGA.patches");
-    static ManualLogSource Log = new("PINKSTAR.RECORDS");
+    public static ManualLogSource Log = new("PINKSTAR.RECORDS");
     
     
     public override void Load()
     {
         BepInEx.Logging.Logger.Sources.Add(Log);
-      
+        Entry.Log.LogInfo("Entry LEVEL APPLICATION");
+        Entry.Log.LogMessage("Entry LEVEL APPLICATION");
         #region LIB
         ClassInjector.RegisterTypeInIl2Cpp<Syrup.IMGUI.simgui>(); 
         ClassInjector.RegisterTypeInIl2Cpp<Brewchat.Game.Monobehaviours.Toolbox>();

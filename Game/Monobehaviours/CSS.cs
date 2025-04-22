@@ -24,9 +24,18 @@ internal class CSS : UnityEngine.MonoBehaviour
         else Destroy(this);
     }
 
-    public void Runtime()
+    public static void Offline()
     {
-
+            foreach (Button button in FindObjectsOfType<UnityEngine.UI.Button>())
+            {
+                ColorBlock colorBlock = button.colors;
+                colorBlock.normalColor = EngineUtils.Conversion.HexToColor("#c60e7b");
+                colorBlock.highlightedColor = EngineUtils.Conversion.HexToColor("#FF14A0");
+                button.colors = colorBlock;
+            }
+    }
+    public static void Online()
+    {
         foreach (GameObject gameobject in Root.AdvancedMenus)
         {
             var render =  gameobject.GetComponentInChildren<VRCUIBackground>();

@@ -1,9 +1,10 @@
 ﻿using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
-
+using Brewchat.Game.Monobehaviours;
 using HarmonyLib;
-
+using sysPuller;
 using VRC.Core;
+using VRC.Udon;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
 
@@ -12,20 +13,31 @@ namespace brewchat.hybridxcore.bep
 {
     [HarmonyPatch]
     internal class Hooks
-    {
-        static bool _ui = false;
+    {   
+        static bool OfflineUILoaded = false;
+        static bool OnlineUILoaded = false;
         
+        [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
+        public static void ApplicationDomain_Initalize_HOOK(ref VRCUiPageLoading __instance)
+        {
+            if (__instance != null && !OfflineUILoaded)
+            {
+                __instance.gameObject.GetOrAddComponent<CSS>();
+                __instance.gameObject.GetOrAddComponent<KeybindHandler>();
+                CSS.Offline();
+            }
+        }
+
         #region Player_Hooks
 
-        [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
+        [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Awake))]
         public static void PlayerModel_Initalize_HOOK(ref QuickMenu __instance)
         {
-            if (__instance != null && !_ui)
+            if (__instance != null && !OnlineUILoaded)
             {
-                UnityEngine.Object.DestroyImmediate(
-                    UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
+                UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
                 __instance.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
-                __instance.gameObject.GetOrAddComponent<CSS>();
+                CSS.Online();
                 QM.Apply();
             }
         }

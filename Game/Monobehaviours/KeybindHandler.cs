@@ -4,22 +4,22 @@ using UnityEngine;
 
 namespace Brewchat.Game.Monobehaviours;
 
-public class KeybindHandler : UnityEngine.MonoBehaviour
+internal class KeybindHandler : UnityEngine.MonoBehaviour
 {
-    public KeybindHandler Instance { get; private set; }
-    private void Awake()
+    public static KeybindHandler Instance { get; private set; }
+    void Awake()
     {
         if (Instance is null)
         {
             Instance = this;
-            UnityEngine.Object.DontDestroyOnLoad(this);
+           DontDestroyOnLoad(this);
         }
-        else UnityEngine.Object.Destroy(this);
+        else Destroy(this);
     }
 
    
 
-    public void LateUpdate()
+    void LateUpdate()
     {
         Fly();
     }
