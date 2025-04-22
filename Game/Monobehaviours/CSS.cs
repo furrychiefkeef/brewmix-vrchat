@@ -114,7 +114,7 @@ internal class CSS : UnityEngine.MonoBehaviour
             
             UnityEngine.UI.Image Action_Menu_GRAPHICS_CURSOR = obj.transform.GetChild(0).GetChild(4).GetComponent<UnityEngine.UI.Image>();
             Action_Menu_GRAPHICS_CURSOR.sprite = EngineUtils.Assets.INTERNAL_Texture(ResourcesManipulator.GetEmbeddedFile("action-menu_joystick.png")).ToSprite();
-            Action_Menu_GRAPHICS_CURSOR.color = EngineUtils.Conversion.HexToColor("#C60E7B");
+            Action_Menu_GRAPHICS_CURSOR.color = EngineUtils.Conversion.HexToColor("#c60e7b");
             PedalGraphic? Center_Removable = obj.transform.GetChild(0).GetChild(0).GetComponent<PedalGraphic>();
             
             UnityEngine.Object.DestroyImmediate(Center_Removable,true);
