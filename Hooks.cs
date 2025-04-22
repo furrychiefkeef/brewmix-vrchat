@@ -37,8 +37,10 @@ namespace brewchat.hybridxcore.bep
             if (__instance is null) return;
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             __instance.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
-            CSS.Online();
+
             QM.Apply();
+            Thread.Sleep(1000);
+            CSS.Online();
         }
         
         #region API

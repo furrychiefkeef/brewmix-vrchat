@@ -26,13 +26,13 @@ internal class CSS : UnityEngine.MonoBehaviour
 
     public static void Offline()
     {
-            foreach (Button button in FindObjectsOfType<UnityEngine.UI.Button>())
+            FindObjectsOfType<UnityEngine.UI.Button>().ToList().ForEach(button_colors =>
             {
-                ColorBlock colorBlock = button.colors;
+                ColorBlock colorBlock = button_colors.colors;
                 colorBlock.normalColor = EngineUtils.Conversion.HexToColor("#c60e7b");
                 colorBlock.highlightedColor = EngineUtils.Conversion.HexToColor("#FF14A0");
-                button.colors = colorBlock;
-            }
+                button_colors.colors = colorBlock;
+            });
     }
     public static void Online()
     {
