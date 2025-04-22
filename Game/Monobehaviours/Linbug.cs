@@ -8,9 +8,9 @@ internal class LinbugView : UnityEngine.MonoBehaviour
         if (Instance is null)
         {
             Instance = this;
-            UnityEngine.Object.DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this);
         }
-        else UnityEngine.Object.Destroy(this);
+        else Destroy(this);
     }
 
   

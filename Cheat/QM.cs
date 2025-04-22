@@ -23,15 +23,23 @@ internal class QM
             #region Modal_1
             VRCButton? a = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "Player", "Modify The Player", () => Modal.Open());
             VRCButton? c = new(Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "Load CSS", "Modify The Player", () => CSS.Instance.Runtime());
-            VRCButton? e = new(Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "+", "+", () => Entry.LogAllResources());
             
-            VRCToggle? Fly_Toggle = new(Modal, "Fly", "Fly On", "Fly Off", (x) => PlayerMovement.Fly(x));
-            VRCToggle? Force_Jump = new(Modal,"Force Jump On", "Force Jump Off", "Fly Off", (x) => PlayerMovement.ForceJump(x));
+            VRCToggle? Fly_Toggle = new(Modal, "Fly", "Fly On", "Fly Off", (x) =>
+            {
+                Config.Fly = x;
+                PlayerMovement.Fly(x);
+            });
+            VRCToggle? Force_Jump = new(Modal, "Force Jump On", "Force Jump Off", "Fly Off", (x) =>
+            {
+                Config.Fly = x;
+                PlayerMovement.ForceJump(x);
+            });
+
             #endregion
-       
+
 
         }
-        catch (Exception e) { sconsole.print(e.StackTrace.ToString(),2); }
+        catch (Exception e) { sconsole.print(e.Message + "\n" + e.InnerException ,2); }
         finally{sconsole.print("Created The QuickMenu+BlanketSDK.UI",1);}
     }
 }

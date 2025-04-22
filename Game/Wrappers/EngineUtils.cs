@@ -8,7 +8,7 @@ namespace Brewchat.Game.Wrappers
 {
     internal static class EngineUtils
     {
-        public static class Conversion
+        public struct Conversion
         {
             public static Color HexToColor(string hex)
             {
@@ -16,38 +16,17 @@ namespace Brewchat.Game.Wrappers
                 return color;
             }
         }
-        public static class Assets
-        {
-            internal static Texture2D? LoadTexture(string img_name, int p)
+
+        public struct Assets    
+        { 
+            public static Texture2D? INTERNAL_Texture(byte[] data)
             {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                string? resourcePath = assembly.GetManifestResourceNames()
-                    .FirstOrDefault(r => r.EndsWith(img_name));
-
-                if (resourcePath == null)
-                {
-                    sconsole.internal_log($"Resource '{img_name}' not found in assembly.");
-                    return null;
-                }
-
-                using (Stream? stream = assembly.GetManifestResourceStream(resourcePath))
-                {
-                    if (stream == null)
-                    {
-                        sconsole.internal_log("Resource stream was null.");
-                        return null;
-                    }
-
-                    byte[] buffer = new byte[stream.Length];
-                    stream.ReadAsync(buffer, 0, buffer.Length).GetAwaiter().GetResult();
-                    Texture2D tex = new Texture2D(0, 0);
-                    if (tex.LoadImage(buffer))
-                        return tex;
-                    else
-                        return null;
-                }
+                Texture2D texture = new(0, 0);
+                texture.LoadImage(data);
+                if (texture != null) texture.name = "resources.dev";
+                return texture;
             }
-            public static Texture2D LoadTexture(string dir)
+            public static Texture2D? Texture(string dir)
             {
                 byte[] data = File.ReadAllBytesAsync(dir).GetAwaiter().GetResult();
                 Texture2D texture = new(0, 0);
@@ -55,14 +34,8 @@ namespace Brewchat.Game.Wrappers
                 if (texture != null) texture.name = Path.GetFileNameWithoutExtension(dir);
                 return texture;
             }
-            public static Texture2D LoadTexture(byte[] data)
-            {
-                Texture2D texture = new(0, 0);
-                texture.LoadImage(data);
-                if (texture != null) texture.name = "resources.dev";
-                return texture;
-            }
-            public static Texture2D Data_LoadTexture(string dir)
+          
+            public static Texture2D? DataTexture(string dir)
             {
                 HttpClient http = new();
                 byte[] data = http.GetByteArrayAsync(dir).GetAwaiter().GetResult();
@@ -72,15 +45,15 @@ namespace Brewchat.Game.Wrappers
                 return texture2D;
             }
   
-            public static Sprite LoadSprite(string dir) 
-                => LoadTexture(dir).ToSprite();
+            public static Sprite Sprite(string dir) 
+                => Texture(dir).ToSprite();
             public static Sprite Data_LoadSprite(string dir) 
-                => Data_LoadTexture(dir).ToSprite();
+                => DataTexture(dir).ToSprite();
         }
     }
     public static class TextureExtensions
     {
-        public static Sprite ToSprite(this Texture2D texture)
+        public static Sprite ToSprite(this Texture2D? texture)
         {
             // Create a sprite from the texture using default game settings
             return Sprite.Create(
@@ -89,6 +62,14 @@ namespace Brewchat.Game.Wrappers
                 Vector2.zero // Using game's default settings
             );
         }
+
+        public static Texture2D? Change(this Texture2D texture, string dir) => EngineUtils.Assets.Texture(dir);
+    }
+
+    public enum Types
+    {
+        URL,
+        PATH
     }
 }
 

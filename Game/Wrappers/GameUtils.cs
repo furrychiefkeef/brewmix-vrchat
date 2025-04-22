@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.Playables;
 using VRC;
 using VRC.Localization;
 using VRC.SDKBase;
-using VRC.UI.Client;
 using VRC.UI.Client.HUD;
 using VRC.UI.Elements;
 
@@ -13,7 +11,7 @@ internal class GameUtils
 {
     public class Gameplay
     {
-        public static class Events
+        public struct  Events
         {
             static QuickMenu? QuickMenu_Cache;
             static MainMenu? MainMenu_Cache;
@@ -196,9 +194,7 @@ RoomManager.field_Internal_Static_ApiWorld_0 != null;
             #endregion
         }
     }
-
-
-
+    
     public class VRChatUtils
     {
         public static class InputManager

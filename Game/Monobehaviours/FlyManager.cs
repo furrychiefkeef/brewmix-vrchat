@@ -5,7 +5,6 @@ namespace Brewchat.Game.Monobehaviours;
 
 internal class FlyManager : UnityEngine.MonoBehaviour
 {
-    public bool fly { get; set; }
     
     void Update()
     {
@@ -21,6 +20,7 @@ internal class FlyManager : UnityEngine.MonoBehaviour
         direction.Normalize(); 
             
         transform.position += direction * speed * Time.deltaTime;
+        GameUtils.PlayerModel.Motion.Velocity(Vector3.zero);
     }
 }
 
