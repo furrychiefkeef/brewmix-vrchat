@@ -6,7 +6,7 @@ internal static class sconsole
 {
     /*static string _App = "brewchat";
     const string _Version = "v2024.2.11";*/
-    static string[] states { get; set; } = 
+    static string[] states { get; } = 
     { 
         "<color=#ed1093>#</color>", 
         "<color=#9cd1a2>+</color>", 

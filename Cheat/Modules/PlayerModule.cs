@@ -5,6 +5,7 @@ using UnityEngine;
 using VRC;
 using VRC.Animation;
 using VRC.Core;
+using VRC.SDK3.Rendering;
 
 namespace Brewchat.Cheat.Modules;
 
@@ -12,16 +13,17 @@ namespace Brewchat.Cheat.Modules;
     {
         public enum PointOfViews
         {
-            firstperson,
-            thirdperson,
-            secondperson,
+            none,
+            first_person, 
+               second_person, 
+                    third_person, 
             freecam,
         }
         
         public class Movement
         { 
-            public static void Fly(bool state)
-        {
+         public static void Fly(bool state)
+         {
             Player player = GameUtils.PlayerModel.Get();
             if (!player && !GameUtils.World.IsWorldLoaded()) return;
             else
@@ -35,14 +37,12 @@ namespace Brewchat.Cheat.Modules;
                         flyManager.enabled = true;
                         MOTION_STATE.enabled = false;
                         CHAR.enabled = false;
-                        GameUtils.PlayerModel.Motion.Velocity(Vector3.zero);
                         break;
                     case false: 
                         flyManager.enabled = true;
                         MOTION_STATE.enabled = true;
                         CHAR.enabled = true;
                         UnityEngine.Object.DestroyImmediate(flyManager);
-
                         break;
                 }
                 sconsole.print($"[LOCAL_PLAYER] Fly is Set to {state}",1);
@@ -74,15 +74,24 @@ namespace Brewchat.Cheat.Modules;
         {
             public static void ChangeCamera(PointOfViews pointOfView)
             {
+                   GameObject obj = new("Camera");
+                   obj.AddComponent<AudioListener>();
+                   var cam = obj.AddComponent<Camera>();
+                   GameUtils.GameCamera.camera = cam;
+              
                 switch (pointOfView)
                 {
-                    case PointOfViews.firstperson:
+                    case PointOfViews.none:
+                        UnityEngine.Object.DestroyImmediate(obj,true);
                         break;
-                    case PointOfViews.thirdperson:
+                    case PointOfViews.first_person:
                         break;
-                    case PointOfViews.secondperson:
+                    case PointOfViews.second_person:
+                        break;
+                    case PointOfViews.third_person:
                         break;
                     case PointOfViews.freecam:
+                        obj.AddComponent<FlyManager>();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(pointOfView), pointOfView, null);

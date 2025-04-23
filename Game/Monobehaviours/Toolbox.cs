@@ -1,4 +1,5 @@
-﻿using Brewchat.Game.Wrappers;
+﻿using Brewchat.Cheat.Modules;
+using Brewchat.Game.Wrappers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
@@ -26,10 +27,13 @@ internal class Toolbox : UnityEngine.MonoBehaviour
     {
         GameUtils.UI.HUD.LoadingPopUp2("", "", "", null, null);
     }
-    public void LoadMyUI()
+    public static void LoadMyUI()
     {
-        EngineUtils.Assets.AssetBundle(new Uri("https://github.com/riotlu/fake-cdn/blob/master/loading?raw=true"),"battle", true);
-       
+        EngineUtils.Assets.AssetBundle(new Uri("https://github.com/riotlu/fake-cdn/blob/master/loading?raw=true"),"welcome_canvas", true);
+    }
+    public void CameraIQW(PlayerModule.PointOfViews pointOfView)
+    {
+        PlayerModule.View.ChangeCamera(pointOfView);
     }
 }
 

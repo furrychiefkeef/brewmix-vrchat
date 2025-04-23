@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using VRC;
+using VRC.DataModel;
 using VRC.Localization;
 using VRC.SDKBase;
 using VRC.UI.Client.HUD;
 using VRC.UI.Elements;
+using VRC.UI.Elements.Controls;
 
 namespace Brewchat.Game.Wrappers;
 
@@ -37,8 +40,9 @@ internal class GameUtils
     }
 
     public class GameCamera
-    {
-        public static Camera camera => Camera.main;
+    {   
+        public static Camera? camera { get; set; } = Camera.main;
+        public static GameObject CameraObj => GameObject.Find("Camera (eye)");
     }
 
     public class PlayerModel
@@ -217,6 +221,34 @@ RoomManager.field_Internal_Static_ApiWorld_0 != null;
             {
                 Horizontial,
                 Vertical,
+            }
+        } 
+        public static class VRCKeyboard
+        {
+            //vinyl thanks <3
+            private static VRCInputField? inputfield;
+            private static GameObject? Object;
+
+            public enum KeyBoardType
+            { Standard, Numeric, Search }
+
+            public static void InputPopup(string Title, Action<string> EndString, Action<string>? RealTimeString = null, Action? OnClose = null, KeyBoardType keyBoardType = KeyBoardType.Standard, string Placeholder = "Enter Text", string OkButton = "OK", string CancelButton = "Cancel", bool MultiLine = true, int CharLimit = 0, bool KeepOpen = false, bool ReadOnly = false)
+            {
+                if (inputfield == null)
+                {
+                    Object = new GameObject("[Saturn] Keyboard");
+                    UnityEngine.Object.DontDestroyOnLoad(Object);
+                    inputfield = Object.AddComponent<VRCInputField>();
+                }
+
+                KeyboardData keyboardData = new();
+                KeyboardData keyboardData2 = keyboardData.Method_Public_KeyboardData_LocalizableString_LocalizableString_String_LocalizableString_LocalizableString_0(LocalizableStringExtensions.Localize(Title), LocalizableStringExtensions.Localize(Placeholder), "", LocalizableStringExtensions.Localize(OkButton), LocalizableStringExtensions.Localize(CancelButton));
+                KeyboardData keyboardData3 = keyboardData2.Method_Public_KeyboardData_Action_1_String_Action_1_String_Action_Boolean_PDM_0(RealTimeString, EndString, OnClose, KeepOpen);
+                KeyboardData keyboardData4 = keyboardData3.Method_Public_KeyboardData_InputPopupType_Boolean_PDM_0((InputPopupType)keyBoardType, param_2: true);
+                KeyboardData keyboardData5 = keyboardData4.Method_Public_KeyboardData_InputType_ContentType_Int32_Boolean_Boolean_InterfacePublicAbstractBoStVoAc1VoAcSt1BoUnique_PDM_0(TMP_InputField.InputType.Standard, TMP_InputField.ContentType.Standard, CharLimit, MultiLine, ReadOnly);
+                keyboardData5._isWorldKeyboard = true;
+                inputfield._keyboardData = keyboardData5;
+                inputfield.Method_Private_Void_0();
             }
         }
     }

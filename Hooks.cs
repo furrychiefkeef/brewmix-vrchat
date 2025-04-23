@@ -1,6 +1,11 @@
-﻿using Brewchat.Cheat;
+﻿
+using BepInEx.Unity.IL2CPP.Utils;
+using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
+using Brewchat.Game.Monobehaviours;
+using Brewview;
 using HarmonyLib;
+using UnityEngine.Playables;
 using VRC.Core;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
@@ -14,6 +19,13 @@ namespace brewchat.hybridxcore.bep
         static bool OfflineUILoaded = false;
         static bool OnlineUILoaded = false;
 
+       #region INTERNAL_CORE
+
+        
+
+        #endregion
+        
+       #region INTERNAL_UI
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
         public static void ApplicationDomain_Initialize_HOOK(ref VRCUiPageLoading? __instance)
@@ -21,30 +33,48 @@ namespace brewchat.hybridxcore.bep
             if (__instance is null && !OfflineUILoaded) return;
             __instance.gameObject.GetOrAddComponent<CSS>();
             CSS.Offline();   
-          
-          
         }
-
-        #region Player_Hooks
+       
 
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
-            UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             __instance.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
+            UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             QM.Apply();
-            
+            Toolbox.LoadMyUI();
         }
-        #region API
+        [HarmonyPostfix, HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
+        public static void QuickMenu_Initialize_HOOK(ref MainMenu? __instance)
+        {
+            if (__instance == null && !OnlineUILoaded) return;
+        }
+        [HarmonyPostfix, HarmonyPatch(typeof(VRCUIBackground), nameof(VRCUIBackground.Start))]
+        public static void BG_Initialize_HOOK(ref VRCUIBackground? __instance)
+        {
+            if (__instance == null && !OnlineUILoaded) return;
+            OnlineUILoaded = true;
+            __instance.StartCoroutine(CorutineHandler.CSSONLINE_RUNTIME());
+        }
+       #endregion
        
-
-
-        #endregion
-        #endregion
+       #region INTERNAL_API
+       [HarmonyPostfix, HarmonyPatch(typeof(VRCPlusStatus), nameof(VRCPlusStatus.prop_Object1PublicTYBoTYUnique_1_Boolean_0), MethodType.Getter)]
+       public static void ExSpoof_VRChatPlus_HOOK(ref Object1PublicTYBoTYUnique<bool> __result)
+       {
+           if (__result != null && !APIUser.CurrentUser.isSupporter)
+               __result.prop_TYPE_0 = true;
+       }  
+       #endregion
+       
+       #region UpdateHook
         
-        #region UpdateHook
-        #endregion
+       #endregion
+        
+       #region Player_Hooks
+       
+       #endregion
       
     }
    

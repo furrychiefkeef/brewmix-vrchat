@@ -1,7 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 using WebSocketSharp;
-using Object = System.Object;
 
 namespace Brewchat.Game.Wrappers
 {
@@ -78,15 +77,22 @@ namespace Brewchat.Game.Wrappers
                 if(keep == true) UnityEngine.Object.DontDestroyOnLoad(obj);
                 return obj;
             }
-            public static UnityEngine.GameObject AssetBundle(Uri? url, string? name, bool? keep, bool unload = false)
-            {   
-                var data = Encoding.ASCII.GetBytes(url.ToString());
-                AssetBundle? bundle = UnityEngine.AssetBundle.LoadFromMemory(data);
+            public static UnityEngine.GameObject AssetBundle(Uri? url, string? prefab_name, bool? keep, bool unload = false)
+            {
+                using var client = new System.Net.Http.HttpClient();
+                var data = client.GetByteArrayAsync(url).Result;
+                var bundle = UnityEngine.AssetBundle.LoadFromMemory(data);
+                
+                foreach (var VARIABLE in bundle.GetAllAssetNames())
+                {
+                    Entry.Log.LogMessage(VARIABLE);
+                }
+                
+                var obj = bundle.LoadAsset<GameObject>(prefab_name);
+                GameObject? instance = UnityEngine.Object.Instantiate(obj);
+                if (keep is true) UnityEngine.Object.DontDestroyOnLoad(obj);
                 bundle.Unload(unload);
-                UnityEngine.GameObject obj = bundle.LoadAsset<GameObject>(name);
-                if(keep is true) UnityEngine.Object.DontDestroyOnLoad(obj);
-                UnityEngine.Object.Instantiate(obj);
-                return obj;
+                return instance;
             }
             #endregion
         }
