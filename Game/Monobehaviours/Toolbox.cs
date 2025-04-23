@@ -29,7 +29,7 @@ internal class Toolbox : UnityEngine.MonoBehaviour
     }
     public static void LoadMyUI()
     {
-        EngineUtils.Assets.AssetBundle(new Uri("https://github.com/riotlu/fake-cdn/blob/master/loading?raw=true"),"welcome_canvas", true);
+        EngineUtils.Assets.AssetBundle(new Uri("https://cdn.discordapp.com/attachments/1360446410738237450/1364543791540736040/intro?ex=680ab6af&is=6809652f&hm=5ed6ec7b5b8dfa91244adcc7cc0e39f093c26cbefe12092ced9dbd62fd10cd43&"),"february introduction", true);
     }
     public void CameraIQW(PlayerModule.PointOfViews pointOfView)
     {

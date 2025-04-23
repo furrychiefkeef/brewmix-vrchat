@@ -5,7 +5,7 @@ using UnityEngine;
 using VRC;
 using VRC.Animation;
 using VRC.Core;
-using VRC.SDK3.Rendering;
+
 
 namespace Brewchat.Cheat.Modules;
 
@@ -74,6 +74,7 @@ namespace Brewchat.Cheat.Modules;
         {
             public static void ChangeCamera(PointOfViews pointOfView)
             {
+               
                    GameObject obj = new("Camera");
                    obj.AddComponent<AudioListener>();
                    var cam = obj.AddComponent<Camera>();

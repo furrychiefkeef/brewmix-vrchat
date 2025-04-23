@@ -18,8 +18,8 @@ internal class FlyManager : UnityEngine.MonoBehaviour
         if (Input.GetKey(KeyCode.Q)) direction += Vector3.down;
         if (Input.GetKey(KeyCode.E)) direction += Vector3.up;
         
-        direction += transform.transform.forward * GameUtils.VRChatUtils.InputManager.GetInput("Vertical").prop_Single_2;
-        direction += transform.transform.right   * GameUtils.VRChatUtils.InputManager.GetInput("Horizontal").prop_Single_2;
+        direction += GameUtils.GameCamera.camera.transform.forward * GameUtils.VRChatUtils.InputManager.GetInput("Vertical").prop_Single_2;
+        direction += GameUtils.GameCamera.camera.transform.right   * GameUtils.VRChatUtils.InputManager.GetInput("Horizontal").prop_Single_2;
         direction.Normalize(); 
             
         transform.position += direction * (speed * Time.deltaTime);
