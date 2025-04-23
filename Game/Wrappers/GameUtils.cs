@@ -73,6 +73,14 @@ internal class GameUtils
                 VRCPlayerApi? player = Get().field_Private_VRCPlayerApi_0;
                 player.SetVelocity(v);
                 return player;
+
+            }
+
+            public static VRCPlayerApi Gravity(float v = 1f)
+            {
+                VRCPlayerApi? player = Get().field_Private_VRCPlayerApi_0;
+                player.SetGravityStrength(v);
+                return player;
             }
         }
 

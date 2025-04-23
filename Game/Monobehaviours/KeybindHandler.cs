@@ -4,28 +4,19 @@ using UnityEngine;
 
 namespace Brewchat.Game.Monobehaviours;
 
-internal class KeybindHandler : UnityEngine.MonoBehaviour
+internal class KeybindManager : UnityEngine.MonoBehaviour
 {
-    public static KeybindHandler Instance { get; private set; }
-    void Awake()
+
+    void Update()
     {
-        if (Instance is null)
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.F))
         {
-            Instance = this;
-           DontDestroyOnLoad(this);
+            Config.Fly = !Config.Fly;
         }
-        else Destroy(this);
     }
 
-   
-
-    void LateUpdate()
+    /*void Fly()
     {
-        Fly();
-    }
-
-    void Fly()
-    {
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.F)) Config.Fly = !Config.Fly;
-    }
+       
+    }*/
 }

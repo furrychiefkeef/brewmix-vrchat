@@ -1,5 +1,7 @@
 ﻿using Brewchat.Game.Wrappers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace Brewchat.Game.Monobehaviours;
 
@@ -23,6 +25,11 @@ internal class Toolbox : UnityEngine.MonoBehaviour
     public void PopUp2Loading()
     {
         GameUtils.UI.HUD.LoadingPopUp2("", "", "", null, null);
+    }
+    public void LoadMyUI()
+    {
+        EngineUtils.Assets.AssetBundle(new Uri("https://github.com/riotlu/fake-cdn/blob/master/loading?raw=true"),"battle", true);
+       
     }
 }
 

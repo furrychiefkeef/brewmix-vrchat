@@ -8,9 +8,19 @@ using VRC.Core;
 
 namespace Brewchat.Cheat.Modules;
 
-    internal class PlayerMovement
+    internal class PlayerModule
     {
-        public static void Fly(bool state)
+        public enum PointOfViews
+        {
+            firstperson,
+            thirdperson,
+            secondperson,
+            freecam,
+        }
+        
+        public class Movement
+        { 
+            public static void Fly(bool state)
         {
             Player player = GameUtils.PlayerModel.Get();
             if (!player && !GameUtils.World.IsWorldLoaded()) return;
@@ -25,20 +35,21 @@ namespace Brewchat.Cheat.Modules;
                         flyManager.enabled = true;
                         MOTION_STATE.enabled = false;
                         CHAR.enabled = false;
+                        GameUtils.PlayerModel.Motion.Velocity(Vector3.zero);
                         break;
                     case false: 
                         flyManager.enabled = true;
                         MOTION_STATE.enabled = true;
                         CHAR.enabled = true;
                         UnityEngine.Object.DestroyImmediate(flyManager);
+
                         break;
                 }
                 sconsole.print($"[LOCAL_PLAYER] Fly is Set to {state}",1);
                 GameUtils.UI.HUD.ToastV2("Player+Movement",$"Fly is set to {state}");
             }
-        }
-
-        public static void ForceJump(bool state)
+        } 
+            public static void ForceJump(bool state)
         {
             Player player = GameUtils.PlayerModel.Get();
             var player_motion = GameUtils.PlayerModel.Motion.Jump_Impulse();
@@ -57,7 +68,30 @@ namespace Brewchat.Cheat.Modules;
                 GameUtils.UI.HUD.ToastV2("Player+Movement",$"Jump+Impulse is set to {state}");
             }
         }
+        }
+
+        public class View
+        {
+            public static void ChangeCamera(PointOfViews pointOfView)
+            {
+                switch (pointOfView)
+                {
+                    case PointOfViews.firstperson:
+                        break;
+                    case PointOfViews.thirdperson:
+                        break;
+                    case PointOfViews.secondperson:
+                        break;
+                    case PointOfViews.freecam:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(pointOfView), pointOfView, null);
+                }
+            }         
+        }
     }
+
+ 
 
 
 

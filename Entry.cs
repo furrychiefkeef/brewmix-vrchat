@@ -28,7 +28,7 @@ public class Entry : BasePlugin
         ClassInjector.RegisterTypeInIl2Cpp<Brewchat.Game.Monobehaviours.Toolbox>();
         ClassInjector.RegisterTypeInIl2Cpp<CSS>();
         ClassInjector.RegisterTypeInIl2Cpp<FlyManager>();
-        ClassInjector.RegisterTypeInIl2Cpp<KeybindHandler>();
+        ClassInjector.RegisterTypeInIl2Cpp<KeybindManager>();
         h.PatchAll();
         #endregion
     } 

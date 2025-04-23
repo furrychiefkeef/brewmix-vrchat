@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿/*
+using System.Reflection;
 using Syrup.IMGUI;
 
 namespace sysPuller;
@@ -26,11 +27,8 @@ public class ResourcesManipulator
             
         }
     }  
-    public static void RequestCalls(Action method_0, int _)
-    {
-        for (int i = 0; i < _; i++) method_0();
-    }
 }
+*/
 
 
 

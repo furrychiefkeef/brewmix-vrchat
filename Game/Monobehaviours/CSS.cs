@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using BestHTTP.PlatformSupport.TcpClient.General;
 using BlanketSDK.Utilities;
 using Brewchat.Game.Wrappers;
 using MaterialEditing.UI;
@@ -6,6 +7,7 @@ using Syrup.IMGUI;
 using sysPuller;
 using UnityEngine;
 using UnityEngine.UI;
+using VRC.UI;
 using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
@@ -30,29 +32,31 @@ internal class CSS : UnityEngine.MonoBehaviour
             {
                 ColorBlock colorBlock = button_colors.colors;
                 colorBlock.normalColor = EngineUtils.Conversion.HexToColor("#c60e7b");
-                colorBlock.highlightedColor = EngineUtils.Conversion.HexToColor("#FF14A0");
+                colorBlock.highlightedColor = EngineUtils.Conversion.HexToColor("#ff14a0");
+                colorBlock.selectedColor = EngineUtils.Conversion.HexToColor("#c60e7b");
+                colorBlock.disabledColor = Color.white;
                 button_colors.colors = colorBlock;
             });
     }
     public static void Online()
     {
-        /*foreach (GameObject gameobject in Root.AdvancedMenus)
+        foreach (GameObject gameobject in Root.AdvancedMenus)
         {
             var render =  gameobject.GetComponentInChildren<VRCUIBackground>();
             if (render is null) return;
-            Texture? texture = EngineUtils.Assets.DataTexture("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy_1.png?raw=true");
+            Texture? texture = EngineUtils.Assets.Texture(new Uri("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy_1.png?raw=true"));
             Image? rm = render.field_Private_Image_0;
             Material? rm_m = rm.material;
             rm_m.mainTexture = texture;
             rm_m.Background_Parallax(texture);
-        }*/
+        }
       #region MainMenu
 
-      var qm_renderer = Root.AdvancedMenus[0].GetComponentInChildren<VRCUIBackground>();
+      /*var qm_renderer = Root.QMParent().transform.FindChild("BackgroundLayer01").GetComponent<ImageEx>();
       if (qm_renderer != null)
       {
-          Texture? texture =  EngineUtils.Assets.DataTexture("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy_1.png?raw=true");
-          Image? rm = qm_renderer.field_Private_Image_0;
+          Texture? texture =  EngineUtils.Assets.Texture(new Uri("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy_1.png?raw=true"));
+          Image? rm = qm_renderer; 
           Material? rm_m = rm.material;
           rm_m.mainTexture = texture;
           rm_m.Background_Parallax(texture);
@@ -60,16 +64,16 @@ internal class CSS : UnityEngine.MonoBehaviour
       #endregion
       
       #region MM_BG
-      var mm_renderer = Root.MMParent().GetComponentInChildren<VRCUIBackground>();
+      var mm_renderer = Root.MMParent().transform.FindChild("BackgroundLayer01").GetComponent<ImageEx>();
       if (mm_renderer != null)
       {
-          Texture? texture = EngineUtils.Assets.DataTexture("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy_1.png?raw=true");
-          Image? rm = mm_renderer.field_Private_Image_0;
+          Texture? texture = EngineUtils.Assets.Texture(new Uri("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy_1.png?raw=true"));
+          Image? rm = mm_renderer;
           Material? rm_m = rm.material;
           rm_m.mainTexture = texture;
           rm_m.Background_Parallax(texture);
 
-      }
+      }*/
       #endregion
 
         #region ActionMenu
@@ -106,7 +110,7 @@ internal class CSS : UnityEngine.MonoBehaviour
                     if (image != null)
                     {
                         image.color = EngineUtils.Conversion.HexToColor("#c60e7b");
-                        image.sprite = EngineUtils.Assets.INTERNAL_Texture(ResourcesManipulator.GetEmbeddedFile("action-menu_divider.png")).ToSprite();
+                        image.sprite = EngineUtils.Assets.INTERNAL_Texture(Resources.action_menu_divider).ToSprite();
                     }
                 }
             }
@@ -114,11 +118,11 @@ internal class CSS : UnityEngine.MonoBehaviour
             
             
             PedalGraphic Action_Menu_GRAPHICS_BG = obj.transform.GetChild(0).GetChild(1).GetComponent<PedalGraphic>();
-            Action_Menu_GRAPHICS_BG._texture = EngineUtils.Assets.INTERNAL_Texture(ResourcesManipulator.GetEmbeddedFile("action-menu_bg.png"));
+            Action_Menu_GRAPHICS_BG._texture = EngineUtils.Assets.INTERNAL_Texture(Resources.action_menu_bg);
             Action_Menu_GRAPHICS_BG.color = EngineUtils.Conversion.HexToColor("#c60e7b");
             
             UnityEngine.UI.Image Action_Menu_GRAPHICS_CURSOR = obj.transform.GetChild(0).GetChild(4).GetComponent<UnityEngine.UI.Image>();
-            Action_Menu_GRAPHICS_CURSOR.sprite = EngineUtils.Assets.INTERNAL_Texture(ResourcesManipulator.GetEmbeddedFile("action-menu_joystick.png")).ToSprite();
+            Action_Menu_GRAPHICS_CURSOR.sprite = EngineUtils.Assets.INTERNAL_Texture(Resources.action_menu_joystick).ToSprite();
             Action_Menu_GRAPHICS_CURSOR.color = EngineUtils.Conversion.HexToColor("#c60e7b");
             PedalGraphic? Center_Removable = obj.transform.GetChild(0).GetChild(0).GetComponent<PedalGraphic>();
             

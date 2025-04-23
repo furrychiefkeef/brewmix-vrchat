@@ -10,6 +10,6 @@ public class Config
     #endregion
     
     
-    public static bool Fly { get; set; } = false;
+    public static bool Fly { get; set; }
     public static float? FlySpeed { get; set; } = 6.5f;
 }

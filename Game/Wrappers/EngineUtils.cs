@@ -1,8 +1,7 @@
-﻿using System.Net;
-using System.Reflection;
-using Cysharp.Threading.Tasks;
-using Syrup.IMGUI;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
+using WebSocketSharp;
+using Object = System.Object;
 
 namespace Brewchat.Game.Wrappers
 {
@@ -18,7 +17,8 @@ namespace Brewchat.Game.Wrappers
         }
 
         public struct Assets    
-        { 
+        {
+            #region Imagebased
             public static Texture2D? INTERNAL_Texture(byte[] data)
             {
                 Texture2D texture = new(0, 0);
@@ -35,20 +35,60 @@ namespace Brewchat.Game.Wrappers
                 return texture;
             }
           
-            public static Texture2D? DataTexture(string dir)
+            public static Texture2D? Texture(Uri? url)
             {
                 HttpClient http = new();
-                byte[] data = http.GetByteArrayAsync(dir).GetAwaiter().GetResult();
+                byte[] data = http.GetByteArrayAsync(url.ToString()).GetAwaiter().GetResult();
                 Texture2D texture2D = new(0, 0);
                 texture2D.LoadImage(data);
-                texture2D.name = Path.GetFileNameWithoutExtension(dir);
+                texture2D.name = Path.GetFileNameWithoutExtension(url.ToString());
                 return texture2D;
             }
   
             public static Sprite Sprite(string dir) 
                 => Texture(dir).ToSprite();
-            public static Sprite Data_LoadSprite(string dir) 
-                => DataTexture(dir).ToSprite();
+            public static Sprite Data_LoadSprite(Uri? dir) 
+                => Texture(dir).ToSprite();
+            
+
+            #endregion
+
+            #region Source
+            public static UnityEngine.Object INTERNAL_AssetBundle(byte[]? data, string? name, bool? keep)
+            {   
+                if(data?.Length == 0) return null;
+                AssetBundle? bundle = UnityEngine.AssetBundle
+                    .LoadFromMemoryAsync(data)
+                    .GetAwaiter().GetResult();
+
+                UnityEngine.Object obj = bundle.LoadAssetAsync<GameObject>(name)
+                    .GetAwaiter().GetResult();
+                if(keep == true) UnityEngine.Object.DontDestroyOnLoad(obj);
+                return obj;
+            }
+            public static UnityEngine.Object AssetBundle(string? dir, string? name, bool? keep)
+            {   
+                if(dir.IsNullOrEmpty()) return null;
+                AssetBundle? bundle = UnityEngine.AssetBundle
+                    .LoadFromFileAsync(dir)
+                    .GetAwaiter().GetResult();
+
+                UnityEngine.Object obj = bundle.LoadAssetAsync<GameObject>(name)
+                    .GetAwaiter().GetResult();
+                if(keep == true) UnityEngine.Object.DontDestroyOnLoad(obj);
+                return obj;
+            }
+            public static UnityEngine.GameObject AssetBundle(Uri? url, string? name, bool? keep, bool unload = false)
+            {   
+                var data = Encoding.ASCII.GetBytes(url.ToString());
+                AssetBundle? bundle = UnityEngine.AssetBundle.LoadFromMemory(data);
+                bundle.Unload(unload);
+                UnityEngine.GameObject obj = bundle.LoadAsset<GameObject>(name);
+                if(keep is true) UnityEngine.Object.DontDestroyOnLoad(obj);
+                UnityEngine.Object.Instantiate(obj);
+                return obj;
+            }
+            #endregion
         }
     }
     public static class TextureExtensions
@@ -65,38 +105,5 @@ namespace Brewchat.Game.Wrappers
 
         public static Texture2D? Change(this Texture2D texture, string dir) => EngineUtils.Assets.Texture(dir);
     }
-
-    public enum Types
-    {
-        URL,
-        PATH
-    }
 }
 
-
-/*public static Color HexToColor(string hex)
-{
-             
-    // Remove # if present
-    if (hex.StartsWith("#"))
-        hex = hex.Substring(1);
-               
-    if (hex.Length == 6)
-    {
-        byte r = Convert.ToByte(hex.Substring(0, 2), 16);
-        byte g = Convert.ToByte(hex.Substring(2, 2), 16);
-        byte b = Convert.ToByte(hex.Substring(4, 2), 16);
-        return new Color(r / 255f, g / 255f, b / 255f, 1f);
-    }
-    else if (hex.Length == 8) 
-    {
-        byte r = Convert.ToByte(hex.Substring(0, 2), 16);
-        byte g = Convert.ToByte(hex.Substring(2, 2), 16);
-        byte b = Convert.ToByte(hex.Substring(4, 2), 16);
-        byte a = Convert.ToByte(hex.Substring(6, 2), 16);
-        return new Color(r / 255f, g / 255f, b / 255f, a / 255f);
-    }
-
-    Debug.LogError("Invalid hex color format: " + hex);
-    return Color.white;
-}*/

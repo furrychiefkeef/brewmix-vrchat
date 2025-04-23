@@ -9,7 +9,7 @@ public static class MaterialUtils
         {
             if (target == null || texture == null) return null;
             target.SetTexture("_ParallaxBackground", texture);
-            target.SetTexture("_ParallaxMidground", texture);
+            target.SetTexture("_ParallaxMidground",  texture);
             target.SetTexture("_ParallaxForeground", texture);
             return target;
         }
@@ -18,7 +18,7 @@ public static class MaterialUtils
         {
             if (target == null || texture == null) return null;
             target.SetTexture("_ParallaxBackground", texture);
-            target.SetTexture("_ParallaxMidground", texture);
+            target.SetTexture("_ParallaxMidground",  texture);
             target.SetTexture("_ParallaxForeground", texture);
             return target;  
         }
