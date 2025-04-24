@@ -3,6 +3,10 @@ using Il2CppInterop.Runtime.InteropTypes;
 
 namespace Brewview;
 
+
+/// <summary>
+/// Faster, and Enjoyable to Write (Thanks AI for helping me a lil bit)
+/// </summary>
 public static class SerializationManager
 {
     public static T FromManagedToIL2CPP<T>(object obj)
@@ -18,7 +22,7 @@ public static class SerializationManager
         if (obj is string stringValue)
         {
             // Use the proper string conversion method
-            var il2cppString = IL2CPP.ManagedStringToIl2Cpp(stringValue);
+            IntPtr il2cppString = IL2CPP.ManagedStringToIl2Cpp(stringValue);
             return (T)(object)new Il2CppSystem.String(il2cppString);
         }
 
@@ -108,7 +112,7 @@ public static class SerializationManager
     }
     
     // Optional: IL2CPP to managed converter
-    public static T FromIL2CPPToManaged<T>(Il2CppObjectBase obj)
+    public static T FromIL2CPPToManaged<T>(object? obj)
     {
         if (obj == null)
             return default;

@@ -21,7 +21,7 @@ internal class VRCToggle : Root
     /// <param name="func">The action to execute when the button is clicked.</param>
     /// <param name="sprite_on">An optional sprite to display on the button.</param>
     /// <param name="sprite_off">An optional sprite to display on the button.</param>
-    public VRCToggle(Transform? parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, Sprite? sprite_on = null, Sprite? sprite_off = null)
+    public VRCToggle(Transform? parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null)
     {
         if (!QuickMenu() | !ToggleButton()) throw new($"toggle has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= _Fallback_Dashboard_Group_QM_UI_Buttons();
@@ -40,6 +40,7 @@ internal class VRCToggle : Root
         #region BUTTON COMPONENT
 
         UnityEngine.UI.Toggle.ToggleEvent? TOGGLE_EVENT_LISTENER_0 = _0.onValueChanged;
+        _0.isOn = state;
         TOGGLE_EVENT_LISTENER_0.AddListener(func);
 
         #endregion

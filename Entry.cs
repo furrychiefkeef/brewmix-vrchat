@@ -9,7 +9,9 @@ using Brewchat.Game.Monobehaviours;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
 using Photon.Realtime;
+using PinkstarRecords;
 using Syrup.IMGUI;
+using UnityEngine;
 using Logger = Cpp2IL.Core.Logging.Logger;
 
 [BepInPlugin("brewchat.mod.com", "brew", "4.0.0")]
@@ -30,6 +32,7 @@ public class Entry : BasePlugin
         ClassInjector.RegisterTypeInIl2Cpp<CSS>();
         ClassInjector.RegisterTypeInIl2Cpp<FlyManager>();
         ClassInjector.RegisterTypeInIl2Cpp<KeybindManager>();
+        ClassInjector.RegisterTypeInIl2Cpp<PinkstarBehaviour>();
         h.PatchAll();
         #endregion
     } 

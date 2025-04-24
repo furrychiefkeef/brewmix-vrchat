@@ -24,10 +24,10 @@ internal class QM
             VRCSmallButton acee = new(Modal, "Injection", () => sconsole.print("passion_fruit",1) );
             VRCButton? T = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "Player", "Modify The Player", () => Modal.Open());
             VRCButton? E = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "CSS", "Load Custom StyleEngine", () => CSS.Online());
-            VRCButton? CE = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "CSS", "Load Custom StyleEngine", () => GameUtils.Gameplay.PhotonUtils.SendRaiseEvent(43, "bitch", default));
             VRCToggle? Fly_Toggle = new(Modal, "Fly", "Fly On", "Fly Off", (x) =>
             {
-                PlayerModule.Movement.Fly(Config.Fly);
+                Config.Fly = !Config.Fly;
+                PlayerModule.Movement.Fly(); 
             });
             VRCToggle? Force_Jump = new(Modal, "Force Jump On", "Force Jump Off", "Fly Off", (x) =>
             {

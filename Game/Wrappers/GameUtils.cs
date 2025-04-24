@@ -45,12 +45,20 @@ internal class GameUtils
         }
         public struct  PhotonUtils
         {
-            public static void SendRaiseEvent(byte eventCode, object parameter, SendOptions sendOptions)
+            public enum Events : Byte
+            {
+                VoiceData = 1,
+                Chatbox = 43,
+                OnPlayerJoin = 253,
+                OnPlayerLeft = 254,
+                OnPlayerFailedJoin = byte.MaxValue,
+            }
+            public static void SendRaiseEvent(Events eventCode, object parameter, SendOptions sendOptions)
             {
                 Il2CppSystem.Object il2cpp_object = SerializationManager.FromManagedToIL2CPP<Il2CppSystem.Object>(parameter);
-                VRCNetworkingClient.field_Internal_Static_VRCNetworkingClient_0.Method_Public_Virtual_New_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0(eventCode, il2cpp_object ,new()
+                VRCNetworkingClient.field_Internal_Static_VRCNetworkingClient_0.Method_Public_Virtual_New_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0((byte)eventCode, il2cpp_object ,new()
                 {
-                    field_Public_ReceiverGroup_0 = ReceiverGroup.All,
+                    field_Public_ReceiverGroup_0 = ReceiverGroup.Others,
                     field_Public_EventCaching_0 = EventCaching.DoNotCache
                 }, sendOptions);
             }
@@ -86,7 +94,7 @@ internal class GameUtils
     public class CameraUtils
     {   
         public static Camera? camera { get; set; } = Camera.main;
-        public static GameObject CameraObj => GameObject.Find("Camera (eye)");
+        public static GameObject CameraObj => GameObject.Find("Camera");
     }
 
     public class PlayerModel
@@ -142,9 +150,11 @@ internal class GameUtils
 
             public static void AvatarScaleMax(float v) =>
                 Get().field_Private_VRCPlayerApi_0.SetAvatarEyeHeightMaximumByMeters(v);
-
             public static void AvatarScaleMin(float v) =>
                 Get().field_Private_VRCPlayerApi_0.SetAvatarEyeHeightMinimumByMeters(v);
+            
+            public static void AllowScaling(bool v) =>
+                Get().field_Private_VRCPlayerApi_0.SetManualAvatarScalingAllowed(v);
         }
 
         public static class Matchmaking
@@ -293,6 +303,20 @@ RoomManager.field_Internal_Static_ApiWorld_0 != null;
                 keyboardData5._isWorldKeyboard = true;
                 inputfield._keyboardData = keyboardData5;
                 inputfield.Method_Private_Void_0();
+            }
+        }
+
+        public static class RPCs
+        {
+            
+        }
+
+        public static class Events
+        {
+            public static string SendEvent43_Chatbox(string msg)
+            {
+                GameUtils.Gameplay.PhotonUtils.SendRaiseEvent(Gameplay.PhotonUtils.Events.Chatbox, msg, default);
+                return msg;
             }
         }
     }

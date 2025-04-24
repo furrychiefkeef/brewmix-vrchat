@@ -1,4 +1,5 @@
 ﻿using Brewchat.Cheat.Modules;
+using Brewchat.Game.Wrappers;
 using Syrup.IMGUI;
 using UnityEngine;
 using VRC.Core;
@@ -14,9 +15,5 @@ public static class CorutineHandler
         // You can add more code here if needed after the delay
     }
 
-    public static System.Collections.IEnumerator Clantag()
-    {
-        
-        yield return new WaitForSeconds(0.15f);
-    }
+  
 }
