@@ -54,8 +54,7 @@ internal class GameUtils
                     field_Public_EventCaching_0 = EventCaching.DoNotCache
                 }, sendOptions);
             }
-       
-           
+
             public static string GetPhotonEventName(byte code)
             {
                 return code switch

@@ -99,6 +99,12 @@ namespace brewchat.hybridxcore.bep
             sconsole.print($"Photon Event Received: {__0.Code} {__0.customData}", 0);
         }
         
+        [HarmonyPostfix, HarmonyPatch(typeof(PhotonNetwork), "Method_Public_Static_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0")]
+        public static void CatchOutgoingPhotonEvents(byte __0, object __1, RaiseEventOptions __2, SendOptions __3)
+        {
+            sconsole.print($"Photon Event Sent: Code={__0}, Content={__1}", 0);
+        }
+        
         [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.Method_Public_Void_Player_0))]
         public static void PlayerJoined(ref VRC.Player player)
         {
