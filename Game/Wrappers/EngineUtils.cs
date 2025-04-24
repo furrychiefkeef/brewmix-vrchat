@@ -85,7 +85,7 @@ namespace Brewchat.Game.Wrappers
                 
                 foreach (var VARIABLE in bundle.GetAllAssetNames())
                 {
-                    Entry.Log.LogMessage(VARIABLE);
+                    Entry.Console.LogMessage(VARIABLE);
                 }
                 
                 var obj = bundle.LoadAsset<GameObject>(prefab_name);

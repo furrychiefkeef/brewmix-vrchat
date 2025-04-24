@@ -1,17 +1,15 @@
-﻿using Brewchat.Cheat;
+﻿using Brewchat;
+using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
-using Brewview;
 using ExitGames.Client.Photon;
 using HarmonyLib;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Photon.Realtime;
 using Syrup.IMGUI;
-
 using VRC.Core;
-using VRC.SDKBase;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
-using Object = Il2CppSystem.Object;
 
 
 
@@ -90,21 +88,39 @@ namespace brewchat.hybridxcore.bep
 
         #region PHOTON
 
-        [HarmonyPostfix, HarmonyPatch(typeof(LoadBalancingClient), "OnEvent")]
-        public static void CatchPhotonEvents(EventData __0)
+        [HarmonyPrefix, HarmonyPatch(typeof(LoadBalancingClient), "OnEvent")]
+        public static bool CatchPhotonEvents(EventData? __0)
         {
-            var paramDict = __0.Parameters as System.Collections.IDictionary;
-            if (paramDict != null)
+            if (__0 == null) return false;
+            
+            if (__0.Code == 12)
             {
-                sconsole.print($"[Event {__0.Code}] [Key:{__0.CustomData}] [Sender: {__0.Sender}]", 0);
-                foreach (System.Collections.DictionaryEntry entry in paramDict)
+                if (!Config.BlockEvent12)
                 {
-                    object Data = SerializationManager.FromIL2CPPToManaged<Il2CppSystem.Object>(entry.Value);
-                    sconsole.print($"[Event {__0.Code}] [Key:{entry.Key}] [Sender: {__0.Sender}] Event \n{Newtonsoft.Json.JsonConvert.SerializeObject((Object)Data, Newtonsoft.Json.Formatting.Indented)}", 0);
+                    sconsole.print("photon","/hook", " blocking [sync] packet",0);
+                    new UnityEngine.WaitForSeconds(1);
+                    return false;
                 }
             }
+            if (__0.Code == 1)
+            {
+                var vd = Il2CppArrayBase<byte>.WrapNativeGenericArrayPointer(__0.customData.Pointer);
+                sconsole.print("photon", "/hook", $"[voice] data : {vd} ", 0);
+                Entry.Console.LogMessage($"VOICEDATA: {vd}");
+            }
+            return true;
+            /*var paramDict = __0.Parameters as System.Collections.IDictionary;*/
+            /*sconsole.print($"[Event {__0.Code}] [Key:{__0.CustomDataKey}] [Sender: {__0.Sender}]", 0);*/
+
+            /*if (paramDict == null) return;
+            foreach (Il2CppSystem.Collections.DictionaryEntry entry in paramDict)
+            {
+                System.Object Data = SerializationManager.FromIL2CPPToManaged<object>(entry.Value);
+                sconsole.print("Photon","/Hook",$"[Event {__0.Code}] [Key:{entry.Key}] [Sender: {__0.Sender}] Event \n{Newtonsoft.Json.JsonConvert.SerializeObject((Object)Data, Newtonsoft.Json.Formatting.Indented)}", 0);
+            }*/
         }
-  
+
+
 
 
     /*[HarmonyPostfix, HarmonyPatch(typeof(PhotonNetwork), nameof(PhotonNetwork.Method_Public_Static_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0))]

@@ -8,24 +8,19 @@ using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
-using Photon.Realtime;
 using PinkstarRecords;
 using Syrup.IMGUI;
-using UnityEngine;
-using Logger = Cpp2IL.Core.Logging.Logger;
 
 [BepInPlugin("brewchat.mod.com", "brew", "4.0.0")]
 public class Entry : BasePlugin
 {
     Harmony h = new("brew@UZI5eGVK1BeA1ajf6dC2kWoAhPhvw5e4Dlg2nxGA.patches");
-    public static ManualLogSource Log = new("PINKSTAR.RECORDS");
+    public static ManualLogSource Console = new("PINKSTAR.RECORDS");
     
     
     public override void Load()
     {
         BepInEx.Logging.Logger.Sources.Add(Log);
-        Entry.Log.LogInfo("Entry LEVEL APPLICATION");
-        Entry.Log.LogMessage("Entry LEVEL APPLICATION");
         #region LIB
         ClassInjector.RegisterTypeInIl2Cpp<Syrup.IMGUI.simgui>(); 
         ClassInjector.RegisterTypeInIl2Cpp<Brewchat.Game.Monobehaviours.Toolbox>();

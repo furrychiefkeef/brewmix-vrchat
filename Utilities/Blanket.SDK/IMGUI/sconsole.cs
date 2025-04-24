@@ -26,7 +26,17 @@ internal static class sconsole
     public static void clr() => text.Clear();
     public static string print(string msg, int v)
     {
-        internal_log($"<color=#ffffff>{GetTime()}</color> {glyphs[v]} ->  {$"[{"Photon"}/{"HOOK"}"}] | {msg}");
+        internal_log($"<color=#ffffff>{GetTime()}</color> {glyphs[v]} ->  | {msg}");
+        /*log(
+            $"<color={ColorPalette.CArray[3]}>[{GetTime()}]</color>" +
+/*            $"[{_Version}]" +#1#
+              $"<color={ColorPalette.CArray[0]}>[{_App}]</color>{msg}");*/
+        return msg;
+
+    }
+    public static string print(string flag, string direction, string msg, int v)
+    {
+        internal_log($"<color=#ffffff>{GetTime()}</color> {glyphs[v]} ->  {$"[{flag}{direction}"}] | {msg}");
         /*log(
             $"<color={ColorPalette.CArray[3]}>[{GetTime()}]</color>" +
 /*            $"[{_Version}]" +#1#

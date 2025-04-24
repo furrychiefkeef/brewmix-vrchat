@@ -29,6 +29,10 @@ internal class QM
                 Config.Fly = !Config.Fly;
                 PlayerModule.Movement.Fly(); 
             });
+            VRCToggle? Event = new(Modal, "BlockEvent 12", "", "Fly Off", (x) =>
+            {
+                Config.BlockEvent12 = !Config.BlockEvent12;
+            });
             VRCToggle? Force_Jump = new(Modal, "Force Jump On", "Force Jump Off", "Fly Off", (x) =>
             {
             });

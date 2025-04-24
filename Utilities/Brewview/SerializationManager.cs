@@ -124,7 +124,7 @@ public static class SerializationManager
             return (T)(object)managedString;
         }
         
-        /*if (obj is Il2CppSystem.Boolean boolVal)
+        if (obj is Il2CppSystem.Boolean boolVal)
         {
             return (T)(object)(bool)boolVal.m_value;
         }
@@ -147,8 +147,46 @@ public static class SerializationManager
         if (obj is Il2CppSystem.Int64 longVal)
         {
             return (T)(object)(long)longVal.m_value;
-        }*/
+        }
         
+        /*if (obj is Il2CppSystem.Array il2cppArray && typeof(T).IsArray)
+        {
+            var elementType = typeof(T).GetElementType();
+            int length = il2cppArray.Length;
+
+            if (elementType == typeof(long))
+            {
+                var result = new long[length];
+                for (int i = 0; i < length; i++)
+                {
+                    var item = il2cppArray[i] as Il2CppSystem.Int64;
+                    result[i] = item?.m_value ?? 0;
+                }
+                return (T)(object)result;
+            }
+            else if (elementType == typeof(int))
+            {
+                var result = new int[length];
+                for (int i = 0; i < length; i++)
+                {
+                    var item = il2cppArray[i] as Il2CppSystem.Int32;
+                    result[i] = item?.m_value ?? 0;
+                }
+                return (T)(object)result;
+            }
+            else if (elementType == typeof(string))
+            {
+                var result = new string[length];
+                for (int i = 0; i < length; i++)
+                {
+                    result[i] = il2cppArray[i]?.ToString() ?? string.Empty;
+                }
+                return (T)(object)result;
+            }
+
+            // Add more types here as needed
+            throw new NotSupportedException($"Array element type {elementType} not supported.");
+        }*/
         // Add more conversions as needed
         
         return default;
