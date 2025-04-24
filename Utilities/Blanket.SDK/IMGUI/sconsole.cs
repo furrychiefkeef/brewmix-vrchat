@@ -6,14 +6,15 @@ internal static class sconsole
 {
     /*static string _App = "brewchat";
     const string _Version = "v2024.2.11";*/
-    static string[] states { get; } = 
+    static string[] glyphs { get; } = 
     { 
         "<color=#ed1093>#</color>", 
         "<color=#9cd1a2>+</color>", 
         "<color=#fe0f05>-</color>", 
         "<color=#db4d52>!</color>" 
     };
-    
+
+    private static List<string> States { get; } = new();
     static string GetTime() => DateTime.Now.ToString("hh.mm:ss:fff");
     public static System.Collections.Generic.List<string> text = new();
     public static void internal_log(string str)
@@ -25,7 +26,7 @@ internal static class sconsole
     public static void clr() => text.Clear();
     public static string print(string msg, int v)
     {
-        internal_log($"<color=#ffffff>{GetTime()}</color> {states[v]} | {msg}");
+        internal_log($"<color=#ffffff>{GetTime()}</color> {glyphs[v]} ->  {$"[{"Photon"}/{"HOOK"}"}] | {msg}");
         /*log(
             $"<color={ColorPalette.CArray[3]}>[{GetTime()}]</color>" +
 /*            $"[{_Version}]" +#1#

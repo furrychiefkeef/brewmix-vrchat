@@ -3,82 +3,125 @@ using BepInEx.Unity.IL2CPP.Utils;
 using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
+using Brewchat.Game.Wrappers;
 using Brewview;
+using ExitGames.Client.Photon;
 using HarmonyLib;
+using Photon.Pun;
+using Photon.Realtime;
+using Syrup.IMGUI;
 using UnityEngine.Playables;
 using VRC.Core;
+using VRC.SDKBase;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
+using Player = VRC.Player;
 
 
 namespace brewchat.hybridxcore.bep
 {
     [HarmonyPatch]
     internal class Hooks
-    {   
+    {
         static bool OfflineUILoaded = false;
         static bool OnlineUILoaded = false;
 
-       #region INTERNAL_CORE
+        #region INTERNAL_CORE
 
-        
+
 
         #endregion
-        
-       #region INTERNAL_UI
+
+        #region INTERNAL_UI
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
         public static void ApplicationDomain_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null && !OfflineUILoaded) return;
             __instance.gameObject.GetOrAddComponent<CSS>();
-            CSS.Offline();   
+            CSS.Offline();
         }
-       
+
 
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
             __instance.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
-            UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
+            UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel,
+                true);
             QM.Apply();
             Toolbox.LoadMyUI();
         }
+
         [HarmonyPostfix, HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
         public static void QuickMenu_Initialize_HOOK(ref MainMenu? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
         }
+
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUIBackground), nameof(VRCUIBackground.Start))]
         public static void BG_Initialize_HOOK(ref VRCUIBackground? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
             OnlineUILoaded = true;
-            __instance.StartCoroutine(CorutineHandler.CSSONLINE_RUNTIME());
+            CSS.Online();
         }
-       #endregion
-       
-       #region INTERNAL_API
-       [HarmonyPostfix, HarmonyPatch(typeof(VRCPlusStatus), nameof(VRCPlusStatus.prop_Object1PublicTYBoTYUnique_1_Boolean_0), MethodType.Getter)]
-       public static void ExSpoof_VRChatPlus_HOOK(ref Object1PublicTYBoTYUnique<bool> __result)
-       {
-           if (__result != null && !APIUser.CurrentUser.isSupporter)
-               __result.prop_TYPE_0 = true;
-       }  
-       #endregion
-       
-       #region UpdateHook
+
+        #endregion
+
+        #region INTERNAL_API
+
+        [HarmonyPostfix,
+         HarmonyPatch(typeof(VRCPlusStatus), nameof(VRCPlusStatus.prop_Object1PublicTYBoTYUnique_1_Boolean_0),
+             MethodType.Getter)]
+        public static void ExSpoof_VRChatPlus_HOOK(ref Object1PublicTYBoTYUnique<bool> __result)
+        {
+            if (__result != null && !APIUser.CurrentUser.isSupporter)
+                __result.prop_TYPE_0 = true;
+        }
+
+        #endregion
+
+        #region UpdateHook
+
+        #endregion
+
+        #region Player_Hooks
+
+        #endregion
+
+        #region PHOTON
+
+        [HarmonyPostfix, HarmonyPatch(typeof(VRCNetworkingClient), "OnEvent")]
+        public static void CatchPhotonEvents(EventData __0)
+        {
+            sconsole.print($"Photon Event Received: {__0.Code} {__0.customData}", 0);
+        }
         
-       #endregion
+        [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.Method_Public_Void_Player_0))]
+        public static void PlayerJoined(ref VRC.Player player)
+        {
+                sconsole.print($"Player Joined: {player}", 0);
+        }
         
-       #region Player_Hooks
-       
-       #endregion
-      
+        [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.field_Internal_Static_NetworkManager_0.Method_Public_Void_Player_PDM_1))]
+        public static void PlayerLeft(VRC.Player player)
+        {
+            sconsole.print($"Player Left: {player}", 0);
+        }
+        #endregion
     }
-   
 }
+
+
+ 
+
+
+       
+   
+
+
 /*[HarmonyPostfix, HarmonyPatch(typeof(VRCUiManager), nameof(QuickMenu.LateUpdate))]
       public static void UpdateManager()
       {

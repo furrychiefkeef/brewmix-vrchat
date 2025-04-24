@@ -8,6 +8,7 @@ using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
+using Photon.Realtime;
 using Syrup.IMGUI;
 using Logger = Cpp2IL.Core.Logging.Logger;
 

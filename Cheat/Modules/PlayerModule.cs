@@ -78,7 +78,7 @@ namespace Brewchat.Cheat.Modules;
                    GameObject obj = new("Camera");
                    obj.AddComponent<AudioListener>();
                    var cam = obj.AddComponent<Camera>();
-                   GameUtils.GameCamera.camera = cam;
+                   GameUtils.CameraUtils.camera = cam;
               
                 switch (pointOfView)
                 {

@@ -1,12 +1,19 @@
-﻿using TMPro;
+﻿using Brewview;
+using ExitGames.Client.Photon;
+using Il2CppInterop.Runtime;
+using Photon.Pun;
+using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 using VRC;
+using VRC.Core;
 using VRC.DataModel;
 using VRC.Localization;
 using VRC.SDKBase;
 using VRC.UI.Client.HUD;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
+using Object = Il2CppSystem.Object;
 
 namespace Brewchat.Game.Wrappers;
 
@@ -14,7 +21,7 @@ internal class GameUtils
 {
     public class Gameplay
     {
-        public struct  Events
+        public struct  CallbackEvents
         {
             static QuickMenu? QuickMenu_Cache;
             static MainMenu? MainMenu_Cache;
@@ -27,7 +34,6 @@ internal class GameUtils
                     return QuickMenu_Cache != null && QuickMenu_Cache.enabled;
                 }
             }
-
             public static bool IsInMainMenu
             {
                 get
@@ -37,9 +43,48 @@ internal class GameUtils
                 }
             }
         }
+        public struct  PhotonUtils
+        {
+            public static void SendRaiseEvent(byte eventCode, object parameter, SendOptions sendOptions)
+            {
+                Il2CppSystem.Object il2cpp_object = SerializationManager.FromManagedToIL2CPP<Il2CppSystem.Object>(parameter);
+                VRCNetworkingClient.field_Internal_Static_VRCNetworkingClient_0.Method_Public_Virtual_New_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0(eventCode, il2cpp_object ,new()
+                {
+                    field_Public_ReceiverGroup_0 = ReceiverGroup.All,
+                    field_Public_EventCaching_0 = EventCaching.DoNotCache
+                }, sendOptions);
+            }
+       
+           
+            public static string GetPhotonEventName(byte code)
+            {
+                return code switch
+                {
+                     0 => "CustomEvent",
+                    43 => "Chatbox",
+                    200 => "CustomEvent",
+                    201 => "RaiseEvent",
+                    202 => "SerializeView",
+                    203 => "Instantiate",
+                    204 => "Destroy",
+                    205 => "RemoveCachedRPCs",
+                    206 => "SendSerializeReliable",
+                    207 => "DestroyPlayerObjects",
+                    208 => "DestroyAll",
+                    209 => "OwnershipRequest",
+                    210 => "OwnershipTransfer",
+                    251 => "Leave",
+                    252 => "Join",
+                    253 => "JoinLobby",
+                    254 => "LeaveLobby",
+                    255 => "JoinRandomFailed",
+                    _ => "Unknown"
+                };
+            }
+        }
     }
 
-    public class GameCamera
+    public class CameraUtils
     {   
         public static Camera? camera { get; set; } = Camera.main;
         public static GameObject CameraObj => GameObject.Find("Camera (eye)");
