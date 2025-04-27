@@ -30,14 +30,19 @@ namespace brewchat.hybridxcore.bep
 
         #region INTERNAL_CORE
 
-
+        [HarmonyPostfix, HarmonyPatch(typeof(VRCApplication), nameof(VRCApplication.Awake))]
+        public static void DomainApp_Initialize_HOOK(ref VRCUiPageLoading? __instance)
+        {
+            if (__instance is null) return;
+            __instance.gameObject.GetOrAddComponent<KeybindManager>();
+        }
 
         #endregion
 
         #region INTERNAL_UI
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
-        public static void ApplicationDomain_Initialize_HOOK(ref VRCUiPageLoading? __instance)
+        public static void VRCLoadingSequence_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null && !OfflineUILoaded) return;
             __instance.gameObject.GetOrAddComponent<CSS>();

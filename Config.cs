@@ -31,13 +31,15 @@ public class Config
     
     public static T Get<T>(Properties pp)
     {
-        return (T)(object)(pp switch 
+        object result = pp switch
         {
             Properties.Fly => Movement.fly,
-            Properties.Speed => Movement.speed,
+            Properties.Speed => Movement.speed ?? 6.5f, // Default value if null
             Properties.abruptness2motion => Movement.abruptness2motion,
             _ => default(T)
-        })!;
+        };
+    
+        return result == null ? default(T) : (T)result;
     }
 
     public struct Logging
