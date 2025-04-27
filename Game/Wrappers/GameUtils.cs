@@ -60,7 +60,7 @@ internal class GameUtils
             public static void SendRaiseEvent(byte code, object parameter, SendOptions sendOptions)
             {
                 var il2 = Pasted.WTFBlaze.Utils.Managers.SerializationManager.FromManagedToIL2CPP<Il2CppSystem.Object>(parameter);
-                PhotonNetwork.Method_Public_Static_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0(code, il2 ,new()
+                PhotonNetwork.RaiseEvent(code, il2 ,new()
                 {
                     field_Public_ReceiverGroup_0 = ReceiverGroup.Others,
                     field_Public_EventCaching_0 = EventCaching.DoNotCache
@@ -109,28 +109,28 @@ internal class GameUtils
         {
             public static VRCPlayerApi Run_Speed(float v = 2f)
             {
-                VRCPlayerApi? player = Get().field_Private_VRCPlayerApi_0;
+                VRCPlayerApi? player = Get().VRCPlayerApi;
                 player.SetRunSpeed(v);
                 return player;
             }
 
             public static VRCPlayerApi Walk_Speed(float v = 2f)
             {
-                VRCPlayerApi? player = Get().field_Private_VRCPlayerApi_0;
+                VRCPlayerApi? player = Get().VRCPlayerApi;
                 player.SetWalkSpeed(v);
                 return player;
             }
 
             public static VRCPlayerApi Jump_Impulse(float v = 3f)
             {
-                VRCPlayerApi? player = Get().field_Private_VRCPlayerApi_0;
+                VRCPlayerApi? player = Get().VRCPlayerApi;
                 player.SetJumpImpulse(v);
                 return player;
             }
 
             public static VRCPlayerApi Velocity(Vector3 v)
             {
-                VRCPlayerApi? player = Get().field_Private_VRCPlayerApi_0;
+                VRCPlayerApi? player = Get().VRCPlayerApi;
                 player.SetVelocity(v);
                 return player;
 
@@ -138,7 +138,7 @@ internal class GameUtils
 
             public static VRCPlayerApi Gravity(float v = 1f)
             {
-                VRCPlayerApi? player = Get().field_Private_VRCPlayerApi_0;
+                VRCPlayerApi? player = Get().VRCPlayerApi;
                 player.SetGravityStrength(v);
                 return player;
             }
@@ -147,29 +147,29 @@ internal class GameUtils
         public static class Avatar
         {
             public static void AvatarScale(float v = 4f) =>
-                Get().field_Private_VRCPlayerApi_0.SetAvatarEyeHeightByMeters(v);
+                Get().VRCPlayerApi.SetAvatarEyeHeightByMeters(v);
 
             public static void AllowAvatarScaling(bool v = true) =>
-                Get().field_Private_VRCPlayerApi_0.SetManualAvatarScalingAllowed(v);
+                Get().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
 
             public static void AvatarScaleMax(float v) =>
-                Get().field_Private_VRCPlayerApi_0.SetAvatarEyeHeightMaximumByMeters(v);
+                Get().VRCPlayerApi.SetAvatarEyeHeightMaximumByMeters(v);
             public static void AvatarScaleMin(float v) =>
-                Get().field_Private_VRCPlayerApi_0.SetAvatarEyeHeightMinimumByMeters(v);
+                Get().VRCPlayerApi.SetAvatarEyeHeightMinimumByMeters(v);
             
             public static void AllowScaling(bool v) =>
-                Get().field_Private_VRCPlayerApi_0.SetManualAvatarScalingAllowed(v);
+                Get().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
         }
 
         public static class Matchmaking
         {
-            public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers => PlayerManager.prop_PlayerManager_0.field_Private_List_1_Player_0;
+            public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers => PlayerManager.prop_PlayerManager_0.PlayerList;
         }
     }
 
     public class World
     {
-        public static bool IsWorldLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.field_Internal_Static_ApiWorld_0 != null;
+        public static bool IsWorldLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.currentApiWorld != null;
     }
 
     public static class UI
@@ -220,15 +220,14 @@ internal class GameUtils
                 VRC.UI.Client.HUD.HudController
                     .field_Public_Static_HudController_0
                     .notification
-                    ?.Method_Public_Void_Sprite_LocalizableString_LocalizableString_Single_Object1PublicTYBoTYUnique_1_Boolean_0
-                        (sprite, title.Localize(), content.Localize(), duration);
+                    ?.ShowNotification(sprite, title.Localize(), content.Localize(), duration);
 
-                #region HUD_V1
+                
 
             }
 
             #endregion
-
+            #region HUD_V1
             public static void PopUp(string? title = null, string? content = null, float duration = 10f)
             {
                 VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
@@ -254,7 +253,6 @@ internal class GameUtils
                         (title.Localize(), content.Localize(), button_text.Localize(), func, idk);
 
             }
-
             #endregion
 
             #endregion
@@ -292,7 +290,7 @@ internal class GameUtils
                 {
                     Object = new GameObject("[Saturn] Keyboard");
                     UnityEngine.Object.DontDestroyOnLoad(Object);
-                    inputfield = Object.AddComponent<VRCInputField>();
+                    inputfield = Object.GetOrAddComponent<VRCInputField>();
                 }
 
                 KeyboardData keyboardData = new();

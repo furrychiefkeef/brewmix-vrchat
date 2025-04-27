@@ -16,6 +16,7 @@ internal class PlayerModule
         static readonly List<string> _disabledColliders = new();
         public static void Fly()
         {
+            bool? fly = Config.Get<bool>(Config.Properties.Fly);
             Player player = GameUtils.PlayerModel.Get();
             if (!player && !GameUtils.World.IsWorldLoaded()) return;
             else
@@ -30,7 +31,7 @@ internal class PlayerModule
 
                 #region LOGIC
 
-                switch (Config.Fly)
+                switch (fly)
                 {
                     case true:
                         fly_component.enabled = true;
@@ -54,8 +55,8 @@ internal class PlayerModule
                         break;
                 }
 
-                sconsole.print($"[LOCAL_PLAYER] Fly is Set to {Config.Fly}", 1);
-                GameUtils.UI.HUD.ToastV2("Player+Movement", $"Fly is set to {Config.Fly}");
+                sconsole.print($"[LOCAL_PLAYER] Fly is Set to {fly}", 1);
+                GameUtils.UI.HUD.ToastV2("Player+Movement", $"Fly is set to {fly}");
 
                 #endregion
 

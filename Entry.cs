@@ -29,7 +29,6 @@ public class Entry : BasePlugin
         ClassInjector.RegisterTypeInIl2Cpp<CSS>();
         ClassInjector.RegisterTypeInIl2Cpp<FlyManager>();
         ClassInjector.RegisterTypeInIl2Cpp<KeybindManager>();
-        ClassInjector.RegisterTypeInIl2Cpp<PinkstarBehaviour>();
         ClassInjector.RegisterTypeInIl2Cpp<Exploits>();
         ClassInjector.RegisterTypeInIl2Cpp<skeletonesp>();
         ClassInjector.RegisterTypeInIl2Cpp<wallhacks>();

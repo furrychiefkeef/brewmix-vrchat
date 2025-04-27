@@ -30,7 +30,8 @@ internal class QM
             VRCButton? E = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "CSS", "Load Custom StyleEngine", () => CSS.Online());
             VRCToggle? Fly_Toggle = new(Modal, "Fly", "Fly On", "Fly Off", (x) =>
             {
-                Config.Fly = !Config.Fly;
+                bool Fly = Config.Get<bool>(Config.Properties.Fly);
+                Fly = !Fly;
                 PlayerModule.Movement.Fly(); 
             });
             VRCToggle? Event12 = new(Modal, "BlockEvent 12", "", "Fly Off", (x) =>

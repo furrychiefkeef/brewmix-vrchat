@@ -30,7 +30,7 @@ class skeletonesp : MonoBehaviour
 
             try
             {
-                Vector3 pos = _player.field_Private_VRCPlayerApi_0.GetBonePosition(bone);
+                Vector3 pos = _player.VRCPlayerApi.GetBonePosition(bone);
 
                 // Skip invalid positions
                 if (pos == Vector3.zero) continue;
@@ -263,10 +263,17 @@ class skeletonesp : MonoBehaviour
 class wallhacks : MonoBehaviour
 {
     private Player _player;
+    private SkinnedMeshRenderer[] _avatarender;
     private void Start()
+    
     {
         _player = transform.GetComponent<VRC.Player>();
-        _player.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
+        _avatarender = transform.GetComponentsInChildren<SkinnedMeshRenderer>(false);
+        if (_avatarender == null) return;
+        foreach (SkinnedMeshRenderer meshs in _avatarender)
+        {
+            meshs.gameObject.layer =  GameUtils.Gameplay.RenderLayers.InternalUI;
+        }
     }
 
    

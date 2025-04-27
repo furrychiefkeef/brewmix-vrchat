@@ -8,7 +8,7 @@ public class Config
     {
         Fly,
         Speed,
-        Event12,
+        abruptness2motion,
     }
     #region MainMenu+QuickMenu
     
@@ -17,11 +17,28 @@ public class Config
     
     #endregion
 
-    public static bool Fly { get; set; }
-    public static float? FlySpeed { get; set; } = 6.5f;
-
-    public bool SetFlyEnable(bool state) =>  Fly = state;
-    public bool GetFlyEnable(Properties pp ) { return Fly; }
+    struct Movement
+    {
+        #region Fly
+        
+        public static bool? fly { get; set; }
+        public static float? speed { get; set; } = 6.5f;
+        public static bool? abruptness2motion { get; set; }
+        
+        #endregion
+        
+    }
+    
+    public static T Get<T>(Properties pp)
+    {
+        return (T)(object)(pp switch 
+        {
+            Properties.Fly => Movement.fly,
+            Properties.Speed => Movement.speed,
+            Properties.abruptness2motion => Movement.abruptness2motion,
+            _ => default(T)
+        })!;
+    }
 
     public struct Logging
     {
