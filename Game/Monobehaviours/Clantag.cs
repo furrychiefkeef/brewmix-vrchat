@@ -9,43 +9,12 @@ namespace PinkstarRecords
         // Clantag options
         private List<string> clanTags = new List<string>
         {
-            "⭐ P I N K S T A R ⭐",
-            "😎 P I N K S T A R 😎",
-            "P I N K S T A R . R E C O R D S",
-            "✨ P I N K S T A R ✨",
-            "",  // Blank for blinking effect
-            "P I N K S T A R",
-            "",  // Blank for blinking effect
-            "P I N K S T A R . R E C O R D S",
-            "",  // Blank for blinking effect
-            "＞︿＜ P I N K S T A R ＞︿＜",
-            "🎵 P I N K S T A R . R E C O R D S 🎵",
-            "💖 P 💖 I 💖 N 💖 K 💖 S 💖 T 💖 A 💖 R 💖",
-            "",  // Blank for blinking effect
-            "【P】【I】【N】【K】【S】【T】【A】【R】",
-            "🔥 PINKSTAR.RECORDS 🔥",
-            "",  // Blank for blinking effect
-            "ℙ𝕀ℕ𝕂𝕊𝕋𝔸ℝ.ℝ𝔼ℂ𝕆ℝ𝔻𝕊",
-            "░P░I░N░K░S░T░A░R░",
-            "",  // Blank for blinking effect
-            "▶️ PINKSTAR.RECORDS ◀️",
-            "📀 PINKSTAR 📀",
-            "",  // Blank for blinking effect
-            "⚡ P I N K S T A R ⚡",
-            "🎧 PINKSTAR.RECORDS 🎧",
-            "",  // Blank for blinking effect
-            "P_I_N_K_S_T_A_R",
-            "🌟 PINKSTAR 🌟",
-            "",  // Blank for blinking effect
-            "『P』『I』『N』『K』『S』『T』『A』『R』",
-            "✅ PINKSTAR.RECORDS ✅",
-            "",  // Blank for blinking effect
-            "⭐ P I N K S T A R ⭐"
+            
         };
         
 
         private bool isEnabled = true;
-        private float delay = 0.3f;
+        private float delay = 0.1f;
         private float lastChangeTime = 0f;
         private int currentTagIndex = 0;
         
@@ -89,7 +58,7 @@ namespace PinkstarRecords
                 try
                 {
                     GameUtils.VRChatUtils.Events.SendEvent43_Chatbox(clanTags[currentTagIndex]);
-                }
+                }   
                 catch (System.Exception) { }
                 
                 // Move to next tag in sequence

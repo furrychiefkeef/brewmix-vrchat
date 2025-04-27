@@ -269,7 +269,7 @@
       <HintPath>..\..\tools\medicine-deob\bin\Debug\net6.0\interop\Unity.XR.OpenVR.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\tools\medicine-deob\bin\Debug\net6.0\interop\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AccessibilityModule">
       <HintPath>..\..\tools\medicine-deob\bin\Debug\net6.0\interop\UnityEngine.AccessibilityModule.dll</HintPath>
@@ -302,7 +302,7 @@
       <HintPath>..\..\tools\medicine-deob\bin\Debug\net6.0\interop\UnityEngine.ContentLoadModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\tools\medicine-deob\bin\Debug\net6.0\interop\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\HybridXCore\interop\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CrashReportingModule">
       <HintPath>..\..\tools\medicine-deob\bin\Debug\net6.0\interop\UnityEngine.CrashReportingModule.dll</HintPath>

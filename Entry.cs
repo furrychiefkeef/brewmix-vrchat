@@ -4,8 +4,10 @@ using System.Resources;
 using BepInEx;
 using BepInEx.Logging;
 using BepInEx.Unity.IL2CPP;
+using BlanketSDK.Utilities;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
+using Brewchat.Game.Wrappers;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
 using PinkstarRecords;
@@ -28,6 +30,9 @@ public class Entry : BasePlugin
         ClassInjector.RegisterTypeInIl2Cpp<FlyManager>();
         ClassInjector.RegisterTypeInIl2Cpp<KeybindManager>();
         ClassInjector.RegisterTypeInIl2Cpp<PinkstarBehaviour>();
+        ClassInjector.RegisterTypeInIl2Cpp<Exploits>();
+        ClassInjector.RegisterTypeInIl2Cpp<skeletonesp>();
+        ClassInjector.RegisterTypeInIl2Cpp<wallhacks>();
         h.PatchAll();
         #endregion
     } 

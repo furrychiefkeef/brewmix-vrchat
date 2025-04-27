@@ -65,33 +65,28 @@ namespace Brewchat.Game.Wrappers
                 if(keep == true) UnityEngine.Object.DontDestroyOnLoad(obj);
                 return obj;
             }
-            public static UnityEngine.Object AssetBundle(string? dir, string? name, bool? keep)
+            public static UnityEngine.Object AssetBundle(string? dir, string? prefab_name, bool? keep)
             {   
                 if(dir.IsNullOrEmpty()) return null;
                 AssetBundle? bundle = UnityEngine.AssetBundle
                     .LoadFromFileAsync(dir)
                     .GetAwaiter().GetResult();
 
-                UnityEngine.Object obj = bundle.LoadAssetAsync<GameObject>(name)
+                UnityEngine.Object obj = bundle.LoadAssetAsync<GameObject>(prefab_name)
                     .GetAwaiter().GetResult();
                 if(keep == true) UnityEngine.Object.DontDestroyOnLoad(obj);
                 return obj;
             }
-            public static UnityEngine.GameObject AssetBundle(Uri? url, string? prefab_name, bool? keep, bool unload = false)
+            public static UnityEngine.GameObject AssetBundle(Uri? url, string? prefab_name, bool? keep)
             {
                 using var client = new System.Net.Http.HttpClient();
                 var data = client.GetByteArrayAsync(url).Result;
                 var bundle = UnityEngine.AssetBundle.LoadFromMemory(data);
-                
-                foreach (var VARIABLE in bundle.GetAllAssetNames())
-                {
-                    Entry.Console.LogMessage(VARIABLE);
-                }
-                
+ 
                 var obj = bundle.LoadAsset<GameObject>(prefab_name);
                 GameObject? instance = UnityEngine.Object.Instantiate(obj);
-                if (keep is true) UnityEngine.Object.DontDestroyOnLoad(obj);
-                bundle.Unload(unload);
+                if (keep is true) UnityEngine.Object.DontDestroyOnLoad(instance);
+                bundle.Unload(false);
                 return instance;
             }
             #endregion

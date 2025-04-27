@@ -21,6 +21,10 @@ internal class GameUtils
 {
     public class Gameplay
     {
+        public struct RenderLayers
+        {
+            public static LayerMask InternalUI = LayerMask.NameToLayer("InternalUI");
+        }
         public struct  CallbackEvents
         {
             static QuickMenu? QuickMenu_Cache;
@@ -53,10 +57,10 @@ internal class GameUtils
                 OnPlayerLeft = 254,
                 OnPlayerFailedJoin = byte.MaxValue,
             }
-            public static void SendRaiseEvent(Events eventCode, object parameter, SendOptions sendOptions)
+            public static void SendRaiseEvent(byte code, object parameter, SendOptions sendOptions)
             {
-                Il2CppSystem.Object il2cpp_object = SerializationManager.FromManagedToIL2CPP<Il2CppSystem.Object>(parameter);
-                VRCNetworkingClient.field_Internal_Static_VRCNetworkingClient_0.Method_Public_Virtual_New_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0((byte)eventCode, il2cpp_object ,new()
+                var il2 = Pasted.WTFBlaze.Utils.Managers.SerializationManager.FromManagedToIL2CPP<Il2CppSystem.Object>(parameter);
+                PhotonNetwork.Method_Public_Static_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0(code, il2 ,new()
                 {
                     field_Public_ReceiverGroup_0 = ReceiverGroup.Others,
                     field_Public_EventCaching_0 = EventCaching.DoNotCache
@@ -159,17 +163,13 @@ internal class GameUtils
 
         public static class Matchmaking
         {
-            public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers =>
-                PlayerManager.prop_PlayerManager_0.field_Private_List_1_Player_0;
+            public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers => PlayerManager.prop_PlayerManager_0.field_Private_List_1_Player_0;
         }
-
-
     }
 
     public class World
     {
-        public static bool IsWorldLoaded() => RoomManager.prop_ApiWorldInstance_0 != null ||
-RoomManager.field_Internal_Static_ApiWorld_0 != null;
+        public static bool IsWorldLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.field_Internal_Static_ApiWorld_0 != null;
     }
 
     public static class UI
@@ -315,10 +315,11 @@ RoomManager.field_Internal_Static_ApiWorld_0 != null;
         {
             public static string SendEvent43_Chatbox(string msg)
             {
-                GameUtils.Gameplay.PhotonUtils.SendRaiseEvent(Gameplay.PhotonUtils.Events.Chatbox, msg, default);
+                GameUtils.Gameplay.PhotonUtils.SendRaiseEvent(43, msg, default);
                 return msg;
             }
         }
     }
-    
+
+  
 }

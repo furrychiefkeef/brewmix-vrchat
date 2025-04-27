@@ -24,6 +24,7 @@ internal class CSS : UnityEngine.MonoBehaviour
 
     public static void Offline()
     {
+        
             FindObjectsOfType<UnityEngine.UI.Button>().ToList().ForEach(button_colors =>
             {
                 ColorBlock colorBlock = button_colors.colors;

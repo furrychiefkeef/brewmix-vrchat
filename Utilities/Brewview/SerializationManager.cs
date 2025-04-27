@@ -1,194 +1,115 @@
-﻿using Il2CppInterop.Runtime;
-using Il2CppInterop.Runtime.InteropTypes;
-
-namespace Brewview;
-
-
-/// <summary>
-/// Faster, and Enjoyable to Write (Thanks AI for helping me a lil bit)
-/// </summary>
-public static class SerializationManager
+﻿
+namespace Pasted.WTFBlaze.Utils.Managers
 {
-    public static T FromManagedToIL2CPP<T>(object obj)
-    {
-        if (obj == null)
-            return default;
-
-        // If already the correct type, return directly
-        if (obj is T il2cppObj)
-            return il2cppObj;
-
-        // String conversion
-        if (obj is string stringValue)
-        {
-            // Use the proper string conversion method
-            IntPtr il2cppString = IL2CPP.ManagedStringToIl2Cpp(stringValue);
-            return (T)(object)new Il2CppSystem.String(il2cppString);
-        }
-
-        // Primitive type conversions using proper boxing methods
-        if (obj is bool boolValue)
-        {
-            // Use the Il2CppSystem.Convert methods which handle the conversions correctly
-            return (T)(object)Il2CppSystem.Convert.ToBoolean(boolValue);
-        }
-
-        if (obj is int intValue)
-        {
-            return (T)(object)Il2CppSystem.Convert.ToInt32(intValue);
-        }
-
-        if (obj is float floatValue)
-        {
-            return (T)(object)Il2CppSystem.Convert.ToSingle(floatValue);
-        }
-
-        if (obj is double doubleValue)
-        {
-            return (T)(object)Il2CppSystem.Convert.ToDouble(doubleValue);
-        }
-
-        if (obj is long longValue)
-        {
-            return (T)(object)Il2CppSystem.Convert.ToInt64(longValue);
-        }
-
-        // Handle System.Array (not Il2CppSystem.Array)
-        if (obj is System.Array managedArray)
-        {
-            var il2cppList = new Il2CppSystem.Collections.Generic.List<Il2CppSystem.Object>();
-            foreach (var item in managedArray)
-            {
-                var convertedItem = FromManagedToIL2CPP<Il2CppSystem.Object>(item);
-                if (convertedItem != null)
-                    il2cppList.Add(convertedItem);
-            }
-            return (T)(object)il2cppList;
-        }
-
-        // Handle managed dictionaries
-        if (obj is System.Collections.IDictionary dict)
-        {
-            var il2cppDict = new Il2CppSystem.Collections.Generic.Dictionary<Il2CppSystem.Object, Il2CppSystem.Object>();
-            foreach (System.Collections.DictionaryEntry entry in dict)
-            {
-                var key = FromManagedToIL2CPP<Il2CppSystem.Object>(entry.Key);
-                var value = FromManagedToIL2CPP<Il2CppSystem.Object>(entry.Value);
-                
-                if (key != null && value != null)
-                    il2cppDict.Add(key, value);
-            }
-            return (T)(object)il2cppDict;
-        }
-
-        // Handle managed lists
-        if (obj is System.Collections.IList list)
-        {
-            var il2cppList = new Il2CppSystem.Collections.Generic.List<Il2CppSystem.Object>();
-            foreach (var item in list)
-            {
-                var il2cppItem = FromManagedToIL2CPP<Il2CppSystem.Object>(item);
-                if (il2cppItem != null)
-                    il2cppList.Add(il2cppItem);
-            }
-            return (T)(object)il2cppList;
-        }
-
-        // Handle HashSet - need to convert directly to a List for IL2CPP
-        if (obj is System.Collections.IEnumerable enumerable && !(obj is string))
-        {
-            var il2cppList = new Il2CppSystem.Collections.Generic.List<Il2CppSystem.Object>();
-            foreach (var item in enumerable)
-            {
-                var il2cppItem = FromManagedToIL2CPP<Il2CppSystem.Object>(item);
-                if (il2cppItem != null)
-                    il2cppList.Add(il2cppItem);
-            }
-            return (T)(object)il2cppList;
-        }
-
-        // If we can't convert, return default value
-        return default;
-    }
     
-    // Optional: IL2CPP to managed converter
-    public static T FromIL2CPPToManaged<T>(object? obj)
+    /// <summary>
+    /// [pasted utils]
+    /// </summary>
+    public static class SerializationManager
     {
-        if (obj == null)
-            return default;
-        
-        // Handle primitive types and strings
-        if (obj is Il2CppSystem.String il2cppString)
-        {
-            string managedString = il2cppString.ToString();
-            return (T)(object)managedString;
-        }
-        
-        if (obj is Il2CppSystem.Boolean boolVal)
-        {
-            return (T)(object)(bool)boolVal.m_value;
-        }
-        
-        if (obj is Il2CppSystem.Int32 intVal)
-        {
-            return (T)(object)(int)intVal.m_value;
-        }
-        
-        if (obj is Il2CppSystem.Single floatVal)
-        {
-            return (T)(object)(float)floatVal.m_value;
-        }
-        
-        if (obj is Il2CppSystem.Double doubleVal)
-        {
-            return (T)(object)(double)doubleVal.m_value;
-        }
-        
-        if (obj is Il2CppSystem.Int64 longVal)
-        {
-            return (T)(object)(long)longVal.m_value;
-        }
-        
-        /*if (obj is Il2CppSystem.Array il2cppArray && typeof(T).IsArray)
-        {
-            var elementType = typeof(T).GetElementType();
-            int length = il2cppArray.Length;
 
-            if (elementType == typeof(long))
+      
+        public static byte[] ToByteArray(Il2CppSystem.Object obj)
+        {
+            if (obj == null) return null;
+            try
             {
-                var result = new long[length];
-                for (int i = 0; i < length; i++)
-                {
-                    var item = il2cppArray[i] as Il2CppSystem.Int64;
-                    result[i] = item?.m_value ?? 0;
-                }
-                return (T)(object)result;
+                var bf = new Il2CppSystem.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                var ms = new Il2CppSystem.IO.MemoryStream();
+                bf.Serialize(ms, obj);
+                return ms.ToArray();
             }
-            else if (elementType == typeof(int))
+            catch (System.Exception e)
             {
-                var result = new int[length];
-                for (int i = 0; i < length; i++)
-                {
-                    var item = il2cppArray[i] as Il2CppSystem.Int32;
-                    result[i] = item?.m_value ?? 0;
-                }
-                return (T)(object)result;
+                Entry.Console.LogMessage(e);
+                return null;
             }
-            else if (elementType == typeof(string))
-            {
-                var result = new string[length];
-                for (int i = 0; i < length; i++)
-                {
-                    result[i] = il2cppArray[i]?.ToString() ?? string.Empty;
-                }
-                return (T)(object)result;
-            }
+        }
 
-            // Add more types here as needed
-            throw new NotSupportedException($"Array element type {elementType} not supported.");
-        }*/
-        // Add more conversions as needed
-        
-        return default;
+        public static byte[] ToByteArray(object obj)
+        {
+            if (obj == null) return null;
+            try
+            {
+                var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                var ms = new System.IO.MemoryStream();
+                bf.Serialize(ms, obj);
+                return ms.ToArray();
+            }
+            catch (System.Exception e)
+            {
+                Entry.Console.LogMessage(e);
+                return null;
+            }
+        }
+
+        public static T FromByteArray<T>(byte[] data)
+        {
+            if (data == null) return default;
+            try
+            {
+                var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                using var ms = new System.IO.MemoryStream(data);
+                var obj = bf.Deserialize(ms);
+                return (T)obj;
+            }
+            catch (System.Exception e)
+            {
+                Entry.Console.LogMessage(e);
+                return default;
+            }
+        }
+
+        public static T IL2CPPFromByteArray<T>(byte[] data)
+        {
+            if (data == null) return default;
+            try
+            {
+                var bf = new Il2CppSystem.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                var ms = new Il2CppSystem.IO.MemoryStream(data);
+                object obj = bf.Deserialize(ms);
+                return (T)obj;
+            }
+            catch (System.Exception e)
+            {
+                 Entry.Console.LogMessage(e);
+                return default;
+            }
+        }
+
+        public static T FromIL2CPPToManaged<T>(Il2CppSystem.Object obj)
+        {
+            return FromByteArray<T>(ToByteArray(obj));
+        }
+
+        public static T FromManagedToIL2CPP<T>(object obj)
+        {
+            return IL2CPPFromByteArray<T>(ToByteArray(obj));
+        }
+
+        public static object[] FromIL2CPPArrayToManagedArray(Il2CppSystem.Object[] obj)
+        {
+            var Parameters = new object[obj.Length];
+            for (var i = 0; i < obj.Length; i++)
+                if (obj[i].GetIl2CppType().Attributes == Il2CppSystem.Reflection.TypeAttributes.Serializable)
+                    Parameters[i] = FromIL2CPPToManaged<object>(obj[i]);
+                else
+                    Parameters[i] = obj[i];
+            return Parameters;
+        }
+
+        public static Il2CppSystem.Object[] FromManagedArrayToIL2CPPArray(object[] obj)
+        {
+            Il2CppSystem.Object[] Parameters = new Il2CppSystem.Object[obj.Length];
+            for (var i = 0; i < obj.Length; i++)
+            {
+                if (obj[i].GetType().Attributes == System.Reflection.TypeAttributes.Serializable)
+                    Parameters[i] = FromManagedToIL2CPP<Il2CppSystem.Object>(obj[i]);
+                else
+                    Parameters[i] = (Il2CppSystem.Object)obj[i];
+            }
+            return Parameters;
+        }
     }
+
 }

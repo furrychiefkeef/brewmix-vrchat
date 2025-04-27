@@ -4,13 +4,20 @@ using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
 using ExitGames.Client.Photon;
 using HarmonyLib;
+using Il2CppInterop.Runtime;
+using Il2CppInterop.Runtime.InteropTypes;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using Il2CppInterop.Runtime.Runtime;
+using Il2CppSystem.Collections;
+using Photon.Pun;
 using Photon.Realtime;
 using Syrup.IMGUI;
+using Unity.Collections;
 using VRC.Core;
+using VRC.SDKBase;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
-
+using Object = Il2CppSystem.Object;
 
 
 namespace brewchat.hybridxcore.bep
@@ -67,9 +74,7 @@ namespace brewchat.hybridxcore.bep
 
         #region INTERNAL_API
 
-        [HarmonyPostfix,
-         HarmonyPatch(typeof(VRCPlusStatus), nameof(VRCPlusStatus.prop_Object1PublicTYBoTYUnique_1_Boolean_0),
-             MethodType.Getter)]
+        [HarmonyPostfix, HarmonyPatch(typeof(VRCPlusStatus), nameof(VRCPlusStatus.prop_Object1PublicTYBoTYUnique_1_Boolean_0), MethodType.Getter)]
         public static void ExSpoof_VRChatPlus_HOOK(ref Object1PublicTYBoTYUnique<bool> __result)
         {
             if (__result != null && !APIUser.CurrentUser.isSupporter)
@@ -88,40 +93,34 @@ namespace brewchat.hybridxcore.bep
 
         #region PHOTON
 
-        [HarmonyPrefix, HarmonyPatch(typeof(LoadBalancingClient), "OnEvent")]
+        [HarmonyPrefix, HarmonyPatch(typeof(LoadBalancingClient),  nameof(LoadBalancingClient.OnEvent))]
         public static bool CatchPhotonEvents(EventData? __0)
         {
             if (__0 == null) return false;
-            
+            /*if (Config.Logging.LogPhotonData)
+            {
+               
+            }*/
             if (__0.Code == 12)
             {
-                if (!Config.BlockEvent12)
+                if (Config.Protection.block_event12)
                 {
                     sconsole.print("photon","/hook", " blocking [sync] packet",0);
-                    new UnityEngine.WaitForSeconds(1);
                     return false;
                 }
             }
-            if (__0.Code == 1)
+            if (__0.Code == 43)
             {
-                var vd = Il2CppArrayBase<byte>.WrapNativeGenericArrayPointer(__0.customData.Pointer);
-                sconsole.print("photon", "/hook", $"[voice] data : {vd} ", 0);
-                Entry.Console.LogMessage($"VOICEDATA: {vd}");
+                    sconsole.print("photon","/hook", $"{__0.CustomData.ToString() } ",0);
             }
-            return true;
-            /*var paramDict = __0.Parameters as System.Collections.IDictionary;*/
-            /*sconsole.print($"[Event {__0.Code}] [Key:{__0.CustomDataKey}] [Sender: {__0.Sender}]", 0);*/
-
-            /*if (paramDict == null) return;
-            foreach (Il2CppSystem.Collections.DictionaryEntry entry in paramDict)
+            /*if (__0.Code == 1)
             {
-                System.Object Data = SerializationManager.FromIL2CPPToManaged<object>(entry.Value);
-                sconsole.print("Photon","/Hook",$"[Event {__0.Code}] [Key:{entry.Key}] [Sender: {__0.Sender}] Event \n{Newtonsoft.Json.JsonConvert.SerializeObject((Object)Data, Newtonsoft.Json.Formatting.Indented)}", 0);
+                Il2CppArrayBase<byte> vd = Il2CppArrayBase<byte>.WrapNativeGenericArrayPointer(__0.CustomData.Pointer);
+                string ae = Convert.ToBase64String(vd);
+                sconsole.print("photon", "/hook", $"[voice] data : {ae} ", 0);
             }*/
+            return true;
         }
-
-
-
 
     /*[HarmonyPostfix, HarmonyPatch(typeof(PhotonNetwork), nameof(PhotonNetwork.Method_Public_Static_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0))]
     public static void CatchOutgoingPhotonEvents(byte __0, object __1, RaiseEventOptions __2, SendOptions __3)

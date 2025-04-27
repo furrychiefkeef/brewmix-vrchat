@@ -15,11 +15,12 @@ namespace Syrup.IMGUI;
 
 public class simgui : MonoBehaviour
 {
-
+    private List<string> console { get; set; } = sconsole.text;
     static string console_flag = "[SYSTEM]";
     Rect console_container_rect = new Rect(0, 0, 0, 0);
     bool CONSOLE_UI; 
     int fontSize = 14;
+   
     private string v = string.Empty;
     
     public static Vector2 scrollPosition = Vector2.zero;

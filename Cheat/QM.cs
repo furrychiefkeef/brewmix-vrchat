@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using BepInEx.Unity.IL2CPP.Utils;
 using Syrup.IMGUI;
 using BlanketSDK.QM;
 
@@ -9,12 +10,15 @@ using Brewchat.Cheats.World;
 using Brewchat.Game.Wrappers;
 using ExitGames.Client.Photon;
 using Il2CppInterop.Runtime;
+using UnityEngine;
+using VRC.Core;
 using VRC.SDK3.Components;
 
 namespace Brewchat.Cheat;
 
-internal class QM
+internal class QM 
 {
+    public static Coroutine coroutine;
     public static void Apply()
     {
         try
@@ -29,9 +33,16 @@ internal class QM
                 Config.Fly = !Config.Fly;
                 PlayerModule.Movement.Fly(); 
             });
-            VRCToggle? Event = new(Modal, "BlockEvent 12", "", "Fly Off", (x) =>
+            VRCToggle? Event12 = new(Modal, "BlockEvent 12", "", "Fly Off", (x) =>
             {
-                Config.BlockEvent12 = !Config.BlockEvent12;
+                Config.Protection.block_event12 = !Config.Protection.block_event12;
+            });
+            VRCToggle? Event1 = new(Modal, "VoiceData", "", "Fly Off", (x) =>
+            {
+                if (x)
+                {
+                    GameUtils.PlayerModel.Get().gameObject.GetOrAddComponent<Exploits>().enabled = x;
+                }
             });
             VRCToggle? Force_Jump = new(Modal, "Force Jump On", "Force Jump Off", "Fly Off", (x) =>
             {
