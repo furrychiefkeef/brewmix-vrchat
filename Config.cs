@@ -17,19 +17,19 @@ public class Config
     
     #endregion
 
-    struct Movement
+    public class Movement
     {
         #region Fly
-        
-        public static bool? fly { get; set; }
+
+        public static bool fly { get; set; }
+        public static bool abruptness2motion { get; set; }
         public static float? speed { get; set; } = 6.5f;
-        public static bool? abruptness2motion { get; set; }
         
         #endregion
         
     }
     
-    public static T Get<T>(Properties pp)
+    /*public static T Get<T>(Properties pp)
     {
         object result = pp switch
         {
@@ -38,11 +38,10 @@ public class Config
             Properties.abruptness2motion => Movement.abruptness2motion,
             _ => default(T)
         };
-    
         return result == null ? default(T) : (T)result;
-    }
+    }*/
 
-    public struct Logging
+    public class Logging
     {
         public static bool LogPhotonData { get; set; }
         public static bool LogRPCData { get; set; }
@@ -51,14 +50,14 @@ public class Config
         public static bool LogVoicePackets_Event1 { get; set; }
     }
 
-    public struct Protection
+    public class Protection
     {
         public static bool block_event1 { get; set; }
         public static bool block_event11 { get; set; }
         public static bool block_event12 { get; set; }
         
     } 
-    public struct Appearance
+    public class Appearance
     {
         public static UnityEngine.Color Theme { get; set; } = EngineUtils.Conversion.HexToColor("#c60e7b");
     }

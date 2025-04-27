@@ -14,8 +14,8 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
        
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F))
         {
-            bool Fly = Config.Get<bool>(Config.Properties.Fly);
-            sconsole.internal_log(($"{Fly}"));
+            Config.Movement.fly = !Config.Movement.fly;
+            sconsole.internal_log(($"{Config.Movement.fly}"));
         }
         if (Input.GetKeyDown(KeyCode.F9))
         {

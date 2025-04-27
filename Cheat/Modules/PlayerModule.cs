@@ -16,7 +16,6 @@ internal class PlayerModule
         static readonly List<string> _disabledColliders = new();
         public static void Fly()
         {
-            bool? fly = Config.Get<bool>(Config.Properties.Fly);
             Player player = GameUtils.PlayerModel.Get();
             if (!player && !GameUtils.World.IsWorldLoaded()) return;
             else
@@ -31,20 +30,19 @@ internal class PlayerModule
 
                 #region LOGIC
 
-                switch (fly)
+                switch (Config.Movement.fly)
                 {
                     case true:
                         fly_component.enabled = true;
                         motion_state.enabled = false;
                         characterController.enabled = false;
-
                         List<Collider> body_colliders = player.GetComponents<Collider>().ToList();
                         foreach (Collider colliderbox in body_colliders)
                         {
                             if (!_disabledColliders.Contains(colliderbox.gameObject.name))
                                 _disabledColliders.Add(colliderbox.gameObject.name);
                         }
-
+                       
                         break;
                     case false:
                         fly_component.enabled = true;
@@ -55,8 +53,8 @@ internal class PlayerModule
                         break;
                 }
 
-                sconsole.print($"[LOCAL_PLAYER] Fly is Set to {fly}", 1);
-                GameUtils.UI.HUD.ToastV2("Player+Movement", $"Fly is set to {fly}");
+                sconsole.print($"[LOCAL_PLAYER] Fly is Set to {Config.Movement.fly}", 1);
+                GameUtils.UI.HUD.ToastV2("Player+Movement", $"Fly is set to {Config.Movement.fly}");
 
                 #endregion
 
@@ -132,6 +130,16 @@ internal class PlayerModule
                         break;
                 }
             }
+        }
+    }
+
+    public static class Body
+    {
+        public static GameObject Clone(VRC.Player pl)
+        {
+            return pl.prop_VRCPlayer_0 
+                .field_Private_MonoBehaviourPublicINetworkReadyReceiverSiGaObGaStObBoGaCaBoUnique_0
+                .field_Private_GameObject_0;
         }
     }
 }
