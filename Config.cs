@@ -17,6 +17,7 @@ public class Config
     
     #endregion
 
+   
     public struct Movement
     {
         #region Fly
@@ -59,6 +60,7 @@ public class Config
     } 
     public struct Appearance
     {
+        public static string QueueAudio { get; set; } = "https://github.com/riotlu/fake-cdn/raw/refs/heads/master/soundcloud_1947871183_audio.ogg?raw=true";
         public static UnityEngine.Color Theme { get; set; } = EngineUtils.Conversion.HexToColor("#c60e7b");
     }
    

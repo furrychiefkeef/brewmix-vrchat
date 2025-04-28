@@ -1,11 +1,14 @@
 
 using System;
 using System.Drawing;
+using BepInEx.Unity.IL2CPP.Utils.Collections;
 using Syrup;
 using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.Rendering;
 using VRC.Fonts;
+using Color = UnityEngine.Color;
+
 namespace Syrup.IMGUI;
 
 
@@ -17,15 +20,16 @@ public class simgui : MonoBehaviour
 {
     private List<string> console { get; set; } = sconsole.text;
     static string console_flag = "[SYSTEM]";
-    Rect console_container_rect = new Rect(0, 0, 0, 0);
+    Rect console_container_rect = new (0, 0, 0, 0);
     bool CONSOLE_UI; 
     int fontSize = 14;
+    private Dictionary<int, float> textAlpha = new Dictionary<int, float>();
    
     private string v = string.Empty;
     
     public static Vector2 scrollPosition = Vector2.zero;
     private float SH = 0;
-
+    private int i = 0;
     #region RectTransform
     float yOffset = 5;
     float y = 13f;
@@ -35,9 +39,11 @@ public class simgui : MonoBehaviour
 
     #endregion
 
-    void Start()
+    void Awake()
     {
+       
         sconsole.print($"{ Guid.NewGuid().ToString() } {console_flag} HI!!!! <color=#9185E6><b>{Environment.UserName}</b></color> !!! get ready to make some noise :D",0);
+        sconsole.internal_log("────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
     }
     void Update() => KeysHandler();
 
@@ -52,18 +58,36 @@ public class simgui : MonoBehaviour
                 new Rect(0, 0, console_container_rect.width, SH)
             ,false,false,GUIStyle.none,GUIStyle.none);
 
-            for (int i = 0; i < sconsole.text.Count; i++)
+            for (i = 0; i < sconsole.text.Count; i++)
             {
-                GUI.Label(new Rect(x, yOffset + i * y, console_container_rect.width - 20, float.MaxValue), sconsole.text[i], sparameters.Text(fontSize));
+                if (!textAlpha.ContainsKey(i))
+                {
+                    textAlpha[i] = 0f;
+                    StartCoroutine(AnimateText(i).WrapToIl2Cpp());
+                    
+                }
+                
+                GUIStyle style = new GUIStyle(sparameters.Text(fontSize));
+                style.normal.textColor = new Color(style.normal.textColor.r, style.normal.textColor.g, style.normal.textColor.b, textAlpha[i]);
+                GUI.Label(new Rect(x, yOffset + i * y, console_container_rect.width - 20, float.MaxValue), sconsole.text[i], style);
             }
             GUI.EndScrollView();
+        }
+    }
+    
+    System.Collections.IEnumerator AnimateText(int index)
+    {
+        while (textAlpha[index] < 1f)
+        {
+            textAlpha[index] = Mathf.Min(textAlpha[index] + Time.deltaTime * 2f, 1f);
+            yield return null;
         }
     }
 
     void KeysHandler()
     {
         if (UnityEngine.Input.GetKeyDown(KeyCode.Home)) CONSOLE_UI = !CONSOLE_UI;
-        if (UnityEngine.Input.GetKeyDown(KeyCode.PageUp)) { sconsole.clr(); sconsole.internal_log("clear!"); sconsole.clr(); }
+        if (UnityEngine.Input.GetKeyDown(KeyCode.PageUp)) { sconsole.clr(); sconsole.internal_log("clear!"); sconsole.clr(); Awake(); }
     }
 }
 

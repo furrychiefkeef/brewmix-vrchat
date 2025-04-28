@@ -1,5 +1,7 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using Brewchat.Game.Wrappers;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 using WebSocketSharp;
 
 namespace Brewchat.Game.Wrappers
@@ -18,6 +20,19 @@ namespace Brewchat.Game.Wrappers
         public struct Assets    
         {
             #region Imagebased
+            
+            public static AudioClip? AudioClip(Uri url)
+            {
+                UnityWebRequest www = UnityWebRequest.Get(url.ToString());
+                var operation = www.SendWebRequest();
+                while (!operation.isDone) System.Threading.Thread.Sleep(1);
+                if (www.result != UnityWebRequest.Result.Success) return null;
+                AudioClip clip = WebRequestWWW.InternalCreateAudioClipUsingDH(www.downloadHandler, www.url, false,false,0);
+                
+                if (clip == null) return null;
+                if (url.IsFile) clip.name = Path.GetFileNameWithoutExtension(url.LocalPath);
+                return clip;
+            }
             public static Texture2D? INTERNAL_Texture(byte[] data)
             {
                 Texture2D texture = new(0, 0);
@@ -25,6 +40,7 @@ namespace Brewchat.Game.Wrappers
                 if (texture != null) texture.name = "resources.dev";
                 return texture;
             }
+            [Obsolete]
             public static Texture2D? Texture(string dir)
             {
                 byte[] data = File.ReadAllBytesAsync(dir).GetAwaiter().GetResult();
@@ -40,10 +56,11 @@ namespace Brewchat.Game.Wrappers
                 byte[] data = http.GetByteArrayAsync(url.ToString()).GetAwaiter().GetResult();
                 Texture2D texture2D = new(0, 0);
                 texture2D.LoadImage(data);
-                texture2D.name = Path.GetFileNameWithoutExtension(url.ToString());
+                texture2D.name = Path.GetFileNameWithoutExtension(url.LocalPath);
                 return texture2D;
             }
-  
+            
+            [Obsolete]
             public static Sprite Sprite(string dir) 
                 => Texture(dir).ToSprite();
             public static Sprite Data_LoadSprite(Uri? dir) 
@@ -65,6 +82,7 @@ namespace Brewchat.Game.Wrappers
                 if(keep == true) UnityEngine.Object.DontDestroyOnLoad(obj);
                 return obj;
             }
+            [Obsolete]
             public static UnityEngine.Object AssetBundle(string? dir, string? prefab_name, bool? keep)
             {   
                 if(dir.IsNullOrEmpty()) return null;
@@ -77,13 +95,14 @@ namespace Brewchat.Game.Wrappers
                 if(keep == true) UnityEngine.Object.DontDestroyOnLoad(obj);
                 return obj;
             }
+            
             public static UnityEngine.GameObject AssetBundle(Uri? url, string? prefab_name, bool? keep)
             {
-                using var client = new System.Net.Http.HttpClient();
-                var data = client.GetByteArrayAsync(url).Result;
-                var bundle = UnityEngine.AssetBundle.LoadFromMemory(data);
+                HttpClient client = new ();
+                byte[] data = client.GetByteArrayAsync(url).Result;
+                AssetBundle? bundle = UnityEngine.AssetBundle.LoadFromMemory(data);
  
-                var obj = bundle.LoadAsset<GameObject>(prefab_name);
+                GameObject? obj = bundle.LoadAsset<GameObject>(prefab_name);
                 GameObject? instance = UnityEngine.Object.Instantiate(obj);
                 if (keep is true) UnityEngine.Object.DontDestroyOnLoad(instance);
                 bundle.Unload(false);

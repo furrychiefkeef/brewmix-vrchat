@@ -14,6 +14,7 @@ using VRC.UI.Client.HUD;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
 using Object = Il2CppSystem.Object;
+using Player = VRC.Player;
 
 namespace Brewchat.Game.Wrappers;
 
@@ -104,30 +105,37 @@ internal class GameUtils
     public class PlayerModel
     {
         public static VRC.Player Get() => VRC.Player.prop_Player_0;
+        
 
         public static class Motion
         {
+        
+          public struct Object
+          {
+              public static Vector3 transform = InputStateController.field_Protected_Static_Vector3_0;
+          }
+          public struct Networking 
+          {
+                
+            
             public static VRCPlayerApi Run_Speed(float v = 2f)
             {
                 VRCPlayerApi? player = Get().VRCPlayerApi;
                 player.SetRunSpeed(v);
                 return player;
             }
-
             public static VRCPlayerApi Walk_Speed(float v = 2f)
             {
                 VRCPlayerApi? player = Get().VRCPlayerApi;
                 player.SetWalkSpeed(v);
                 return player;
             }
-
             public static VRCPlayerApi Jump_Impulse(float v = 3f)
             {
                 VRCPlayerApi? player = Get().VRCPlayerApi;
                 player.SetJumpImpulse(v);
                 return player;
             }
-
             public static VRCPlayerApi Velocity(Vector3 v)
             {
                 VRCPlayerApi? player = Get().VRCPlayerApi;
@@ -135,13 +143,13 @@ internal class GameUtils
                 return player;
 
             }
-
             public static VRCPlayerApi Gravity(float v = 1f)
             {
                 VRCPlayerApi? player = Get().VRCPlayerApi;
                 player.SetGravityStrength(v);
                 return player;
             }
+          }
         }
 
         public static class Avatar

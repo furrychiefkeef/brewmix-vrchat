@@ -8,14 +8,15 @@ internal class FlyManager : UnityEngine.MonoBehaviour
     public bool Rotation { get; set; }
     void LateUpdate() => Controller();
 
-    private Vector3 velocity = Vector3.zero;
-    private float acceleration = 10f; // How fast you reach target speed
-    private float deceleration = 5f; // How fast you stop
+    Vector3 velocity = Vector3.zero;
+    float acceleration = 10f; // How fast you reach target speed
+    float deceleration = 5f; // How fast you stop
 
     void Controller()
     {
+        
         float speed = (float)(Input.GetKey(KeyCode.LeftShift) ? (Config.Movement.speed * 5f) : Config.Movement.speed)!;
-
+    
         if (transform is null || GameUtils.Gameplay.CallbackEvents.IsInMainMenu) return;
 
         Vector3 targetDirection = Vector3.zero;

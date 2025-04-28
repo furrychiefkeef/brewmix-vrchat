@@ -3,7 +3,6 @@ using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
 using Syrup.IMGUI;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using VRC;
 using VRC.Animation;
 using VRC.Core;
@@ -15,6 +14,7 @@ internal class PlayerModule
 {
     public class Movement
     {
+       
         static readonly List<string> _disabledColliders = new();
         public static void Fly()
         {
@@ -68,7 +68,7 @@ internal class PlayerModule
             #region REQUIRED_COMPONENTS
 
             Player player = GameUtils.PlayerModel.Get();
-            var player_motion = GameUtils.PlayerModel.Motion.Jump_Impulse();
+            var player_motion = GameUtils.PlayerModel.Motion.Networking.Jump_Impulse();
             var cache_player_jump_ = player_motion.GetJumpImpulse();
 
             #endregion

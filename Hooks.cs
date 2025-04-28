@@ -2,6 +2,7 @@
 using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
+using Brewchat.Game.Wrappers;
 using ExitGames.Client.Photon;
 using HarmonyLib;
 using Il2CppInterop.Runtime;
@@ -13,6 +14,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Syrup.IMGUI;
 using Unity.Collections;
+using UnityEngine;
 using VRC.Core;
 using VRC.SDKBase;
 using VRC.UI.Elements;
@@ -35,6 +37,8 @@ namespace brewchat.hybridxcore.bep
         {
             if (__instance is null) return;
             __instance.gameObject.GetOrAddComponent<KeybindManager>();
+            __instance.field_Public_AudioClip_0 = EngineUtils.Assets.AudioClip(new Uri(Config.Appearance.QueueAudio));
+            __instance.field_Public_AudioClip_1 = EngineUtils.Assets.AudioClip(new Uri(Config.Appearance.QueueAudio));
         }
 
         #endregion
@@ -45,8 +49,12 @@ namespace brewchat.hybridxcore.bep
         public static void VRCLoadingSequence_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null && !OfflineUILoaded) return;
+            OfflineUILoaded = true;
             __instance?.gameObject.GetOrAddComponent<CSS>();
             CSS.Offline();
+            __instance.field_Public_AudioClip_0 = EngineUtils.Assets.AudioClip(new Uri(Config.Appearance.QueueAudio));
+            __instance.field_Public_AudioClip_1 = EngineUtils.Assets.AudioClip(new Uri(Config.Appearance.QueueAudio));
+   
         }
 
 
