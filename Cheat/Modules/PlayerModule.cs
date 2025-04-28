@@ -1,7 +1,9 @@
-﻿using Brewchat.Game.Monobehaviours;
+﻿using BepInEx.Unity.IL2CPP.Utils.Collections;
+using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
 using Syrup.IMGUI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using VRC;
 using VRC.Animation;
 using VRC.Core;
@@ -93,7 +95,47 @@ internal class PlayerModule
 
             }
         }
-       
+
+        public static void ClickTP()
+        {
+            Player player = GameUtils.PlayerModel.Get();
+            if(!player && !GameUtils.World.IsWorldLoaded() || GameUtils.Gameplay.CallbackEvents.IsInMainMenu) return;
+            if(Physics.Raycast(GameUtils.Camera.Get.transform.position, GameUtils.Camera.Get.transform.forward, out RaycastHit hit)) player.transform.position = hit.point;
+        }
+
+        private static Coroutine _spinbotCoroutine;
+        
+        public static void Spinbot(bool status, float spinSpeed = 1f)
+        {   
+            Player player = GameUtils.PlayerModel.Get();
+            if (!player) return;
+            
+            if(status && _spinbotCoroutine == null)
+            {
+                _spinbotCoroutine = player.StartCoroutine(SpinbotRoutine(player, spinSpeed).WrapToIl2Cpp());
+            }
+            else if(!status && _spinbotCoroutine != null)
+            {
+                player.StopCoroutine(_spinbotCoroutine);
+                _spinbotCoroutine = null;
+            }
+        }
+        
+        private static System.Collections.IEnumerator SpinbotRoutine(Player player, float spinSpeed)
+        {
+            float rotationAngle = 0f;     MonoBehaviourPublicLa1StVeQuVeBoInVeBoUnique? localanim;
+            while(true)
+            {
+                rotationAngle += spinSpeed * Time.deltaTime * 360f;
+                localanim =  player.GetComponentInChildren<MonoBehaviourPublicLa1StVeQuVeBoInVeBoUnique>();
+                if(player._vrcplayer?.field_Private_VRCAvatarManager_0?.field_Private_GameObject_0 != null)
+                {
+                    player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0.transform.localRotation = Quaternion.Euler(0f, rotationAngle, 0f);
+                    if ( localanim != null) localanim.enabled = false;
+                }
+                yield return new WaitForEndOfFrame();
+            }
+        }
   
     }
     public class Camera
@@ -137,8 +179,8 @@ internal class PlayerModule
     {
         public static GameObject Clone(VRC.Player pl)
         {
-            return pl.prop_VRCPlayer_0 
-                .field_Private_MonoBehaviourPublicINetworkReadyReceiverSiGaObGaStObBoGaCaBoUnique_0
+            return pl._vrcplayer
+                .field_Private_VRCAvatarManager_0
                 .field_Private_GameObject_0;
         }
     }

@@ -45,7 +45,7 @@ namespace brewchat.hybridxcore.bep
         public static void VRCLoadingSequence_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null && !OfflineUILoaded) return;
-            __instance.gameObject.GetOrAddComponent<CSS>();
+            __instance?.gameObject.GetOrAddComponent<CSS>();
             CSS.Offline();
         }
 
@@ -54,7 +54,7 @@ namespace brewchat.hybridxcore.bep
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
-            __instance.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
+            __instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel,
                 true);
             QM.Apply();

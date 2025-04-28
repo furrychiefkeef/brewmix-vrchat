@@ -17,7 +17,7 @@ public class Config
     
     #endregion
 
-    public class Movement
+    public struct Movement
     {
         #region Fly
 
@@ -41,7 +41,7 @@ public class Config
         return result == null ? default(T) : (T)result;
     }*/
 
-    public class Logging
+    public struct Logging
     {
         public static bool LogPhotonData { get; set; }
         public static bool LogRPCData { get; set; }
@@ -50,14 +50,14 @@ public class Config
         public static bool LogVoicePackets_Event1 { get; set; }
     }
 
-    public class Protection
+    public struct Protection
     {
         public static bool block_event1 { get; set; }
         public static bool block_event11 { get; set; }
         public static bool block_event12 { get; set; }
         
     } 
-    public class Appearance
+    public struct Appearance
     {
         public static UnityEngine.Color Theme { get; set; } = EngineUtils.Conversion.HexToColor("#c60e7b");
     }

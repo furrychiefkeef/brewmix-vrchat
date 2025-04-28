@@ -18,7 +18,6 @@ namespace Brewchat.Cheat;
 
 internal class QM 
 {
-    public static Coroutine coroutine;
     public static void Apply()
     {
         try
@@ -30,6 +29,7 @@ internal class QM
             VRCButton? E = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "CSS", "Load Custom StyleEngine", () => CSS.Online());
             VRCToggle? Fly_Toggle = new(Modal, "Fly", "Fly On", "Fly Off", (x) =>
             {
+                Config.Movement.fly = !Config.Movement.fly;
                 PlayerModule.Movement.Fly(); 
             });
             VRCToggle? Event12 = new(Modal, "BlockEvent 12", "", "Fly Off", (x) =>
@@ -45,6 +45,7 @@ internal class QM
             });
             VRCToggle? Force_Jump = new(Modal, "Force Jump On", "Force Jump Off", "Fly Off", (x) =>
             {
+                PlayerModule.Movement.Spinbot(x);
             });
 
             #endregion

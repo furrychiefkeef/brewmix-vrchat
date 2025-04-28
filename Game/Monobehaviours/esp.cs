@@ -16,7 +16,7 @@ class skeletonesp : MonoBehaviour
 
     void OnGUI()
     {
-        Camera cam = GameUtils.CameraUtils.camera;
+        Camera? cam = GameUtils.Camera.Get;
         if (cam == null) return;
 
         Dictionary<HumanBodyBones, Vector3> bonePositions = new Dictionary<HumanBodyBones, Vector3>();

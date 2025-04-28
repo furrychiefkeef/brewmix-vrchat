@@ -95,9 +95,9 @@ internal class GameUtils
         }
     }
 
-    public class CameraUtils
+    public class Camera
     {   
-        public static Camera? camera { get; set; } = Camera.main;
+        public static UnityEngine.Camera? Get { get; set; } = UnityEngine.Camera.main;
         public static GameObject CameraObj => GameObject.Find("Camera");
     }
 
