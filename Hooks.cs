@@ -37,8 +37,8 @@ namespace brewchat.hybridxcore.bep
         {
             if (__instance is null) return;
             __instance.gameObject.GetOrAddComponent<KeybindManager>();
-            __instance.field_Public_AudioClip_0 = EngineUtils.Assets.AudioClip(new Uri(Config.Appearance.QueueAudio));
-            __instance.field_Public_AudioClip_1 = EngineUtils.Assets.AudioClip(new Uri(Config.Appearance.QueueAudio));
+            __instance?.gameObject.GetOrAddComponent<CSS>();
+            CSS.Offline();
         }
 
         #endregion
@@ -50,10 +50,9 @@ namespace brewchat.hybridxcore.bep
         {
             if (__instance is null && !OfflineUILoaded) return;
             OfflineUILoaded = true;
-            __instance?.gameObject.GetOrAddComponent<CSS>();
+            __instance.gameObject.GetComponentInChildren<AudioSource>(true).clip = EngineUtils.Assets.AudioClip(new Uri(Config.Appearance.QueueAudio));
             CSS.Offline();
-            __instance.field_Public_AudioClip_0 = EngineUtils.Assets.AudioClip(new Uri(Config.Appearance.QueueAudio));
-            __instance.field_Public_AudioClip_1 = EngineUtils.Assets.AudioClip(new Uri(Config.Appearance.QueueAudio));
+         
    
         }
 
