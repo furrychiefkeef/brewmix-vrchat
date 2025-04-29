@@ -87,7 +87,7 @@ public class simgui : MonoBehaviour
     void KeysHandler()
     {
         if (UnityEngine.Input.GetKeyDown(KeyCode.Home)) CONSOLE_UI = !CONSOLE_UI;
-        if (UnityEngine.Input.GetKeyDown(KeyCode.PageUp)) { sconsole.clr(); sconsole.internal_log("clear!"); sconsole.clr(); Awake(); }
+        if (UnityEngine.Input.GetKeyDown(KeyCode.PageUp)) { sconsole.clr(); sconsole.internal_log("clear!"); sconsole.clr(); }
     }
 }
 

@@ -44,11 +44,11 @@ public class Config
 
     public struct Logging
     {
-        public static bool LogPhotonData { get; set; }
+        public static bool LogPhotonData { get; set; } = true;
         public static bool LogRPCData { get; set; }
 
-        public static bool LogMessageData_Event43 { get; set; } 
-        public static bool LogVoicePackets_Event1 { get; set; }
+        public static bool LogMessageData_Event43 { get; set; }
+        public static bool LogVoicePackets_Event1 { get; set; } = true;
     }
 
     public struct Protection

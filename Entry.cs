@@ -22,7 +22,7 @@ public class Entry : BasePlugin
     
     public override void Load()
     {
-        BepInEx.Logging.Logger.Sources.Add(Log);
+        BepInEx.Logging.Logger.Sources.Add(Console);
         #region LIB
         ClassInjector.RegisterTypeInIl2Cpp<Syrup.IMGUI.simgui>(); 
         ClassInjector.RegisterTypeInIl2Cpp<Brewchat.Game.Monobehaviours.Toolbox>();

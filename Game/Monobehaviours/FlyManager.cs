@@ -5,7 +5,7 @@ namespace Brewchat.Game.Monobehaviours;
 
 internal class FlyManager : UnityEngine.MonoBehaviour
 {
-    public bool Rotation { get; set; }
+    public bool Rotation { get; set; } = false;
     void LateUpdate() => Controller();
 
     Vector3 velocity = Vector3.zero;

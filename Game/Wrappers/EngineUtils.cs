@@ -19,8 +19,7 @@ namespace Brewchat.Game.Wrappers
 
         public struct Assets    
         {
-            #region Imagebased
-            
+            #region Media
             public static AudioClip? AudioClip(Uri url)
             {
                 UnityWebRequest www = UnityWebRequest.Get(url.ToString());
@@ -33,6 +32,47 @@ namespace Brewchat.Game.Wrappers
                 if (url.IsFile) clip.name = Path.GetFileNameWithoutExtension(url.LocalPath);
                 return clip;
             }
+             public static GameObject? CreateAudio(Uri url)
+            {
+                UnityWebRequest www = UnityWebRequest.Get(url.ToString());
+                var operation = www.SendWebRequest();
+                while (!operation.isDone) System.Threading.Thread.Sleep(1);
+                if (www.result != UnityWebRequest.Result.Success) return null;
+                AudioClip clip = WebRequestWWW.InternalCreateAudioClipUsingDH(www.downloadHandler, www.url, false,false,0);
+                
+                if (clip == null) return null;
+                if (url.IsFile) clip.name = Path.GetFileNameWithoutExtension(url.LocalPath);
+                var src = new GameObject("Audio").AddComponent<AudioSource>();
+                src.clip = clip;
+                src.hideFlags += 32;
+                src.loop = true;
+                src.volume = 1f;
+                src.bypassListenerEffects = true;
+                src.bypassReverbZones = true;
+                src.Play();
+                UnityEngine.Object.DontDestroyOnLoad(src);
+                return src.gameObject;
+            }
+            public static AudioSource? AudioOverride(Uri url)
+            {
+                UnityWebRequest www = UnityWebRequest.Get(url.ToString());
+                var operation = www.SendWebRequest();
+                while (!operation.isDone) System.Threading.Thread.Sleep(1);
+                if (www.result != UnityWebRequest.Result.Success) return null;
+                AudioClip clip = WebRequestWWW.InternalCreateAudioClipUsingDH(www.downloadHandler, www.url, false,false,0);
+                AudioSource? audiosrc = null;
+                
+                if (audiosrc == null || clip == null) return null;
+                if (url.IsFile) clip.name = Path.GetFileNameWithoutExtension(url.LocalPath);
+                audiosrc.clip = clip;
+                audiosrc.hideFlags += 32;
+                audiosrc.Play();
+                return audiosrc;
+            }
+
+            #endregion
+            #region Imagebased
+ 
             public static Texture2D? INTERNAL_Texture(byte[] data)
             {
                 Texture2D texture = new(0, 0);

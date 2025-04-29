@@ -10,6 +10,8 @@ using Il2CppInterop.Runtime.InteropTypes;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Il2CppInterop.Runtime.Runtime;
 using Il2CppSystem.Collections;
+using Il2CppSystem.Runtime.Serialization;
+using Pasted.WTFBlaze.Utils.Managers;
 using Photon.Pun;
 using Photon.Realtime;
 using Syrup.IMGUI;
@@ -17,6 +19,8 @@ using Unity.Collections;
 using UnityEngine;
 using VRC.Core;
 using VRC.SDKBase;
+using VRC.UI.Client;
+using VRC.UI.Core;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
 using Object = Il2CppSystem.Object;
@@ -38,6 +42,7 @@ namespace brewchat.hybridxcore.bep
             if (__instance is null) return;
             __instance.gameObject.GetOrAddComponent<KeybindManager>();
             __instance?.gameObject.GetOrAddComponent<CSS>();
+            /*__instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();*/
             CSS.Offline();
         }
 
@@ -46,30 +51,43 @@ namespace brewchat.hybridxcore.bep
         #region INTERNAL_UI
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
+        public static void VRCLoadingSequence_IsEnable_HOOK(ref VRCUiPageLoading? __instance)
+        {
+            if (__instance is null && !OfflineUILoaded) return;
+            CSS.Offline();
+        }
+        [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.Start))]
         public static void VRCLoadingSequence_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null && !OfflineUILoaded) return;
-            OfflineUILoaded = true;
-            __instance.gameObject.GetComponentInChildren<AudioSource>(true).clip = EngineUtils.Assets.AudioClip(new Uri(Config.Appearance.QueueAudio));
-            CSS.Offline();
-         
-   
+            AudioSource? LoadingScreenAudio = __instance.gameObject.transform.GetChild(1).GetComponent<AudioSource>();
+            UnityEngine.Object.DestroyImmediate(LoadingScreenAudio);
+            EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent = __instance.gameObject.transform;
         }
 
-
+        /*[HarmonyPostfix, HarmonyPatch(typeof(VRCUIManager), nameof(VRCUIManager.Start))]
+        public static void UI_Initialize_HOOK(ref QuickMenu? __instance)
+        {
+            if (__instance == null && !OnlineUILoaded) return;
+            #region QM
+            UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel,
+                true);
+            #endregion
+            QM.Apply();
+            Toolbox.LoadMyUI();
+        }*/
+        
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
             __instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
-            UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel,
-                true);
+            UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel,true);
             QM.Apply();
-            Toolbox.LoadMyUI();
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
-        public static void QuickMenu_Initialize_HOOK(ref MainMenu? __instance)
+        public static void MainMenu_Initialize_HOOK(ref MainMenu? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
         }
@@ -109,29 +127,42 @@ namespace brewchat.hybridxcore.bep
         public static bool CatchPhotonEvents(EventData? __0)
         {
             if (__0 == null) return false;
-            /*if (Config.Logging.LogPhotonData)
+            if (Config.Logging.LogPhotonData)
             {
-               
-            }*/
-            if (__0.Code == 12)
-            {
-                if (Config.Protection.block_event12)
+                sconsole.print("photon","/hook", $"[{__0.Code}] Data={__0.CustomData.ToString()} ",0);
+                if (__0.Code == 17) return false;
+                /*switch (__0.Code)
                 {
-                    sconsole.print("photon","/hook", " blocking [sync] packet",0);
-                    return false;
-                }
+                    
+                    case 1:
+                        if (Config.Logging.LogVoicePackets_Event1)
+                        {
+                            var vd = SerializationManager.FromIL2CPPToManaged<Il2CppSystem.Object>(__0.CustomData);
+                            sconsole.print("photon","/hook", $"[{__0.Code}] Data={vd.GetType()} ",0);
+                        }
+                        break;
+                    /*case 13:
+                        sconsole.print("photon","/hook", $"[{__0.Code}] Data={__0.CustomData} ",0);
+                        return false;#1#
+                    case 17:
+                        sconsole.print("photon","/hook", $"[{__0.Code}] Data={__0.CustomData} ",0);
+                        return false;
+                    case 43:
+                        if (Config.Logging.LogMessageData_Event43)
+                        {
+                            sconsole.print("photon","/hook", $"{__0.CustomData.ToString() } ",0);
+                        }
+                        break;
+                    default:
+                     
+                        break;
+                }*/
             }
-            if (__0.Code == 43)
-            {
-                    sconsole.print("photon","/hook", $"{__0.CustomData.ToString() } ",0);
-            }
-            /*if (__0.Code == 1)
-            {
-                Il2CppArrayBase<byte> vd = Il2CppArrayBase<byte>.WrapNativeGenericArrayPointer(__0.CustomData.Pointer);
-                string ae = Convert.ToBase64String(vd);
-                sconsole.print("photon", "/hook", $"[voice] data : {ae} ", 0);
-            }*/
             return true;
+
+
+
+
         }
 
     /*[HarmonyPostfix, HarmonyPatch(typeof(PhotonNetwork), nameof(PhotonNetwork.Method_Public_Static_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0))]

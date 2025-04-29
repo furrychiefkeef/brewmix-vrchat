@@ -167,6 +167,8 @@ internal class PlayerModule
                         obj.AddComponent<UnityEngine.Camera>();
                         break;
                     case P0V.none:
+                        UnityEngine.Object.Destroy(obj);
+                        break;
                     default:
                         UnityEngine.Object.Destroy(obj);
                         break;
