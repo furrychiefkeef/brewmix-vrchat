@@ -22,9 +22,7 @@ internal class VRCSmallButton : Root
         if (!MainMenu() | !MMExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= _Fallback_Dashboard_Group_MM_UI_ExpandButtons();
         UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(MMExpandButton(), parent);
-        obj.SetSiblingIndex(5 - 1) ;
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.EXPANDSMALL_BUTTON";
-
         #region REQUIRED_COMPONENTS
         UnityEngine.Object.DestroyImmediate(obj.GetComponent<MenuTab>());
         VRCButtonHandle  _0 = obj.GetComponent<VRCButtonHandle>();

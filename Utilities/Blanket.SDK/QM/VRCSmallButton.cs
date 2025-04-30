@@ -26,7 +26,7 @@ internal class VRCSmallButton : Root
         
         #region REQUIRED_COMPONENTS
         VRCButtonHandle  _0 = obj.GetComponent<VRCButtonHandle>();
-        ImageEx  _1 = obj.GetChild(0).GetComponent<ImageEx>();
+        ImageEx  _1 = obj.GetChild(1).GetComponent<ImageEx>();
         ToolTip  _2 = obj.GetComponent<ToolTip>();
         #endregion
 
