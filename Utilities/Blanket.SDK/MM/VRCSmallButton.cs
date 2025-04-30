@@ -23,9 +23,10 @@ internal class VRCSmallButton : Root
         parent ??= _Fallback_Dashboard_Group_MM_UI_ExpandButtons();
         UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(MMExpandButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.EXPANDSMALL_BUTTON";
+        obj.SetSiblingIndex(5 - 1) ;
         #region REQUIRED_COMPONENTS
-        UnityEngine.Object.DestroyImmediate(obj.GetComponent<MenuTab>());
-        VRCButtonHandle  _0 = obj.GetComponent<VRCButtonHandle>();
+
+        VRCButtonHandle _0 = obj.gameObject.AddComponent<VRCButtonHandle>();
         ImageEx  _1 = obj.GetChild(1).GetComponent<ImageEx>();
         ToolTip  _2 = obj.GetComponent<ToolTip>();
         #endregion
@@ -43,6 +44,7 @@ internal class VRCSmallButton : Root
         #region TOOLTIP COMPONENT
         _2._localizableString = tooltip.Localize();
         #endregion
+       UnityEngine.Object.DestroyImmediate(obj.GetComponent<MenuTab>());
     }
     public VRCSmallButton(VRCModalContainer parent, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.parent_rightbuttons, tooltip, func, sprite) { }
 }
