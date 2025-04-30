@@ -1,6 +1,7 @@
 ﻿using BlanketSDK.QM.Modals;
 using BlanketSDK.Utilities;
 using UnityEngine;
+using VRC.Core;
 using VRC.Localization;
 using VRC.UI;
 using VRC.UI.Elements.Controls;
@@ -22,29 +23,30 @@ internal class VRCSmallButton : Root
         if (!MainMenu() | !MMExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= _Fallback_Dashboard_Group_MM_UI_ExpandButtons();
         UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(MMExpandButton(), parent);
-        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.EXPANDSMALL_BUTTON";
+        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_SMALL_BUTTON";
         obj.SetSiblingIndex(5 - 1) ;
         #region REQUIRED_COMPONENTS
-
-        VRCButtonHandle _0 = obj.gameObject.AddComponent<VRCButtonHandle>();
+        
+        MenuTab _0 = obj.GetComponent<MenuTab>();
         ImageEx  _1 = obj.GetChild(1).GetComponent<ImageEx>();
         ToolTip  _2 = obj.GetComponent<ToolTip>();
         #endregion
 
         #region BUTTON COMPONENT
         UnityEngine.UI.Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_0 = _0.onClick;
+        _0.field_Private_MenuStateController_0 = null;
         BUTTONCLICKED_EVENT_0.RemoveAllListeners();
         BUTTONCLICKED_EVENT_0.AddListener(func);
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT
-        /*_1.sprite = sprite;*/
+        if(!sprite) return;
+        _1.sprite = sprite;
         #endregion
 
         #region TOOLTIP COMPONENT
         _2._localizableString = tooltip.Localize();
         #endregion
-       UnityEngine.Object.DestroyImmediate(obj.GetComponent<MenuTab>());
     }
     public VRCSmallButton(VRCModalContainer parent, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.parent_rightbuttons, tooltip, func, sprite) { }
 }

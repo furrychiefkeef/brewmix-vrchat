@@ -21,11 +21,15 @@ internal class QM
     {
         try
         {
+            
+            new VRCTab(Root._Fallback_Dashboard_Group_QM_UI_Buttons_TAB(),"Player", "Modify The Player", () => sconsole.print("passion_fruit",1) );
             #region Modal_1
             VRCModalContainer? Modal = new("Player+Movement");
             VRCSmallButton acee = new(Modal, "Injection", () => sconsole.print("passion_fruit",1) );
             
-            VRCWingButton WE = new(Root._Fallback_Dashboard_Group_QM_UI_WingButtons(), VRCWingButton.Position.L,"Player", "Modify The Player", () => sconsole.print("passion_fruit",1));
+            VRCWingButton WE = new(Root._Fallback_Dashboard_Group_QM_UI_WingButtons(), Ropie.Wing.Position.L,"Player", "Modify The Player", () => sconsole.print("passion_fruit",1));
+            VRCWingButton WC = new(Root._Fallback_Dashboard_Group_QM_UI_WingButtons(), Ropie.Wing.Position.R,"Player", "Modify The Player", () => sconsole.print("passion_fruit",1));
+            
             BlanketSDK.MM.VRCButton? AE = new(Root._Fallback_Dashboard_Group_MM_UI_Buttons(), "Player", "Modify The Player", () => sconsole.print("passion_fruit",1));
             
             BlanketSDK.MM.VRCSmallButton acee2 = new(Root._Fallback_Dashboard_Group_MM_UI_ExpandButtons(), "Injection2", () =>

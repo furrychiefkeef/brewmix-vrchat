@@ -40,10 +40,11 @@ internal class Root
     public static Transform MenuDevTools() => QuickMenu().transform.FindChild("Container/Window/QMParent/Menu_DevTools");
     public static Transform SelectedUser_Local() => QuickMenu().transform.FindChild("Container/Window/QMParent/Menu_SelectedUser_Local");
     #region QUICK+MENU-Buttons
+    public static Transform QMTab() => QuickMenu().transform.FindChild("Container/Window/Page_Buttons_QM/HorizontalLayoutGroup/Page_Settings");
     public static Transform SingleButton() => MenuDashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions/Button_Respawn");
     public static Transform ExpandButton() => MenuDashboard().transform.FindChild("Header_H1/RightItemContainer/Button_QM_Expand");
     public static Transform ToggleButton() => MenuDevTools().transform.FindChild("Scrollrect/Viewport/VerticalLayoutGroup/Buttons/Button_Tag");
-    public static Transform WingButton() => WingMenu("Left").transform.FindChild("Button_Explore");
+    public static Transform WingButton(string position) => WingMenu(position).transform.FindChild("Button_Explore");
     public static Transform CarouselButton() => SelectedUser_Local().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_AvatarActions");
 
     public static Transform FourButtons_Modal() => QMParent().transform.FindChild("Modal_QM_ChangeShieldLevel");
@@ -98,11 +99,12 @@ internal class Root
    
 
     #region FALLBACK
+    public static Transform _Fallback_Dashboard_Group_QM_UI_Buttons_TAB() => QuickMenu().transform.FindChild("Container/Window/Page_Buttons_QM/HorizontalLayoutGroup");
     public static Transform _Fallback_Dashboard_Group_QM_UI_Buttons() => MenuDashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions");
     public static Transform _Fallback_Dashboard_Group_QM_UI_ExpandButtons() => MenuDashboard().transform.FindChild("Header_H1/RightItemContainer");
     public static Transform _Fallback_Dashboard_Group_MM_UI_ExpandButtons() => MMParent().transform.FindChild("Panel_MM_Header/HeaderRight");
     public static Transform _Fallback_Dashboard_Group_MM_UI_Buttons() => MenuSetting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Navigation/Viewport/VerticalLayoutGroup");
-    public static Transform _Fallback_Dashboard_Group_QM_UI_WingButtons() => WingMenu("Left");
+    public static Transform _Fallback_Dashboard_Group_QM_UI_WingButtons(string position = null) => WingMenu(position);
 
     #endregion
 

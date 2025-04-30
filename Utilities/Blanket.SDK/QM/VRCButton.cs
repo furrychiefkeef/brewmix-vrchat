@@ -23,7 +23,7 @@ internal class VRCButton : Root
         if (!QuickMenu() | !SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= _Fallback_Dashboard_Group_QM_UI_Buttons();
         Transform? obj = UnityEngine.Object.Instantiate(SingleButton(), parent);
-        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.SINGLE_BUTTON-{name}";
+        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_SINGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS
         VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();
@@ -46,7 +46,7 @@ internal class VRCButton : Root
         #endregion
 
         #region IMAGE || IMAGE_EX COMPONENT
-        _2.overrideSprite = sprite;
+        if(!sprite) return;
         _2.sprite = sprite;
         #endregion
 

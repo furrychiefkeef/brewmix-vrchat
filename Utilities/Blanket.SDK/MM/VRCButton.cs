@@ -46,7 +46,7 @@ internal class VRCButton : Root
         #endregion
 
         #region IMAGE || IMAGE_EX COMPONENT
-        _2.overrideSprite = sprite;
+        if(!sprite) return;
         _2.sprite = sprite;
         #endregion
 

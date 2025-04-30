@@ -27,7 +27,7 @@ internal class VRCToggle : Root
         parent ??= _Fallback_Dashboard_Group_QM_UI_Buttons();
 
         Transform? obj = UnityEngine.Object.Instantiate(ToggleButton(), parent);
-        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.TOGGLE_BUTTON-{name}";
+        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_TOGGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS
         UnityEngine.UI.Toggle _0 = obj.GetComponent<VRCToggleHandle>();
@@ -51,6 +51,7 @@ internal class VRCToggle : Root
         #endregion
 
         #region IMAGE || IMAGE_EX COMPONENT
+        if(!sprite_on || !sprite_off) return;
         _2on.sprite = sprite_on;
         _2off.sprite = sprite_off;
         #endregion
