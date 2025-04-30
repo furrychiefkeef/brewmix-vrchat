@@ -25,6 +25,7 @@ internal class GameUtils
         public struct RenderLayers
         {
             public static LayerMask InternalUI = LayerMask.NameToLayer("InternalUI");
+            public static LayerMask Default = LayerMask.NameToLayer("Default");
         }
         public struct  CallbackEvents
         {
@@ -109,11 +110,6 @@ internal class GameUtils
 
         public static class Motion
         {
-        
-          public struct Object
-          {
-              public static Vector3 transform = InputStateController.field_Protected_Static_Vector3_0;
-          }
           public struct Networking 
           {
                 
@@ -171,7 +167,8 @@ internal class GameUtils
 
         public static class Matchmaking
         {
-            public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers => PlayerManager.prop_PlayerManager_0.PlayerList;
+            public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetAllPlayers => PlayerManager.prop_PlayerManager_0.PlayerList;
+            public static Il2CppSystem.Collections.Generic.List<PlayerNameplate> GetAllPlayersNameplates = NameplateManager.field_Public_Static_NameplateManager_0.field_Private_List_1_PlayerNameplate_0;
         }
     }
 

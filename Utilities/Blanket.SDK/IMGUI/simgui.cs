@@ -1,12 +1,8 @@
 
-using System;
-using System.Drawing;
-using BepInEx.Unity.IL2CPP.Utils.Collections;
-using Syrup;
-using Syrup.IMGUI;
+
 using UnityEngine;
-using UnityEngine.Rendering;
-using VRC.Fonts;
+using UNIXEngine.IL2CPPModding.Utils.Collections;
+
 using Color = UnityEngine.Color;
 
 namespace Syrup.IMGUI;

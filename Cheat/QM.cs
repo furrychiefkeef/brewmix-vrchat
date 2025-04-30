@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using BepInEx.Unity.IL2CPP.Utils;
 using Syrup.IMGUI;
 using BlanketSDK.QM;
 
@@ -25,6 +24,14 @@ internal class QM
             #region Modal_1
             VRCModalContainer? Modal = new("Player+Movement");
             VRCSmallButton acee = new(Modal, "Injection", () => sconsole.print("passion_fruit",1) );
+            
+            VRCWingButton WE = new(Root._Fallback_Dashboard_Group_QM_UI_WingButtons(), "Player", VRCWingButton.Position.L,"Modify The Player", () => sconsole.print("passion_fruit",1));
+            BlanketSDK.MM.VRCButton? AE = new(Root._Fallback_Dashboard_Group_MM_UI_Buttons(), "Player", "Modify The Player", () => sconsole.print("passion_fruit",1));
+            BlanketSDK.MM.VRCSmallButton acee2 = new(Root._Fallback_Dashboard_Group_MM_UI_ExpandButtons(), "Injection2", () =>
+            {
+                sconsole.print("passion_fruit", 1);
+            });
+            
             VRCButton? T = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "Player", "Modify The Player", () => Modal.Open());
             VRCButton? E = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "CSS", "Load Custom StyleEngine", () => CSS.Online());
             VRCToggle? Fly_Toggle = new(Modal, "Fly", "Fly On", "Fly Off", (x) =>

@@ -4,8 +4,80 @@ using UnityEngine;
 using VRC;
 using System;
 using System.Collections.Generic;
+using Syrup.IMGUI;
 
-class skeletonesp : MonoBehaviour
+
+internal class wallhacks : MonoBehaviour
+{
+    public GameObject canvas_nameplate { get; set; }
+    public PlayerNameplate _nameplate { get; set; }
+    public  Player _player { get; set; }
+    private SkinnedMeshRenderer[] _avatarender;
+    private SkinnedMeshRenderer _meshs;
+ 
+    private void Awake()
+    {
+        enabled = Config.Render.player_wallhack;
+    }
+
+    void Start()
+    {
+
+        _player = transform.GetComponent<VRC.Player>();
+        _avatarender = _player.GetComponentsInChildren<SkinnedMeshRenderer>(false);
+        if (_avatarender == null) return;
+        foreach (SkinnedMeshRenderer meshs in _avatarender)
+            meshs.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
+
+        if (_nameplate == null) return;
+        _nameplate = _player._playerNet._vrcPlayer.Nameplate;
+        canvas_nameplate = _nameplate.NameplatePositioner.transform.GetChild(0).gameObject;
+        canvas_nameplate.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
+    }
+}
+
+internal class esp : MonoBehaviour
+{
+    public Player _player { get; set; }
+    private SkinnedMeshRenderer[] _avatarender;
+    private HighlightsFXStandalone FX;
+    private void Start()
+    {
+        _player = transform.GetComponent<VRC.Player>();
+        GetSelectRegion(_player);
+    }
+
+    void GetSelectRegion(VRC.Player player)
+    {
+        var obj = Instantiate(_player.transform.FindChild("SelectRegion"), player.transform);
+        UnityEngine.Object.DontDestroyOnLoad(obj.GetComponent<PlayerSelector>());
+        FX = FindObjectOfType<HighlightsFXStandalone>();
+        FX.highlightColor = Color.red;
+        FX.field_Protected_HashSet_1_MeshFilter_0.AddIfNotPresent(obj.GetComponent<MeshFilter>());
+        FX.blurSize = 1f;
+        obj.GetComponent<MeshRenderer>().enabled = true;
+  
+    }
+
+   
+}
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+/*class skeletonesp : MonoBehaviour
 {
     private Player _player;
     public Color Theme = Config.Appearance.Theme;
@@ -258,23 +330,4 @@ class skeletonesp : MonoBehaviour
         // Restore the original GUI color
         GUI.color = originalColor;
     }
-}
-
-class wallhacks : MonoBehaviour
-{
-    private Player _player;
-    private SkinnedMeshRenderer[] _avatarender;
-    private void Start()
-    
-    {
-        _player = transform.GetComponent<VRC.Player>();
-        _avatarender = transform.GetComponentsInChildren<SkinnedMeshRenderer>(false);
-        if (_avatarender == null) return;
-        foreach (SkinnedMeshRenderer meshs in _avatarender)
-        {
-            meshs.gameObject.layer =  GameUtils.Gameplay.RenderLayers.InternalUI;
-        }
-    }
-
-   
-}
+}*/

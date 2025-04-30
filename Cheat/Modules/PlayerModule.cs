@@ -1,8 +1,8 @@
-﻿using BepInEx.Unity.IL2CPP.Utils.Collections;
-using Brewchat.Game.Monobehaviours;
+﻿using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
 using Syrup.IMGUI;
 using UnityEngine;
+using UNIXEngine.IL2CPPModding.Utils.Collections;
 using VRC;
 using VRC.Animation;
 using VRC.Core;

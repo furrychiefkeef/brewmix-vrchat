@@ -119,18 +119,35 @@ namespace brewchat.hybridxcore.bep
 
         #region Player_Hooks
 
+        [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.OnPlayerJoined))]
+        public static void PlayerJoined(VRC.Player __0)
+        {
+            if (__0 != null && !__0.APIUser.IsSelf)
+            {
+                __0.gameObject.AddComponent<wallhacks>().enabled = Config.Render.player_wallhack;
+                sconsole.print($"Player Joined: {__0.VRCPlayerApi.displayName} | Actor: {__0.VRCPlayerApi.playerId}", 0);
+            }
+        }
+        [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.OnPlayerLeave))]
+        public static void PlayerLeft(VRC.Player __0)
+        {
+            if (__0 != null && !__0.APIUser.IsSelf)
+            {  
+                sconsole.print($"Player Left: {__0.VRCPlayerApi.displayName}", 0);
+            }
+        }
         #endregion
 
-        #region PHOTON
+        /*#region PHOTON
 
         [HarmonyPrefix, HarmonyPatch(typeof(LoadBalancingClient),  nameof(LoadBalancingClient.OnEvent))]
         public static bool CatchPhotonEvents(EventData? __0)
         {
             if (__0 == null) return false;
-            if (Config.Logging.LogPhotonData)
+            /*if (Config.Logging.LogPhotonData)
             {
-                sconsole.print("photon","/hook", $"[{__0.Code}] Data={__0.CustomData.ToString()} ",0);
-                if (__0.Code == 17) return false;
+                sconsole.print("photon","/hook", $"[{__0.Code}] Data={__0.CustomData.ToString()} ",0);#1#
+                /*if (__0.Code == 17) return false;#1#
                 /*switch (__0.Code)
                 {
                     
@@ -143,7 +160,7 @@ namespace brewchat.hybridxcore.bep
                         break;
                     /*case 13:
                         sconsole.print("photon","/hook", $"[{__0.Code}] Data={__0.CustomData} ",0);
-                        return false;#1#
+                        return false;#2#
                     case 17:
                         sconsole.print("photon","/hook", $"[{__0.Code}] Data={__0.CustomData} ",0);
                         return false;
@@ -156,9 +173,10 @@ namespace brewchat.hybridxcore.bep
                     default:
                      
                         break;
-                }*/
+                }#1#
+                return true;
             }
-            return true;
+            return true;*/
 
 
 
@@ -243,8 +261,10 @@ namespace brewchat.hybridxcore.bep
         {
             sconsole.print($"Player Left: {player}", 0);
         }*/
+        /*
         #endregion
     }
+    */
 
 
 

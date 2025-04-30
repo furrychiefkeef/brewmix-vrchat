@@ -8,7 +8,6 @@ namespace Pasted.WTFBlaze.Utils.Managers
     public static class SerializationManager
     {
 
-      
         public static byte[] ToByteArray(Il2CppSystem.Object obj)
         {
             if (obj == null) return null;
@@ -26,6 +25,7 @@ namespace Pasted.WTFBlaze.Utils.Managers
             }
         }
 
+        [Obsolete("Obsolete")]
         public static byte[] ToByteArray(object obj)
         {
             if (obj == null) return null;
@@ -43,6 +43,7 @@ namespace Pasted.WTFBlaze.Utils.Managers
             }
         }
 
+        [Obsolete("Obsolete")]
         public static T FromByteArray<T>(byte[] data)
         {
             if (data == null) return default;

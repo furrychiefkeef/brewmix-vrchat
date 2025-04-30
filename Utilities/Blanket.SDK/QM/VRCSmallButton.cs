@@ -23,10 +23,10 @@ internal class VRCSmallButton : Root
         parent ??= _Fallback_Dashboard_Group_QM_UI_ExpandButtons();
         UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(ExpandButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.EXPANDSMALL_BUTTON";
-
+        
         #region REQUIRED_COMPONENTS
         VRCButtonHandle  _0 = obj.GetComponent<VRCButtonHandle>();
-        ImageEx  _1 = obj.GetChild(1).GetComponent<ImageEx>();
+        ImageEx  _1 = obj.GetChild(0).GetComponent<ImageEx>();
         ToolTip  _2 = obj.GetComponent<ToolTip>();
         #endregion
 

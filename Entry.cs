@@ -1,28 +1,24 @@
 ﻿using System.Collections;
 using System.Reflection;
 using System.Resources;
-using BepInEx;
-using BepInEx.Logging;
-using BepInEx.Unity.IL2CPP;
-using BlanketSDK.Utilities;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
-using Brewchat.Game.Wrappers;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
-using PinkstarRecords;
 using Syrup.IMGUI;
+using UNIXEngine;
+using UNIXEngine.Logging;
 
-[BepInPlugin("brewchat.mod.com", "brew", "4.0.0")]
-public class Entry : BasePlugin
+[UNIxMod("com.pinkstar.records", "pinkstar*", "0.0.0.0")]
+public class Entry : UNIXEngine.IL2CPPModding.UnixMod
 {
-    Harmony h = new("brew@UZI5eGVK1BeA1ajf6dC2kWoAhPhvw5e4Dlg2nxGA.patches");
-    public static ManualLogSource Console = new("PINKSTAR.RECORDS");
+    Harmony h = new("pinkstar@UZI5eRCE1BBA1ajf6dC2kWoAhPhvw5e4Dlg2nxGA.patches");
+    public static ManualLogSource Console = new("PINKSTAR X .RECORDS");
     
     
     public override void Load()
     {
-        BepInEx.Logging.Logger.Sources.Add(Console);
+        UNIXEngine.Logging.Logger.Sources.Add(Console);
         #region LIB
         ClassInjector.RegisterTypeInIl2Cpp<Syrup.IMGUI.simgui>(); 
         ClassInjector.RegisterTypeInIl2Cpp<Brewchat.Game.Monobehaviours.Toolbox>();
@@ -30,7 +26,7 @@ public class Entry : BasePlugin
         ClassInjector.RegisterTypeInIl2Cpp<FlyManager>();
         ClassInjector.RegisterTypeInIl2Cpp<KeybindManager>();
         ClassInjector.RegisterTypeInIl2Cpp<Exploits>();
-        ClassInjector.RegisterTypeInIl2Cpp<skeletonesp>();
+        ClassInjector.RegisterTypeInIl2Cpp<esp>();
         ClassInjector.RegisterTypeInIl2Cpp<wallhacks>();
         h.PatchAll();
         #endregion
@@ -43,8 +39,7 @@ public class Entry : BasePlugin
         foreach (var name in assembly.GetManifestResourceNames())
         {
             sconsole.print($"Resource: {name}", 0);
-        
-            // Try to read the resource to see what's inside
+            
             try 
             {
                 using (var stream = assembly.GetManifestResourceStream(name))
@@ -76,4 +71,3 @@ public class Entry : BasePlugin
     }
 }
 
-   

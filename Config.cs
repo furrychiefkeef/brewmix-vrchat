@@ -29,18 +29,13 @@ public class Config
         #endregion
         
     }
-    
-    /*public static T Get<T>(Properties pp)
+
+    public struct Render
     {
-        object result = pp switch
-        {
-            Properties.Fly => Movement.fly,
-            Properties.Speed => Movement.speed ?? 6.5f, // Default value if null
-            Properties.abruptness2motion => Movement.abruptness2motion,
-            _ => default(T)
-        };
-        return result == null ? default(T) : (T)result;
-    }*/
+        public static bool player_wallhack { get; set; } 
+        public static bool nameplate_wallhack { get; set; } 
+    }
+   
 
     public struct Logging
     {
@@ -65,5 +60,15 @@ public class Config
     }
    
 
-
+    /*public static T Get<T>(Properties pp)
+       {
+           object result = pp switch
+           {
+               Properties.Fly => Movement.fly,
+               Properties.Speed => Movement.speed ?? 6.5f, // Default value if null
+               Properties.abruptness2motion => Movement.abruptness2motion,
+               _ => default(T)
+           };
+           return result == null ? default(T) : (T)result;
+       }*/
 }
