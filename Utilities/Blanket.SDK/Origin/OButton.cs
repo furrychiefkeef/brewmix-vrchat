@@ -15,8 +15,7 @@ internal class OButton : Templates
     public OButton(Transform parent, float piviot_x ,float piviot_y, string? name, System.Action func)
     {
         if (!USERINTERFACE() | !ORIGIN_BUTTON()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        parent ??= _Fallback_Dashboard_Group_MM_UI_Buttons();
-        GameObject? obj = UnityEngine.Object.Instantiate(ORIGIN_BUTTON(), ORIGIN_BUTTON_PARENT().transform);
+        Transform? obj = UnityEngine.Object.Instantiate(ORIGIN_BUTTON(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.ORIGIN_BUTTON-{name}";
         
         #region REQUIRED_COMPONENTS

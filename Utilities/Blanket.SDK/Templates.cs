@@ -21,8 +21,7 @@ internal class Templates
     #region USER_INTERFACE
     protected static GameObject USERINTERFACE() => UnityEngine.Object.FindObjectOfType<UserInterface>().gameObject;
 
-    protected static GameObject ORIGIN_BUTTON() =>
-        GameObject.Find("MenuContent/Popups/LoadingPopup/ProgressPanel/Parent_Loading_Progress/GoButton");
+    protected static Transform ORIGIN_BUTTON() => VRCUiManager.field_Private_Static_VRCUiManager_0.transform.FindChild("MenuContent/Popups/LoadingPopup/ProgressPanel/Parent_Loading_Progress/GoButton");
     protected static GameObject ORIGIN_BUTTON_PARENT() =>
         GameObject.Find("MenuContent/Popups/LoadingPopup/ProgressPanel/Parent_Loading_Progress");
     protected static GameObject SCREENSPACE_OVERLAY_UNSCALEDUI() => GameObject.Find("UnscaledUI");
