@@ -34,7 +34,6 @@ internal class MM
     {
         public static void Apply()
         {
-            if (!GameUtils.World.IsWorldLoaded()) return;
             VRCProfileButton? EA = new(new VRCProfileRow(Templates._Fallback_Dashboard_Group_MM_UI_ProfileRows(),"Player"), "Teleport", $"Teleport to this player's Position", () =>
             {
                 GameUtils.PlayerModel.Get().transform.position = GameUtils.PlayerModel.Matchmaking.GetSelectedUser.transform.position;
