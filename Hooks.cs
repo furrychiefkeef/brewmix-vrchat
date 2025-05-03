@@ -64,7 +64,7 @@ namespace brewchat.hybridxcore.bep
             if (__instance is null && !OfflineUILoaded) return;
             AudioSource? LoadingScreenAudio = __instance.gameObject.transform.GetChild(1).GetComponent<AudioSource>();
             UnityEngine.Object.DestroyImmediate(LoadingScreenAudio);
-            EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent =
+            var ui = EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent =
                 __instance.gameObject.transform;
         }
 

@@ -61,9 +61,10 @@ internal class QM
     {
         public static void Apply()
         {   
-            if (!GameUtils.World.IsWorldLoaded()) return;
+
             VRCButton? Fly = new(Templates._QM.SelectedUser_LocalCon(), "Teleport", $"Teleport to this player's Position", () =>
             {
+                if (!GameUtils.World.IsWorldLoaded()) return;
                 GameUtils.PlayerModel.Get().transform.position = GameUtils.PlayerModel.Matchmaking.GetSelectedUser.transform.position;
             });
         }

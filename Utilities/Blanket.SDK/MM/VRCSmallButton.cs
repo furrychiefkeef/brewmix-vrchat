@@ -11,20 +11,21 @@ namespace BlanketSDK.MM.Elements.Controls;
 internal class VRCSmallButton : Templates
 {  
     /// <summary>
-    ///  VRCSmallButton this is used to create a SMALLBUTTON_MAINMENU_BUTTON
+    ///  VRCSmallButton is used to create a SMALLBUTTON_MAINMENU_BUTTON
     /// </summary>
     /// <param name="parent">The parent transform where the button will be placed.</param>
     /// <param name="name">The display name of the button.</param>
     /// <param name="tooltip">The tooltip text for the button.</param>
+    /// <param name="priority">The priority order of the button.</param>
     /// <param name="func">The action to execute when the button is clicked.</param>
     /// <param name="sprite">An optional sprite to display on the button.</param>
-    public VRCSmallButton(Transform parent, string? tooltip, System.Action func, Sprite? sprite = null)
+    public VRCSmallButton(Transform parent, string? tooltip, int priority, System.Action func, Sprite? sprite = null)
     {
         if (!MainMenu() | !_MM.MMExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= _Fallback_Dashboard_Group_MM_UI_ExpandButtons();
         UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(_MM.MMExpandButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_SMALL_BUTTON";
-        obj.SetSiblingIndex(5 - 1) ;
+        obj.SetSiblingIndex(priority - 1) ;
         #region REQUIRED_COMPONENTS
         
         MenuTab _0 = obj.GetComponent<MenuTab>();
@@ -49,5 +50,5 @@ internal class VRCSmallButton : Templates
         _1.sprite = sprite;
         #endregion
     }
-    public VRCSmallButton(VRCModalContainer parent, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.parent_rightbuttons, tooltip, func, sprite) { }
+    public VRCSmallButton(VRCModalContainer parent, string? tooltip, int priority ,System.Action func, Sprite? sprite = null) : this(parent.parent_rightbuttons, tooltip, priority, func, sprite) { }
 }

@@ -13,7 +13,7 @@ internal class VRCProfileRow : Templates
         parent ??= _Fallback_Dashboard_Group_MM_UI_ProfileRows();
         Transform? obj = UnityEngine.Object.Instantiate(_MM.MMProfileRow(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_PROFILE_ROW_{header}";
-        obj.SetSiblingIndex(3);
+        obj.SetSiblingIndex(2 + 1);
       
         /*obj.gameObject.SetActive(alwaysVisable);*/
         
