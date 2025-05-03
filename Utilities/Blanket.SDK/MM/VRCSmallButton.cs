@@ -1,4 +1,4 @@
-﻿using BlanketSDK.QM.Modals;
+﻿using BlanketSDK.QM.Elements.Modals;
 using BlanketSDK.Utilities;
 using UnityEngine;
 using VRC.Core;
@@ -6,9 +6,9 @@ using VRC.Localization;
 using VRC.UI;
 using VRC.UI.Elements.Controls;
 
-namespace BlanketSDK.MM;
+namespace BlanketSDK.MM.Elements.Controls;
 
-internal class VRCSmallButton : Root
+internal class VRCSmallButton : Templates
 {  
     /// <summary>
     ///  VRCSmallButton this is used to create a SMALLBUTTON_MAINMENU_BUTTON
@@ -20,9 +20,9 @@ internal class VRCSmallButton : Root
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCSmallButton(Transform parent, string? tooltip, System.Action func, Sprite? sprite = null)
     {
-        if (!MainMenu() | !MMExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!MainMenu() | !_MM.MMExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= _Fallback_Dashboard_Group_MM_UI_ExpandButtons();
-        UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(MMExpandButton(), parent);
+        UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(_MM.MMExpandButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_SMALL_BUTTON";
         obj.SetSiblingIndex(5 - 1) ;
         #region REQUIRED_COMPONENTS
@@ -34,18 +34,19 @@ internal class VRCSmallButton : Root
 
         #region BUTTON COMPONENT
         UnityEngine.UI.Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_0 = _0.onClick;
-        _0.field_Private_MenuStateController_0 = null;
+        _0.field_Private_MenuStateController_0 = MM()?.field_Protected_MenuStateController_0;
+        _0._controlName = "empty";
         BUTTONCLICKED_EVENT_0.RemoveAllListeners();
         BUTTONCLICKED_EVENT_0.AddListener(func);
         #endregion
-        
-        #region IMAGE || IMAGE_EX COMPONENT
-        if(!sprite) return;
-        _1.sprite = sprite;
-        #endregion
-
+  
         #region TOOLTIP COMPONENT
         _2._localizableString = tooltip.Localize();
+        #endregion
+        
+        #region IMAGE || IMAGE_EX COMPONENT
+        if (!sprite) return;
+        _1.sprite = sprite;
         #endregion
     }
     public VRCSmallButton(VRCModalContainer parent, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.parent_rightbuttons, tooltip, func, sprite) { }

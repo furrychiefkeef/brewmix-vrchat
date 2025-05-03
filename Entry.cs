@@ -7,11 +7,15 @@ using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
 using Syrup.IMGUI;
 using UNIXEngine;
+using UNIXEngine.IL2CPPModding;
 using UNIXEngine.Logging;
 
 [UNIxMod("com.pinkstar.records", "pinkstar*", "0.0.0.0")]
 public class Entry : UNIXEngine.IL2CPPModding.UnixMod
 {
+    public static string NAME => "PINKSTAR";
+    public static string FULLNAME => "PINKSTAR X .RECORDS";
+    public static string VERSION => "0.0.0.0";
     Harmony h = new("pinkstar@UZI5eRCE1BBA1ajf6dC2kWoAhPhvw5e4Dlg2nxGA.patches");
     public static ManualLogSource Console = new("PINKSTAR X .RECORDS");
     
@@ -19,16 +23,36 @@ public class Entry : UNIXEngine.IL2CPPModding.UnixMod
     public override void Load()
     {
         UNIXEngine.Logging.Logger.Sources.Add(Console);
-        #region LIB
+        h.PatchAll();
+        #region Components
+
+        #region CORE
         ClassInjector.RegisterTypeInIl2Cpp<Syrup.IMGUI.simgui>(); 
         ClassInjector.RegisterTypeInIl2Cpp<Brewchat.Game.Monobehaviours.Toolbox>();
         ClassInjector.RegisterTypeInIl2Cpp<CSS>();
-        ClassInjector.RegisterTypeInIl2Cpp<FlyManager>();
-        ClassInjector.RegisterTypeInIl2Cpp<KeybindManager>();
-        ClassInjector.RegisterTypeInIl2Cpp<Exploits>();
-        ClassInjector.RegisterTypeInIl2Cpp<esp>();
-        ClassInjector.RegisterTypeInIl2Cpp<wallhacks>();
-        h.PatchAll();
+
+        #region Managers
+
+        ClassInjector.RegisterTypeInIl2Cpp<FlyManager>(); ClassInjector.RegisterTypeInIl2Cpp<KeybindManager>();
+
+        #endregion
+
+        #region Modules
+
+        ClassInjector.RegisterTypeInIl2Cpp<FlyManager>(); ClassInjector.RegisterTypeInIl2Cpp<KeybindManager>();
+        ClassInjector.RegisterTypeInIl2Cpp<esp>(); ClassInjector.RegisterTypeInIl2Cpp<wallhacks>();
+
+        #endregion
+
+        #endregion
+       
+
+        
+
+        
+     
+        
+       
         #endregion
     } 
     public static void LogAllResources()

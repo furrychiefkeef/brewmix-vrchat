@@ -1,30 +1,17 @@
-﻿using Brewchat;
+﻿using BestHTTP.SecureProtocol.Org.BouncyCastle.Crypto.Tls;
+using Brewchat;
 using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
-using ExitGames.Client.Photon;
 using HarmonyLib;
-using Il2CppInterop.Runtime;
-using Il2CppInterop.Runtime.InteropTypes;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
-using Il2CppInterop.Runtime.Runtime;
-using Il2CppSystem.Collections;
-using Il2CppSystem.Runtime.Serialization;
-using Pasted.WTFBlaze.Utils.Managers;
-using Photon.Pun;
 using Photon.Realtime;
 using Syrup.IMGUI;
-using Unity.Collections;
 using UnityEngine;
+using UnityEngine.XR;
 using VRC.Core;
-using VRC.SDKBase;
-using VRC.UI.Client;
-using VRC.UI.Core;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
-using Object = Il2CppSystem.Object;
-
 
 namespace brewchat.hybridxcore.bep
 {
@@ -40,8 +27,11 @@ namespace brewchat.hybridxcore.bep
         public static void DomainApp_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null) return;
-            __instance.gameObject.GetOrAddComponent<KeybindManager>();
             __instance?.gameObject.GetOrAddComponent<CSS>();
+            sconsole.internal_log("VR_OFF");
+            __instance.gameObject.GetOrAddComponent<KeybindManager>();
+          
+               
             /*__instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();*/
             CSS.Offline();
         }
@@ -50,46 +40,53 @@ namespace brewchat.hybridxcore.bep
 
         #region INTERNAL_UI
 
+        /*[HarmonyPostfix, HarmonyPatch(typeof(VRCUIManager), nameof(VRCUIManager.Start))]
+               public static void UI_Initialize_HOOK(ref QuickMenu? __instance)
+               {
+                   if (__instance == null && !OnlineUILoaded) return;
+                   #region QM
+                   UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel,
+                       true);
+                   #endregion
+                   QM.Apply();
+                   Toolbox.LoadMyUI();
+               }*/
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
         public static void VRCLoadingSequence_IsEnable_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null && !OfflineUILoaded) return;
             CSS.Offline();
         }
+
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.Start))]
         public static void VRCLoadingSequence_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null && !OfflineUILoaded) return;
             AudioSource? LoadingScreenAudio = __instance.gameObject.transform.GetChild(1).GetComponent<AudioSource>();
             UnityEngine.Object.DestroyImmediate(LoadingScreenAudio);
-            EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent = __instance.gameObject.transform;
+            EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent =
+                __instance.gameObject.transform;
         }
 
-        /*[HarmonyPostfix, HarmonyPatch(typeof(VRCUIManager), nameof(VRCUIManager.Start))]
-        public static void UI_Initialize_HOOK(ref QuickMenu? __instance)
-        {
-            if (__instance == null && !OnlineUILoaded) return;
-            #region QM
-            UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel,
-                true);
-            #endregion
-            QM.Apply();
-            Toolbox.LoadMyUI();
-        }*/
-        
+
+
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
             __instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
-            UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel,true);
-            QM.Apply();
+            UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel,
+                true);
+            QM._Pinkstar.Apply();
+            QM.SelectedMenu.Apply();
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
         public static void MainMenu_Initialize_HOOK(ref MainMenu? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
+            MM._Pinkstar.Apply();
+            MM.SelectedMenu.Apply();
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUIBackground), nameof(VRCUIBackground.Start))]
@@ -124,183 +121,27 @@ namespace brewchat.hybridxcore.bep
         {
             if (__0 != null && !__0.APIUser.IsSelf)
             {
-                __0.gameObject.AddComponent<wallhacks>().enabled = Config.Render.player_wallhack;
+                __0.gameObject.AddComponent<wallhacks>();
                 sconsole.print($"Player Joined: {__0.VRCPlayerApi.displayName} | Actor: {__0.VRCPlayerApi.playerId}", 0);
             }
         }
+
         [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.OnPlayerLeave))]
         public static void PlayerLeft(VRC.Player __0)
         {
             if (__0 != null && !__0.APIUser.IsSelf)
-            {  
+            {
                 sconsole.print($"Player Left: {__0.VRCPlayerApi.displayName}", 0);
             }
         }
         #endregion
 
-        /*#region PHOTON
-
-        [HarmonyPrefix, HarmonyPatch(typeof(LoadBalancingClient),  nameof(LoadBalancingClient.OnEvent))]
-        public static bool CatchPhotonEvents(EventData? __0)
-        {
-            if (__0 == null) return false;
-            /*if (Config.Logging.LogPhotonData)
-            {
-                sconsole.print("photon","/hook", $"[{__0.Code}] Data={__0.CustomData.ToString()} ",0);#1#
-                /*if (__0.Code == 17) return false;#1#
-                /*switch (__0.Code)
-                {
-                    
-                    case 1:
-                        if (Config.Logging.LogVoicePackets_Event1)
-                        {
-                            var vd = SerializationManager.FromIL2CPPToManaged<Il2CppSystem.Object>(__0.CustomData);
-                            sconsole.print("photon","/hook", $"[{__0.Code}] Data={vd.GetType()} ",0);
-                        }
-                        break;
-                    /*case 13:
-                        sconsole.print("photon","/hook", $"[{__0.Code}] Data={__0.CustomData} ",0);
-                        return false;#2#
-                    case 17:
-                        sconsole.print("photon","/hook", $"[{__0.Code}] Data={__0.CustomData} ",0);
-                        return false;
-                    case 43:
-                        if (Config.Logging.LogMessageData_Event43)
-                        {
-                            sconsole.print("photon","/hook", $"{__0.CustomData.ToString() } ",0);
-                        }
-                        break;
-                    default:
-                     
-                        break;
-                }#1#
-                return true;
-            }
-            return true;*/
-
-
-
-
-        }
-
-    /*[HarmonyPostfix, HarmonyPatch(typeof(PhotonNetwork), nameof(PhotonNetwork.Method_Public_Static_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0))]
-    public static void CatchOutgoingPhotonEvents(byte __0, object __1, RaiseEventOptions __2, SendOptions __3)
-    {
-
-        sconsole.print($"Photon Event Sent: Code: {__0}, Content={__1.GetType()} Send {__3.DeliveryMode} ", 0);
-    }*/
-        /*[HarmonyPostfix, HarmonyPatch(typeof(VRCNetworkingClient), nameof(VRCNetworkingClient.OnEvent))]
-        public static void LogAllPhotonEvents(EventData __0)
-        {
-            // Log the basic event info
-            sconsole.print($"Photon Event: Code={__0.Code}, Sender={__0.Sender}", 0);
-    
-            // Log the custom data
-            if (__0.CustomData != null)
-            {
-                sconsole.print($"  Custom Data: {__0.CustomData}", 0);
-            }
-    
-            // Log all parameters using Dictionary methods instead of Key/Value properties
-            if (__0.Parameters != null)
-            {
-                // Try to cast to IDictionary to access the keys and values
-                var paramDict = __0.Parameters as System.Collections.IDictionary;
-                if (paramDict != null)
-                {
-                    foreach (System.Collections.DictionaryEntry entry in paramDict)
-                    {
-                        sconsole.print($"  Param {entry.Key}: {entry.Value}", 0);
-                    }
-                }
-                else
-                {
-                    // If direct casting doesn't work, try to log the whole Parameters object
-                    sconsole.print($"  Parameters: {__0.Parameters}", 0);
-                }
-            }*/
-        /*
-        [HarmonyPostfix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.Method_Public_Boolean_Player_VrcEvent_VrcBroadcastType_0))]
-        public static void GetEventPatch(ref VRC.Player __0, ref VRC_EventHandler.VrcEvent __1, ref VRC_EventHandler.VrcBroadcastType __2)
-        {
-            //Need to log events for funny
-            var player = __0;
-            var PlayerName = player.field_Private_APIUser_0.displayName;
-            var PlayerID = player.field_Private_APIUser_0.id;
-            var ObjectName = __1.ParameterObject.name;
-            Il2CppSystem.Object[] RawParameters = Networking.DecodeParameters(__1.ParameterBytes);
-            string ParametersString = "";
-            for (int i = 0; i < RawParameters.Length; i++) ParametersString += Il2CppSystem.Convert.ToString(RawParameters[i]) + "|";
-            sconsole.print($"[RPC] Sender: {PlayerName} ({PlayerID}) | OBJ: {ObjectName} | RPC: {__1.ParameterString} | VALUES: [{ParametersString}] | TYPE: {__2}",0);
-            */
-           
-            /*switch (ObjectName)
-            {
-                case "UdonSyncRunProgramAsRPC":
-                    break;
-                /*case "SyncKill":
-                    return !WorldsMenu.GodMode;#1#
-            }*/
-        }
+        #region Test
         
-    
-        /*[HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.Method_Public_Virtual_Final_New_Void_EventData_0))]
-        public static void CatchOutgoingPhotonEvents(ref EventData? __0)
-        {
-
-            sconsole.print($"Photon Event: Sender: Sender -> {__0.sender}, Param={__0.Parameters} Code: {__0.Code} ", 0);
-        }*/
-        /*[HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.Method_Public_Void_Player_0))]
-        public static void PlayerJoined(ref VRC.Player player)
-        {
-                sconsole.print($"Player Joined: {player}", 0);
-        }
-        
-        [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.field_Internal_Static_NetworkManager_0.Method_Public_Void_Player_PDM_1))]
-        public static void PlayerLeft(VRC.Player player)
-        {
-            sconsole.print($"Player Left: {player}", 0);
-        }*/
-        /*
         #endregion
     }
-    */
-
-
-
- 
-
-
-       
-   
-
-
-/*[HarmonyPostfix, HarmonyPatch(typeof(VRCUiManager), nameof(QuickMenu.LateUpdate))]
-      public static void UpdateManager()
-      {
-
-      }
-      [HarmonyPostfix, HarmonyPatch(typeof(VRCUiManager), nameof(QuickMenu.FixedUpdate))]
-      public static void FixedUpdateManager()
-      {
-
-      }*/
-        
-/*[HarmonyPostfix, HarmonyPatch(typeof(VRCUiManager), nameof(VRCUiManager.LateUpdate))]
-public static void LateUpdateManager__HOOK(ref VRCUiManager __instance)
-{
-
-}*/
-/*[HarmonyPostfix, HarmonyPatch(typeof(ChatBubbleRateLimiter), nameof(ChatBubbleRateLimiter.field_Private_Single_0), MethodType.Getter | MethodType.Setter)]
-public static float RateLimiterBypass__HOOK(ref ChatBubbleRateLimiter __instance, ref float __result)
-{
-
-    if (__instance != null && __instance.gameObject != null)
-    {
-        __result = 0;
-        sconsole.SLog($"RATE LIMITER BYPASSED CHECK DEBUG: {__result}");
-        return __result;
-    }
-    return __result;
 }
-#endregion*/
+
+
+
+  

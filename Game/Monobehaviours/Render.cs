@@ -30,9 +30,8 @@ internal class wallhacks : MonoBehaviour
             meshs.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
 
         if (_nameplate == null) return;
-        _nameplate = _player._playerNet._vrcPlayer.Nameplate;
-        canvas_nameplate = _nameplate.NameplatePositioner.transform.GetChild(0).gameObject;
-        canvas_nameplate.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
+        _nameplate = _player._vrcplayer.field_Public_PlayerNameplate_0;
+        _nameplate.field_Public_CanvasGroup_0.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
     }
 }
 

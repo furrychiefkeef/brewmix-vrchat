@@ -1,70 +1,71 @@
-﻿using System.Diagnostics;
+﻿using BlanketSDK.QM.Elements;
 using Syrup.IMGUI;
-using BlanketSDK.QM;
-
+using BlanketSDK.QM.Elements.Controls;
 using BlanketSDK.Utilities;
-using BlanketSDK.QM.Modals;
+using BlanketSDK.QM.Elements.Modals;
 using Brewchat.Cheat.Modules;
-using Brewchat.Cheats.World;
 using Brewchat.Game.Wrappers;
-using ExitGames.Client.Photon;
-using Il2CppInterop.Runtime;
-using UnityEngine;
+using MS.Internal.Xml.XPath;
 using VRC.Core;
-using VRC.SDK3.Components;
+using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
 namespace Brewchat.Cheat;
 
 internal class QM 
 {
-    public static void Apply()
-    {
-        try
+    public class _Pinkstar {
+        public static void Apply()
         {
-            
-            new VRCTab(Root._Fallback_Dashboard_Group_QM_UI_Buttons_TAB(),"Player", "Modify The Player", () => sconsole.print("passion_fruit",1) );
-            #region Modal_1
-            VRCModalContainer? Modal = new("Player+Movement");
-            VRCSmallButton acee = new(Modal, "Injection", () => sconsole.print("passion_fruit",1) );
-            
-            VRCWingButton WE = new(Root._Fallback_Dashboard_Group_QM_UI_WingButtons(), Ropie.Wing.Position.L,"Player", "Modify The Player", () => sconsole.print("passion_fruit",1));
-            VRCWingButton WC = new(Root._Fallback_Dashboard_Group_QM_UI_WingButtons(), Ropie.Wing.Position.R,"Player", "Modify The Player", () => sconsole.print("passion_fruit",1));
-            
-            BlanketSDK.MM.VRCButton? AE = new(Root._Fallback_Dashboard_Group_MM_UI_Buttons(), "Player", "Modify The Player", () => sconsole.print("passion_fruit",1));
-            
-            BlanketSDK.MM.VRCSmallButton acee2 = new(Root._Fallback_Dashboard_Group_MM_UI_ExpandButtons(), "Injection2", () =>
+            try
             {
-                sconsole.print("passion_fruit", 0);
-            });
-            
-            VRCButton? T = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "Player", "Modify The Player", () => Modal.Open());
-            VRCButton? E = new (Root._Fallback_Dashboard_Group_QM_UI_Buttons(), "CSS", "Load Custom StyleEngine", () => CSS.Online());
-            VRCToggle? Fly_Toggle = new(Modal, "Fly", "Fly On", "Fly Off", (x) =>
-            {
-                Config.Movement.fly = !Config.Movement.fly;
-                PlayerModule.Movement.Fly(); 
-            });
-            VRCToggle? Event12 = new(Modal, "BlockEvent 12", "", "Fly Off", (x) =>
-            {
-                Config.Protection.block_event12 = !Config.Protection.block_event12;
-            });
-            VRCToggle? Event1 = new(Modal, "VoiceData", "", "Fly Off", (x) =>
-            {
-                if (x)
+                #region Begin
+
+                var MainPage = new VRCPage(Entry.FULLNAME);
+                new VRCTab(MainPage,"The passion project.", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+                
+                VRCWingButton WING_L = new(Templates._Fallback_Dashboard_Group_QM_UI_WingButtons(), Ropie.Wing.Position.L,Entry.NAME, "The passion project.", () => sconsole.print("passion_fruit",1));
+                VRCWingButton WING_R = new(Templates._Fallback_Dashboard_Group_QM_UI_WingButtons(), Ropie.Wing.Position.R,Entry.NAME, "The passion project.", () => sconsole.print("passion_fruit",1));
+                #endregion
+              
+                VRCGroupBox Main_Groupbox =  new (MainPage);
+                
+                #region Groupbox
+                
+                VRCModalContainer? PlayerMovementModal = new("Player+Movement");
+                VRCButton? T = new (Main_Groupbox, "Player", "Modify The Player", () => PlayerMovementModal.Open());
+                
+                #endregion
+                
+                #region Modal_Player+Movement
+           
+                
+                VRCSmallButton Injection = new(PlayerMovementModal, "Injection", () => sconsole.print("passion_fruit",1) );
+                VRCToggle? Fly = new(PlayerMovementModal, "Fly", "Turn Fly On", "Turn Fly Off", (x) =>
                 {
-                    GameUtils.PlayerModel.Get().gameObject.GetOrAddComponent<Exploits>().enabled = x;
-                }
-            });
-            VRCToggle? Force_Jump = new(Modal, "Force Jump On", "Force Jump Off", "Fly Off", (x) =>
-            {
-                PlayerModule.Movement.Spinbot(x);
-            });
-
-            #endregion
-
-
+               
+                    Config.Movement.fly = !Config.Movement.fly;
+                    PlayerModule.Movement.Fly(); 
+                });
+                VRCToggle? Spinbot = new(PlayerMovementModal, "Spinbot", "Force Jump Off", "Fly Off", (x) =>
+                {
+                    PlayerModule.Movement.Spinbot(x);
+                });
+                #endregion
+            }
+            catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source ,2); }
+            finally{sconsole.print("Created The QuickMenu+BlanketSDK.UI",1);}
         }
-        catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source ,2); }
-        finally{sconsole.print("Created The QuickMenu+BlanketSDK.UI",1);}
+    }
+
+    public class SelectedMenu
+    {
+        public static void Apply()
+        {   
+            if (!GameUtils.World.IsWorldLoaded()) return;
+            VRCButton? Fly = new(Templates._QM.SelectedUser_LocalCon(), "Teleport", $"Teleport to this player's Position", () =>
+            {
+                GameUtils.PlayerModel.Get().transform.position = GameUtils.PlayerModel.Matchmaking.GetSelectedUser.transform.position;
+            });
+        }
     }
 }

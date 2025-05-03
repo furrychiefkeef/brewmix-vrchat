@@ -1,6 +1,7 @@
 ﻿using Brewview;
 using ExitGames.Client.Photon;
 using Il2CppInterop.Runtime;
+using Il2CppMono.Security.Interface;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
@@ -13,6 +14,7 @@ using VRC.SDKBase;
 using VRC.UI.Client.HUD;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
+using VRC.UI.Elements.Menus;
 using Object = Il2CppSystem.Object;
 using Player = VRC.Player;
 
@@ -27,7 +29,8 @@ internal class GameUtils
             public static LayerMask InternalUI = LayerMask.NameToLayer("InternalUI");
             public static LayerMask Default = LayerMask.NameToLayer("Default");
         }
-        public struct  CallbackEvents
+
+        public struct CallbackEvents
         {
             static QuickMenu? QuickMenu_Cache;
             static MainMenu? MainMenu_Cache;
@@ -40,6 +43,7 @@ internal class GameUtils
                     return QuickMenu_Cache != null && QuickMenu_Cache.enabled;
                 }
             }
+
             public static bool IsInMainMenu
             {
                 get
@@ -49,7 +53,8 @@ internal class GameUtils
                 }
             }
         }
-        public struct  PhotonUtils
+
+        public struct PhotonUtils
         {
             public enum Events : Byte
             {
@@ -59,10 +64,13 @@ internal class GameUtils
                 OnPlayerLeft = 254,
                 OnPlayerFailedJoin = byte.MaxValue,
             }
+
             public static void SendRaiseEvent(byte code, object parameter, SendOptions sendOptions)
             {
-                var il2 = Pasted.WTFBlaze.Utils.Managers.SerializationManager.FromManagedToIL2CPP<Il2CppSystem.Object>(parameter);
-                PhotonNetwork.RaiseEvent(code, il2 ,new()
+                var il2 =
+                    Pasted.WTFBlaze.Utils.Managers.SerializationManager.FromManagedToIL2CPP<Il2CppSystem.Object>(
+                        parameter);
+                PhotonNetwork.RaiseEvent(code, il2, new()
                 {
                     field_Public_ReceiverGroup_0 = ReceiverGroup.Others,
                     field_Public_EventCaching_0 = EventCaching.DoNotCache
@@ -73,7 +81,7 @@ internal class GameUtils
             {
                 return code switch
                 {
-                     0 => "CustomEvent",
+                    0 => "CustomEvent",
                     43 => "Chatbox",
                     200 => "CustomEvent",
                     201 => "RaiseEvent",
@@ -95,57 +103,109 @@ internal class GameUtils
                 };
             }
         }
+
+        public struct NetworkUtils
+        {
+
+            private static int _eintMValue;
+
+            public static void SendEmojiRPC(int emoji)
+            {
+                Il2CppSystem.Int32 eint = default(Il2CppSystem.Int32);
+                _eintMValue = eint.m_value;
+                _eintMValue = emoji;
+                Il2CppSystem.Object @object = @eint.BoxIl2CppObject();
+                Networking.RPC(0, PlayerModel.Get().gameObject, "SendEmojiRPC", new Il2CppSystem.Object[] { emoji });
+            }
+        }
     }
 
     public class Camera
-    {   
+    {
+
+
+
         public static UnityEngine.Camera? Get { get; set; } = UnityEngine.Camera.main;
         public static GameObject CameraObj => GameObject.Find("Camera");
     }
 
     public class PlayerModel
     {
-        public static VRC.Player Get() => VRC.Player.prop_Player_0;
-        
+        public static VRC.Player Get() => Player.prop_Player_0;
 
+        public static VRC.Player? GrabPlayerFromDisplayName(string name)
+        {
+
+            if (string.IsNullOrEmpty(name))
+                return null;
+        
+            foreach (var player in Matchmaking.GetAllPlayers)
+            {
+                if (player.APIUser.IsSelf || !player._vrcplayer || !player._vrcplayer._player)
+                    continue;
+            
+                if (string.Equals(player.APIUser.displayName, name, StringComparison.OrdinalIgnoreCase))
+                    return player._vrcplayer._player;
+            }
+    
+            return null;
+        }
+        public static VRC.Player? GrabPlayerFromActorId(int id)
+        {
+
+            if (id.Equals(0)) return null;
+        
+            foreach (var player in Matchmaking.GetAllPlayers)
+            {
+                if (player.APIUser.IsSelf || !player._vrcplayer || !player._vrcplayer._player)
+                    continue;
+            
+                if (int.Equals(player.VRCPlayerApi.playerId, id))
+                    return player._vrcplayer._player;
+            }
+    
+            return null;
+        }
         public static class Motion
         {
-          public struct Networking 
-          {
-                
-            
-            public static VRCPlayerApi Run_Speed(float v = 2f)
+            public struct Networking
             {
-                VRCPlayerApi? player = Get().VRCPlayerApi;
-                player.SetRunSpeed(v);
-                return player;
-            }
-            public static VRCPlayerApi Walk_Speed(float v = 2f)
-            {
-                VRCPlayerApi? player = Get().VRCPlayerApi;
-                player.SetWalkSpeed(v);
-                return player;
-            }
-            public static VRCPlayerApi Jump_Impulse(float v = 3f)
-            {
-                VRCPlayerApi? player = Get().VRCPlayerApi;
-                player.SetJumpImpulse(v);
-                return player;
-            }
-            public static VRCPlayerApi Velocity(Vector3 v)
-            {
-                VRCPlayerApi? player = Get().VRCPlayerApi;
-                player.SetVelocity(v);
-                return player;
+                public static VRCPlayerApi Run_Speed(float v = 2f)
+                {
+                    VRCPlayerApi? player = Get().VRCPlayerApi;
+                    player.SetRunSpeed(v);
+                    return player;
+                }
 
+                public static VRCPlayerApi Walk_Speed(float v = 2f)
+                {
+                    VRCPlayerApi? player = Get().VRCPlayerApi;
+                    player.SetWalkSpeed(v);
+                    return player;
+                }
+
+                public static VRCPlayerApi Jump_Impulse(float v = 3f)
+                {
+                    VRCPlayerApi? player = Get().VRCPlayerApi;
+                    player.SetJumpImpulse(v);
+                    return player;
+                }
+
+                public static VRCPlayerApi Velocity(Vector3 v)
+                {
+                    VRCPlayerApi? player = Get().VRCPlayerApi;
+                    player.SetVelocity(v);
+                    return player;
+
+                }
+
+                public static VRCPlayerApi Gravity(float v = 1f)
+                {
+                    VRCPlayerApi? player = Get().VRCPlayerApi;
+                    player.SetGravityStrength(v);
+                    return player;
+                }
             }
-            public static VRCPlayerApi Gravity(float v = 1f)
-            {
-                VRCPlayerApi? player = Get().VRCPlayerApi;
-                player.SetGravityStrength(v);
-                return player;
-            }
-          }
         }
 
         public static class Avatar
@@ -158,34 +218,54 @@ internal class GameUtils
 
             public static void AvatarScaleMax(float v) =>
                 Get().VRCPlayerApi.SetAvatarEyeHeightMaximumByMeters(v);
+
             public static void AvatarScaleMin(float v) =>
                 Get().VRCPlayerApi.SetAvatarEyeHeightMinimumByMeters(v);
-            
+
             public static void AllowScaling(bool v) =>
                 Get().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
         }
 
         public static class Matchmaking
         {
-            public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetAllPlayers => PlayerManager.prop_PlayerManager_0.PlayerList;
-            public static Il2CppSystem.Collections.Generic.List<PlayerNameplate> GetAllPlayersNameplates = NameplateManager.field_Public_Static_NameplateManager_0.field_Private_List_1_PlayerNameplate_0;
+            public static VRC.Player? GetSelectedUser
+            {
+                get
+                {
+                    return UnityEngine.Object.FindObjectOfType<SelectedUserMenuQM>().transform
+                        .GetComponent<MonoBehaviourPublicTeObSlGrImSiObUnique>()
+                        .field_Private_InterfacePublicAbstractBoSt1StLoCoStLi1ObUnique_0.prop_String_1.GetPlayer()
+                        ?._vrcplayer._player;
+                }
+                set { }
+            }
+            /*public static VRC.Player? MM_GetSelectedUser()
+            {
+                return UnityEngine.Object.FindObjectOfType<MonoBehaviourPublicInOb_u_sOb_p_sBuGaObUnique>()
+                    .field_Private_InterfacePublicAbstractBoSt1StLoCoStLi1ObUnique_0.prop_String_1.GetPlayer()
+                    ?._vrcplayer._player;
+            }*/
+
+            public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetAllPlayers =>
+                PlayerManager.prop_PlayerManager_0.PlayerList;
         }
     }
 
     public class World
     {
-        public static bool IsWorldLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.currentApiWorld != null;
+        public static bool IsWorldLoaded() =>
+            RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.currentApiWorld != null;
     }
 
     public static class UI
     {
-
+       
         public class HUD
         {
             #region NOTIFICATION MANAGER
 
             #region HUD_V2
-
+            
             private static Hud_UserEventCarousel? _carousel;
             private static float _lastCheckTime;
             private const float CacheTimeout = 30f;
@@ -227,12 +307,12 @@ internal class GameUtils
                     .notification
                     ?.ShowNotification(sprite, title.Localize(), content.Localize(), duration);
 
-                
-
             }
 
             #endregion
+
             #region HUD_V1
+
             public static void PopUp(string? title = null, string? content = null, float duration = 10f)
             {
                 VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
@@ -258,12 +338,13 @@ internal class GameUtils
                         (title.Localize(), content.Localize(), button_text.Localize(), func, idk);
 
             }
+
             #endregion
 
             #endregion
         }
     }
-    
+
     public class VRChatUtils
     {
         public static class InputManager
@@ -271,7 +352,7 @@ internal class GameUtils
             public static VRCInput GetInput(string name) =>
                 VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name];
 
-            public static VRCInput GetInput(Enum name) =>
+            public static VRCInput GetInput(Get name) =>
                 VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name.ToString()];
 
             public enum Get
@@ -279,7 +360,8 @@ internal class GameUtils
                 Horizontial,
                 Vertical,
             }
-        } 
+        }
+
         public static class VRCKeyboard
         {
             //vinyl thanks <3
@@ -287,9 +369,16 @@ internal class GameUtils
             private static GameObject? Object;
 
             public enum KeyBoardType
-            { Standard, Numeric, Search }
+            {
+                Standard,
+                Numeric,
+                Search
+            }
 
-            public static void InputPopup(string Title, Action<string> EndString, Action<string>? RealTimeString = null, Action? OnClose = null, KeyBoardType keyBoardType = KeyBoardType.Standard, string Placeholder = "Enter Text", string OkButton = "OK", string CancelButton = "Cancel", bool MultiLine = true, int CharLimit = 0, bool KeepOpen = false, bool ReadOnly = false)
+            public static void InputPopup(string Title, Action<string> EndString, Action<string>? RealTimeString = null,
+                Action? OnClose = null, KeyBoardType keyBoardType = KeyBoardType.Standard,
+                string Placeholder = "Enter Text", string OkButton = "OK", string CancelButton = "Cancel",
+                bool MultiLine = true, int CharLimit = 0, bool KeepOpen = false, bool ReadOnly = false)
             {
                 if (inputfield == null)
                 {
@@ -299,10 +388,24 @@ internal class GameUtils
                 }
 
                 KeyboardData keyboardData = new();
-                KeyboardData keyboardData2 = keyboardData.Method_Public_KeyboardData_LocalizableString_LocalizableString_String_LocalizableString_LocalizableString_0(LocalizableStringExtensions.Localize(Title), LocalizableStringExtensions.Localize(Placeholder), "", LocalizableStringExtensions.Localize(OkButton), LocalizableStringExtensions.Localize(CancelButton));
-                KeyboardData keyboardData3 = keyboardData2.Method_Public_KeyboardData_Action_1_String_Action_1_String_Action_Boolean_PDM_0(RealTimeString, EndString, OnClose, KeepOpen);
-                KeyboardData keyboardData4 = keyboardData3.Method_Public_KeyboardData_InputPopupType_Boolean_PDM_0((InputPopupType)keyBoardType, param_2: true);
-                KeyboardData keyboardData5 = keyboardData4.Method_Public_KeyboardData_InputType_ContentType_Int32_Boolean_Boolean_InterfacePublicAbstractBoStVoAc1VoAcSt1BoUnique_PDM_0(TMP_InputField.InputType.Standard, TMP_InputField.ContentType.Standard, CharLimit, MultiLine, ReadOnly);
+                KeyboardData keyboardData2 =
+                    keyboardData
+                        .Method_Public_KeyboardData_LocalizableString_LocalizableString_String_LocalizableString_LocalizableString_0(
+                            LocalizableStringExtensions.Localize(Title),
+                            LocalizableStringExtensions.Localize(Placeholder), "",
+                            LocalizableStringExtensions.Localize(OkButton),
+                            LocalizableStringExtensions.Localize(CancelButton));
+                KeyboardData keyboardData3 =
+                    keyboardData2.Method_Public_KeyboardData_Action_1_String_Action_1_String_Action_Boolean_PDM_0(
+                        RealTimeString, EndString, OnClose, KeepOpen);
+                KeyboardData keyboardData4 =
+                    keyboardData3.Method_Public_KeyboardData_InputPopupType_Boolean_PDM_0((InputPopupType)keyBoardType,
+                        param_2: true);
+                KeyboardData keyboardData5 =
+                    keyboardData4
+                        .Method_Public_KeyboardData_InputType_ContentType_Int32_Boolean_Boolean_InterfacePublicAbstractBoStVoAc1VoAcSt1BoUnique_PDM_0(
+                            TMP_InputField.InputType.Standard, TMP_InputField.ContentType.Standard, CharLimit,
+                            MultiLine, ReadOnly);
                 keyboardData5._isWorldKeyboard = true;
                 inputfield._keyboardData = keyboardData5;
                 inputfield.Method_Private_Void_0();
@@ -311,7 +414,7 @@ internal class GameUtils
 
         public static class RPCs
         {
-            
+
         }
 
         public static class Events
@@ -324,5 +427,27 @@ internal class GameUtils
         }
     }
 
-  
+   
+}
+
+
+public static class Player_Extensions
+{
+    public static VRC.Player? GetPlayer(this string name)
+    {
+
+        if (string.IsNullOrEmpty(name))
+            return null;
+        
+        foreach (var player in GameUtils.PlayerModel.Matchmaking.GetAllPlayers)
+        {
+            if (player.APIUser.IsSelf || player._vrcplayer == null || player._vrcplayer._player == null)
+                continue;
+            
+            if (string.Equals(player.APIUser.displayName, name, StringComparison.OrdinalIgnoreCase))
+                return player._vrcplayer._player;
+        }
+    
+        return null;
+    }
 }

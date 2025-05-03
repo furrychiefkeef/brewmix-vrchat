@@ -37,7 +37,7 @@ internal class CSS : UnityEngine.MonoBehaviour
     }
     public static void Online()
     {
-        foreach (GameObject gameobject in Root.AdvancedMenus)
+        foreach (GameObject gameobject in Templates.AdvancedMenus)
         {
             var render =  gameobject.GetComponentInChildren<VRCUIBackground>();
             if (render is null) return;
@@ -75,7 +75,7 @@ internal class CSS : UnityEngine.MonoBehaviour
 
         #region ActionMenu
 
-        Transform? obj = Root.ActionMenu("MenuR");
+        Transform? obj = Templates.ActionMenu("MenuR");
         ActionMenu? _ActionMenu = obj.GetComponent<ActionMenu>();
         
         if (obj != null)
