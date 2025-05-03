@@ -41,12 +41,5 @@ internal class VRCProfileRow : Templates
         container = _cellgrid;
         
         #endregion
-        
-        #region SetPosition
-
-        _1.localPosition = new Vector3(0, -1332.719f, 0);
-
-        #endregion
-
     }
 }
