@@ -14,6 +14,7 @@ internal class VRCProfileRow : Templates
         Transform? obj = UnityEngine.Object.Instantiate(_MM.MMProfileRow(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_PROFILE_ROW_{header}";
         obj.SetSiblingIndex(3);
+      
         /*obj.gameObject.SetActive(alwaysVisable);*/
         
         Transform? _header = obj.GetChild(0);
@@ -22,7 +23,15 @@ internal class VRCProfileRow : Templates
         #region REQUIRED_COMPONENTS
 
         TextMeshProUGUIEx? _0 = _header.GetChild(1).GetComponentInChildren<TextMeshProUGUIEx>();
+        RectTransform? _1 = obj.GetComponent<RectTransform>();
+     
+        #endregion
         
+        #region TEXT_COMPONENT
+
+        _0.text = header;
+        _0.richText = true;
+
         #endregion
         
         #region LOGIC_REQUIRED
@@ -32,13 +41,12 @@ internal class VRCProfileRow : Templates
         container = _cellgrid;
         
         #endregion
+        
+        #region SetPosition
 
-        #region TEXT_COMPONENT
-
-        _0.text = header;
-        _0.richText = true;
+        _1.localPosition = new Vector3(0, -1332.719f, 0);
 
         #endregion
-       
+
     }
 }
