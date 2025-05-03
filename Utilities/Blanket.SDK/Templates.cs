@@ -20,6 +20,11 @@ internal class Templates
     #region Basic
     #region USER_INTERFACE
     protected static GameObject USERINTERFACE() => UnityEngine.Object.FindObjectOfType<UserInterface>().gameObject;
+
+    protected static GameObject ORIGIN_BUTTON() =>
+        GameObject.Find("MenuContent/Popups/LoadingPopup/ProgressPanel/Parent_Loading_Progress/GoButton");
+    protected static GameObject ORIGIN_BUTTON_PARENT() =>
+        GameObject.Find("MenuContent/Popups/LoadingPopup/ProgressPanel/Parent_Loading_Progress");
     protected static GameObject SCREENSPACE_OVERLAY_UNSCALEDUI() => GameObject.Find("UnscaledUI");
     protected static QuickMenu? QM() => UnityEngine.Object.FindObjectOfType<QuickMenu>();
     protected static MainMenu? MM() => UnityEngine.Object.FindObjectOfType<MainMenu>();

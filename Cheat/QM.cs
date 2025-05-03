@@ -37,8 +37,7 @@ internal class QM
                 #endregion
                 
                 #region Modal_Player+Movement
-           
-                
+      
                 VRCSmallButton Injection = new(PlayerMovementModal, "Injection", () => sconsole.print("passion_fruit",1) );
                 VRCToggle? Fly = new(PlayerMovementModal, "Fly", "Turn Fly On", "Turn Fly Off", (x) =>
                 {
@@ -46,12 +45,68 @@ internal class QM
                     Config.Movement.fly = !Config.Movement.fly;
                     PlayerModule.Movement.Fly(); 
                 });
-                VRCToggle? Spinbot = new(PlayerMovementModal, "Spinbot", "Force Jump Off", "Fly Off", (x) =>
+                VRCToggle? Spinbot = new(PlayerMovementModal, "Spinbot", "Spinbot On", "Spinbot Off", (x) =>
                 {
                     PlayerModule.Movement.Spinbot(x);
                 });
+                VRCToggle? ForceJump = new(PlayerMovementModal, "Force Jump", "Force Jump Off", "Fly Off", (x) =>
+                {
+                    PlayerModule.Movement.ForceJump(x);
+                });
                 #endregion
+
+                #region Modal Logging__Main
+            
+                VRCModalContainer? Logging = new("Logging"); 
+                VRCButton? R = new (Main_Groupbox, "Logging", "Configure Logging", () => Logging.Open());
+             
+                
+                VRCToggle? Log_Chat = new(Logging, "Chatbox", "parse", "parse", (x) =>
+                {
+   
+                });
+                VRCToggle? Log_RPCs = new(Logging, "RPCs", "parse", "parse", (x) =>
+                {
+
+                });
+                VRCToggle? Log_Events = new(Logging, "Events", "parse", "parse", (x) =>
+                {
+                    
+                });
+                VRCToggle? Udon_Events = new(Logging, "Udon Events", "parse", "parse", (x) =>
+                {
+                    
+                });
+                
+                
+                #region Modal Logging__MainPage2
+            
+                VRCModalContainer? LoggingP2 = new("Logging Page 2");
+                VRCSmallButton Next = new(Logging, "Next", () => LoggingP2.Open());
+                VRCToggle? Debug_Log = new(LoggingP2, "Debug", "parse", "parse", (x) =>
+                {
+                        Config.Advanced.DebugMode = !Config.Advanced.DebugMode;
+                });
+                /*VRCToggle? Log_RPCs = new(Logging, "RPCs", "parse", "parse", (x) =>
+                {
+
+                });
+                VRCToggle? Log_Events = new(Logging, "Events", "parse", "parse", (x) =>
+                {
+                    
+                });
+                VRCToggle? Udon_Events = new(Logging, "Udon Events", "parse", "parse", (x) =>
+                {
+                    
+                });*/
+                #endregion
+                
+                
+                #endregion
+               
+                
             }
+          
             catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source ,2); }
             finally{sconsole.print("Created The QuickMenu+BlanketSDK.UI",1);}
         }

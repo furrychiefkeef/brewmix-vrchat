@@ -56,6 +56,7 @@ namespace brewchat.hybridxcore.bep
         {
             if (__instance is null && !OfflineUILoaded) return;
             CSS.Offline();
+            /*Origin.Apply();*/
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.Start))]
