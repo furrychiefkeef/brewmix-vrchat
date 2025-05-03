@@ -127,7 +127,7 @@ internal class Templates
     public static Transform _Fallback_Dashboard_Group_MM_UI_Buttons() => _MM.MenuSetting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Navigation/Viewport/VerticalLayoutGroup");
     public static Transform _Fallback_Dashboard_Group_QM_UI_WingButtons(string position = null) => _QM.WingMenu(position);
     public static Transform _Fallback_Dashboard_Group_MM_UI_ProfileButtons() => _MM.MenuUserDetails().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Row3/CellGrid_MM_Content");
-    public static Transform _Fallback_Dashboard_Group_MM_UI_ProfileRows() => _MM.MenuUserDetails().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Row3");
+    public static Transform _Fallback_Dashboard_Group_MM_UI_ProfileRows() => _MM.MenuUserDetails().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
     #endregion
 
     #endregion

@@ -21,7 +21,7 @@ internal class VRCProfileRow : Templates
 
         #region REQUIRED_COMPONENTS
 
-        TextMeshProUGUIEx? _0 = _header.GetChild(0).GetComponentInChildren<TextMeshProUGUIEx>();
+        TextMeshProUGUIEx? _0 = _header.GetChild(1).GetComponentInChildren<TextMeshProUGUIEx>();
         
         #endregion
         
