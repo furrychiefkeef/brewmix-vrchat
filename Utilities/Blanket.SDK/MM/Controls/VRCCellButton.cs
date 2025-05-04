@@ -7,17 +7,17 @@ using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.MM.Elements.Controls;
 
-internal class VRCButton : Templates
+internal class VRCCellButton : Templates
 {
     /// <summary>
-    ///  VRCButton this is used to create a SINGLE_MAINMENU_BUTTON
+    ///  VRCButton this is used to create a SINGLE_MAINMENU_CELLBUTTON
     /// </summary>
     /// <param name="parent">The parent transform where the button will be placed.</param>
     /// <param name="name">The display name of the button.</param>
     /// <param name="tooltip">The tooltip text for the button.</param>
     /// <param name="func">The action to execute when the button is clicked.</param>
     /// <param name="sprite">An optional sprite to display on the button.</param>
-    public VRCButton(Transform parent, string? name, string? tooltip, Sprite? sprite = null)
+    public VRCCellButton(Transform parent, string? name, string? tooltip, Sprite? sprite = null)
     {
         if (!MainMenu() | !_MM.MMSingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= _Fallback_Dashboard_Group_MM_UI_Buttons();
@@ -55,6 +55,6 @@ internal class VRCButton : Templates
         #endregion
 
     }
-    public VRCButton(VRCPage parent, string? name, string? tooltip, Sprite? sprite = null) : this(parent.navigation_buttons, name, tooltip, sprite) { }
+    public VRCCellButton(VRCPage parent, string? name, string? tooltip, Sprite? sprite = null) : this(parent.navigation_buttons, name, tooltip, sprite) { }
 }
 /*  UnityEngine.UI.Button _0 = obj.GetComponentInChildren<UnityEngine.UI.Button>(); depercated*/

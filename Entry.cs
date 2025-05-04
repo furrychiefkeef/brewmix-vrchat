@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Resources;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
+using Brewchat.Game.Wrappers;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
 using Syrup.IMGUI;
@@ -30,7 +31,7 @@ public class Entry : UNIXEngine.IL2CPPModding.UnixMod
         ClassInjector.RegisterTypeInIl2Cpp<Syrup.IMGUI.simgui>(); 
         ClassInjector.RegisterTypeInIl2Cpp<Brewchat.Game.Monobehaviours.Toolbox>();
         ClassInjector.RegisterTypeInIl2Cpp<CSS>();
-
+        ClassInjector.RegisterTypeInIl2Cpp<UTag>();// Most Getto Way For Tagging.
         #region Managers
 
         ClassInjector.RegisterTypeInIl2Cpp<FlyManager>(); ClassInjector.RegisterTypeInIl2Cpp<KeybindManager>();
@@ -40,19 +41,21 @@ public class Entry : UNIXEngine.IL2CPPModding.UnixMod
         #region Modules
 
         ClassInjector.RegisterTypeInIl2Cpp<FlyManager>(); ClassInjector.RegisterTypeInIl2Cpp<KeybindManager>();
-        ClassInjector.RegisterTypeInIl2Cpp<esp>(); ClassInjector.RegisterTypeInIl2Cpp<wallhacks>();
+        
+        ClassInjector.RegisterTypeInIl2Cpp<esp>();
+        ClassInjector.RegisterTypeInIl2Cpp<wallhacks>();
 
         #endregion
 
         #endregion
-       
 
-        
 
-        
-     
-        
-       
+
+
+
+
+
+
         #endregion
     } 
     public static void LogAllResources()

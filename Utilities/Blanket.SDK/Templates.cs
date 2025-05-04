@@ -21,7 +21,7 @@ internal class Templates
     #region USER_INTERFACE
     protected static GameObject USERINTERFACE() => UnityEngine.Object.FindObjectOfType<UserInterface>().gameObject;
 
-    protected static Transform ORIGIN_BUTTON() => VRCUiManager.field_Private_Static_VRCUiManager_0.transform.FindChild("MenuContent/Popups/LoadingPopup/ProgressPanel/Parent_Loading_Progress/GoButton");
+    protected static Transform ORIGIN_BUTTON() => GameObject.Find("MenuContent/Popups/LoadingPopup/ProgressPanel/Parent_Loading_Progress/GoButton").transform;
     protected static GameObject ORIGIN_BUTTON_PARENT() =>
         GameObject.Find("MenuContent/Popups/LoadingPopup/ProgressPanel/Parent_Loading_Progress");
     protected static GameObject SCREENSPACE_OVERLAY_UNSCALEDUI() => GameObject.Find("UnscaledUI");
@@ -97,6 +97,8 @@ internal class Templates
         #region QUICK+MENU-Elements
         public static Transform MMProfileRow() =>  MenuUserDetails().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Row3");
 
+        public static Transform VRCCellContainer() => MenuSetting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Content/Viewport/VerticalLayoutGroup/Debug");
+
         #endregion
     }
 
@@ -104,18 +106,16 @@ internal class Templates
     #endregion
 
     #region UNSCALED+MENU
-    public static Transform ActionMenu(string position)
+
+    public static Transform[] ActionMenus()
     {
-        /*return GameObject.Find($"ActionMenu/Container/{position}/ActionMenu").transform;*/
-        return GameObject.Find($"ActionMenu/Container/{position}/ActionMenu").transform;
-        /*switch (!XRDevice.isPresent)
+        return new Transform[]
         {
-            case true:
-                
-            case false:
-               
-        }*/
+            GameObject.Find("ActionMenu/Container/MenuR/ActionMenu")?.transform,
+            GameObject.Find("ActionMenu/Container/MenuL/ActionMenu")?.transform
+        };
     }
+
     #endregion
     
    

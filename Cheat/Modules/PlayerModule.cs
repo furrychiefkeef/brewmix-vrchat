@@ -54,10 +54,11 @@ internal class PlayerModule
                         UnityEngine.Object.DestroyImmediate(fly_component);
                         break;
                 }
-
+                
+                
                 sconsole.print($"[LOCAL_PLAYER] Fly is Set to {Config.Movement.fly}", 1);
                 GameUtils.UI.HUD.ToastV2("Player+Movement", $"Fly is set to {Config.Movement.fly}");
-
+                GameUtils.UI.HUD.Alert($"Fly is set to {Config.Movement.fly}", GameUtils.UI.HUD.AlertType.QuickMenu);
                 #endregion
 
             }
@@ -89,6 +90,7 @@ internal class PlayerModule
 
                 sconsole.print($"Jump+Impulse is set to {state}", 1);
                 GameUtils.UI.HUD.ToastV2("Player+Movement", $"Jump+Impulse is set to {state}");
+                GameUtils.UI.HUD.Alert($"Jump+Impulse is set to {state}", GameUtils.UI.HUD.AlertType.QuickMenu);
 
 
                 #endregion
@@ -105,25 +107,30 @@ internal class PlayerModule
 
         private static Coroutine _spinbotCoroutine;
         
-        public static void Spinbot(bool status, float spinSpeed = 1f)
+        public static void Spinbot(bool state, float spinSpeed = 1f)
         {   
             Player player = GameUtils.PlayerModel.Get();
             if (!player) return;
             
-            if(status && _spinbotCoroutine == null)
+            if(state && _spinbotCoroutine == null)
             {
                 _spinbotCoroutine = player.StartCoroutine(SpinbotRoutine(player, spinSpeed).WrapToIl2Cpp());
             }
-            else if(!status && _spinbotCoroutine != null)
+            else if(!state && _spinbotCoroutine != null)
             {
                 player.StopCoroutine(_spinbotCoroutine);
                 _spinbotCoroutine = null;
             }
+            sconsole.print($"Spinbot is set to {state}", 1);
+            GameUtils.UI.HUD.ToastV2("Player+Movement", $"Spinbot is set to {state}");
+            GameUtils.UI.HUD.Alert($"Spinbot is set to {state}", GameUtils.UI.HUD.AlertType.QuickMenu);
+
         }
         
         private static System.Collections.IEnumerator SpinbotRoutine(Player player, float spinSpeed)
         {
-            float rotationAngle = 0f;     MonoBehaviourPublicLa1StVeQuVeBoInVeBoUnique? localanim;
+            float rotationAngle = 0f;
+            MonoBehaviourPublicLa1StVeQuVeBoInVeBoUnique? localanim;
             while(true)
             {
                 rotationAngle += spinSpeed * Time.deltaTime * 360f;
@@ -140,7 +147,7 @@ internal class PlayerModule
     }
     public class Camera
     {
-        public enum P0V
+        public enum CameraView
         {
           none,
             first_person, 
@@ -150,28 +157,53 @@ internal class PlayerModule
         }
         public class View
         {
-            public static void ChangeCamera(P0V POV)
+            public static GameObject cache;
+            public static void ChangeCamera(CameraView view)
             {
-                GameObject obj = new("Free_Camera");
-                switch (POV)
+                
+                if (GameUtils.Camera.Get != null)
+                { 
+                    UnityEngine.Camera? reference = GameUtils.Camera.Get;
+                    GameObject obj = new($"{view}_Camera");   obj.AddComponent<UTag>().SetTag("PinkCams");
+                    UnityEngine.Camera? camera = obj.AddComponent<UnityEngine.Camera>();
+                    
+                    
+                    obj.transform.parent = reference.transform;
+                    switch (view)
+                    {
+                        case CameraView.first_person:
+                            break;
+                        case CameraView.second_person:
+                            break;
+                        case CameraView.third_person:
+                            
+                            obj.transform.position = reference.transform.position;
+                            obj.transform.localScale = reference.transform.localScale;
+                            obj.transform.rotation = reference.transform.rotation;
+                            obj.transform.Rotate(Vector3.zero);
+                            obj.transform.position = reference.transform.position + (-camera.transform.forward * 2f);
+                            
+                            camera.fieldOfView = reference.fieldOfView;
+                            camera.nearClipPlane /= 4f;
+                            
+                            if (reference != null) camera.cullingMask = -524289;
+                            break;
+                        case CameraView.freecam:
+                            cache = obj;
+                            obj.AddComponent<AudioListener>();
+                            obj.AddComponent<FlyManager>().Rotation = true;
+                            obj.transform.position = reference.transform.position;
+                            break;
+                    }
+                }
+               
+               
+            } 
+            public static void DestoryCameras()
+            {
+                foreach (var VARIABLE in UnityEngine.Object.FindObjectsOfType<UTag>().Where(x => x.identifer.Contains("PinkCams")))
                 {
-                    case P0V.first_person:
-                        break;
-                    case P0V.second_person:
-                        break;
-                    case P0V.third_person:
-                        break;
-                    case P0V.freecam:
-                        obj.AddComponent<AudioListener>();
-                        obj.AddComponent<FlyManager>().Rotation = true;
-                        obj.AddComponent<UnityEngine.Camera>();
-                        break;
-                    case P0V.none:
-                        UnityEngine.Object.Destroy(obj);
-                        break;
-                    default:
-                        UnityEngine.Object.Destroy(obj);
-                        break;
+                    UnityEngine.Object.DestroyImmediate(VARIABLE.gameObject);
                 }
             }
         }

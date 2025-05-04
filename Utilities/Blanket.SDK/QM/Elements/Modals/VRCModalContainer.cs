@@ -61,7 +61,7 @@ namespace BlanketSDK.QM.Elements.Modals
 
             Transform _0 = RIGHT_CONTAINER;
              if (_0.transform == null) UnityEngine.Object.DestroyImmediate(_0);
-             else if (parent_rightbuttons == null) UnityEngine.Object.DestroyImmediate(RIGHT_CONTAINER);
+             else if (parent_rightbuttons == null) UnityEngine.Object.Destroy(RIGHT_CONTAINER);
              parent_rightbuttons = _0.transform;
             #endregion
 

@@ -1,4 +1,5 @@
-﻿using Brewview;
+﻿using BlanketSDK.Utilities;
+using Brewview;
 using ExitGames.Client.Photon;
 using Il2CppInterop.Runtime;
 using Il2CppMono.Security.Interface;
@@ -228,24 +229,13 @@ internal class GameUtils
 
         public static class Matchmaking
         {
-            public static VRC.Player? GetSelectedUser
+            public static VRC.Player? GetSelectedUser()
             {
-                get
-                {
                     return UnityEngine.Object.FindObjectOfType<SelectedUserMenuQM>().transform
                         .GetComponent<MonoBehaviourPublicTeObSlGrImSiObUnique>()
                         .field_Private_InterfacePublicAbstractBoSt1StLoCoStLi1ObUnique_0.prop_String_1.GetPlayer()
                         ?._vrcplayer._player;
-                }
-                set { }
             }
-            /*public static VRC.Player? MM_GetSelectedUser()
-            {
-                return UnityEngine.Object.FindObjectOfType<MonoBehaviourPublicInOb_u_sOb_p_sBuGaObUnique>()
-                    .field_Private_InterfacePublicAbstractBoSt1StLoCoStLi1ObUnique_0.prop_String_1.GetPlayer()
-                    ?._vrcplayer._player;
-            }*/
-
             public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetAllPlayers =>
                 PlayerManager.prop_PlayerManager_0.PlayerList;
         }
@@ -259,7 +249,7 @@ internal class GameUtils
 
     public static class UI
     {
-       
+      
         public class HUD
         {
             #region NOTIFICATION MANAGER
@@ -269,7 +259,7 @@ internal class GameUtils
             private static Hud_UserEventCarousel? _carousel;
             private static float _lastCheckTime;
             private const float CacheTimeout = 30f;
-
+            
             private static Hud_UserEventCarousel GetCarousel()
             {
                 if (_carousel != null && Time.realtimeSinceStartup - _lastCheckTime < CacheTimeout)
@@ -309,6 +299,30 @@ internal class GameUtils
 
             }
 
+            #region Alert
+
+            public enum AlertType
+            {
+                QuickMenu,
+                MainMenu,
+            }
+
+            public static string Alert(string content, AlertType Alert)
+            {
+                if (Alert == AlertType.QuickMenu)
+                {
+                    UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_ModalAlert_0
+                        .Method_Public_Void_LocalizableString_PDM_0(content.Localize());
+                }
+                if (Alert == AlertType.MainMenu)
+                {
+                    UnityEngine.Object.FindObjectOfType<MainMenu>().field_Private_ModalAlert_0
+                        .Method_Public_Void_LocalizableString_PDM_0(content.Localize());
+                }
+                return content;
+            }
+
+            #endregion
             #endregion
 
             #region HUD_V1
@@ -318,6 +332,12 @@ internal class GameUtils
                 VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
                     .Method_Public_Void_LocalizableString_LocalizableString_Single_0
                         (title.Localize(), content.Localize(), duration);
+            }
+            public static void PopUp2(string? title = null, string? content = null, string? uhz = null, Action func = null)
+            {
+                VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
+                    .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_Action_1_VRCUiPopup_0
+                        (title.Localize(), content.Localize(), uhz.Localize(),func);
             }
 
             public static void LoadingPopUp2(string? title, string? content, string? button_text, System.Action func,
@@ -382,7 +402,8 @@ internal class GameUtils
             {
                 if (inputfield == null)
                 {
-                    Object = new GameObject("[Saturn] Keyboard");
+                    Object = new GameObject($"[{Entry.NAME}] Keyboard");
+                    Object.transform.parent = Templates._MM.MMParent();
                     UnityEngine.Object.DontDestroyOnLoad(Object);
                     inputfield = Object.GetOrAddComponent<VRCInputField>();
                 }

@@ -12,23 +12,41 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
 {
     private void Awake()
     {
-        sconsole.print("Monobehaviours", "/KeybindManager", "KeybindManager", 0);
+        sconsole.print(" Monobehaviours", "/KeybindManager", "KeybindManager", 0);
     }
 
     void Update()
+    {
+        if(GameUtils.Gameplay.CallbackEvents.IsInMainMenu || GameUtils.Gameplay.CallbackEvents.IsInQuickMenu || !GameUtils.World.IsWorldLoaded()) return;
+        CommandHandler();
+
+        #region Keybinds
+
+        if (Input.GetKeyDown(KeyCode.F5)) PlayerModule.Camera.View.ChangeCamera(PlayerModule.Camera.CameraView.third_person);
+        if(GameUtils.Gameplay.CallbackEvents.IsInMainMenu || GameUtils.Gameplay.CallbackEvents.IsInQuickMenu) return;
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            PlayerModule.Camera.View.DestoryCameras();
+        }
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F)) Config.Movement.fly = !Config.Movement.fly;
+        if (Input.GetKeyDown(KeyCode.Mouse2))  PlayerModule.Movement.ClickTP();
+        #endregion
+        
+    }
+
+    void CommandHandler()
     {
         if (Input.GetKeyDown(KeyCode.F9))
         {
             GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a Command", (command) =>
             {
-                
-                var a = GameUtils.PlayerModel.GrabPlayerFromDisplayName(command);
-                GameUtils.PlayerModel.Get().transform.position = a.gameObject.transform.position;
-
-            });
+                if (command == "*help")
+                {
+                    sconsole.internal_log("*debug: {1,2,3}");
+                    sconsole.internal_log("*player:teleport: {player}");
+                }
+            }, MultiLine: false);
         }
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F)) Config.Movement.fly = !Config.Movement.fly;
-        if (Input.GetKeyDown(KeyCode.Mouse2))  PlayerModule.Movement.ClickTP();
     }
 
     /*void Fly()

@@ -36,7 +36,7 @@ internal class VRCSmallButton : Templates
         #region BUTTON COMPONENT
         UnityEngine.UI.Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_0 = _0.onClick;
         _0.field_Private_MenuStateController_0 = MM()?.field_Protected_MenuStateController_0;
-        _0._controlName = "empty";
+        
         BUTTONCLICKED_EVENT_0.RemoveAllListeners();
         BUTTONCLICKED_EVENT_0.AddListener(func);
         #endregion

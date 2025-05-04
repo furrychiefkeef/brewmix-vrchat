@@ -595,21 +595,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\action-menu_joystick.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\action-menu_bg.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\action-menu_radial_bg.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\action-menu_divider.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\logo.png" />
+    <EmbeddedResource Include="Assets\Branding\logo.png" />
+    <EmbeddedResource Include="Assets\UI\ActionMenu\action-menu_bg.png" />
+    <EmbeddedResource Include="Assets\UI\ActionMenu\action-menu_divider.png" />
+    <EmbeddedResource Include="Assets\UI\ActionMenu\action-menu_joystick.png" />
+    <EmbeddedResource Include="Assets\UI\ActionMenu\action-menu_radial_bg.png" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
       <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\&quot;&#xA;start steam://rungameid/438100 --no-vr" />

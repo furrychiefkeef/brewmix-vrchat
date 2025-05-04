@@ -16,15 +16,15 @@ internal class MM
         {
             try
             { 
-                VRCSmallButton acee2 = new(Templates._Fallback_Dashboard_Group_MM_UI_ExpandButtons(), "The passion project.", 5, () => sconsole.print("passion_fruit", 0), EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+                VRCSmallButton acee2 = new(Templates._Fallback_Dashboard_Group_MM_UI_ExpandButtons(), "The passion project.", 5, () => GameUtils.UI.HUD.Alert("bitch2", GameUtils.UI.HUD.AlertType.MainMenu), EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
                 var aware = new VRCPage(Entry.NAME);
                 new VRCTab(aware, Entry.FULLNAME, "The passion project.", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
                 
-                VRCButton? AE = new(aware, "Passion", "Fruit");
-                VRCButton? AD = new(aware, "Fruit", "Passion");
-                
-               
-                
+                VRCCellButton? AE = new(aware, "Passion", "Fruit");
+                VRCCellButton? AD = new(aware, "Fruit", "Passion");
+
+                new VRCCellContainer(aware, "The passion project.", 1);
+
             }
             catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source ,2); }
             finally{sconsole.print("Created The MainMenu+BlanketSDK.UI",1);}
@@ -41,12 +41,12 @@ internal class MM
                 var row4 = new VRCProfileRow(Templates._Fallback_Dashboard_Group_MM_UI_ProfileRows(),$"{Entry.NAME} Actions");
                 VRCProfileButton? Teleport = new(row4, "Teleport", $"Teleport to this player's Position", () =>
                 {
-                    GameUtils.PlayerModel.Get().transform.position = GameUtils.PlayerModel.Matchmaking.GetSelectedUser.transform.position;
+                    GameUtils.PlayerModel.Get().transform.position = GameUtils.PlayerModel.Matchmaking.GetSelectedUser().transform.position;
                 });
                 VRCProfileButton? Info = new(row4,"Info", $"Grab Players Info", () =>
                 {
-                    Entry.Console.LogMessage(GameUtils.PlayerModel.Matchmaking.GetSelectedUser.VRCPlayerApi.displayName);
-                    Entry.Console.LogMessage(GameUtils.PlayerModel.Matchmaking.GetSelectedUser.APIUser.id);
+                    Entry.Console.LogMessage(GameUtils.PlayerModel.Matchmaking.GetSelectedUser().VRCPlayerApi.displayName);
+                    Entry.Console.LogMessage(GameUtils.PlayerModel.Matchmaking.GetSelectedUser().APIUser.id);
                 });
 
                 #region Admin
@@ -59,7 +59,7 @@ internal class MM
              
             }
             catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source ,2); }
-          finally{sconsole.print("Created The MainMenu+BlanketSDK.UI",1);}
+          finally{sconsole.print("Created The Selected_MainMenu+BlanketSDK.UI",1);}
             
         }
     }

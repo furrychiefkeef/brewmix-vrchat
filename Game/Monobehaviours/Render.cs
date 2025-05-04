@@ -14,13 +14,26 @@ internal class wallhacks : MonoBehaviour
     public  Player _player { get; set; }
     private SkinnedMeshRenderer[] _avatarender;
     private SkinnedMeshRenderer _meshs;
- 
+    public static wallhacks? Instance { get; private set; }
     private void Awake()
     {
-        enabled = Config.Render.player_wallhack;
+        if (Instance is null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }   
+        else Destroy(this);
     }
+    public void Start()
+    {
+        Render();
+    }
+    public void SetEnable(bool status )
+    {
+        enabled = status;
+    } 
 
-    void Start()
+    void Render()
     {
 
         _player = transform.GetComponent<VRC.Player>();
@@ -49,8 +62,8 @@ internal class esp : MonoBehaviour
     void GetSelectRegion(VRC.Player player)
     {
         var obj = Instantiate(_player.transform.FindChild("SelectRegion"), player.transform);
-        UnityEngine.Object.DontDestroyOnLoad(obj.GetComponent<PlayerSelector>());
-        FX = FindObjectOfType<HighlightsFXStandalone>();
+        UnityEngine.Object.DestroyImmediate(obj.GetComponent<PlayerSelector>());
+        FX = obj.gameObject.AddComponent<HighlightsFXStandalone>();
         FX.highlightColor = Color.red;
         FX.field_Protected_HashSet_1_MeshFilter_0.AddIfNotPresent(obj.GetComponent<MeshFilter>());
         FX.blurSize = 1f;

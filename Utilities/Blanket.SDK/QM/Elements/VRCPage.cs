@@ -17,9 +17,7 @@ internal class VRCPage : Templates
 
     public VRCPage(string name)
     {
-        if (!_QM.QMParent() || !_QM.MenuDevTools())
-            throw new(
-                $"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!_QM.QMParent() || !_QM.MenuDevTools()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         Transform? obj = UnityEngine.Object.Instantiate(_QM.MenuDevTools(), _QM.QMParent());
         obj.gameObject.SetActive(false);
         obj.SetSiblingIndex(5);

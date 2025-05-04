@@ -4,12 +4,17 @@ using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
+using ExitGames.Client.Photon;
 using HarmonyLib;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using Photon.Pun;
 using Photon.Realtime;
 using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.XR;
+using Valve.Newtonsoft.Json.Utilities;
 using VRC.Core;
+using VRC.SDKBase;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
 
@@ -28,7 +33,6 @@ namespace brewchat.hybridxcore.bep
         {
             if (__instance is null) return;
             __instance?.gameObject.GetOrAddComponent<CSS>();
-            sconsole.internal_log("VR_OFF");
             __instance.gameObject.GetOrAddComponent<KeybindManager>();
           
                
@@ -67,6 +71,7 @@ namespace brewchat.hybridxcore.bep
             UnityEngine.Object.DestroyImmediate(LoadingScreenAudio);
             var ui = EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent =
                 __instance.gameObject.transform;
+           
         }
 
 
@@ -117,6 +122,12 @@ namespace brewchat.hybridxcore.bep
 
         #region Player_Hooks
 
+        
+        /*[HarmonyPostfix, HarmonyPatch(typeof(VRC.Player), nameof(VRC.Player.Start))]
+        public static void PlayerInt(VRC.Player __instance)
+        {
+        }*/
+        
         [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.OnPlayerJoined))]
         public static void PlayerJoined(VRC.Player __0)
         {
@@ -140,6 +151,21 @@ namespace brewchat.hybridxcore.bep
         #region Test
         
         #endregion
+
+        [HarmonyPostfix, HarmonyPatch(typeof(LoadBalancingClient), nameof(LoadBalancingClient.OnEvent))]
+        public static void PhotonHandler(EventData __0)
+        {
+            if (__0.Code == 1)
+            {
+                if (Config.Logging.LogVoicePackets_Event1)
+                {
+                    Il2CppArrayBase<byte> ml = Il2CppArrayBase<byte>.WrapNativeGenericArrayPointer(__0.CustomData.Pointer);
+                    var newdata = Convert.ToBase64String(ml);
+                    sconsole.internal_log($"{__0.Sender} | SENT PACKET: {newdata}");
+                }
+               
+            }
+        }
     }
 }
 

@@ -32,7 +32,7 @@ public class Config
 
     public struct Render
     {
-        public static bool player_wallhack { get; set; } 
+        public static bool player_wallhack { get; set; }  = false;
         public static bool nameplate_wallhack { get; set; } 
     }
    
@@ -43,7 +43,7 @@ public class Config
         public static bool LogRPCData { get; set; }
 
         public static bool LogMessageData_Event43 { get; set; }
-        public static bool LogVoicePackets_Event1 { get; set; } = true;
+        public static bool LogVoicePackets_Event1 { get; set; } = false;
     }
 
     public struct Protection
@@ -55,13 +55,65 @@ public class Config
     } 
     public struct Appearance
     {
-        public static string QueueAudio { get; set; } = "https://github.com/riotlu/fake-cdn/raw/refs/heads/master/soundcloud_1576168915_audio.ogg?raw=true";
-        public static UnityEngine.Color Theme { get; set; } = EngineUtils.Conversion.HexToColor("#c60e7b");
+        public static string QueueAudio { get; set; } = "https://github.com/riotlu/fake-cdn/raw/refs/heads/master/FuckAOPPNONSTOP.mp3?raw=true";
+
+        public struct Platte
+        {
+          public static  UnityEngine.Color Main { get; set; } = EngineUtils.Conversion.HexToColor("#c60e7b");
+           /*Color Background { get; set; };
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;
+           Color Hover { get; set; } ;*/
+        }
     }
 
     public struct Advanced
     {
-        public static bool DebugMode { get; set; } = true;
+        public static bool DebugMode { get; set; } = false;
     }
    
 

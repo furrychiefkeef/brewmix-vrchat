@@ -24,9 +24,7 @@ internal class VRCGroupBox : Templates
         _container.DestroyChildren();
 
         #region header
-
-       
-
+        
         #region REQUIRED_COMPONENTS
 
         TextMeshProUGUIEx? _1 =  _header.GetComponentInChildren<TextMeshProUGUIEx>();

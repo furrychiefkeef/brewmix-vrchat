@@ -11,10 +11,10 @@ namespace BlanketSDK.MM.Elements;
 
 internal class VRCPage : Templates
 {
-    UIPage page;
+    public SettingsPage page;
     public string Name;
     public Transform? navigation_buttons;
-    public Transform? content_container;
+    public Transform? _content_container;
     public VRCPage(string name)
     {
         if (!_MM.MMParent() || !_MM.MenuSetting()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
@@ -98,8 +98,9 @@ internal class VRCPage : Templates
         _contentGroup.transform.DestroyChildren();
         /*_contentGroup.GetComponent<Canvas>().enabled = true;
         _contentGroup.GetComponent<GraphicRaycaster>().enabled = true;*/
+       
         _contentGroup.transform.parent.GetComponentInChildren<VRCRectMask2D>().field_Private_Boolean_0 = true;
-        content_container = _contentGroup.transform;
+        _content_container = _contentGroup.transform;
         
         #endregion
     }

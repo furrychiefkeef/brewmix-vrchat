@@ -45,9 +45,9 @@ internal class Toolbox : UnityEngine.MonoBehaviour
       
         DontDestroyOnLoad(au);
     }
-    public void CameraIQW(PlayerModule.Camera.P0V pov)
+    public void CameraIQW(PlayerModule.Camera.CameraView view)
     {
-        PlayerModule.Camera.View.ChangeCamera(pov);
+       
     }
 }
 
