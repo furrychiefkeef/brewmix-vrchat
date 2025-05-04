@@ -100,6 +100,76 @@ namespace brewchat.hybridxcore.bep.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] capsule_voice_glow {
+            get {
+                object obj = ResourceManager.GetObject("capsule_voice_glow", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] capsule_voice_glow_full_groups {
+            get {
+                object obj = ResourceManager.GetObject("capsule_voice_glow_full_groups", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] capsule_voice_glow_half {
+            get {
+                object obj = ResourceManager.GetObject("capsule_voice_glow_half", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] capsule_voice_glow_half_groups {
+            get {
+                object obj = ResourceManager.GetObject("capsule_voice_glow_half_groups", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] capsule_voice_pulse {
+            get {
+                object obj = ResourceManager.GetObject("capsule_voice_pulse", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] capsule_voice_pulse_left {
+            get {
+                object obj = ResourceManager.GetObject("capsule_voice_pulse_left", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] capsule_voice_pulse_right {
+            get {
+                object obj = ResourceManager.GetObject("capsule_voice_pulse_right", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @drywrld.
         /// </summary>
         internal static string D_Contact {

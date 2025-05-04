@@ -13,9 +13,10 @@ using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
 namespace Brewchat.Cheat;
 
-internal class QM 
+internal class QM
 {
-    public class _Pinkstar {
+    public class _Pinkstar
+    {
         public static void Apply()
         {
             try
@@ -33,7 +34,10 @@ internal class QM
                 VRCWingButton WING_R = new(Templates._Fallback_Dashboard_Group_QM_UI_WingButtons(),
                     Ropie.Wing.Position.R, Entry.NAME, "The passion project.",
                     () => sconsole.print("passion_fruit", 1));
-
+                
+                VRCWingButton WING_C = new(Templates._Fallback_Dashboard_Group_QM_UI_WingButtons(),
+                    Ropie.Wing.Position.R,"Test Nameplates", "The passion project.",
+                    () => CSS.Nameplates());
                 #endregion
 
                 VRCGroupBox Main_Groupbox = new(MainPage);
@@ -119,27 +123,36 @@ internal class QM
 
                 #endregion
             }
-            catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
-            finally { sconsole.print("Created The QuickMenu+BlanketSDK.UI", 1); }
-        }
-
-        public class SelectedMenu
-        {
-            public static void Apply()
+            catch (Exception e)
             {
-                try
-                {
-                    VRCButton? Fly = new(Templates._QM.SelectedUser_LocalCon(), "Teleport",
-                        "Teleport to this player's Position", () =>
-                        {
-                            if (!GameUtils.World.IsWorldLoaded()) return;
-                            GameUtils.PlayerModel.Get().transform.position = GameUtils.PlayerModel.Matchmaking
-                                .GetSelectedUser().transform.position;
-                        });
-                }
-                catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
-                finally { sconsole.print("Created The Selected_QuickMenu+BlanketSDK.UI", 1); }
+                sconsole.print(e.Message + "\n" + e.Source, 2);
+            }
+            finally
+            {
+                sconsole.print("Created The QuickMenu+BlanketSDK.UI", 1);
             }
         }
+
+        
+    }
+    public class SelectedMenu
+    {
+        public static void Apply()
+        {
+            try
+            {
+                VRCButton? Fly = new(Templates._QM.SelectedUser_LocalCon(), "Teleport",
+                    "Teleport to this player's Position", () =>
+                    {
+                        if (!GameUtils.World.IsWorldLoaded()) return;
+                        GameUtils.PlayerModel.Get().transform.position = GameUtils.PlayerModel.Matchmaking
+                            .GetSelectedUser().transform.position;
+                    });
+            }
+            catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
+            finally { sconsole.print("Created The Selected_QuickMenu+BlanketSDK.UI", 1); }
+        }
+    }
+}
 
 

@@ -22,6 +22,32 @@ internal class CSS : UnityEngine.MonoBehaviour
         else Destroy(this);
     }
 
+    public static void Nameplates()
+    {
+        // Define your textures
+        var textures = new Sprite[]
+        {
+            EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_voice_glow).ToSprite(),
+            EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_voice_glow_full_groups).ToSprite(),
+            EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_voice_glow_half).ToSprite(),
+            EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_voice_glow_half_groups).ToSprite(),
+            EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_voice_pulse).ToSprite(),
+            EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_voice_pulse_left).ToSprite(),
+            EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_voice_pulse_right).ToSprite()
+        };
+
+        foreach (var nameplate in UnityEngine.Object.FindObjectsOfType<PlayerNameplate>())
+        {
+            var imageSlices = nameplate.mainContainer.GetComponentsInChildren<ImageThreeSlice>();
+        
+            // Apply textures based on index if there's a consistent order
+            for (int i = 0; i < imageSlices.Length && i < textures.Length; i++)
+            {
+                imageSlices[i]._sprite = textures[i];
+                Debug.Log($"Changed sprite for index {i} in {nameplate.gameObject.name}");
+            }
+        }
+    }
     public static void Offline()
     {
         #region Offline

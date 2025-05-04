@@ -596,10 +596,8 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\Branding\logo.png" />
-    <EmbeddedResource Include="Assets\UI\ActionMenu\action-menu_bg.png" />
-    <EmbeddedResource Include="Assets\UI\ActionMenu\action-menu_divider.png" />
-    <EmbeddedResource Include="Assets\UI\ActionMenu\action-menu_joystick.png" />
-    <EmbeddedResource Include="Assets\UI\ActionMenu\action-menu_radial_bg.png" />
+    <EmbeddedResource Include="Assets\UI\ActionMenu\action-menu_*.png" />
+    <EmbeddedResource Include="Assets\UI\Nameplate\capsule_voice_*.png" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
       <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\&quot;&#xA;start steam://rungameid/438100 --no-vr" />

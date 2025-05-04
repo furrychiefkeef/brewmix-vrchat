@@ -119,19 +119,40 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Assets\logo.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Assets\Branding\logo.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="action-menu_bg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Assets\action-menu_bg.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Assets\UI\ActionMenu\action-menu_bg.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="action-menu_divider" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Assets\action-menu_divider.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Assets\UI\ActionMenu\action-menu_divider.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="action-menu_joystick" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Assets\action-menu_joystick.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Assets\UI\ActionMenu\action-menu_joystick.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="action-menu_radial_bg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Assets\action-menu_radial_bg.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Assets\UI\ActionMenu\action-menu_radial_bg.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="capsule_voice_glow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\UI\Nameplate\capsule_voice_glow.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="capsule_voice_glow_full_groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\UI\Nameplate\capsule_voice_glow_full_groups.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="capsule_voice_glow_half" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\UI\Nameplate\capsule_voice_glow_half.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="capsule_voice_glow_half_groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\UI\Nameplate\capsule_voice_glow_half_groups.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="capsule_voice_pulse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\UI\Nameplate\capsule_voice_pulse.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="capsule_voice_pulse_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\UI\Nameplate\capsule_voice_pulse_left.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="capsule_voice_pulse_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\UI\Nameplate\capsule_voice_pulse_right.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="D-Contact" xml:space="preserve">
     <value>@drywrld</value>
