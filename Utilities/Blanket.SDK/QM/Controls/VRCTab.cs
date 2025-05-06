@@ -17,9 +17,9 @@ internal class VRCTab : Templates
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCTab(VRCPage page, string? tooltip, System.Action func = null, Sprite? sprite = null)
     {
-        if (!QuickMenu() | !_QM.QMTab()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!QuickMenu() | !_QM.Tab()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         Transform parent = _Fallback_Dashboard_Group_QM_UI_Buttons_TAB();
-        Transform? obj = UnityEngine.Object.Instantiate(_QM.QMTab(), parent);
+        Transform? obj = UnityEngine.Object.Instantiate(_QM.Tab(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_TAB_BUTTON-{page.Name}";
 
         #region REQUIRED_COMPONENTS

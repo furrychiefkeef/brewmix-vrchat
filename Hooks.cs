@@ -4,14 +4,18 @@ using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
+using Brewview;
 using ExitGames.Client.Photon;
 using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using MonoMod.RuntimeDetour;
+using Org.BouncyCastle.Crypto.Tls;
 using Photon.Pun;
 using Photon.Realtime;
 using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.XR;
+using UNIXEngine.IL2CPPModding.Utils.Collections;
 using Valve.Newtonsoft.Json.Utilities;
 using VRC.Core;
 using VRC.SDKBase;
@@ -34,7 +38,6 @@ namespace brewchat.hybridxcore.bep
             if (__instance is null) return;
             __instance?.gameObject.GetOrAddComponent<CSS>();
             __instance.gameObject.GetOrAddComponent<KeybindManager>();
-          
                
             /*__instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();*/
             CSS.Offline();
@@ -59,8 +62,8 @@ namespace brewchat.hybridxcore.bep
         public static void VRCLoadingSequence_IsEnable_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null && !OfflineUILoaded) return;
+            OfflineUILoaded = true;
             CSS.Offline();
-            Origin.Apply();
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.Start))]
@@ -133,7 +136,6 @@ namespace brewchat.hybridxcore.bep
         {
             if (__0 != null && !__0.APIUser.IsSelf)
             {
-                __0.gameObject.AddComponent<wallhacks>();
                 sconsole.print($"Player Joined: {__0.VRCPlayerApi.displayName} | Actor: {__0.VRCPlayerApi.playerId}", 0);
             }
         }
@@ -149,7 +151,7 @@ namespace brewchat.hybridxcore.bep
         #endregion
 
         #region Test
-        
+
         #endregion
 
         [HarmonyPostfix, HarmonyPatch(typeof(LoadBalancingClient), nameof(LoadBalancingClient.OnEvent))]

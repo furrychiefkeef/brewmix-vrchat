@@ -1,17 +1,17 @@
 ﻿using System.Collections;
+
 using System.Reflection;
 using System.Resources;
-using Brewchat.Cheat.Modules;
-using Brewchat.Game.Monobehaviours;
-using Brewchat.Game.Wrappers;
+
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
 using Syrup.IMGUI;
 using UNIXEngine;
-using UNIXEngine.IL2CPPModding;
+
 using UNIXEngine.Logging;
 
-[UNIxMod("com.pinkstar.records", "pinkstar*", "0.0.0.0")]
+
+[UnixModDescriptor("com.pinkstar.records", "pinkstar*", "0.0.0.0")]
 public class Entry : UNIXEngine.IL2CPPModding.UnixMod
 {
     public static string NAME => "PINKSTAR";
@@ -26,35 +26,13 @@ public class Entry : UNIXEngine.IL2CPPModding.UnixMod
         UNIXEngine.Logging.Logger.Sources.Add(Console);
         h.PatchAll();
         #region Components
-
         #region CORE
-        ClassInjector.RegisterTypeInIl2Cpp<Syrup.IMGUI.simgui>(); 
-        ClassInjector.RegisterTypeInIl2Cpp<Brewchat.Game.Monobehaviours.Toolbox>();
-        ClassInjector.RegisterTypeInIl2Cpp<CSS>();
-        ClassInjector.RegisterTypeInIl2Cpp<UTag>();// Most Getto Way For Tagging.
-        #region Managers
-
-        ClassInjector.RegisterTypeInIl2Cpp<FlyManager>(); ClassInjector.RegisterTypeInIl2Cpp<KeybindManager>();
-
+        foreach (var type in Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(UnityEngine.MonoBehaviour))))
+        {
+            Log.LogInfo($"[Setup] Registering Mono: {type.Name}");
+            ClassInjector.RegisterTypeInIl2Cpp(type);
+        }
         #endregion
-
-        #region Modules
-
-        ClassInjector.RegisterTypeInIl2Cpp<FlyManager>(); ClassInjector.RegisterTypeInIl2Cpp<KeybindManager>();
-        
-        ClassInjector.RegisterTypeInIl2Cpp<esp>();
-        ClassInjector.RegisterTypeInIl2Cpp<wallhacks>();
-
-        #endregion
-
-        #endregion
-
-
-
-
-
-
-
 
         #endregion
     } 

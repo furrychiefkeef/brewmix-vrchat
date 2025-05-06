@@ -18,9 +18,9 @@ internal class VRCTab : Templates
     /// <param name="parent">The parent transform where the button will be placed.</param>
     public VRCTab(VRCPage page,string? name, string? tooltip, Action func = null, Sprite? sprite = null)
     {
-        if (!MainMenu() | !_MM.MMTab()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!MainMenu() | !_MM.Tab()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         Transform parent = _Fallback_Dashboard_Group_MM_UI_Buttons_TAB();
-        Transform? obj = UnityEngine.Object.Instantiate(_MM.MMTab(), parent);
+        Transform? obj = UnityEngine.Object.Instantiate(_MM.Tab(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_TAB_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS

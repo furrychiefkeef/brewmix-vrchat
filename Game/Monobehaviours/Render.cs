@@ -2,10 +2,6 @@
 using Brewchat.Game.Wrappers;
 using UnityEngine;
 using VRC;
-using System;
-using System.Collections.Generic;
-using Syrup.IMGUI;
-
 
 internal class wallhacks : MonoBehaviour
 {
@@ -14,46 +10,37 @@ internal class wallhacks : MonoBehaviour
     public  Player _player { get; set; }
     private SkinnedMeshRenderer[] _avatarender;
     private SkinnedMeshRenderer _meshs;
-    public static wallhacks? Instance { get; private set; }
-    private void Awake()
-    {
-        if (Instance is null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(this);
-        }   
-        else Destroy(this);
-    }
-    public void Start()
+
+    public void LateUpdate()
     {
         Render();
     }
-    public void SetEnable(bool status )
-    {
-        enabled = status;
-    } 
-
+ 
     void Render()
     {
-
-        _player = transform.GetComponent<VRC.Player>();
-        _avatarender = _player.GetComponentsInChildren<SkinnedMeshRenderer>(false);
-        if (_avatarender == null) return;
-        foreach (SkinnedMeshRenderer meshs in _avatarender)
-            meshs.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
-
-        if (_nameplate == null) return;
-        _nameplate = _player._vrcplayer.field_Public_PlayerNameplate_0;
-        _nameplate.field_Public_CanvasGroup_0.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
+            _player = transform.GetComponent<VRC.Player>();
+            _avatarender = _player.GetComponentsInChildren<SkinnedMeshRenderer>(false);
+            if (_avatarender == null) return;
+            foreach (SkinnedMeshRenderer meshs in _avatarender)
+            {
+                if(meshs.gameObject.layer == GameUtils.Gameplay.RenderLayers.InternalUI) continue;
+                meshs.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
+            }
+             if (_nameplate == null) return;
+             _nameplate = _player._vrcplayer.field_Public_PlayerNameplate_0;
+             _nameplate.NameplatePositioner.transform.parent.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
+        }
     }
-}
 
 internal class esp : MonoBehaviour
 {
     public Player _player { get; set; }
     private SkinnedMeshRenderer[] _avatarender;
     private HighlightsFXStandalone FX;
-    private void Start()
+
+   
+
+    void LateUpdate()
     {
         _player = transform.GetComponent<VRC.Player>();
         GetSelectRegion(_player);
@@ -61,15 +48,16 @@ internal class esp : MonoBehaviour
 
     void GetSelectRegion(VRC.Player player)
     {
-        var obj = Instantiate(_player.transform.FindChild("SelectRegion"), player.transform);
-        UnityEngine.Object.DestroyImmediate(obj.GetComponent<PlayerSelector>());
-        FX = obj.gameObject.AddComponent<HighlightsFXStandalone>();
-        FX.highlightColor = Color.red;
-        FX.field_Protected_HashSet_1_MeshFilter_0.AddIfNotPresent(obj.GetComponent<MeshFilter>());
-        FX.blurSize = 1f;
-        obj.GetComponent<MeshRenderer>().enabled = true;
-  
+        PlayerSelector Capsule = player._laserSelectRegion;
+        if (GameUtils.Camera.Get != null)
+        {
+            FX = GameUtils.Camera.Get.GetComponent<HighlightsFXStandalone>();
+            FX.Method_Public_Void_MeshFilter_PDM_0(Capsule.GetComponent<MeshFilter>());
+            FX.highlightColor = Config.Appearance.Platte.HighlightFX;
+            FX.blurSize = 1f;
+        }
     }
+    
 
    
 }

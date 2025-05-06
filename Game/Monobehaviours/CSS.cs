@@ -1,9 +1,11 @@
-﻿using BlanketSDK.Utilities;
+﻿using System.Collections;
+using BlanketSDK.Utilities;
 using Brewchat.Game.Wrappers;
 using MaterialEditing.UI;
 using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.UI;
+using UNIXEngine.IL2CPPModding.Utils.Collections;
 using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
@@ -12,6 +14,7 @@ namespace Brewchat.Cheat.Modules;
 internal class CSS : UnityEngine.MonoBehaviour
 { 
     public static CSS? Instance { get; private set; }
+    public static PlayerNameplate _nameplate;
     private void Awake()
     {
         if (Instance is null)
@@ -22,30 +25,44 @@ internal class CSS : UnityEngine.MonoBehaviour
         else Destroy(this);
     }
 
-    public static void Nameplates()
+    public void Nameplates()
     {
-        // Define your textures
-        var textures = new Sprite[]
+        StartCoroutine(CleanseNameplates().WrapToIl2Cpp());
+    }
+    private static IEnumerator CleanseNameplates()
+    {
+        foreach (var nameplate in NameplateManager.field_Public_Static_NameplateManager_0.field_Private_List_1_PlayerNameplate_0)
         {
-            EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_voice_glow).ToSprite(),
-            EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_voice_glow_full_groups).ToSprite(),
-            EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_voice_glow_half).ToSprite(),
-            EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_voice_glow_half_groups).ToSprite(),
-            EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_voice_pulse).ToSprite(),
-            EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_voice_pulse_left).ToSprite(),
-            EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_voice_pulse_right).ToSprite()
-        };
-
-        foreach (var nameplate in UnityEngine.Object.FindObjectsOfType<PlayerNameplate>())
-        {
-            var imageSlices = nameplate.mainContainer.GetComponentsInChildren<ImageThreeSlice>();
-        
-            // Apply textures based on index if there's a consistent order
-            for (int i = 0; i < imageSlices.Length && i < textures.Length; i++)
+            _nameplate = nameplate;
+            int counter = 0;
+            while (counter < 55)
             {
-                imageSlices[i]._sprite = textures[i];
-                Debug.Log($"Changed sprite for index {i} in {nameplate.gameObject.name}");
+                counter++;
+                if (!nameplate) yield return null; 
+                
+                Image? Icon_BG = _nameplate.icon.transform.GetChild(0).GetComponent<Image>();
+                Icon_BG.sprite  = EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_background_bar).ToSprite();
+                Icon_BG.overrideSprite  = EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_background_bar).ToSprite();
+                
+                Image? Icon_2 = _nameplate.icon.transform.GetChild(1).GetComponent<Image>();
+                Image? Icon_3 = _nameplate.icon.transform.GetChild(2).GetComponent<Image>();
+                Image? Icon_4 = _nameplate.icon.transform.GetChild(3).GetComponent<Image>();
+                Image? Icon_5 = _nameplate.icon.transform.GetChild(4).GetComponent<Image>();
+
+                ImageThreeSlice? Pronouns_BG = _nameplate.pronouns.GetComponent<ImageThreeSlice>();
+                Pronouns_BG.prop_Sprite_0 = EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_background).ToSprite();
+                
+                #region COLOR
+                
+                _nameplate.field_Public_Color_0 = Config.Appearance.Platte.Nameplate; // Nameplate Background / Banner Version
+                Icon_BG.color = Config.Appearance.Platte.Nameplate;
+                Pronouns_BG.color = Config.Appearance.Platte.Nameplate;
+                
+                #endregion
+            
+                yield return new WaitForEndOfFrame();
             }
+            
         }
     }
     public static void Offline()

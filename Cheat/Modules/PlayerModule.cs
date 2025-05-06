@@ -149,11 +149,9 @@ internal class PlayerModule
     {
         public enum CameraView
         {
-          none,
-            first_person, 
-                 second_person, 
-                     third_person,
-          freecam,
+            second_person, 
+            third_person,
+            freecam,
         }
         public class View
         {
@@ -167,34 +165,35 @@ internal class PlayerModule
                     GameObject obj = new($"{view}_Camera");   obj.AddComponent<UTag>().SetTag("PinkCams");
                     UnityEngine.Camera? camera = obj.AddComponent<UnityEngine.Camera>();
                     
+                    if(reference != null)
+                    {
+                        obj.transform.localScale = reference.transform.localScale;
+                        obj.transform.parent = reference.transform;
+                        obj.transform.rotation = reference.transform.rotation;
+                        
+                        obj.transform.position = reference.transform.position;
+                        obj.transform.position = reference.transform.position + (-camera.transform.forward * 2f);
+                    }
                     
-                    obj.transform.parent = reference.transform;
+                    camera.fieldOfView = reference.fieldOfView;
+                    camera.nearClipPlane /= 4f;
+                    if (reference != null) camera.cullingMask = -524289;
+                    
                     switch (view)
                     {
-                        case CameraView.first_person:
-                            break;
                         case CameraView.second_person:
+                            obj.transform.Rotate(new Vector3(0f, 180f, 0f), 75f);
                             break;
                         case CameraView.third_person:
-                            
-                            obj.transform.position = reference.transform.position;
-                            obj.transform.localScale = reference.transform.localScale;
-                            obj.transform.rotation = reference.transform.rotation;
                             obj.transform.Rotate(Vector3.zero);
-                            obj.transform.position = reference.transform.position + (-camera.transform.forward * 2f);
-                            
-                            camera.fieldOfView = reference.fieldOfView;
-                            camera.nearClipPlane /= 4f;
-                            
-                            if (reference != null) camera.cullingMask = -524289;
                             break;
                         case CameraView.freecam:
                             cache = obj;
                             obj.AddComponent<AudioListener>();
                             obj.AddComponent<FlyManager>().Rotation = true;
-                            obj.transform.position = reference.transform.position;
                             break;
                     }
+                    
                 }
                
                

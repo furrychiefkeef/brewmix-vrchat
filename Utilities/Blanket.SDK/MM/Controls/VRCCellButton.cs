@@ -19,10 +19,10 @@ internal class VRCCellButton : Templates
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCCellButton(Transform parent, string? name, string? tooltip, Sprite? sprite = null)
     {
-        if (!MainMenu() | !_MM.MMSingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!MainMenu() | !_MM.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= _Fallback_Dashboard_Group_MM_UI_Buttons();
 
-        Transform? obj = UnityEngine.Object.Instantiate(_MM.MMSingleButton(), parent);
+        Transform? obj = UnityEngine.Object.Instantiate(_MM.SingleButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_SINGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS

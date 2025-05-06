@@ -20,10 +20,10 @@ internal class VRCProfileButton : Templates
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCProfileButton(Transform parent, string? name, string? tooltip, System.Action func = null, Sprite? sprite = null)
     {
-        if (!MainMenu() || !_MM.MMProfileButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!MainMenu() || !_MM.ProfileButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= _Fallback_Dashboard_Group_MM_UI_ProfileButtons();
 
-        Transform? obj = UnityEngine.Object.Instantiate(_MM.MMProfileButton(), parent);
+        Transform? obj = UnityEngine.Object.Instantiate(_MM.ProfileButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_SINGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS

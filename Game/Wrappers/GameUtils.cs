@@ -233,7 +233,7 @@ internal class GameUtils
             {
                     return UnityEngine.Object.FindObjectOfType<SelectedUserMenuQM>().transform
                         .GetComponent<MonoBehaviourPublicTeObSlGrImSiObUnique>()
-                        .field_Private_InterfacePublicAbstractBoSt1StLoCoStLi1ObUnique_0.prop_String_1.GetPlayer()
+                        .field_Private_IUser_0.prop_String_1.GetPlayer()
                         ?._vrcplayer._player;
             }
             public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetAllPlayers =>
@@ -403,7 +403,7 @@ internal class GameUtils
                 if (inputfield == null)
                 {
                     Object = new GameObject($"[{Entry.NAME}] Keyboard");
-                    Object.transform.parent = Templates._MM.MMParent();
+                    Object.transform.parent = Templates._MM.Parent();
                     UnityEngine.Object.DontDestroyOnLoad(Object);
                     inputfield = Object.GetOrAddComponent<VRCInputField>();
                 }

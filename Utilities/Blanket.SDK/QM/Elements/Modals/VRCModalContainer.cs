@@ -1,5 +1,6 @@
 ﻿using BlanketSDK.Utilities;
 using Cysharp.Threading.Tasks.Linq;
+using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -20,7 +21,7 @@ namespace BlanketSDK.QM.Elements.Modals
         public VRCModalContainer(string? header, Sprite? sprite = null)
         {
             if (!QuickMenu() | !_QM.FourButtons_Modal()) throw new($"modal or quickmenu has moved to a different location or been altered: " + $"{brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-            _obj = UnityEngine.Object.Instantiate(_QM.FourButtons_Modal(), _QM.QMParent());
+            _obj = UnityEngine.Object.Instantiate(_QM.FourButtons_Modal(), _QM.Parent());
             _obj.gameObject.SetActive(false);
             _obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MODAL_CONTAINER-{header}";
             Name = $"Menu_{header}";
@@ -29,10 +30,10 @@ namespace BlanketSDK.QM.Elements.Modals
         
             #region REQUIRED_COMPONENTS
             QMSafetyPage? _Instance = _obj.GetComponent<QMSafetyPage>();
-            _obj.GetComponent<MenuPanelRect>().enabled = true;
-            _obj.GetComponent<UnityEngine.Canvas>().enabled = true;
-            _obj.GetComponent<UnityEngine.CanvasGroup>().enabled = true;
-            _obj.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
+            _obj.GetComponent<MenuPanelRect>().enabled = false;
+            _obj.GetComponent<UnityEngine.Canvas>().enabled = false;
+            _obj.GetComponent<UnityEngine.CanvasGroup>().enabled = false;
+            _obj.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = false;
             #endregion
             
             #region LOGIC_REQUIRED
@@ -101,11 +102,12 @@ namespace BlanketSDK.QM.Elements.Modals
 
         public void Open()
         { 
-            _obj.gameObject.SetActive(true);
+             _obj.gameObject.SetActive(true);
+            _obj.GetComponent<MenuPanelRect>().enabled = true;
             _obj.GetComponent<UnityEngine.Canvas>().enabled = true;
             _obj.GetComponent<UnityEngine.CanvasGroup>().enabled = true;
             _obj.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
-            ModalLogic.Method_Protected_Void_Boolean_TransitionType_0(true, UIPage.TransitionType.InPlace);
+            QM().field_Protected_MenuStateController_0.Method_Public_Void_String_UIContext_Boolean_TransitionType_0(Name,null, true, UIPage.TransitionType.InPlace);
            
         }
         void Close() => ModalLogic.Method_Protected_Void_Boolean_TransitionType_0(false, UIPage.TransitionType.Bottom);

@@ -9,9 +9,9 @@ internal class VRCProfileRow : Templates
     public Transform? container;
     public VRCProfileRow(Transform parent, string header, bool alwaysVisable = true)
     {
-        if (!MainMenu() || !_MM.MMProfileButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!MainMenu() || !_MM.ProfileButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= _Fallback_Dashboard_Group_MM_UI_ProfileRows();
-        Transform? obj = UnityEngine.Object.Instantiate(_MM.MMProfileRow(), parent);
+        Transform? obj = UnityEngine.Object.Instantiate(_MM.ProfileRow(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_PROFILE_ROW_{header}";
         obj.SetSiblingIndex(2 + 1);
       

@@ -8,7 +8,9 @@ using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
 using MS.Internal.Xml.XPath;
 using UnityEngine.Device;
+using UNIXEngine.IL2CPPModding.Utils.Collections;
 using VRC.Core;
+using VRC.Networking;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
 namespace Brewchat.Cheat;
@@ -37,9 +39,9 @@ internal class QM
                 
                 VRCWingButton WING_C = new(Templates._Fallback_Dashboard_Group_QM_UI_WingButtons(),
                     Ropie.Wing.Position.R,"Test Nameplates", "The passion project.",
-                    () => CSS.Nameplates());
+                    () => CSS.Instance.Nameplates());
                 #endregion
-
+    
                 VRCGroupBox Main_Groupbox = new(MainPage);
 
                 #region Groupbox
@@ -114,14 +116,14 @@ internal class QM
                 VRCModalContainer? Renders = new("Renderer");
                 VRCButton? AC = new(Main_Groupbox, "Renders", "Render Properties", () => Renders.Open());
 
-                VRCToggle? ESP = new(Renders, "ESP", "parse", "parse", (x) => { });
+                VRCToggle? ESP = new(Renders, "ESP", "parse", "parse", (x) => { Config.Render.esp = !Config.Render.esp; });
                 VRCToggle? WALLHACKS = new(Renders, "Wallhacks", "parse", "parse", (x) =>
                 {
                     Config.Render.player_wallhack = !Config.Render.player_wallhack;
-                    wallhacks.Instance.SetEnable(Config.Render.player_wallhack);
                 });
 
                 #endregion
+                
             }
             catch (Exception e)
             {
@@ -141,13 +143,32 @@ internal class QM
         {
             try
             {
-                VRCButton? Fly = new(Templates._QM.SelectedUser_LocalCon(), "Teleport",
-                    "Teleport to this player's Position", () =>
-                    {
+                var Debugger = new VRCPage("Debugger_pinkstar");
+                #region Actions
+
+                 new VRCButton(Templates._QM.SelectedUser_LocalCon(), "Teleport","Teleport to this player's Position", () =>
+                 {
                         if (!GameUtils.World.IsWorldLoaded()) return;
-                        GameUtils.PlayerModel.Get().transform.position = GameUtils.PlayerModel.Matchmaking
-                            .GetSelectedUser().transform.position;
-                    });
+                        GameUtils.PlayerModel.Get().transform.position = GameUtils.PlayerModel.Matchmaking.GetSelectedUser().transform.position;  
+                 });
+                  
+
+                #endregion
+
+                #region Debugger
+
+                 
+   
+                 new VRCButton(Debugger, Templates._QM.SelectedUser_LocalCon(), "Debugger","a");
+                 var box = new VRCGroupBox(Debugger, "Debugger");
+                 
+                 var a = new VRCToggle(box, "Freeze Player", "Freeze!", "Unfreeze!", (x) =>
+                 {
+                     GameUtils.PlayerModel.Matchmaking.GetSelectedUser().GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
+                 });
+
+                 #endregion
+
             }
             catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
             finally { sconsole.print("Created The Selected_QuickMenu+BlanketSDK.UI", 1); }

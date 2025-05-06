@@ -9,45 +9,7 @@ namespace Brewchat.Game.Wrappers
 {
     internal static class EngineUtils
     {
-        public struct Internals
-        {
-            private static Dictionary<string, List<GameObject>> customTaggedObjects = new Dictionary<string, List<GameObject>>();
-            public static void SetCustomTag(GameObject obj, string tagName)
-            {
-                // Make sure the dictionary has an entry for this tag
-                if (!customTaggedObjects.ContainsKey(tagName))
-                {
-                    customTaggedObjects.Add(tagName, new List<GameObject>());
-                }
-            
-                // Add the object to the custom tag list if not already there
-                if (!customTaggedObjects[tagName].Contains(obj))
-                {
-                    customTaggedObjects[tagName].Add(obj);
-                    Entry.Console.LogInfo($"Added custom tag '{tagName}' to {obj.name}");
-                }
-            }
         
-            // Method to check if an object has your custom tag
-            public bool HasCustomTag(GameObject obj, string tagName)
-            {
-                if (customTaggedObjects.ContainsKey(tagName))
-                {
-                    return customTaggedObjects[tagName].Contains(obj);
-                }
-                return false;
-            }
-        
-            // Method to get all objects with a specific custom tag
-            public List<GameObject> FindGameObjectsWithCustomTag(string tagName)
-            {
-                if (customTaggedObjects.ContainsKey(tagName))
-                {
-                    return new List<GameObject>(customTaggedObjects[tagName]);
-                }
-                return new List<GameObject>();
-            }
-        }
         public struct Conversion 
         {
             public static Color HexToColor(string hex)

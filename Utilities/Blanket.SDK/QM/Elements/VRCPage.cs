@@ -11,27 +11,28 @@ namespace BlanketSDK.QM.Elements;
 
 internal class VRCPage : Templates
 {
-    UIPage page;
+    private Transform? _obj;
+    static UIPage page;
     public string Name;
     public Transform? box;
 
     public VRCPage(string name)
     {
-        if (!_QM.QMParent() || !_QM.MenuDevTools()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        Transform? obj = UnityEngine.Object.Instantiate(_QM.MenuDevTools(), _QM.QMParent());
-        obj.gameObject.SetActive(false);
-        obj.SetSiblingIndex(5);
+        if (!_QM.Parent() || !_QM.MenuDevTools()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        _obj = UnityEngine.Object.Instantiate(_QM.MenuDevTools(), _QM.Parent());
+        _obj.gameObject.SetActive(false);
+        _obj.SetSiblingIndex(5);
         
         Name = $"Menu_{name}";
-        obj.name = Name;
+        _obj.name = Name;
 
         #region REQUIRED_COMPONENTS
 
-        DevMenu? _0 = obj.GetComponent<DevMenu>();
-        obj.GetComponent<UnityEngine.Canvas>().enabled = true;
-        obj.GetComponent<UnityEngine.CanvasGroup>().enabled = true;
-        obj.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
-        TextMeshProUGUIEx? _1 = obj.GetChild(0).GetChild(1).GetComponentInChildren<TextMeshProUGUIEx>();
+        DevMenu? _0 = _obj.GetComponent<DevMenu>();
+        _obj.GetComponent<UnityEngine.Canvas>().enabled = true;
+        _obj.GetComponent<UnityEngine.CanvasGroup>().enabled = true;
+        _obj.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
+        TextMeshProUGUIEx? _1 = _obj.GetChild(0).GetChild(1).GetComponentInChildren<TextMeshProUGUIEx>();
 
         #endregion
 
@@ -73,11 +74,25 @@ internal class VRCPage : Templates
         
         #region OBJs
 
-        var group = obj.GetComponentInChildren<VerticalLayoutGroup>();
+        var group = _obj.GetComponentInChildren<VerticalLayoutGroup>();
         group.transform.DestroyChildren();
         box = group.transform;
 
         #endregion
+    }
+
+    public void Open()
+    {
+        _obj.gameObject.SetActive(true);
+        _obj.GetComponent<UnityEngine.Canvas>().enabled = true;
+        _obj.GetComponent<UnityEngine.CanvasGroup>().enabled = true;
+        _obj.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
+        page.Method_Protected_Void_Boolean_TransitionType_0(true, UIPage.TransitionType.InPlace);
+    }
+
+    void Close()
+    {
+        
     }
 }
 

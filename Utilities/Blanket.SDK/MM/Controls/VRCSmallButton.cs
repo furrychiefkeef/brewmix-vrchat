@@ -21,9 +21,9 @@ internal class VRCSmallButton : Templates
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCSmallButton(Transform parent, string? tooltip, int priority, System.Action func, Sprite? sprite = null)
     {
-        if (!MainMenu() | !_MM.MMExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!MainMenu() | !_MM.ExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= _Fallback_Dashboard_Group_MM_UI_ExpandButtons();
-        UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(_MM.MMExpandButton(), parent);
+        UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(_MM.ExpandButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_SMALL_BUTTON";
         obj.SetSiblingIndex(priority - 1) ;
         #region REQUIRED_COMPONENTS
