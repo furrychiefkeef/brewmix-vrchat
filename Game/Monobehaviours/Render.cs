@@ -11,12 +11,7 @@ internal class wallhacks : MonoBehaviour
     private SkinnedMeshRenderer[] _avatarender;
     private SkinnedMeshRenderer _meshs;
 
-    public void LateUpdate()
-    {
-        Render();
-    }
- 
-    void Render()
+    void Start()
     {
             _player = transform.GetComponent<VRC.Player>();
             _avatarender = _player.GetComponentsInChildren<SkinnedMeshRenderer>(false);
@@ -26,9 +21,10 @@ internal class wallhacks : MonoBehaviour
                 if(meshs.gameObject.layer == GameUtils.Gameplay.RenderLayers.InternalUI) continue;
                 meshs.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
             }
-             if (_nameplate == null) return;
-             _nameplate = _player._vrcplayer.Nameplate;
-             _nameplate.NameplatePositioner.transform.parent.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
+
+            if (_player._vrcplayer.Nameplate == null) return;
+             _nameplate = _player._vrcplayer.Nameplate;    
+             _nameplate.NameplatePositioner.transform.GetChild(0).gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
         }
     }
 

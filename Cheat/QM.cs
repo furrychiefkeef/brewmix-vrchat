@@ -1,11 +1,13 @@
-﻿using BlanketSDK.QM.Elements;
+﻿using BlanketSDK.Core;
+using BlanketSDK.QM.Elements;
 using Syrup.IMGUI;
 using BlanketSDK.QM.Elements.Controls;
 using BlanketSDK.QM.Elements.Modals;
 using BlanketSDK.Utilities;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Wrappers;
-
+using UnityEngine.UI;
+using VRC.Networking;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
 namespace Brewchat.Cheat;
@@ -44,7 +46,11 @@ internal class QM
 
                 VRCModalContainer? PlayerMovementModal = new("Player+Movement");
                 VRCButton? T = new(Main_Groupbox, "Player", "Modify The Player", () => PlayerMovementModal.Open());
-
+                VRCToggle E = new(Main_Groupbox, "Enable", "Enable The Player", "Disable The Player", (x) =>
+                {
+                    GameUtils.PlayerModel.Get().GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
+                });
+                
                 #endregion
 
                 #region Modal_Player+Movement
@@ -121,25 +127,28 @@ internal class QM
                 #endregion
                 
             }
-            catch (Exception e)
-            {
-                sconsole.print(e.Message + "\n" + e.Source, 2);
-            }
-            finally
-            {
-                sconsole.print("Created The QuickMenu+BlanketSDK.UI", 1);
-            }
+            catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
+            finally { sconsole.print("Created The QuickMenu+BlanketSDK.UI", 1); }
         }
 
         
     }
-    public class SelectedMenu
+    public class SelectedMenu : IQuickMenuElements
     {
         public static void Apply()
         {
             try
-            {   
-            
+            {
+                VRCToggle toggle = new(QMMenus.QMSubmenus.SelectedUser_Local().GetComponentInChildren<VerticalLayoutGroup>().gameObject.transform, "FREEZE!", "FREEZE CRIMINAL SCUM, ","UNFREEZE NICE INDIVIUAL!", (x) =>
+                {
+                    var selecteduser= GameUtils.PlayerModel.Matchmaking.GetSelectedUser();
+                    if (selecteduser != null)
+                    {
+                       
+                        sconsole.print($"<color=red>[frozen]</color>: {selecteduser.APIUser.displayName }",0);
+                        selecteduser.GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
+                    }
+                }, false);
             }
             catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
             finally { sconsole.print("Created The Selected_QuickMenu+BlanketSDK.UI", 1); }

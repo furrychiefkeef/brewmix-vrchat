@@ -134,6 +134,12 @@ namespace brewchat.hybridxcore.bep
         {
             if (__0 != null && !__0.APIUser.IsSelf)
             {
+                if (__0.APIUser.allowAvatarCopying != true)
+                {
+                    __0.APIUser.allowAvatarCopying = true;
+                }
+
+                __0.gameObject.AddComponent<wallhacks>();
                 sconsole.print($"Player Joined: {__0.VRCPlayerApi.displayName} | Actor: {__0.VRCPlayerApi.playerId}", 0);
             }
         }
