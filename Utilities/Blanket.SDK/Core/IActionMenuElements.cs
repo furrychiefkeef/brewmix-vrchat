@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BlanketSDK.Utilities.Unbearable;
+namespace BlanketSDK.Core;
 
 /// <summary>
 /// VRCUI_CLASSMENU ELEMENTS I DID THIS CAUSE I WAS TERRIFIED OF MY CODE STYLE.

@@ -1,6 +1,6 @@
 ﻿
 using BlanketSDK.Utilities;
-using BlanketSDK.Utilities.Unbearable;
+using BlanketSDK.Core;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.Localization;
@@ -21,7 +21,7 @@ internal class VRCProfileButton : IMainMenuElements
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCProfileButton(Transform parent, string? name, string? tooltip, System.Action func = null, Sprite? sprite = null)
     {
-        if (!MainMenu() || !MMControls.Buttons.ProfileButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!MainMenu() || !MMControls.Buttons.ProfileButton()) throw new($"profile button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileButtons();
 
         Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.ProfileButton(), parent);

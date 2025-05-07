@@ -1,11 +1,6 @@
 ﻿using BlanketSDK.Utilities;
-using BlanketSDK.Utilities.Unbearable;
-using Cysharp.Threading.Tasks.Linq;
-using Syrup.IMGUI;
+using BlanketSDK.Core;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
-using VRC.Udon.Wrapper.Modules;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
 using VRC.UI.Elements.Menus;

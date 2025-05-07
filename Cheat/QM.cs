@@ -25,16 +25,17 @@ internal class QM
                 new VRCTab(MainPage, "The passion project.",
                     sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
 
-                /*VRCWingButton WING_L = new(Templates._Fallback_Dashboard_Group_QM_UI_WingButtons(),
+                VRCWingButton WING_L = new(null,
                     SDKUtils.Wing.Position.L, Entry.NAME, "The passion project.",
                     () => sconsole.print("passion_fruit", 1));
-                VRCWingButton WING_R = new(Templates._Fallback_Dashboard_Group_QM_UI_WingButtons(),
+                
+                VRCWingButton WING_R = new(null,
                     SDKUtils.Wing.Position.R, Entry.NAME, "The passion project.",
                     () => sconsole.print("passion_fruit", 1));
                 
-                VRCWingButton WING_C = new(Templates._Fallback_Dashboard_Group_QM_UI_WingButtons(),
+                VRCWingButton WING_C = new(null,
                     SDKUtils.Wing.Position.R,"Test Nameplates", "The passion project.",
-                    () => CSS.Instance.Nameplates());*/
+                    () => CSS.Instance.Nameplates());
                 #endregion
     
                 VRCGroupBox Main_Groupbox = new(MainPage);

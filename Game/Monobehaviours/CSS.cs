@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using BlanketSDK.Utilities;
-using BlanketSDK.Utilities.Unbearable;
+using BlanketSDK.Core;
 using Brewchat.Game.Wrappers;
 using MaterialEditing.UI;
 using Syrup.IMGUI;

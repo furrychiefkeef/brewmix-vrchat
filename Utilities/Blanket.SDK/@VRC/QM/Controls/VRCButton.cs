@@ -1,9 +1,6 @@
 ﻿using BlanketSDK.QM.Elements.Modals;
-using BlanketSDK.Utilities;
-using BlanketSDK.Utilities.Unbearable;
-using Il2CppInterop.Runtime;
+using BlanketSDK.Core;
 using UnityEngine;
-using UnityEngine.UI;
 using VRC.Localization;
 using VRC.UI;
 using VRC.UI.Elements.Controls;

@@ -595,13 +595,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Assets\Branding\logo.png" />
-    <EmbeddedResource Include="Assets\UI\ActionMenu\action-menu_*.png" />
-    <EmbeddedResource Include="Assets\UI\Nameplate\capsule_*.png" />
+    <EmbeddedResource Include="Assets\Textures\Branding\logo.png" />
+    <EmbeddedResource Include="Assets\Textures\UI\ActionMenu\action-menu_*.png" />
+    <EmbeddedResource Include="Assets\Textures\UI\Nameplate\capsule_*.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Utilities\Blanket.SDK\VRC\" />
+    <Folder Include="Assets\Textures\" />
+    <Folder Include="Utilities\Blanket.SDK\@VRC\" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods&quot;&#xA;start steam://rungameid/438100 --no-vr" />

@@ -1,4 +1,4 @@
-﻿namespace BlanketSDK.Utilities.Unbearable;
+﻿namespace BlanketSDK.Core;
 
 public class VRCOriginElements
 {

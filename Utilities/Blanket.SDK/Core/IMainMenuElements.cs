@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using VRC.UI.Elements;
 
-namespace BlanketSDK.Utilities.Unbearable;
+namespace BlanketSDK.Core;
 
 /// <summary>
 /// VRCUI_CLASSMENU ELEMENTS I DID THIS CAUSE I WAS TERRIFIED OF MY CODE STYLE.
@@ -17,7 +17,7 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
 
     protected interface MMMenus
     {
-        /*public static Transform WingMenu(string position) => MainMenu().transform.FindChild($"Wing_{position}/Container/InnerContainer");*/
+        public static Transform WingMenu(string position) => MainMenu().transform.FindChild($"Wing_{position}/Container/InnerContainer");
         // Put Menus
         public interface MMSubmenus
         {
@@ -38,7 +38,7 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
 
             public static Transform SingleButton() => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Navigation/Viewport/VerticalLayoutGroup/Cell_MM_Debug");
 
-            /*public static Transform WingButton(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Explore");*/
+            public static Transform WingButton(string position) => MMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Explore");
             public static Transform ProfileButton() => MMMenus.MMSubmenus.MenuUser_Details().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Row3/CellGrid_MM_Content/ModBtn");
 
             public static Transform ExpandButton() => MMParent().transform.FindChild("Panel_MM_Header/HeaderRight/Button_Settings");
@@ -65,7 +65,7 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
 
         public static Transform _Fallback_Dashboard_Group_MM_UI_Buttons() => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Navigation/Viewport/VerticalLayoutGroup");
 
-        /*public static Transform _Fallback_Dashboard_Group_MM_UI_WingButtons(string position = null) => _MM.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
+        public static Transform _Fallback_Dashboard_Group_MM_UI_WingButtons(string position) => MMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");
         public static Transform _Fallback_Dashboard_Group_MM_UI_ProfileButtons() => MMMenus.MMSubmenus.MenuUser_Details().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Row3/CellGrid_MM_Content");
 
         public static Transform _Fallback_Dashboard_Group_MM_UI_ProfileRows() => MMMenus.MMSubmenus.MenuUser_Details().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");

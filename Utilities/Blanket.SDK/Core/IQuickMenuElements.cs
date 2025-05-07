@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using VRC.UI.Elements;
 
-namespace BlanketSDK.Utilities.Unbearable;
+namespace BlanketSDK.Core;
 
 /// <summary>
 /// VRCUI_QUICKMENU ELEMENTS I DID THIS CAUSE I WAS TERRIFIED OF MY CODE STYLE.
@@ -13,11 +13,11 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
     protected static QuickMenu? QM() => UnityEngine.Object.FindObjectOfType<QuickMenu>();
     public static Transform QMParent() => QuickMenu().transform.FindChild("Container/Window/QMParent");
 
-    protected struct QMMenus
+    protected interface QMMenus
     {
         public static Transform WingMenu(string position) => QuickMenu().transform.FindChild($"Container/Window/Wing_{position}/Container/InnerContainer");
 
-        public struct QMSubmenus
+        public interface QMSubmenus
         {
             public static Transform Menu_Dashboard() => QMParent().transform.FindChild("Menu_Dashboard");
             public static Transform Menu_DevTools() => QMParent().transform.FindChild("Menu_DevTools");
@@ -25,11 +25,11 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         }
     }
 
-    internal struct QMControls
+    internal interface QMControls
     {
         public static Transform Tab() => QuickMenu().transform.FindChild("Container/Window/Page_Buttons_QM/HorizontalLayoutGroup/Page_Settings");
 
-        public struct Buttons
+        public interface Buttons
         {
 
             public static Transform SingleButton() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions/Button_Respawn");
@@ -39,31 +39,31 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
             public static Transform ToggleButton() => QMMenus.QMSubmenus.Menu_DevTools().transform.FindChild("Scrollrect/Viewport/VerticalLayoutGroup/Buttons/Button_Tag");
 
             public static Transform CarouselButton() => QMMenus.QMSubmenus.SelectedUser_Local().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_AvatarActions");
-            /*public static Transform WingButton(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Explore");*/
+            public static Transform WingButton(string position) => QMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Explore");
         }
     }
 
-    internal struct QMElements
+    internal interface QMElements
     {
         public static Transform QMButtonContainer() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
 
         public static Transform FourButtons_Modal() => QMParent().transform.FindChild("Modal_QM_ChangeShieldLevel");
         /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
 
-        public struct SelectedUser
+        public interface SelectedUser
         {
             public static Transform SelectedUser_ButtonContainer() => QMMenus.QMSubmenus.SelectedUser_Local().FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_UserActions");
         }
     }
 
-    internal struct QMFallbacks
+    internal interface QMFallbacks
     {
         public static Transform _Fallback_Dashboard_Group_QM_UI_Buttons_TAB() => QuickMenu().transform.FindChild("Container/Window/Page_Buttons_QM/HorizontalLayoutGroup");
 
         public static Transform _Fallback_Dashboard_Group_QM_UI_ExpandButtons() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("Header_H1/RightItemContainer");
 
         public static Transform _Fallback_Dashboard_Group_QM_UI_Buttons() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions");
-        /*public static Transform _Fallback_Dashboard_Group_QM_UI_WingButtons(string position = null) => _QM.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
+        public static Transform _Fallback_Dashboard_Group_QM_UI_WingButtons(string position) => QMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");
     }
 }
 

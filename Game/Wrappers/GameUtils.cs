@@ -1,9 +1,5 @@
-﻿using BlanketSDK.Utilities;
-using BlanketSDK.Utilities.Unbearable;
-using Brewview;
+﻿using BlanketSDK.Core;
 using ExitGames.Client.Photon;
-using Il2CppInterop.Runtime;
-using Il2CppMono.Security.Interface;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
@@ -17,7 +13,6 @@ using VRC.UI.Client.HUD;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
 using VRC.UI.Elements.Menus;
-using Object = Il2CppSystem.Object;
 using Player = VRC.Player;
 
 namespace Brewchat.Game.Wrappers;

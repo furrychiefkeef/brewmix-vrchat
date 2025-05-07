@@ -3,7 +3,7 @@ using BlanketSDK.Utilities;
 using ExitGames.Client.Photon.StructWrapping;
 using UnityEngine;
 using VRC.UI.Elements.Controls;
-using BlanketSDK.Utilities.Unbearable;
+using BlanketSDK.Core;
 namespace BlanketSDK.QM.Elements;
 
 internal class VRCGroupBox : IQuickMenuElements

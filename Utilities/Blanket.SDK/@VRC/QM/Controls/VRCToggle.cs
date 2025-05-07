@@ -1,12 +1,8 @@
-﻿
-
-using UnityEngine;
+﻿using UnityEngine;
 using VRC.Localization;
 using VRC.UI.Elements.Controls;
-
-using BlanketSDK.Utilities;
 using BlanketSDK.QM.Elements.Modals;
-using BlanketSDK.Utilities.Unbearable;
+using BlanketSDK.Core;
 using VRC.UI;
 using VRC.UI.Elements.Tooltips;
 

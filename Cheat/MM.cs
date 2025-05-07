@@ -2,14 +2,14 @@
 using Syrup.IMGUI;
 
 using BlanketSDK.MM.Elements.Controls;
+using BlanketSDK.Core;
 using BlanketSDK.Utilities;
-using BlanketSDK.Utilities.Unbearable;
 using Brewchat.Game.Wrappers;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
 namespace Brewchat.Cheat;
 
-internal class MM 
+internal class MM : IMainMenuElements
 {
     public class _Pinkstar 
     { 
@@ -17,13 +17,13 @@ internal class MM
         {
             try
             {
-                /*new VRCWingButton(Templates._Fallback_Dashboard_Group_MM_UI_WingButtons(), Ropie.Wing.Position.R,
+                new VRCWingButton(MMFallbacks._Fallback_Dashboard_Group_MM_UI_WingButtons("Left"), SDKUtils.Wing.Position.L,
                     "Test", "Test",
                     () =>
                     {
 
-                    });*/
-                VRCSmallButton acee2 = new(IMainMenuElements.MMFallbacks._Fallback_Dashboard_Group_MM_UI_ExpandButtons(), "The passion project.", 5, () => GameUtils.UI.HUD.Alert("bitch2", GameUtils.UI.HUD.AlertType.MainMenu), EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+                    });
+                VRCSmallButton acee2 = new(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ExpandButtons(), "The passion project.", 5, () => GameUtils.UI.HUD.Alert("bitch2", GameUtils.UI.HUD.AlertType.MainMenu), EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
                 var aware = new VRCPage(Entry.NAME, EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
                 new VRCTab(aware, Entry.FULLNAME, "The passion project.", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
                 

@@ -1,5 +1,5 @@
 ﻿using BlanketSDK.Utilities;
-using BlanketSDK.Utilities.Unbearable;
+using BlanketSDK.Core;
 using Brewchat;
 using Syrup.IMGUI;
 using UnityEngine;
