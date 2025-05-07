@@ -1,4 +1,5 @@
 ﻿using BlanketSDK.Utilities;
+using BlanketSDK.Utilities.Unbearable;
 using Brewchat;
 using Syrup.IMGUI;
 using UnityEngine;
@@ -10,7 +11,7 @@ using VRC.UI.Elements.Menus;
 
 namespace BlanketSDK.MM.Elements;
 
-internal class VRCPage : Templates
+internal class VRCPage : IMainMenuElements
 {
     public SettingsPage page;
     public string Name;
@@ -18,8 +19,8 @@ internal class VRCPage : Templates
     public Transform? _content_container;
     public VRCPage(string name, Sprite? sprite)
     {
-        if (!_MM.Parent() || !_MM.MenuSetting()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        Transform? obj = UnityEngine.Object.Instantiate(_MM.MenuSetting(), _MM.Parent().GetChild(2));
+        if (!MMParent() || !MMMenus.MMSubmenus.Menu_Setting()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        Transform? obj = UnityEngine.Object.Instantiate(MMMenus.MMSubmenus.Menu_Setting(), MMParent().GetChild(2));
         obj.gameObject.SetActive(false);
         obj.SetSiblingIndex(5);
         

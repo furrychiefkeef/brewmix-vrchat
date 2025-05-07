@@ -1,5 +1,6 @@
 ﻿using BlanketSDK.QM.Elements.Modals;
 using BlanketSDK.Utilities;
+using BlanketSDK.Utilities.Unbearable;
 using UnityEngine;
 using VRC.Localization;
 using VRC.UI;
@@ -7,7 +8,7 @@ using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.QM.Elements.Controls;
 
-internal class VRCSmallButton : Templates
+internal class VRCSmallButton : IQuickMenuElements
 {  
     /// <summary>
     ///  VRCSmallButton this is used to create a SMALLBUTTON_QUICKMENU_BUTTON
@@ -18,9 +19,9 @@ internal class VRCSmallButton : Templates
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCSmallButton(Transform parent, string? tooltip, System.Action func, Sprite? sprite = null)
     {
-        if (!QuickMenu() | !_QM.ExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        parent ??= _Fallback_Dashboard_Group_QM_UI_ExpandButtons();
-        UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(_QM.ExpandButton(), parent);
+        if (!QuickMenu() | !QMControls.Buttons.ExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_ExpandButtons();
+        UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.ExpandButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_SMALL_BUTTON";
         
         #region REQUIRED_COMPONENTS

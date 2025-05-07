@@ -1,4 +1,5 @@
 ﻿using BlanketSDK.Utilities;
+using BlanketSDK.Utilities.Unbearable;
 using Brewchat;
 using Syrup.IMGUI;
 using UnityEngine;
@@ -9,7 +10,7 @@ using VRC.UI.Elements.Menus;
 
 namespace BlanketSDK.QM.Elements;
 
-internal class VRCPage : Templates
+internal class VRCPage : IQuickMenuElements
 {
     private Transform? _obj;
     static UIPage page;
@@ -18,8 +19,8 @@ internal class VRCPage : Templates
 
     public VRCPage(string name)
     {
-        if (!_QM.Parent() || !_QM.MenuDevTools()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        _obj = UnityEngine.Object.Instantiate(_QM.MenuDevTools(), _QM.Parent());
+        if (!QMParent() || !QMMenus.QMSubmenus.Menu_DevTools()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        _obj = UnityEngine.Object.Instantiate(QMMenus.QMSubmenus.Menu_DevTools(), QMParent());
         _obj.gameObject.SetActive(false);
         _obj.SetSiblingIndex(5);
         

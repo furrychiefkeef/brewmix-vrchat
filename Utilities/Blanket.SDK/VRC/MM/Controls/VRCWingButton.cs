@@ -1,15 +1,16 @@
-﻿using BlanketSDK.Utilities;
+﻿/*
+using BlanketSDK.Utilities;
 using UnityEngine;
 using VRC.Localization;
 using VRC.UI;
 using VRC.UI.Elements.Controls;
 
-namespace BlanketSDK.QM.Elements.Controls;
+namespace BlanketSDK.MM.Elements.Controls;
 
-internal class VRCWingButton : Templates
+internal class VRCWingButton : IMainMenuElements
 {
     /// <summary>
-    ///  VRCSmallButton this is used to create a WING_QUICKMENU_BUTTON
+    ///  VRCSmallButton this is used to create a WING_MAINMENU_BUTTON
     /// </summary>
     /// <param name="parent">The parent transform where the button will be placed.</param>
     /// <param name="position">add whatever side u want it to be on Left or Right</param>
@@ -19,11 +20,11 @@ internal class VRCWingButton : Templates
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCWingButton(Transform parent, Ropie.Wing.Position position, string? name,  string? tooltip, System.Action func, Sprite? sprite = null)
         {
-            if (!QuickMenu() | !_QM.WingButton("Left") || !_QM.WingButton("Right")) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-            parent ??= _Fallback_Dashboard_Group_QM_UI_WingButtons(Ropie.Wing.SetWingPosition(position));
+            if (!MainMenu() | !_MM.WingButton("Left") || !_MM.WingButton("Right")) throw new($"wing button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+            parent ??= MMFallbacks._Fallback_Dashboard_Group_MM_UI_WingButtons();
          
-             UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(_QM.WingButton(Ropie.Wing.SetWingPosition(position)), parent);
-             obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_WINGBUTTON_BUTTON";
+             UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(_MM.WingButton(Ropie.Wing.SetWingPosition(position)), parent);
+             obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_WINGBUTTON_BUTTON";
 
            
            
@@ -61,4 +62,5 @@ internal class VRCWingButton : Templates
                  Position.L => "Left",
                  Position.R => "Right",
                  _ => "Unknown"
-             });*/
+             });#1#
+             */

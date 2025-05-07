@@ -2,7 +2,7 @@
 
 namespace BlanketSDK.Utilities;
 
-public static class Ropie
+public static class SDKUtils
 {
     public class Wing
     {

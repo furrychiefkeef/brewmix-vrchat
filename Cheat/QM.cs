@@ -1,16 +1,11 @@
 ﻿using BlanketSDK.QM.Elements;
 using Syrup.IMGUI;
 using BlanketSDK.QM.Elements.Controls;
-using BlanketSDK.Utilities;
 using BlanketSDK.QM.Elements.Modals;
+using BlanketSDK.Utilities;
 using Brewchat.Cheat.Modules;
-using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
-using MS.Internal.Xml.XPath;
-using UnityEngine.Device;
-using UNIXEngine.IL2CPPModding.Utils.Collections;
-using VRC.Core;
-using VRC.Networking;
+
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
 namespace Brewchat.Cheat;
@@ -30,16 +25,16 @@ internal class QM
                 new VRCTab(MainPage, "The passion project.",
                     sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
 
-                VRCWingButton WING_L = new(Templates._Fallback_Dashboard_Group_QM_UI_WingButtons(),
-                    Ropie.Wing.Position.L, Entry.NAME, "The passion project.",
+                /*VRCWingButton WING_L = new(Templates._Fallback_Dashboard_Group_QM_UI_WingButtons(),
+                    SDKUtils.Wing.Position.L, Entry.NAME, "The passion project.",
                     () => sconsole.print("passion_fruit", 1));
                 VRCWingButton WING_R = new(Templates._Fallback_Dashboard_Group_QM_UI_WingButtons(),
-                    Ropie.Wing.Position.R, Entry.NAME, "The passion project.",
+                    SDKUtils.Wing.Position.R, Entry.NAME, "The passion project.",
                     () => sconsole.print("passion_fruit", 1));
                 
                 VRCWingButton WING_C = new(Templates._Fallback_Dashboard_Group_QM_UI_WingButtons(),
-                    Ropie.Wing.Position.R,"Test Nameplates", "The passion project.",
-                    () => CSS.Instance.Nameplates());
+                    SDKUtils.Wing.Position.R,"Test Nameplates", "The passion project.",
+                    () => CSS.Instance.Nameplates());*/
                 #endregion
     
                 VRCGroupBox Main_Groupbox = new(MainPage);
@@ -142,33 +137,8 @@ internal class QM
         public static void Apply()
         {
             try
-            {
-                var Debugger = new VRCPage("Debugger_pinkstar");
-                #region Actions
-
-                 new VRCButton(Templates._QM.SelectedUser_LocalCon(), "Teleport","Teleport to this player's Position", () =>
-                 {
-                        if (!GameUtils.World.IsWorldLoaded()) return;
-                        GameUtils.PlayerModel.Get().transform.position = GameUtils.PlayerModel.Matchmaking.GetSelectedUser().transform.position;  
-                 });
-                  
-
-                #endregion
-
-                #region Debugger
-
-                 
-   
-                 new VRCButton(Debugger, Templates._QM.SelectedUser_LocalCon(), "Debugger","a");
-                 var box = new VRCGroupBox(Debugger, "Debugger");
-                 
-                 var a = new VRCToggle(box, "Freeze Player", "Freeze!", "Unfreeze!", (x) =>
-                 {
-                     GameUtils.PlayerModel.Matchmaking.GetSelectedUser().GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
-                 });
-
-                 #endregion
-
+            {   
+            
             }
             catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
             finally { sconsole.print("Created The Selected_QuickMenu+BlanketSDK.UI", 1); }

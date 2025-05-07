@@ -1,4 +1,5 @@
 ﻿using BlanketSDK.Utilities;
+using BlanketSDK.Utilities.Unbearable;
 using Brewview;
 using ExitGames.Client.Photon;
 using Il2CppInterop.Runtime;
@@ -403,7 +404,7 @@ internal class GameUtils
                 if (inputfield == null)
                 {
                     Object = new GameObject($"[{Entry.NAME}] Keyboard");
-                    Object.transform.parent = Templates._MM.Parent();
+                    Object.transform.parent = IMainMenuElements.MMParent();
                     UnityEngine.Object.DontDestroyOnLoad(Object);
                     inputfield = Object.GetOrAddComponent<VRCInputField>();
                 }

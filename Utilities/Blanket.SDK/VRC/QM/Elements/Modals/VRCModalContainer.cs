@@ -1,4 +1,5 @@
 ﻿using BlanketSDK.Utilities;
+using BlanketSDK.Utilities.Unbearable;
 using Cysharp.Threading.Tasks.Linq;
 using Syrup.IMGUI;
 using UnityEngine;
@@ -11,7 +12,7 @@ using VRC.UI.Elements.Menus;
 
 namespace BlanketSDK.QM.Elements.Modals
 {
-    internal class VRCModalContainer : Templates
+    internal class VRCModalContainer : IQuickMenuElements
     {
         public string Name;
         public Transform? _obj = null;
@@ -20,8 +21,8 @@ namespace BlanketSDK.QM.Elements.Modals
         public Transform? parent_rightbuttons;
         public VRCModalContainer(string? header, Sprite? sprite = null)
         {
-            if (!QuickMenu() | !_QM.FourButtons_Modal()) throw new($"modal or quickmenu has moved to a different location or been altered: " + $"{brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-            _obj = UnityEngine.Object.Instantiate(_QM.FourButtons_Modal(), _QM.Parent());
+            if (!QuickMenu() | !QMElements.FourButtons_Modal()) throw new($"modal or quickmenu has moved to a different location or been altered: " + $"{brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+            _obj = UnityEngine.Object.Instantiate(QMElements.FourButtons_Modal(), QMParent());
             _obj.gameObject.SetActive(false);
             _obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MODAL_CONTAINER-{header}";
             Name = $"Menu_{header}";

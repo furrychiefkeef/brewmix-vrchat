@@ -1,11 +1,12 @@
 ﻿using BlanketSDK.Utilities;
+using BlanketSDK.Utilities.Unbearable;
 using UnityEngine;
 using VRC.Localization;
 using VRC.UI;
 using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.QM.Elements.Controls;
-internal class VRCTab : Templates
+internal class VRCTab : IQuickMenuElements
 {
     /// <summary>
     ///  VRCButton this is used to create a TAB_QUICKMENU_BUTTON
@@ -17,9 +18,9 @@ internal class VRCTab : Templates
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCTab(VRCPage page, string? tooltip, System.Action func = null, Sprite? sprite = null)
     {
-        if (!QuickMenu() | !_QM.Tab()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        Transform parent = _Fallback_Dashboard_Group_QM_UI_Buttons_TAB();
-        Transform? obj = UnityEngine.Object.Instantiate(_QM.Tab(), parent);
+        if (!QuickMenu() | !QMControls.Tab()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        Transform parent = QMFallbacks._Fallback_Dashboard_Group_QM_UI_Buttons_TAB();
+        Transform? obj = UnityEngine.Object.Instantiate(QMControls.Tab(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_TAB_BUTTON-{page.Name}";
 
         #region REQUIRED_COMPONENTS

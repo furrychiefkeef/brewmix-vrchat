@@ -1,17 +1,18 @@
 ﻿using BlanketSDK.Utilities;
+using BlanketSDK.Utilities.Unbearable;
 using UnityEngine;
 using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.MM.Elements;
 
-internal class VRCProfileRow : Templates
+internal class VRCProfileRow : IMainMenuElements
 {
     public Transform? container;
     public VRCProfileRow(Transform parent, string header, bool alwaysVisable = true)
     {
-        if (!MainMenu() || !_MM.ProfileButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        parent ??= _Fallback_Dashboard_Group_MM_UI_ProfileRows();
-        Transform? obj = UnityEngine.Object.Instantiate(_MM.ProfileRow(), parent);
+        if (!MainMenu() || MMControls.Buttons.ProfileButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        parent ??= MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows();
+        Transform? obj = UnityEngine.Object.Instantiate(MMElements.ProfileRow(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_PROFILE_ROW_{header}";
         obj.SetSiblingIndex(2 + 1);
       

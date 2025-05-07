@@ -1,22 +1,18 @@
 ﻿using System.Collections;
-
 using System.Reflection;
 using System.Resources;
-
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
 using Syrup.IMGUI;
+using UnityEngine;
 using UNIXEngine;
-
 using UNIXEngine.Logging;
 
-
-[UnixModDescriptor("com.pinkstar.records", "pinkstar*", "0.0.0.0")]
+[UNIxMod("0000000000","pinkstar*","0.0.0.0")]
 public class Entry : UNIXEngine.IL2CPPModding.UnixMod
 {
     public static string NAME => "PINKSTAR";
     public static string FULLNAME => "PINKSTAR X .RECORDS";
-    public static string VERSION => "0.0.0.0";
     Harmony h = new("pinkstar@UZI5eRCE1BBA1ajf6dC2kWoAhPhvw5e4Dlg2nxGA.patches");
     public static ManualLogSource Console = new("PINKSTAR X .RECORDS");
     
@@ -24,16 +20,16 @@ public class Entry : UNIXEngine.IL2CPPModding.UnixMod
     public override void Load()
     {
         UNIXEngine.Logging.Logger.Sources.Add(Console);
-        h.PatchAll();
+       
         #region Components
-        #region CORE
-        foreach (var type in Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(UnityEngine.MonoBehaviour))))
-        {
-            Log.LogInfo($"[Setup] Registering Mono: {type.Name}");
-            ClassInjector.RegisterTypeInIl2Cpp(type);
-        }
-        #endregion
 
+        foreach (var monos in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(MonoBehaviour))))
+        {
+            Console.LogDebug($"Registering Monobehaviours: {monos.Name}");
+            ClassInjector.RegisterTypeInIl2Cpp(monos);
+        } 
+        Console.LogDebug($"Setting Hooks...");
+        h.PatchAll();
         #endregion
     } 
     public static void LogAllResources()

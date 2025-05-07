@@ -27,7 +27,7 @@ internal class wallhacks : MonoBehaviour
                 meshs.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
             }
              if (_nameplate == null) return;
-             _nameplate = _player._vrcplayer.field_Public_PlayerNameplate_0;
+             _nameplate = _player._vrcplayer.Nameplate;
              _nameplate.NameplatePositioner.transform.parent.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using BlanketSDK.QM.Elements.Modals;
 using BlanketSDK.Utilities;
+using BlanketSDK.Utilities.Unbearable;
 using Il2CppInterop.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +10,7 @@ using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.QM.Elements.Controls;
 
-internal class VRCButton : Templates
+internal class VRCButton : IQuickMenuElements
 {
     /// <summary>
     ///  VRCButton this is used to create a SINGLE_QUICKMENU_BUTTON
@@ -21,9 +22,9 @@ internal class VRCButton : Templates
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCButton(Transform parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null)
     {
-        if (!QuickMenu() | !_QM.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        parent ??= _Fallback_Dashboard_Group_QM_UI_Buttons();
-        Transform? obj = UnityEngine.Object.Instantiate(_QM.SingleButton(), parent);
+        if (!QuickMenu() | !QMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_Buttons();
+        Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.SingleButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_SINGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS
@@ -58,8 +59,8 @@ internal class VRCButton : Templates
     }
     public VRCButton(VRCModalContainer modal, string? name, string? tooltip, System.Action func, Sprite? sprite = null)
     {
-        if (!QuickMenu() | !_QM.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        Transform? obj = UnityEngine.Object.Instantiate(_QM.SingleButton(), modal.parent_menu);
+        if (!QuickMenu() | !QMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.SingleButton(), modal.parent_menu);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_SINGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS
@@ -95,8 +96,8 @@ internal class VRCButton : Templates
     }
     public VRCButton(VRCPage page, Transform parent, string? name, string? tooltip, System.Action func = null, Sprite? sprite = null)
     {
-        if (!QuickMenu() | !_QM.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        Transform? obj = UnityEngine.Object.Instantiate(_QM.SingleButton(), parent);
+        if (!QuickMenu() | !QMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.SingleButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_SINGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS

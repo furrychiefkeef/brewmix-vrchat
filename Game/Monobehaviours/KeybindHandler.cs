@@ -1,7 +1,6 @@
 ﻿
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Wrappers;
-using Sentry.Unity.NativeUtils;
 using Syrup.IMGUI;
 using UnityEngine;
 
@@ -17,20 +16,23 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
 
     void Update()
     {
-        if(GameUtils.Gameplay.CallbackEvents.IsInMainMenu || GameUtils.Gameplay.CallbackEvents.IsInQuickMenu || !GameUtils.World.IsWorldLoaded()) return;
-        CommandHandler();
-
-        #region Keybinds
-
-        if (Input.GetKeyDown(KeyCode.F5)) PlayerModule.Camera.View.ChangeCamera(PlayerModule.Camera.CameraView.third_person);
-        if (Input.GetKeyDown(KeyCode.F6)) PlayerModule.Camera.View.ChangeCamera(PlayerModule.Camera.CameraView.second_person);
-        if(GameUtils.Gameplay.CallbackEvents.IsInMainMenu || GameUtils.Gameplay.CallbackEvents.IsInQuickMenu) return;
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (GameUtils.World.IsWorldLoaded())
         {
-            PlayerModule.Camera.View.DestoryCameras();
+            if(GameUtils.Gameplay.CallbackEvents.IsInMainMenu || GameUtils.Gameplay.CallbackEvents.IsInQuickMenu) return;
+            CommandHandler();
+        
+            #region Keybinds
+
+            if (Input.GetKeyDown(KeyCode.F5)) PlayerModule.Camera.View.ChangeCamera(PlayerModule.Camera.CameraView.third_person);
+            if (Input.GetKeyDown(KeyCode.F6)) PlayerModule.Camera.View.ChangeCamera(PlayerModule.Camera.CameraView.second_person);
+            if (Input.GetKeyDown(KeyCode.Backspace)) PlayerModule.Camera.View.DestoryCameras();
+            if (Input.GetKeyDown(KeyCode.Mouse2))  PlayerModule.Movement.ClickTP();
         }
-        if (Input.GetKeyDown(KeyCode.Mouse2))  PlayerModule.Movement.ClickTP();
         #endregion
+       
+            
+       
+       
         
     }
 
@@ -47,6 +49,8 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
                 }
             }, MultiLine: false);
         }
+
+        return; 
     }
 
     /*void Fly()

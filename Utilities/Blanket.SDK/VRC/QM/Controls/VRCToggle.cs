@@ -6,11 +6,12 @@ using VRC.UI.Elements.Controls;
 
 using BlanketSDK.Utilities;
 using BlanketSDK.QM.Elements.Modals;
+using BlanketSDK.Utilities.Unbearable;
 using VRC.UI;
 using VRC.UI.Elements.Tooltips;
 
 namespace BlanketSDK.QM.Elements.Controls;
-internal class VRCToggle : Templates
+internal class VRCToggle : IQuickMenuElements
 {
     /// <summary>
     ///  VRCButton this is used to create a TOGGLE_QUICKMENU_BUTTON
@@ -24,10 +25,10 @@ internal class VRCToggle : Templates
     /// <param name="sprite_off">An optional sprite to display on the button.</param>
     public VRCToggle(Transform? parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null)
     {
-        if (!QuickMenu() | !_QM.ToggleButton()) throw new($"toggle has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        parent ??= _Fallback_Dashboard_Group_QM_UI_Buttons();
+        if (!QuickMenu() | !QMControls.Buttons.ToggleButton()) throw new($"toggle has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_Buttons();
 
-        Transform? obj = UnityEngine.Object.Instantiate(_QM.ToggleButton(), parent);
+        Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.ToggleButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_TOGGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS

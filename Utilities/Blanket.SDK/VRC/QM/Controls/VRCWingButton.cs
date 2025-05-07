@@ -5,9 +5,9 @@ using VRC.Localization;
 using VRC.UI;
 using VRC.UI.Elements.Controls;
 
-namespace BlanketSDK.MM.Elements.Controls;
+namespace BlanketSDK.QM.Elements.Controls;
 
-internal class VRCWingButton : Templates
+internal class VRCWingButton : IQuickMenuElements
 {
     /// <summary>
     ///  VRCSmallButton this is used to create a WING_QUICKMENU_BUTTON
@@ -20,11 +20,11 @@ internal class VRCWingButton : Templates
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCWingButton(Transform parent, Ropie.Wing.Position position, string? name,  string? tooltip, System.Action func, Sprite? sprite = null)
         {
-            if (!QuickMenu() | !_MM.WingButton("Left") || !_QM.WingButton("Right")) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-            /*parent ??= _Fallback_Dashboard_Group_MM_UI_WingButtons(Ropie.Wing.SetWingPosition(position));#1#
+            if (!QuickMenu() | !_QM.WingButton("Left") || !_QM.WingButton("Right")) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+            parent ??= _Fallback_Dashboard_Group_QM_UI_WingButtons(Ropie.Wing.SetWingPosition(position));
          
-             UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(_MM.WingButton(Ropie.Wing.SetWingPosition(position)), parent);
-             obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_WINGBUTTON_BUTTON";
+             UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(_QM.WingButton(Ropie.Wing.SetWingPosition(position)), parent);
+             obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_WINGBUTTON_BUTTON";
 
            
            

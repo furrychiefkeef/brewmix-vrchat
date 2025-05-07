@@ -1,5 +1,6 @@
 ﻿using BlanketSDK.QM.Elements.Modals;
 using BlanketSDK.Utilities;
+using BlanketSDK.Utilities.Unbearable;
 using UnityEngine;
 using VRC.Core;
 using VRC.Localization;
@@ -8,7 +9,7 @@ using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.MM.Elements.Controls;
 
-internal class VRCSmallButton : Templates
+internal class VRCSmallButton : IMainMenuElements
 {  
     /// <summary>
     ///  VRCSmallButton is used to create a SMALLBUTTON_MAINMENU_BUTTON
@@ -21,9 +22,9 @@ internal class VRCSmallButton : Templates
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCSmallButton(Transform parent, string? tooltip, int priority, System.Action func, Sprite? sprite = null)
     {
-        if (!MainMenu() | !_MM.ExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        parent ??= _Fallback_Dashboard_Group_MM_UI_ExpandButtons();
-        UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(_MM.ExpandButton(), parent);
+        if (!MainMenu() | !MMControls.Buttons.ExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        parent ??= MMFallbacks._Fallback_Dashboard_Group_MM_UI_ExpandButtons();
+        UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.ExpandButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_SMALL_BUTTON";
         obj.SetSiblingIndex(priority - 1) ;
         #region REQUIRED_COMPONENTS

@@ -1,11 +1,12 @@
 ﻿using BlanketSDK.Utilities;
+using BlanketSDK.Utilities.Unbearable;
 using UnityEngine;
 using VRC.Localization;
 using VRC.UI;
 using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.MM.Elements.Controls;
-internal class VRCTab : Templates
+internal class VRCTab : IMainMenuElements
 {
     /// <summary>
     ///  VRCButton this is used to create a TAB_MAINMENU_BUTTON
@@ -18,9 +19,9 @@ internal class VRCTab : Templates
     /// <param name="parent">The parent transform where the button will be placed.</param>
     public VRCTab(VRCPage page,string? name, string? tooltip, Action func = null, Sprite? sprite = null)
     {
-        if (!MainMenu() | !_MM.Tab()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        Transform parent = _Fallback_Dashboard_Group_MM_UI_Buttons_TAB();
-        Transform? obj = UnityEngine.Object.Instantiate(_MM.Tab(), parent);
+        if (!MainMenu() | !MMControls.Tab()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        Transform parent = MMFallbacks._Fallback_Dashboard_Group_MM_UI_Buttons_TAB();
+        Transform? obj = UnityEngine.Object.Instantiate(MMControls.Tab(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_TAB_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS

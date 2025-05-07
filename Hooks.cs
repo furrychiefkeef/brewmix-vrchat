@@ -62,7 +62,6 @@ namespace brewchat.hybridxcore.bep
         public static void VRCLoadingSequence_IsEnable_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null && !OfflineUILoaded) return;
-            OfflineUILoaded = true;
             CSS.Offline();
         }
 
@@ -72,8 +71,7 @@ namespace brewchat.hybridxcore.bep
             if (__instance is null && !OfflineUILoaded) return;
             AudioSource? LoadingScreenAudio = __instance.gameObject.transform.GetChild(1).GetComponent<AudioSource>();
             UnityEngine.Object.DestroyImmediate(LoadingScreenAudio);
-            var ui = EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent =
-                __instance.gameObject.transform;
+            EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent = __instance.gameObject.transform;
            
         }
 
@@ -157,6 +155,7 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(LoadBalancingClient), nameof(LoadBalancingClient.OnEvent))]
         public static void PhotonHandler(EventData __0)
         {
+            if(__0 is null && __0.CustomData is null)
             if (__0.Code == 1)
             {
                 if (Config.Logging.LogVoicePackets_Event1)
