@@ -18,7 +18,6 @@ namespace BlanketSDK.QM.Elements.Modals
         {
             if (!QuickMenu() | !QMElements.FourButtons_Modal()) throw new($"modal or quickmenu has moved to a different location or been altered: " + $"{brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
             _obj = UnityEngine.Object.Instantiate(QMElements.FourButtons_Modal(), QMParent());
-            _obj.gameObject.SetActive(false);
             _obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MODAL_CONTAINER-{header}";
             Name = $"Menu_{header}";
            
@@ -26,19 +25,23 @@ namespace BlanketSDK.QM.Elements.Modals
         
             #region REQUIRED_COMPONENTS
             QMSafetyPage? _Instance = _obj.GetComponent<QMSafetyPage>();
-            _obj.GetComponent<MenuPanelRect>().enabled = false;
-            _obj.GetComponent<UnityEngine.Canvas>().enabled = false;
-            _obj.GetComponent<UnityEngine.CanvasGroup>().enabled = false;
-            _obj.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = false;
             #endregion
             
             #region LOGIC_REQUIRED
             ModalLogic = _Instance;
             
-            ModalLogic.enabled = true;
+            ModalLogic.enabled = false;
             ModalLogic.field_Public_String_0 = Name;
             ModalLogic.field_Private_Boolean_1 = true;
             ModalLogic.field_Private_List_1_UIPage_0.Add(ModalLogic);
+            Il2CppSystem.Collections.Generic.Dictionary<Behaviour, bool>? behaviours = ModalLogic.field_Private_Dictionary_2_Behaviour_Boolean_0;
+            behaviours.Clear();
+            
+            behaviours.Add(_obj.GetComponent<MenuPanelRect>(), true);
+            behaviours.Add(_obj.GetComponent<UnityEngine.Canvas>(), true);
+            behaviours.Add(_obj.GetComponent<UnityEngine.CanvasGroup>(), true);
+            behaviours.Add(_obj.GetComponent<UnityEngine.UI.GraphicRaycaster>(), true);
+            
             QM()?.field_Protected_MenuStateController_0.field_Private_Dictionary_2_String_UIPage_0.Add(Name, ModalLogic);
             #endregion
 
@@ -79,10 +82,6 @@ namespace BlanketSDK.QM.Elements.Modals
             #region BUTTONS_MODAL_CONTAINER
             VRCButtonHandle _2_ButtonClose = _obj.GetChild(1).GetChild(3).GetChild(0).GetComponent<VRCButtonHandle>();
             UnityEngine.UI.Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_NO = _2_ButtonClose.onClick;
-
-            BUTTONCLICKED_EVENT_NO.RemoveAllListeners();
-            System.Action close_button = () => Close();
-            BUTTONCLICKED_EVENT_NO?.AddListener(close_button);
             #endregion
 
             #region BUTTONS_MODAL_CONTAINER_UNUSED
@@ -95,17 +94,10 @@ namespace BlanketSDK.QM.Elements.Modals
 
         
 
-
+            
         public void Open()
         { 
-             _obj.gameObject.SetActive(true);
-            _obj.GetComponent<MenuPanelRect>().enabled = true;
-            _obj.GetComponent<UnityEngine.Canvas>().enabled = true;
-            _obj.GetComponent<UnityEngine.CanvasGroup>().enabled = true;
-            _obj.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
-            QM().field_Protected_MenuStateController_0.Method_Public_Void_String_UIContext_Boolean_TransitionType_0(Name,null, true, UIPage.TransitionType.InPlace);
-           
+            QM()?.field_Protected_MenuStateController_0.Method_Public_Void_UIPage_UIContext_Boolean_TransitionType_0(ModalLogic, null, true, UIPage.TransitionType.InPlace);
         }
-        void Close() => ModalLogic.Method_Protected_Void_Boolean_TransitionType_0(false, UIPage.TransitionType.Bottom);
     }
 }

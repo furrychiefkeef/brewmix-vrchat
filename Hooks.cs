@@ -40,7 +40,7 @@ namespace brewchat.hybridxcore.bep
             if (__instance is null) return;
             __instance?.gameObject.GetOrAddComponent<CSS>();
             __instance.gameObject.GetOrAddComponent<KeybindManager>();
-               
+
             /*__instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();*/
             CSS.Offline();
         }
@@ -74,7 +74,7 @@ namespace brewchat.hybridxcore.bep
             AudioSource? LoadingScreenAudio = __instance.gameObject.transform.GetChild(1).GetComponent<AudioSource>();
             UnityEngine.Object.DestroyImmediate(LoadingScreenAudio);
             EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent = __instance.gameObject.transform;
-           
+
         }
 
 
@@ -125,12 +125,12 @@ namespace brewchat.hybridxcore.bep
 
         #region Player_Hooks
 
-        
+
         /*[HarmonyPostfix, HarmonyPatch(typeof(VRC.Player), nameof(VRC.Player.Start))]
         public static void PlayerInt(VRC.Player __instance)
         {
         }*/
-        
+
         [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.OnPlayerJoined))]
         public static void PlayerJoined(VRC.Player __0)
         {
@@ -154,6 +154,7 @@ namespace brewchat.hybridxcore.bep
                 sconsole.print($"Player Left: {__0.VRCPlayerApi.displayName}", 0);
             }
         }
+
         #endregion
 
         #region Test
@@ -163,56 +164,57 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(LoadBalancingClient), nameof(LoadBalancingClient.OnEvent))]
         public static void PhotonHandler(EventData __0)
         {
-            if(__0 is null && __0.CustomData is null)
-            if (__0.Code == 1)
-            {
-                if (Config.Logging.LogVoicePackets_Event1)
+            if (__0 is null && __0.CustomData is null)
+                if (__0.Code == 1)
                 {
-                    Il2CppArrayBase<byte> ml = Il2CppArrayBase<byte>.WrapNativeGenericArrayPointer(__0.CustomData.Pointer);
-                    var newdata = Convert.ToBase64String(ml);
-                    sconsole.internal_log($"{__0.Sender} | SENT PACKET: {newdata}");
-                }
-               
-            }
-        }
-        
-        [HarmonyPostfix, HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomEvent))]
-        public static void UdonEventLog(UdonBehaviour __instance, string __0)
-        {
-            if (__instance == null) return;
-    
-            try
-            {
-                // Log the event being sent
-                sconsole.internal_log($"{__instance.gameObject.name} | UDON EVENT SENT >> [{__0}]");
-        
-                // If you need to access the event table, you'd need to use reflection or a safer approach
-                // This part depends on what information you actually need to log
-        
-                // Example with reflection (if really needed):
-                
-                var eventTableField = typeof(UdonBehaviour).GetField("_eventTable",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                if (eventTableField != null)
-                {
-                    var eventTable = eventTableField.GetValue(__instance) as Dictionary<string, uint>;
-                    if (eventTable != null)
+                    if (Config.Logging.LogVoicePackets_Event1)
                     {
-                        foreach (var entry in eventTable)
-                        {
-                            sconsole.internal_log($"{entry.Key} | VAL >> [{entry.Value}]");
-                        }
+                        Il2CppArrayBase<byte> ml = Il2CppArrayBase<byte>.WrapNativeGenericArrayPointer(__0.CustomData.Pointer);
+                        var newdata = Convert.ToBase64String(ml);
+                        sconsole.internal_log($"{__0.Sender} | SENT PACKET: {newdata}");
                     }
+
                 }
-                
-            }
-            catch (System.Exception ex)
-            {
-                sconsole.internal_log($"Error in UdonEventLog: {ex.Message}");
-            }
         }
     }
 }
+
+/*[HarmonyPostfix, HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomEvent))]
+public static void UdonEventLog(UdonBehaviour __instance, string __0)
+{
+    if (__instance == null) return;
+
+    try
+    {
+        // Log the event being sent
+        sconsole.internal_log($"{__instance.gameObject.name} | UDON EVENT SENT >> [{__0}]");
+
+        // If you need to access the event table, you'd need to use reflection or a safer approach
+        // This part depends on what information you actually need to log
+
+        // Example with reflection (if really needed):
+
+        var eventTableField = typeof(UdonBehaviour).GetField("_eventTable",
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        if (eventTableField != null)
+        {
+            var eventTable = eventTableField.GetValue(__instance) as Dictionary<string, uint>;
+            if (eventTable != null)
+            {
+                foreach (var entry in eventTable)
+                {
+                    sconsole.internal_log($"{entry.Key} | VAL >> [{entry.Value}]");
+                }
+            }
+        }
+
+    }
+    catch (System.Exception ex)
+    {
+        sconsole.internal_log($"Error in UdonEventLog: {ex.Message}");
+    }
+}
+}*/
 
 
 
