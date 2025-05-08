@@ -1,12 +1,13 @@
 ﻿
 using Brewchat.Cheat.Modules;
+using Brewchat.Cheats.World;
 using Brewchat.Game.Wrappers;
 using Syrup.IMGUI;
 using UnityEngine;
+using UNIXEngine.IL2CPPModding.Utils.Collections;
 
 
 namespace Brewchat.Game.Monobehaviours;
-
 internal class KeybindManager : UnityEngine.MonoBehaviour
 {
     private void Awake()
@@ -27,8 +28,11 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F6)) PlayerModule.Camera.View.ChangeCamera(PlayerModule.Camera.CameraView.second_person);
             if (Input.GetKeyDown(KeyCode.Backspace)) PlayerModule.Camera.View.DestoryCameras();
             if (Input.GetKeyDown(KeyCode.Mouse2))  PlayerModule.Movement.ClickTP();
+            if (Input.GetKey(KeyCode.F10)) GameUtils.PlayerModel.Get().StartCoroutine(M4.UdonNukeCoroutine().WrapToIl2Cpp());
+
+            #endregion
         }
-        #endregion
+        
        
             
        

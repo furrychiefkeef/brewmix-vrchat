@@ -5,8 +5,10 @@ using BlanketSDK.QM.Elements.Controls;
 using BlanketSDK.QM.Elements.Modals;
 using BlanketSDK.Utilities;
 using Brewchat.Cheat.Modules;
+using Brewchat.Cheats.World;
 using Brewchat.Game.Wrappers;
 using UnityEngine.UI;
+using UNIXEngine.IL2CPPModding.Utils.Collections;
 using VRC.Networking;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
@@ -38,6 +40,11 @@ internal class QM
                 VRCWingButton WING_C = new(null,
                     SDKUtils.Wing.Position.R,"Test Nameplates", "The passion project.",
                     () => CSS.Instance.Nameplates());
+                
+                VRCWingButton WING_D = new(null, SDKUtils.Wing.Position.R,"Send GlobalUdon", "Send GlobalUdonEvent", () =>
+                {
+                    GameUtils.PlayerModel.Get().StartCoroutine(M4.UdonNukeCoroutine().WrapToIl2Cpp());
+                });
                 #endregion
     
                 VRCGroupBox Main_Groupbox = new(MainPage);

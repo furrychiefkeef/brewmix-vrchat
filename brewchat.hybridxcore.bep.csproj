@@ -6,6 +6,9 @@
     <Nullable>enable</Nullable>
     <Platforms>AnyCPU;x64</Platforms>
     <LangVersion>preview</LangVersion>
+    <Company>division club</Company>
+    <Product>guild</Product>
+    <AssemblyName>000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">

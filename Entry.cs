@@ -8,11 +8,11 @@ using UnityEngine;
 using UNIXEngine;
 using UNIXEngine.Logging;
 
-[UNIxMod("0000000000","pinkstar*","0.0.0.0")]
+[UNIxMod("0000000000","PINKSTAR","0.0.0.0")]
 public class Entry : UNIXEngine.IL2CPPModding.UnixMod
 {
-    public static string NAME => "PINKSTAR";
-    public static string FULLNAME => "PINKSTAR X .RECORDS";
+    public const string NAME = "PINKSTAR";
+    public const string FULLNAME = "PINKSTAR X .RECORDS";
     Harmony h = new("pinkstar@UZI5eRCE1BBA1ajf6dC2kWoAhPhvw5e4Dlg2nxGA.patches");
     public static ManualLogSource Console = new("PINKSTAR X .RECORDS");
     
@@ -21,9 +21,9 @@ public class Entry : UNIXEngine.IL2CPPModding.UnixMod
     {
         UNIXEngine.Logging.Logger.Sources.Add(Console);
        
-        #region Components
+        #region Components 
 
-        foreach (var monos in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(MonoBehaviour))))
+        foreach (Type monos in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(MonoBehaviour))))
         {
             Console.LogDebug($"Registering Monobehaviours: {monos.Name}");
             ClassInjector.RegisterTypeInIl2Cpp(monos);
