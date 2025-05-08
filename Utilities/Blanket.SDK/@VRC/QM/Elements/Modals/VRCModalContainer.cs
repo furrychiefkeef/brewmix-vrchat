@@ -1,6 +1,7 @@
 ﻿using BlanketSDK.Utilities;
 using BlanketSDK.Core;
 using UnityEngine;
+using UnityEngine.UI;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
 using VRC.UI.Elements.Menus;
@@ -25,6 +26,7 @@ namespace BlanketSDK.QM.Elements.Modals
         
             #region REQUIRED_COMPONENTS
             QMSafetyPage? _Instance = _obj.GetComponent<QMSafetyPage>();
+           
             #endregion
             
             #region LOGIC_REQUIRED
@@ -34,6 +36,10 @@ namespace BlanketSDK.QM.Elements.Modals
             ModalLogic.field_Public_String_0 = Name;
             ModalLogic.field_Private_Boolean_1 = true;
             ModalLogic.field_Private_List_1_UIPage_0.Add(ModalLogic);
+
+            #region LOGIC_REQUIRED_FOR_API 
+            
+            // FIXES LOGIC ISSUE WITH IT NEEDING TO BE INITIALIZED TWICE.
             Il2CppSystem.Collections.Generic.Dictionary<Behaviour, bool>? behaviours = ModalLogic.field_Private_Dictionary_2_Behaviour_Boolean_0;
             behaviours.Clear();
             
@@ -41,6 +47,13 @@ namespace BlanketSDK.QM.Elements.Modals
             behaviours.Add(_obj.GetComponent<UnityEngine.Canvas>(), true);
             behaviours.Add(_obj.GetComponent<UnityEngine.CanvasGroup>(), true);
             behaviours.Add(_obj.GetComponent<UnityEngine.UI.GraphicRaycaster>(), true);
+
+            Il2CppSystem.Collections.Generic.List<RectMask2D>? Rect2D = ModalLogic.field_Private_List_1_RectMask2D_0;
+            Rect2D.Clear();
+            Rect2D.Add(_obj.GetComponent<VRCRectMask2D>());
+            _obj.GetComponent<VRCRectMask2D>().prop_Boolean_0 = true;
+            #endregion
+         
             
             QM()?.field_Protected_MenuStateController_0.field_Private_Dictionary_2_String_UIPage_0.Add(Name, ModalLogic);
             #endregion
