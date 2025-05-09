@@ -8,13 +8,13 @@ using UnityEngine;
 using UNIXEngine;
 using UNIXEngine.Logging;
 
-[UNIxMod("0000000000","PINKSTAR","0.0.0.0")]
+[UNIxMod("0000000000","Visionary","0.0.0.0")]
 public class Entry : UNIXEngine.IL2CPPModding.UnixMod
 {
-    public const string NAME = "PINKSTAR";
-    public const string FULLNAME = "PINKSTAR X .RECORDS";
+    public const string NAME = "KemonoHook";
+    public const string FULLNAME = "KemonoHook";
     Harmony h = new("pinkstar@UZI5eRCE1BBA1ajf6dC2kWoAhPhvw5e4Dlg2nxGA.patches");
-    public static ManualLogSource Console = new("PINKSTAR X .RECORDS");
+    public static ManualLogSource Console = new("KemonoHook X .RECORDS");
     
     
     public override void Load()
