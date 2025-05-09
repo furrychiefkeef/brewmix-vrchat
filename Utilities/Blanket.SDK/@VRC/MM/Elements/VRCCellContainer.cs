@@ -8,10 +8,12 @@ namespace BlanketSDK.MM.Elements;
 
 internal class VRCCellContainer : IMainMenuElements
 {
+    public GameObject Object;
     public VRCCellContainer(VRCPage page, string name, int priority)
     {
         if (!MMMenus.MMSubmenus.Menu_Setting() || !MMElements.VRCCellContainer()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         Transform? obj = UnityEngine.Object.Instantiate(MMElements.VRCCellContainer(), page._content_container);
+        Object = obj.gameObject;
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_CELL_CONTAINER";
         obj.gameObject.SetActive(false);
         if(priority != null) obj.SetSiblingIndex(priority);

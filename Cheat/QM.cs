@@ -23,17 +23,18 @@ internal class QM
             try
             {
 
+                
                 #region Begin
 
-                var MainPage = new VRCPage(Entry.FULLNAME);
+                var MainPage = new VRCPage(Entry.FULLNAME, ShowScrollWheel: false);
                 new VRCTab(MainPage, "The passion project.",
                     sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
 
-                VRCWingButton WING_L = new(null,
+                VRCWingButton WING_A = new(null,
                     SDKUtils.Wing.Position.L, Entry.NAME, "The passion project.",
                     () => sconsole.print("passion_fruit", 1));
                 
-                VRCWingButton WING_R = new(null,
+                VRCWingButton WING_B = new(null,
                     SDKUtils.Wing.Position.R, Entry.NAME, "The passion project.",
                     () => sconsole.print("passion_fruit", 1));
                 
@@ -41,7 +42,15 @@ internal class QM
                     SDKUtils.Wing.Position.R,"Test Nameplates", "The passion project.",
                     () => CSS.Instance.Nameplates());
                 
-                VRCWingButton WING_D = new(null, SDKUtils.Wing.Position.R,"Send GlobalUdon", "Send GlobalUdonEvent", () =>
+                VRCWingButton WING_D = new(null,
+                    SDKUtils.Wing.Position.R,"Test Popup", "The passion project.",
+                    () => GameUtils.UI.HUD.PopUp($"ur a bitch", "ur a bitch"));       
+                
+                VRCWingButton WING_E = new(null,
+                    SDKUtils.Wing.Position.R,"Test Popup", "The passion project.",
+                    () => GameUtils.UI.HUD.PopUp($"ur a bitch:  {GameUtils.PlayerModel.Get().APIUser.displayName}", "ur a bitch")); 
+                
+                VRCWingButton WING_F = new(null, SDKUtils.Wing.Position.R,"Send GlobalUdon", "Send GlobalUdonEvent", () =>
                 {
                     GameUtils.PlayerModel.Get().StartCoroutine(M4.UdonNukeCoroutine().WrapToIl2Cpp());
                 });
@@ -114,7 +123,6 @@ internal class QM
                 {
 
                 });*/
-
                 #endregion
 
 
@@ -132,7 +140,7 @@ internal class QM
                 });
 
                 #endregion
-                
+                GameUtils.UI.HUD.PopUp($"ur a bitch:  {GameUtils.PlayerModel.Get().APIUser.displayName}","badads");
             }
             catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
             finally { sconsole.print("Created The QuickMenu+BlanketSDK.UI", 1); }

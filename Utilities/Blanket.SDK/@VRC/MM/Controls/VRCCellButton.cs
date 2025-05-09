@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using VRC.Localization;
 using VRC.UI;
 using VRC.UI.Elements.Controls;
+using Object = Il2CppSystem.Object;
 
 namespace BlanketSDK.MM.Elements.Controls;
 
@@ -18,7 +19,7 @@ internal class VRCCellButton : IMainMenuElements
     /// <param name="tooltip">The tooltip text for the button.</param>
     /// <param name="func">The action to execute when the button is clicked.</param>
     /// <param name="sprite">An optional sprite to display on the button.</param>
-    public VRCCellButton(Transform parent, string? name, string? tooltip, Sprite? sprite = null)
+    public VRCCellButton(Transform parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null)
     {
         if (!MainMenu() | !MMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= MMFallbacks._Fallback_Dashboard_Group_MM_UI_Buttons();
@@ -28,16 +29,17 @@ internal class VRCCellButton : IMainMenuElements
 
         #region REQUIRED_COMPONENTS
         VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();
-        _0._controlName = name;
+        
         TextMeshProUGUIEx _1 = obj.GetChild(2).GetComponentInChildren<TextMeshProUGUIEx>(true);
         ImageEx _2 = obj.GetChild(6).GetComponent<ImageEx>();
         ToolTip _3 = obj.GetComponent<ToolTip>();
         #endregion
 
         #region BUTTON COMPONENT
-        /*UnityEngine.UI.Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_0 = _0.onClick;
+        _0._controlName = null;
+        UnityEngine.UI.Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_0 = _0.onClick;
         BUTTONCLICKED_EVENT_0.RemoveAllListeners();
-        BUTTONCLICKED_EVENT_0.AddListener(func);*/
+        BUTTONCLICKED_EVENT_0.AddListener(func);
 
         #endregion
 
@@ -56,6 +58,51 @@ internal class VRCCellButton : IMainMenuElements
         #endregion
 
     }
-    public VRCCellButton(VRCPage parent, string? name, string? tooltip, Sprite? sprite = null) : this(parent.navigation_buttons, name, tooltip, sprite) { }
+    public VRCCellButton(VRCPage page, VRCCellContainer Menu, string? name, string? tooltip, Sprite? sprite = null)
+    {
+        if (!MainMenu() | !MMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        page.navigation_buttons ??= MMFallbacks._Fallback_Dashboard_Group_MM_UI_Buttons();
+
+        Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.SingleButton(), page.navigation_buttons);
+        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_SINGLE_BUTTON-{name}";
+
+        #region REQUIRED_COMPONENTS
+        VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();
+        MonoBehaviourPublicSt_ILo_nObGa_n_tToBuUnique? _1 = obj.GetComponent<MonoBehaviourPublicSt_ILo_nObGa_n_tToBuUnique>();
+        TextMeshProUGUIEx _2 = obj.GetChild(2).GetComponentInChildren<TextMeshProUGUIEx>(true);
+        ImageEx _3 = obj.GetChild(6).GetComponent<ImageEx>();
+        ToolTip _4 = obj.GetComponent<ToolTip>();
+        #endregion
+
+        #region BUTTON COMPONENT
+        _0._controlName = Menu.Object.gameObject.name;
+            
+
+        #endregion
+
+        #region LOGIC_REQUIRED
+
+        if (Menu != null)
+        {
+            _1._targetObjectToEnable = Menu.Object;  
+        }
+   
+        #endregion
+        
+        #region TEXT COMPONENT
+        _2.text = name;
+        _2.richText = true;
+        #endregion
+        
+        #region TOOLTIP COMPONENT
+        _4._localizableString = tooltip.Localize(); 
+        #endregion
+        
+        #region IMAGE || IMAGE_EX COMPONENT
+        if(!sprite) return;
+        _3.sprite = sprite;
+        #endregion
+
+    }
 }
 /*  UnityEngine.UI.Button _0 = obj.GetComponentInChildren<UnityEngine.UI.Button>(); depercated*/

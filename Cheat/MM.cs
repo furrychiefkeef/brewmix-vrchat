@@ -27,10 +27,14 @@ internal class MM : IMainMenuElements
                 var aware = new VRCPage(Entry.NAME, EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
                 new VRCTab(aware, Entry.FULLNAME, "The passion project.", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
                 
-                VRCCellButton? AE = new(aware, "Passion", "Fruit");
-                VRCCellButton? AD = new(aware, "Fruit", "Passion");
-            
-                new VRCCellContainer(aware, "The passion project.", 1);
+         
+                
+                var ace = new VRCCellContainer(aware, "The passion project.", 1);
+                VRCCellButton? AE = new(aware, ace, "Passion", "Fruit");
+                VRCCellButton? AC = new(aware.navigation_buttons, "Fruit", "Passion", () =>
+                {
+                    sconsole.print("passion_fruit", 1);
+                });
 
             }
             catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source ,2); }

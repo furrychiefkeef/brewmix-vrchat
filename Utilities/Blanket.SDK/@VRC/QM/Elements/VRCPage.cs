@@ -17,7 +17,7 @@ internal class VRCPage : IQuickMenuElements
     public string Name;
     public Transform? box;
 
-    public VRCPage(string name)
+    public VRCPage(string name,  bool isScrollable = true, bool ShowScrollWheel = true)
     {
         if (!QMParent() || !QMMenus.QMSubmenus.Menu_DevTools()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         _obj = UnityEngine.Object.Instantiate(QMMenus.QMSubmenus.Menu_DevTools(), QMParent());
@@ -34,7 +34,7 @@ internal class VRCPage : IQuickMenuElements
         _obj.GetComponent<UnityEngine.CanvasGroup>().enabled = true;
         _obj.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
         TextMeshProUGUIEx? _1 = _obj.GetChild(0).GetChild(1).GetComponentInChildren<TextMeshProUGUIEx>();
-
+        VRCScrollRect? _2 = _obj.GetChild(1).GetComponent<VRCScrollRect>();
         #endregion
 
         #region TEXT COMPONENT
@@ -45,6 +45,7 @@ internal class VRCPage : IQuickMenuElements
 
         #region REQUIRED_LOGIC
 
+        
         page = _0;
         page.enabled = true;
         page.field_Private_Boolean_1 = true;
@@ -70,16 +71,41 @@ internal class VRCPage : IQuickMenuElements
                 sconsole.internal_log($"{Name} was created");
             }
         }
-
+        
         #endregion
         
-        #region OBJs
+        #region LOGIC_FOR_API
 
-        var group = _obj.GetComponentInChildren<VerticalLayoutGroup>();
+        VerticalLayoutGroup? group = _obj.GetComponentInChildren<VerticalLayoutGroup>();
+        VRCRectMask2D? Rect2DMask = group.transform.parent.GetComponent<VRCRectMask2D>();
+        
+        Rect2DMask.enabled = true;
+        Rect2DMask.field_Private_Boolean_0 = true; // Fixes Overlapping.
+        
         group.transform.DestroyChildren();
         box = group.transform;
-
+   
         #endregion
+
+        if (isScrollable)
+        {
+            GameObject ScrollRectObj = _2.gameObject; ScrollRectObj.SetActive(true);  _2.enabled = true; 
+           
+            
+            _2.field_Public_Boolean_0 = isScrollable;
+            Transform? Scrollbar = ScrollRectObj.gameObject.transform.FindChild("Scrollbar");
+            Scrollbar.gameObject.SetActive(true);
+            sconsole.internal_log($"{Scrollbar.name} was found");
+            _2.verticalScrollbar = Scrollbar.GetComponent<Scrollbar>();
+
+            if (!ShowScrollWheel)
+            {
+                UnityEngine.Object.Destroy(Scrollbar.gameObject.transform.FindChild("Sliding Area").gameObject);
+                UnityEngine.Object.DestroyImmediate(Scrollbar.GetComponent<VRC.UI.ImageEx>());
+            }
+ 
+
+        }
     }
 
     public void Open()
