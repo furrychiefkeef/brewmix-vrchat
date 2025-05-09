@@ -11,10 +11,10 @@ using UNIXEngine.Logging;
 [UNIxMod("0000000000","Visionary","0.0.0.0")]
 public class Entry : UNIXEngine.IL2CPPModding.UnixMod
 {
-    public const string NAME = "KemonoHook";
-    public const string FULLNAME = "KemonoHook";
+    public const string NAME = "Visionary";
+    public const string FULLNAME = "Visionary";
     Harmony h = new("pinkstar@UZI5eRCE1BBA1ajf6dC2kWoAhPhvw5e4Dlg2nxGA.patches");
-    public static ManualLogSource Console = new("KemonoHook X .RECORDS");
+    public static ManualLogSource Console = new("Visionary X .RECORDS");
     
     
     public override void Load()
