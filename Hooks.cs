@@ -21,6 +21,7 @@ using VRC.Core;
 using VRC.Networking.Tween;
 using VRC.SDKBase;
 using VRC.Udon;
+using VRC.Udon.Common.Interfaces;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
 
@@ -136,11 +137,8 @@ namespace brewchat.hybridxcore.bep
         {
             if (__0 != null && !__0.APIUser.IsSelf)
             {
-                if (__0.APIUser.allowAvatarCopying != true)
-                {
-                    __0.APIUser.allowAvatarCopying = true;
-                }
-
+                if (__0.APIUser.allowAvatarCopying != true) __0.APIUser.allowAvatarCopying = true;
+                
                 /*__0.gameObject.AddComponent<wallhacks>();*/
                 sconsole.print($"Player Joined: {__0.VRCPlayerApi.displayName} | Actor: {__0.VRCPlayerApi.playerId}", 0);
             }
@@ -176,45 +174,47 @@ namespace brewchat.hybridxcore.bep
 
                 }
         }
-    }
-}
 
-/*[HarmonyPostfix, HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomEvent))]
-public static void UdonEventLog(UdonBehaviour __instance, string __0)
-{
-    if (__instance == null) return;
 
-    try
-    {
-        // Log the event being sent
-        sconsole.internal_log($"{__instance.gameObject.name} | UDON EVENT SENT >> [{__0}]");
 
-        // If you need to access the event table, you'd need to use reflection or a safer approach
-        // This part depends on what information you actually need to log
-
-        // Example with reflection (if really needed):
-
-        var eventTableField = typeof(UdonBehaviour).GetField("_eventTable",
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        if (eventTableField != null)
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomNetworkEvent), 
+            new Type[] { typeof(NetworkEventTarget), typeof(string) })]
+        public static void UdonEventLog(ref NetworkEventTarget __0, string __1)
         {
-            var eventTable = eventTableField.GetValue(__instance) as Dictionary<string, uint>;
-            if (eventTable != null)
+          
+            try
             {
-                foreach (var entry in eventTable)
+                // Log the event being sent
+                sconsole.internal_log($"| UDON TARGET EVENT: [{__0} CODE {__1}]");
+
+                // If you need to access the event table, you'd need to use reflection or a safer approach
+                // This part depends on what information you actually need to log
+
+                // Example with reflection (if really needed):
+
+                /*var eventTableField = typeof(UdonBehaviour).GetField("_eventTable",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                if (eventTableField != null)
                 {
-                    sconsole.internal_log($"{entry.Key} | VAL >> [{entry.Value}]");
-                }
+                    var eventTable = eventTableField.GetValue(__instance) as Dictionary<string, uint>;
+                    if (eventTable != null)
+                    {
+                        foreach (var entry in eventTable)
+                        {
+                            sconsole.internal_log($"{entry.Key} | VAL >> [{entry.Value}]");
+                        }
+                    }
+                }*/
+
+            }
+            catch (System.Exception ex)
+            {
+                sconsole.internal_log($"Error in UdonEventLog: {ex.Message}");
             }
         }
-
-    }
-    catch (System.Exception ex)
-    {
-        sconsole.internal_log($"Error in UdonEventLog: {ex.Message}");
     }
 }
-}*/
 
 
 

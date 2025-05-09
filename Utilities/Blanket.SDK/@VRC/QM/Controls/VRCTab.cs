@@ -28,7 +28,7 @@ internal class VRCTab : IQuickMenuElements
         MenuTab _0 = obj.GetComponent<MenuTab>();
         ImageEx _1 = obj.GetChild(2).GetComponent<ImageEx>();
         ToolTip _2 = obj.GetComponent<ToolTip>();
-
+ 
         #endregion
         
         #region REQUIRED_LOGIC

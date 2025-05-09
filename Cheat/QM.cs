@@ -42,21 +42,13 @@ internal class QM
                     SDKUtils.Wing.Position.R,"Test Nameplates", "The passion project.",
                     () => CSS.Instance.Nameplates());
                 
-                VRCWingButton WING_D = new(null,
-                    SDKUtils.Wing.Position.R,"Test Popup", "The passion project.",
-                    () => GameUtils.UI.HUD.PopUp($"ur a bitch", "ur a bitch"));       
-                
-                VRCWingButton WING_E = new(null,
-                    SDKUtils.Wing.Position.R,"Test Popup", "The passion project.",
-                    () => GameUtils.UI.HUD.PopUp($"ur a bitch:  {GameUtils.PlayerModel.Get().APIUser.displayName}", "ur a bitch")); 
-                
                 VRCWingButton WING_F = new(null, SDKUtils.Wing.Position.R,"Send GlobalUdon", "Send GlobalUdonEvent", () =>
                 {
                     GameUtils.PlayerModel.Get().StartCoroutine(M4.UdonNukeCoroutine().WrapToIl2Cpp());
                 });
                 #endregion
     
-                VRCGroupBox Main_Groupbox = new(MainPage);
+                VRCGroupBox Main_Groupbox = new(MainPage, "Main");
 
                 #region Groupbox
 
@@ -68,7 +60,8 @@ internal class QM
                 });
                 
                 #endregion
-
+                VRCGroupBox _Groupbox = new(MainPage, "Main");
+                
                 #region Modal_Player+Movement
 
                 VRCSmallButton Injection = new(PlayerMovementModal, "Injection",
@@ -140,7 +133,6 @@ internal class QM
                 });
 
                 #endregion
-                GameUtils.UI.HUD.PopUp($"ur a bitch:  {GameUtils.PlayerModel.Get().APIUser.displayName}","badads");
             }
             catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
             finally { sconsole.print("Created The QuickMenu+BlanketSDK.UI", 1); }

@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using Syrup.IMGUI;
+using UnityEngine;
 using VRC.Udon;
+using VRC.Udon.Common.Interfaces;
 
 namespace Brewchat.Cheats.World;
     
@@ -9,9 +11,9 @@ public class M4
     public static string? uddies;
     public static System.Collections.IEnumerator UdonNukeCoroutine()
     {
-        var udonBehaviours = UnityEngine.Object.FindObjectsOfType<UdonBehaviour>();
+        cachedUdonBehaviours = UnityEngine.Object.FindObjectsOfType<UdonBehaviour>().ToList();
     
-        foreach (UdonBehaviour behaviour in udonBehaviours)
+        foreach (UdonBehaviour behaviour in cachedUdonBehaviours)
         {
             if (behaviour == null) continue;
         
