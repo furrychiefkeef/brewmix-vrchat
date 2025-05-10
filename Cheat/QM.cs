@@ -4,6 +4,7 @@ using Syrup.IMGUI;
 using BlanketSDK.QM.Elements.Controls;
 using BlanketSDK.QM.Elements.Modals;
 using BlanketSDK.Utilities;
+using Brewchat.Cheat.Flaws;
 using Brewchat.Cheat.Modules;
 using Brewchat.Cheats.World;
 using Brewchat.Game.Wrappers;
@@ -77,7 +78,7 @@ internal class QM
                     PlayerModule.Movement.Fly();
                 });
                 VRCToggle? Spinbot = new(PlayerMovementModal, "Spinbot", "Spinbot On", "Spinbot Off",
-                    (x) => { PlayerModule.Movement.Spinbot(x); });
+                    (x) => { FlawFound.DefaultPrompt(); });
                 VRCToggle? ForceJump = new(PlayerMovementModal, "Force Jump", "Force Jump Off", "Fly Off",
                     (x) => { PlayerModule.Movement.ForceJump(x); });
 

@@ -34,7 +34,7 @@ namespace Brewchat.Game.Wrappers
                 if (url.IsFile) clip.name = Path.GetFileNameWithoutExtension(url.LocalPath);
                 return clip;
             }
-             public static GameObject? CreateAudio(Uri url)
+             public static GameObject? CreateAudio(Uri url, float volume = 1f, bool loop = true, bool bypassAllEffects = true)
             {
                 UnityWebRequest www = UnityWebRequest.Get(url.ToString());
                 var operation = www.SendWebRequest();
@@ -43,14 +43,18 @@ namespace Brewchat.Game.Wrappers
                 AudioClip clip = WebRequestWWW.InternalCreateAudioClipUsingDH(www.downloadHandler, www.url, false,false,0);
                 
                 if (clip == null) return null;
-                if (url.IsFile) clip.name = Path.GetFileNameWithoutExtension(url.LocalPath);
-                var src = new GameObject("Audio").AddComponent<AudioSource>();
+                var src = new GameObject($"Audio: [{url.LocalPath}]").AddComponent<AudioSource>();
+                if (url.IsFile)
+                {
+                    src.name = Path.GetFileNameWithoutExtension(url.LocalPath);
+                    clip.name = src.name;
+                }
                 src.clip = clip;
                 src.hideFlags += 32;
-                src.loop = true;
-                src.volume = 1f;
-                src.bypassListenerEffects = true;
-                src.bypassReverbZones = true;
+                src.loop = loop;
+                src.volume = volume;
+                src.bypassListenerEffects = bypassAllEffects;
+                src.bypassReverbZones = bypassAllEffects;
                 src.Play();
                 UnityEngine.Object.DontDestroyOnLoad(src);
                 return src.gameObject;

@@ -106,7 +106,6 @@ internal class PlayerModule
         }
 
         private static Coroutine _spinbotCoroutine;
-        
         public static void Spinbot(bool state, float spinSpeed = 1f)
         {   
             Player player = GameUtils.PlayerModel.Get();
@@ -162,7 +161,7 @@ internal class PlayerModule
                 if (GameUtils.Camera.Get != null)
                 { 
                     UnityEngine.Camera? reference = GameUtils.Camera.Get;
-                    GameObject obj = new($"{view}_Camera");   obj.AddComponent<UTag>().SetTag("PinkCams");
+                    GameObject obj = new($"{view}_Camera");   obj.AddComponent<UTag>().SetTag("VCams");
                     UnityEngine.Camera? camera = obj.AddComponent<UnityEngine.Camera>();
                     
                     if(reference != null)
@@ -210,7 +209,7 @@ internal class PlayerModule
 
     public static class Body
     {
-        public static GameObject AvatarObj;
+        static GameObject AvatarObj;
         public static GameObject Clone(VRC.Player player)
         {
             Transform? head = player._vrcplayer.VRCPlayerApi.GetBoneTransform(HumanBodyBones.Head);
