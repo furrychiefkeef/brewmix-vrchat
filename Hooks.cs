@@ -80,24 +80,10 @@ namespace brewchat.hybridxcore.bep
                 true);
             QM._Pinkstar.Apply();
             QM.SelectedMenu.Apply();
-            Toolbox.LoadMyUI();
-    
-        }
-        [HarmonyPrefix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.OnEnable))]
-        public static bool QuickMenuE_Initialize_HOOK(ref QuickMenu? __instance)
-        {
-            if (__instance == null)
-            {
+            /*Toolbox.LoadMyUI();*/
 
-                if (APIUser.CurrentUser.displayName != "faggot")
-                {
-                    GameUtils.UI.HUD.PopUp("uh","uhhhhh", 20F);
-                    return false;
-                }
-            }
-
-            return true;
         }
+
         [HarmonyPostfix, HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
         public static void MainMenu_Initialize_HOOK(ref MainMenu? __instance)
         {
@@ -145,7 +131,7 @@ namespace brewchat.hybridxcore.bep
             if (__0 != null && !__0.APIUser.IsSelf)
             {
                 if (__0.APIUser.allowAvatarCopying != true) __0.APIUser.allowAvatarCopying = true;
-                
+
                 /*__0.gameObject.AddComponent<wallhacks>();*/
                 sconsole.print($"Player Joined: {__0.VRCPlayerApi.displayName} | Actor: {__0.VRCPlayerApi.playerId}", 0);
             }
@@ -184,7 +170,7 @@ namespace brewchat.hybridxcore.bep
             ParameterDictionary? Parameters = __0.Parameters;
             foreach (var data in __0.Parameters)
             {
-                
+
                 var Data = SerializationManager.FromIL2CPPToManaged<object>(data.Value);
                 var ac = new JsonSerializerOptions() { WriteIndented = true };
                 sconsole.internal_log($"[PHOTON] [Event {__0.Code}] [Key:{__0.CustomDataKey}] [Sender: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName}] Event \n{System.Text.Json.JsonSerializer.Serialize(Data, ac)}");
@@ -202,7 +188,7 @@ namespace brewchat.hybridxcore.bep
         })]
         public static void UdonEventLog(ref NetworkEventTarget __0, string __1)
         {
-          
+
             try
             {
                 // Log the event being sent
@@ -250,6 +236,7 @@ namespace brewchat.hybridxcore.bep
             {
                 sconsole.internal_log($"[RPC] Sender: {PlayerName} ({PlayerID}) | OBJ: {ObjectName} | RPC: {__1.ParameterString} | VALUES: [{ParametersString}] | TYPE: {__2}");
             }
+
             switch (ObjectName)
             {
                 case "UdonSyncRunProgramAsRPC":
@@ -257,10 +244,13 @@ namespace brewchat.hybridxcore.bep
                 /*case "SyncKill":
                     return !WorldsMenu.GodMode;*/
             }
+
             return result;
         }
     }
 }
+
+
 
 
 

@@ -161,7 +161,7 @@ internal class PlayerModule
                 if (GameUtils.Camera.Get != null)
                 { 
                     UnityEngine.Camera? reference = GameUtils.Camera.Get;
-                    GameObject obj = new($"{view}_Camera");   obj.AddComponent<UTag>().SetTag("VCams");
+                    GameObject obj = new($"{view}_Camera");   obj.AddComponent<UTag>().SetTag("V-Cams");
                     UnityEngine.Camera? camera = obj.AddComponent<UnityEngine.Camera>();
                     
                     if(reference != null)
@@ -199,7 +199,7 @@ internal class PlayerModule
             } 
             public static void DestoryCameras()
             {
-                foreach (var VARIABLE in UnityEngine.Object.FindObjectsOfType<UTag>().Where(x => x.identifer.Contains("VCams")))
+                foreach (var VARIABLE in UnityEngine.Object.FindObjectsOfType<UTag>().Where(x => x.identifer.Contains("V-Cams")))
                 {
                     UnityEngine.Object.DestroyImmediate(VARIABLE.gameObject);
                 }

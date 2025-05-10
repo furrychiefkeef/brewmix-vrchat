@@ -1,8 +1,10 @@
-﻿using Syrup.IMGUI;
+﻿using Brewchat.Game.Wrappers;
+using Syrup.IMGUI;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 using VRC.Udon.Common.Interfaces;
+using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
 namespace Brewchat.Cheats.World;
     
@@ -16,7 +18,7 @@ public class M4
     
         foreach (UdonBehaviour behaviour in cachedUdonBehaviours)
         {
-          
+
             foreach (string eventKey in behaviour._eventTable.Keys)
             {
                 behaviour.SendCustomEvent(eventKey);
