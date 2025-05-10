@@ -9,6 +9,8 @@ namespace BlanketSDK.QM.Elements.Controls;
 
 internal class VRCButton : IQuickMenuElements
 {
+    TextMeshProUGUIEx TMPro;
+    UnityEngine.UI.Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_0;
     /// <summary>
     ///  VRCButton this is used to create a SINGLE_QUICKMENU_BUTTON
     /// </summary>
@@ -33,7 +35,7 @@ internal class VRCButton : IQuickMenuElements
         #endregion
         #region BUTTON COMPONENT
         
-        UnityEngine.UI.Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_0 = _0.onClick;
+        BUTTONCLICKED_EVENT_0 = _0.onClick;
         BUTTONCLICKED_EVENT_0.RemoveAllListeners();
         BUTTONCLICKED_EVENT_0.AddListener(func);
         
@@ -42,6 +44,7 @@ internal class VRCButton : IQuickMenuElements
         #region TEXT COMPONENT
         _1.text = name;
         _1.richText = true;
+        TMPro = _1;
         #endregion
         
         #region TOOLTIP COMPONENT
@@ -69,7 +72,7 @@ internal class VRCButton : IQuickMenuElements
         #endregion
 
         #region BUTTON COMPONENT
-        UnityEngine.UI.Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_0 = _0.onClick;
+        BUTTONCLICKED_EVENT_0 = _0.onClick;
         
         BUTTONCLICKED_EVENT_0.RemoveAllListeners();
         BUTTONCLICKED_EVENT_0.AddListener(func);
@@ -79,6 +82,7 @@ internal class VRCButton : IQuickMenuElements
         #region TEXT COMPONENT
         _1.text = name;
         _1.richText = true;
+        TMPro = _1;
         #endregion
         
         #region TOOLTIP COMPONENT
@@ -109,7 +113,7 @@ internal class VRCButton : IQuickMenuElements
         _0._controlName = page.Name;
         if (func != null)
         {
-            UnityEngine.UI.Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_0 = _0.onClick;
+            BUTTONCLICKED_EVENT_0 = _0.onClick;
             BUTTONCLICKED_EVENT_0 = new();
             BUTTONCLICKED_EVENT_0.AddListener(func);
         }
@@ -119,6 +123,7 @@ internal class VRCButton : IQuickMenuElements
         #region TEXT COMPONENT
         _1.text = name;
         _1.richText = true;
+        TMPro = _1;
         #endregion
         
         #region TOOLTIP COMPONENT
@@ -131,7 +136,15 @@ internal class VRCButton : IQuickMenuElements
         #endregion
 
     }
-    
+    public void Invoke()
+    {
+        BUTTONCLICKED_EVENT_0?.Invoke();
+    }
+    public TextMeshProUGUIEx SetText(string text)
+    {
+        TMPro.text = text;
+        return TMPro;
+    }
     /*public VRCButton(VRCModalContainer parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.parent_menu, name, tooltip, func, sprite) { }*/
     public VRCButton(VRCGroupBox parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.container, name, tooltip, func, sprite) { }
 }

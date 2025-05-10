@@ -1,24 +1,17 @@
-﻿using BestHTTP.SecureProtocol.Org.BouncyCastle.Crypto.Tls;
+﻿using System.Text.Json;
 using Brewchat;
 using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
-using Brewview;
 using ExitGames.Client.Photon;
 using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
-using MonoMod.RuntimeDetour;
-using Org.BouncyCastle.Crypto.Tls;
-using Photon.Pun;
+using Pasted.WTFBlaze.Utils.Managers;
 using Photon.Realtime;
 using Syrup.IMGUI;
 using UnityEngine;
-using UnityEngine.XR;
-using UNIXEngine.IL2CPPModding.Utils.Collections;
-using Valve.Newtonsoft.Json.Utilities;
 using VRC.Core;
-using VRC.Networking.Tween;
 using VRC.SDKBase;
 using VRC.Udon;
 using VRC.Udon.Common.Interfaces;
@@ -78,8 +71,6 @@ namespace brewchat.hybridxcore.bep
 
         }
 
-
-
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
@@ -89,8 +80,24 @@ namespace brewchat.hybridxcore.bep
                 true);
             QM._Pinkstar.Apply();
             QM.SelectedMenu.Apply();
+            Toolbox.LoadMyUI();
+    
         }
+        [HarmonyPrefix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.OnEnable))]
+        public static bool QuickMenuE_Initialize_HOOK(ref QuickMenu? __instance)
+        {
+            if (__instance == null)
+            {
 
+                if (APIUser.CurrentUser.displayName != "faggot")
+                {
+                    GameUtils.UI.HUD.PopUp("uh","uhhhhh", 20F);
+                    return false;
+                }
+            }
+
+            return true;
+        }
         [HarmonyPostfix, HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
         public static void MainMenu_Initialize_HOOK(ref MainMenu? __instance)
         {
@@ -173,13 +180,26 @@ namespace brewchat.hybridxcore.bep
                     }
 
                 }
+
+            ParameterDictionary? Parameters = __0.Parameters;
+            foreach (var data in __0.Parameters)
+            {
+                
+                var Data = SerializationManager.FromIL2CPPToManaged<object>(data.Value);
+                var ac = new JsonSerializerOptions() { WriteIndented = true };
+                sconsole.internal_log($"[PHOTON] [Event {__0.Code}] [Key:{__0.CustomDataKey}] [Sender: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName}] Event \n{System.Text.Json.JsonSerializer.Serialize(Data, ac)}");
+            }
         }
 
 
 
+
+
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomNetworkEvent), 
-            new Type[] { typeof(NetworkEventTarget), typeof(string) })]
+        [HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomNetworkEvent), new Type[]
+        {
+            typeof(NetworkEventTarget), typeof(string)
+        })]
         public static void UdonEventLog(ref NetworkEventTarget __0, string __1)
         {
           
@@ -212,6 +232,32 @@ namespace brewchat.hybridxcore.bep
             {
                 sconsole.internal_log($"Error in UdonEventLog: {ex.Message}");
             }
+        }
+
+        [HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.Method_Public_Boolean_Player_VrcEvent_VrcBroadcastType_0))]
+        public static bool LogRPC(VRC.Player __0, VRC_EventHandler.VrcEvent __1, VRC_EventHandler.VrcBroadcastType __2)
+        {
+            bool result = true;
+            var player = __0;
+            var PlayerName = player.APIUser.displayName;
+            var PlayerID = player.APIUser.id;
+            var ObjectName = __1.ParameterObject.name;
+            Il2CppSystem.Object[] RawParameters = Networking.DecodeParameters(__1.ParameterBytes);
+            string ParametersString = "";
+            for (int i = 0; i < RawParameters.Length; i++) ParametersString += Il2CppSystem.Convert.ToString(RawParameters[i]) + "|";
+
+            if (ObjectName != "USpeak" && __1.ParameterString != "SanityCheck")
+            {
+                sconsole.internal_log($"[RPC] Sender: {PlayerName} ({PlayerID}) | OBJ: {ObjectName} | RPC: {__1.ParameterString} | VALUES: [{ParametersString}] | TYPE: {__2}");
+            }
+            switch (ObjectName)
+            {
+                case "UdonSyncRunProgramAsRPC":
+                    break;
+                /*case "SyncKill":
+                    return !WorldsMenu.GodMode;*/
+            }
+            return result;
         }
     }
 }

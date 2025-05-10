@@ -26,46 +26,6 @@ internal class CSS : UnityEngine.MonoBehaviour
         else Destroy(this);
     }
 
-    public void Nameplates()
-    {
-        StartCoroutine(CleanseNameplates().WrapToIl2Cpp());
-    }
-    private static IEnumerator CleanseNameplates()
-    {
-        foreach (var nameplate in NameplateManager.field_Public_Static_NameplateManager_0.field_Private_List_1_PlayerNameplate_0)
-        {
-            _nameplate = nameplate;
-            int counter = 0;
-            while (counter < 55)
-            {
-                counter++;
-                if (!nameplate) yield return null; 
-                
-                Image? Icon_BG = _nameplate.icon.transform.GetChild(0).GetComponent<Image>();
-                Icon_BG.sprite  = EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_background_bar).ToSprite();
-                Icon_BG.overrideSprite  = EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_background_bar).ToSprite();
-                
-                Image? Icon_2 = _nameplate.icon.transform.GetChild(1).GetComponent<Image>();
-                Image? Icon_3 = _nameplate.icon.transform.GetChild(2).GetComponent<Image>();
-                Image? Icon_4 = _nameplate.icon.transform.GetChild(3).GetComponent<Image>();
-                Image? Icon_5 = _nameplate.icon.transform.GetChild(4).GetComponent<Image>();
-
-                ImageThreeSlice? Pronouns_BG = _nameplate.pronouns.GetComponent<ImageThreeSlice>();
-                Pronouns_BG.prop_Sprite_0 = EngineUtils.Assets.INTERNAL_Texture(Resources.capsule_background).ToSprite();
-                
-                #region COLOR
-                
-                _nameplate.field_Public_Color_0 = Config.Appearance.Platte.Nameplate; // Nameplate Background / Banner Version
-                Icon_BG.color = Config.Appearance.Platte.Nameplate;
-                Pronouns_BG.color = Config.Appearance.Platte.Nameplate;
-                
-                #endregion
-            
-                yield return new WaitForEndOfFrame();
-            }
-            
-        }
-    }
     public static void Offline()
     {
         #region Offline
@@ -159,7 +119,7 @@ internal class CSS : UnityEngine.MonoBehaviour
 
         #region STYLE_ENGINE+QM+MM_COLORS
         
-        Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppArrayBase<StyleEngine>? VRC_UI = UnityEngine.Object.FindObjectsOfType<StyleEngine>();
+        Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppArrayBase<StyleEngine>? VRC_UI = FindObjectsOfType<StyleEngine>();
         foreach (StyleEngine? X in VRC_UI)
         {
             X.field_Private_Dictionary_2_String_Color_0["Highlight"] = EngineUtils.Conversion.HexToColor("#c60e7b"); 

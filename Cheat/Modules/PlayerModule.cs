@@ -200,7 +200,7 @@ internal class PlayerModule
             } 
             public static void DestoryCameras()
             {
-                foreach (var VARIABLE in UnityEngine.Object.FindObjectsOfType<UTag>().Where(x => x.identifer.Contains("PinkCams")))
+                foreach (var VARIABLE in UnityEngine.Object.FindObjectsOfType<UTag>().Where(x => x.identifer.Contains("VCams")))
                 {
                     UnityEngine.Object.DestroyImmediate(VARIABLE.gameObject);
                 }
@@ -210,11 +210,17 @@ internal class PlayerModule
 
     public static class Body
     {
-        public static GameObject Clone(VRC.Player pl)
+        public static GameObject AvatarObj;
+        public static GameObject Clone(VRC.Player player)
         {
-            return pl._vrcplayer
-                .field_Private_VRCAvatarManager_0
-                .field_Private_GameObject_0;
+            Transform? head = player._vrcplayer.VRCPlayerApi.GetBoneTransform(HumanBodyBones.Head);
+            head.localScale = new Vector3(1f, 1f, 1f);
+            if (AvatarObj ==null)
+            {
+                AvatarObj = UnityEngine.Object.Instantiate(player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0);
+                AvatarObj.transform.position = player.transform.position;
+            }
+            return AvatarObj;
         }
     }
 }

@@ -62,8 +62,7 @@ public class Config
 
     public struct Appearance
     {
-        public static string QueueAudio { get; set; } =
-            "https://github.com/riotlu/fake-cdn/raw/refs/heads/master/Audio/1 pound bish.mp3?raw=true";
+        public static string QueueAudio { get; set; } = "https://github.com/riotlu/fake-cdn/raw/refs/heads/master/Audio/1 pound bish.mp3?raw=true";
 
         public struct Platte
         {

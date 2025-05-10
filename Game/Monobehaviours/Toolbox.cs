@@ -1,6 +1,7 @@
 ﻿using Brewchat.Cheat.Modules;
 using Brewchat.Game.Wrappers;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Brewchat.Game.Monobehaviours;
 
@@ -27,23 +28,8 @@ internal class Toolbox : UnityEngine.MonoBehaviour
     }
     public static void LoadMyUI()
     {
-        EngineUtils.Assets.AssetBundle(new Uri("https://cdn.discordapp.com/attachments/1365105880965713960/1365105938251386890/intro?ex=680ebc7a&is=680d6afa&hm=4b457a778bb60e370cb3f8efcc13af01c5b812b02f175ab2a055b03ed3d9f8e4&"),
-            "february introduction", false);
-    }
-
-    public static void MusicPlayer()
-    {
-        GameObject au = new("Audio_Player");
-        var src = au.AddComponent<AudioSource>();
-        src.clip = EngineUtils.Assets.AudioClip(new Uri(""));
-        src.hideFlags += 32;
-        src.loop = true;
-        src.volume = 1f;
-        src.bypassListenerEffects = true;
-        src.bypassReverbZones = true;
-        src.Play();
-      
-        DontDestroyOnLoad(au);
+       GameObject? load =  EngineUtils.Assets.AssetBundle(new Uri("https://cdn.discordapp.com/attachments/1365105880965713960/1365105938251386890/intro?ex=681f373a&is=681de5ba&hm=aaeb2bdb24413952348642ed1fcc317559d13a07e301596ad93f20a66eea26ae&"), "february introduction", false);
+       load.GetComponentInChildren<GraphicRaycaster>().enabled = false;
     }
     public void CameraIQW(PlayerModule.Camera.CameraView view)
     {

@@ -44,13 +44,27 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F9))
         {
-            GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a Command", (command) =>
+            /*GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a Command", (command) =>
             {
                 if (command == "*help")
                 {
                     sconsole.internal_log("*debug: {1,2,3}");
                     sconsole.internal_log("*player:teleport: {player}");
                 }
+            }, MultiLine: false);*/
+            GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter World ID", (id) =>
+            {
+                if (id.StartsWith("wrld_"))
+                {
+                    sconsole.print("WORLD LOADED",0);
+                    GameUtils.World.Join(id);
+                }
+                if (id.StartsWith("avtr_"))
+                {
+                    sconsole.print("AVATAR LOADED" ,0);
+                    GameUtils.PlayerModel.Avatar.SetAvatar(id);
+                }
+                
             }, MultiLine: false);
         }
 

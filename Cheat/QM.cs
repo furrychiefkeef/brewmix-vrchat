@@ -9,6 +9,7 @@ using Brewchat.Cheats.World;
 using Brewchat.Game.Wrappers;
 using UnityEngine.UI;
 using UNIXEngine.IL2CPPModding.Utils.Collections;
+using VRC.Core;
 using VRC.Networking;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
@@ -22,8 +23,7 @@ internal class QM
         {
             try
             {
-
-                
+     
                 #region Begin
 
                 var MainPage = new VRCPage(Entry.FULLNAME, ShowScrollWheel: false);
@@ -37,11 +37,7 @@ internal class QM
                 VRCWingButton WING_B = new(null,
                     SDKUtils.Wing.Position.R, Entry.NAME, "The passion project.",
                     () => sconsole.print("passion_fruit", 1));
-                
-                VRCWingButton WING_C = new(null,
-                    SDKUtils.Wing.Position.R,"Test Nameplates", "The passion project.",
-                    () => CSS.Instance.Nameplates());
-                
+
                 VRCWingButton WING_F = new(null, SDKUtils.Wing.Position.R,"Send GlobalUdon", "Send GlobalUdonEvent", () =>
                 {
                     GameUtils.PlayerModel.Get().StartCoroutine(M4.UdonNukeCoroutine().WrapToIl2Cpp());
@@ -56,7 +52,15 @@ internal class QM
                 VRCButton? T = new(Main_Groupbox, "Player", "Modify The Player", () => PlayerMovementModal.Open());
                 VRCToggle E = new(Main_Groupbox, "Enable", "Enable The Player", "Disable The Player", (x) =>
                 {
-                    GameUtils.PlayerModel.Get().GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
+                    var _player = GameUtils.PlayerModel.Get();
+                    var gameObject = PlayerModule.Body.Clone(_player);
+                    if (gameObject != null && x == false)
+                    {
+                        UnityEngine.Object.Destroy(gameObject);
+                    }
+                    _player.GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
+                    
+                    
                 });
                 
                 #endregion

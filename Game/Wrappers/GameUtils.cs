@@ -8,7 +8,11 @@ using VRC;
 using VRC.Core;
 using VRC.DataModel;
 using VRC.Localization;
+using VRC.SDK3.Components;
+using VRC.SDK3.Internal;
 using VRC.SDKBase;
+using VRC.SDKBase.Network;
+using VRC.UI;
 using VRC.UI.Client.HUD;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
@@ -120,8 +124,6 @@ internal class GameUtils
     public class Camera
     {
 
-
-
         public static UnityEngine.Camera? Get { get; set; } = UnityEngine.Camera.main;
         public static GameObject CameraObj => GameObject.Find("Camera");
     }
@@ -147,28 +149,27 @@ internal class GameUtils
     
             return null;
         }
-        public static VRC.Player? GrabPlayerFromActorId(int id)
+ 
+        public static VRC.Player? GetPlayerFromActor(int id)
         {
-
-            if (id.Equals(0)) return null;
-        
             foreach (var player in Matchmaking.GetAllPlayers)
             {
-                if (player.APIUser.IsSelf || !player._vrcplayer || !player._vrcplayer._player)
-                    continue;
-            
-                if (int.Equals(player.VRCPlayerApi.playerId, id))
-                    return player._vrcplayer._player;
+                if (player.VRCPlayerApi.playerId == id)
+                {
+                    return player;
+                }
             }
-    
+
             return null;
         }
         public static class Motion
         {
             public struct Networking
             {
+                
                 public static VRCPlayerApi Run_Speed(float v = 2f)
                 {
+                    
                     VRCPlayerApi? player = Get().VRCPlayerApi;
                     player.SetRunSpeed(v);
                     return player;
@@ -207,6 +208,13 @@ internal class GameUtils
 
         public static class Avatar
         {
+            public static ApiAvatar SetAvatar(string id)
+            {
+                ApiAvatar avatar = new() { id = id };
+                PageAvatar.Method_Public_Static_Void_ApiAvatar_String_0(avatar, "AvatarMenu");
+                return avatar;
+            }
+            public static ApiAvatar GetAvatar() => Get().ApiAvatar;
             public static void AvatarScale(float v = 4f) =>
                 Get().VRCPlayerApi.SetAvatarEyeHeightByMeters(v);
 
@@ -239,8 +247,12 @@ internal class GameUtils
 
     public class World
     {
-        public static bool IsWorldLoaded() =>
-            RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.currentApiWorld != null;
+        public static bool IsWorldLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.currentApiWorld != null;
+        public static string Join(string worldId)
+        {
+            Networking.GoToRoom(worldId);
+            return worldId;
+        }
     }
 
     public static class UI

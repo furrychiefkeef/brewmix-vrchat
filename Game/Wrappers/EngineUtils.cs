@@ -82,7 +82,7 @@ namespace Brewchat.Game.Wrappers
                 if (texture != null) texture.name = "resources.dev";
                 return texture;
             }
-            [Obsolete]
+            [Obsolete("")]
             public static Texture2D? Texture(string dir)
             {
                 byte[] data = File.ReadAllBytesAsync(dir).GetAwaiter().GetResult();
