@@ -60,24 +60,26 @@ internal class GameUtils
             public enum Events : Byte
             {
                 VoiceData = 1,
+                MovementData = 12,
+                MovementData2 = 13,
+                EV = 11,
+                PlayerPrefab = 202,
                 Chatbox = 43,
+                Social = 74,
                 OnPlayerJoin = 253,
                 OnPlayerLeft = 254,
                 OnPlayerFailedJoin = byte.MaxValue,
             }
 
-            public static void SendRaiseEvent(byte code, object parameter, SendOptions sendOptions)
+            public static void SendRaiseEvent(byte code, object payload, SendOptions sendOptions)
             {
-                var il2 =
-                    Pasted.WTFBlaze.Utils.Managers.SerializationManager.FromManagedToIL2CPP<Il2CppSystem.Object>(
-                        parameter);
-                PhotonNetwork.RaiseEvent(code, il2, new()
+                var IL2CPP = Pasted.WTFBlaze.Utils.Managers.SerializationManager.FromManagedToIL2CPP<Il2CppSystem.Object>(payload);
+                PhotonNetwork.RaiseEvent(code, IL2CPP, new()
                 {
                     field_Public_ReceiverGroup_0 = ReceiverGroup.Others,
                     field_Public_EventCaching_0 = EventCaching.DoNotCache
                 }, sendOptions);
             }
-
             public static string GetPhotonEventName(byte code)
             {
                 return code switch
@@ -108,8 +110,14 @@ internal class GameUtils
         public struct NetworkUtils
         {
 
+            public struct Player
+            {
+                public static void SpawnEmoji(string id){}
+                public static void SpawnPrint(string id){}
+                public static void SpawnPortal(string id){}
+                public static void SpawnDrone(int actor){}
+            }
             private static int _eintMValue;
-
             public static void SendEmojiRPC(int emoji)
             {
                 Il2CppSystem.Int32 eint = default(Il2CppSystem.Int32);

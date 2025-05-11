@@ -5,6 +5,8 @@ using BlanketSDK.MM.Elements.Controls;
 using BlanketSDK.Core;
 using BlanketSDK.Utilities;
 using Brewchat.Game.Wrappers;
+using FragLabs.Audio.Codecs.Opus;
+using VRC.Core;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
 namespace Brewchat.Cheat;
@@ -64,7 +66,7 @@ internal class MM : IMainMenuElements
                 var row5 = new VRCProfileRow(IMainMenuElements.MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(),$"<color=red>{Entry.NAME}</color>");
                 VRCProfileButton? Tag = new(row5,"Give Tag", $"Give a Specific Tag to User", () =>
                 {
-                            /*Pinkstar.Utils().GiveTag(player)*/
+                            Pinkstar.Utils().GiveTag(player)
                 });
                 #endregion
              

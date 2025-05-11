@@ -13,9 +13,9 @@ internal class Toolbox : UnityEngine.MonoBehaviour
         if (Instance is null)
         {
             Instance = this;
-            UnityEngine.Object.DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this);
         }
-        else UnityEngine.Object.Destroy(this);
+        else Destroy(this);
     }
     
     public void PopUpLoading()
@@ -28,12 +28,8 @@ internal class Toolbox : UnityEngine.MonoBehaviour
     }
     public static void LoadMyUI()
     {
-       GameObject? load =  EngineUtils.Assets.AssetBundle(new Uri("https://cdn.discordapp.com/attachments/1365105880965713960/1365105938251386890/intro?ex=681f373a&is=681de5ba&hm=aaeb2bdb24413952348642ed1fcc317559d13a07e301596ad93f20a66eea26ae&"), "february introduction", false);
+       GameObject? load = EngineUtils.Assets.AssetBundle(new Uri("https://cdn.discordapp.com/attachments/1365105880965713960/1365105938251386890/intro?ex=6821da3a&is=682088ba&hm=b4c0f049a9191104e63e71ad6e2ae6c5bd43657789318b951b371996b703dae6&"), "february introduction", false);
        load.GetComponentInChildren<GraphicRaycaster>().enabled = false;
-    }
-    public void CameraIQW(PlayerModule.Camera.CameraView view)
-    {
-       
     }
 }
 

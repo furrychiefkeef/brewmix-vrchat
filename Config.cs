@@ -45,18 +45,17 @@ public class Config
 
     public struct Logging
     {
-        public static bool LogPhotonData { get; set; } = true;
-        public static bool LogRPCData { get; set; }
+        public static bool Photon { get; set; } = false;
+        public static bool RPC { get; set; } = false;
+        public static bool Udon { get; set; } = false;
 
-        public static bool LogMessageData_Event43 { get; set; }
-        public static bool LogVoicePackets_Event1 { get; set; } = false;
     }
 
     public struct Protection
     {
-        public static bool block_event1 { get; set; }
+        public static bool block_voicedata_event1 { get; set; }
         public static bool block_event11 { get; set; }
-        public static bool block_event12 { get; set; }
+        public static bool block_movementdata_event12 { get; set; }
 
     }
 
@@ -68,7 +67,6 @@ public class Config
         {
             public static UnityEngine.Color Main { get; set; } = EngineUtils.Conversion.HexToColor("#c60e7b");
             public static UnityEngine.Color Nameplate { get; set; } = EngineUtils.Conversion.HexToColor("#c60e7b");
-
             public static UnityEngine.Color Chatbox { get; set; } = EngineUtils.Conversion.HexToColor("#c60e7b");
             public static UnityEngine.Color HighlightFX { get; set; } = EngineUtils.Conversion.HexToColor("#c60e7b");
             /*Color Hover { get; set; } ;

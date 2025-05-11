@@ -80,7 +80,7 @@ namespace brewchat.hybridxcore.bep
                 true);
             QM._Pinkstar.Apply();
             QM.SelectedMenu.Apply();
-            /*Toolbox.LoadMyUI();*/
+            Toolbox.LoadMyUI();
 
         }
 
@@ -119,12 +119,6 @@ namespace brewchat.hybridxcore.bep
 
         #region Player_Hooks
 
-
-        /*[HarmonyPostfix, HarmonyPatch(typeof(VRC.Player), nameof(VRC.Player.Start))]
-        public static void PlayerInt(VRC.Player __instance)
-        {
-        }*/
-
         [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.OnPlayerJoined))]
         public static void PlayerJoined(VRC.Player __0)
         {
@@ -155,51 +149,40 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(LoadBalancingClient), nameof(LoadBalancingClient.OnEvent))]
         public static void PhotonHandler(EventData __0)
         {
-            if (__0 is null && __0.CustomData is null)
-                if (__0.Code == 1)
-                {
-                    if (Config.Logging.LogVoicePackets_Event1)
-                    {
-                        Il2CppArrayBase<byte> ml = Il2CppArrayBase<byte>.WrapNativeGenericArrayPointer(__0.CustomData.Pointer);
-                        var newdata = Convert.ToBase64String(ml);
-                        sconsole.internal_log($"{__0.Sender} | SENT PACKET: {newdata}");
-                    }
+            if (__0 is null && __0.CustomData is null) return;
 
-                }
-
-            ParameterDictionary? Parameters = __0.Parameters;
-            foreach (var data in __0.Parameters)
+            if (!Config.Logging.Photon)
             {
+                ParameterDictionary? Parameters = __0.Parameters;
+                foreach (var data in __0.Parameters)
+                {
 
-                var Data = SerializationManager.FromIL2CPPToManaged<object>(data.Value);
-                var ac = new JsonSerializerOptions() { WriteIndented = true };
-                sconsole.internal_log($"[PHOTON] [Event {__0.Code}] [Key:{__0.CustomDataKey}] [Sender: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName}] Event \n{System.Text.Json.JsonSerializer.Serialize(Data, ac)}");
+                    var Data = SerializationManager.FromIL2CPPToManaged<object>(data.Value);
+
+                    sconsole.print("hook", "/photon", $" Player: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] [RAW DATA :{__0.CustomData}]  " +
+                                                      $"Event Data: \n {System.Text.Json.JsonSerializer.Serialize(Data, new JsonSerializerOptions
+                                                      {
+                                                          WriteIndented = true
+                                                      })}", 0);
+                }
             }
         }
 
-
-
-
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomNetworkEvent), new Type[]
-        {
-            typeof(NetworkEventTarget), typeof(string)
-        })]
-        public static void UdonEventLog(ref NetworkEventTarget __0, string __1)
+        [HarmonyPostfix, HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomNetworkEvent), new Type[] { typeof(NetworkEventTarget), typeof(string) })]
+        public static void UdonEventLog(ref UdonBehaviour __instance, ref NetworkEventTarget __0, string __1)
         {
 
-            try
+            if (!Config.Logging.Udon)
             {
-                // Log the event being sent
-                sconsole.internal_log($"| UDON TARGET EVENT: [{__0} CODE {__1}]");
+                if (__1.Contains("_"))
+                {
+                    sconsole.print("hook", "/udon", $"Network Event: {__1}", 0);
+                }
 
-                // If you need to access the event table, you'd need to use reflection or a safer approach
-                // This part depends on what information you actually need to log
+                sconsole.print("hook", "/udon", $"Node Event: {__1}", 0);
 
-                // Example with reflection (if really needed):
 
-                /*var eventTableField = typeof(UdonBehaviour).GetField("_eventTable",
+                var eventTableField = typeof(UdonBehaviour).GetField("_eventTable",
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 if (eventTableField != null)
                 {
@@ -208,50 +191,35 @@ namespace brewchat.hybridxcore.bep
                     {
                         foreach (var entry in eventTable)
                         {
-                            sconsole.internal_log($"{entry.Key} | VAL >> [{entry.Value}]");
+                            sconsole.internal_log($"global: {entry.Key} | VAL >> [{entry.Value}]");
                         }
                     }
-                }*/
-
-            }
-            catch (System.Exception ex)
-            {
-                sconsole.internal_log($"Error in UdonEventLog: {ex.Message}");
+                }
             }
         }
 
-        [HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.Method_Public_Boolean_Player_VrcEvent_VrcBroadcastType_0))]
-        public static bool LogRPC(VRC.Player __0, VRC_EventHandler.VrcEvent __1, VRC_EventHandler.VrcBroadcastType __2)
+        /*[HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(Networking.RPC), []
+        {})]*/
+
+    public static bool LogRPC(VRC.Player __0, GameObject __1, bool __2)
         {
             bool result = true;
             var player = __0;
             var PlayerName = player.APIUser.displayName;
             var PlayerID = player.APIUser.id;
-            var ObjectName = __1.ParameterObject.name;
-            Il2CppSystem.Object[] RawParameters = Networking.DecodeParameters(__1.ParameterBytes);
+            /*Il2CppSystem.Object[] RawParameters = Networking.DecodeParameters(__1.ParameterBytes);*/
             string ParametersString = "";
-            for (int i = 0; i < RawParameters.Length; i++) ParametersString += Il2CppSystem.Convert.ToString(RawParameters[i]) + "|";
+            /*for (int i = 0; i < RawParameters.Length; i++) ParametersString += Il2CppSystem.Convert.ToString(RawParameters[i]) + "|";*/
 
-            if (ObjectName != "USpeak" && __1.ParameterString != "SanityCheck")
+            if (!Config.Logging.RPC)
             {
-                sconsole.internal_log($"[RPC] Sender: {PlayerName} ({PlayerID}) | OBJ: {ObjectName} | RPC: {__1.ParameterString} | VALUES: [{ParametersString}] | TYPE: {__2}");
-            }
-
-            switch (ObjectName)
-            {
-                case "UdonSyncRunProgramAsRPC":
-                    break;
-                /*case "SyncKill":
-                    return !WorldsMenu.GodMode;*/
+                sconsole.print("hook", "/rpc", $"{PlayerName} ({PlayerID}) | RPC: {__1.name} | VALUES: [{ParametersString}] | TYPE: {__2}",0);
             }
 
             return result;
         }
     }
 }
-
-
-
-
+  
 
   

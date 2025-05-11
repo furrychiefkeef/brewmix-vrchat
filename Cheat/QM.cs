@@ -78,7 +78,7 @@ internal class QM
                     PlayerModule.Movement.Fly();
                 });
                 VRCToggle? Spinbot = new(PlayerMovementModal, "Spinbot", "Spinbot On", "Spinbot Off",
-                    (x) => { FlawFound.DefaultPrompt(); });
+                    (x) => { PlayerModule.Movement.Spinbot(x); });
                 VRCToggle? ForceJump = new(PlayerMovementModal, "Force Jump", "Force Jump Off", "Fly Off",
                     (x) => { PlayerModule.Movement.ForceJump(x); });
 
@@ -95,21 +95,20 @@ internal class QM
                 VRCButton? R = new(Main_Groupbox, "Logging", "Configure Logging", () => Logging.Open());
 
 
-                VRCToggle? Log_RPCs = new(Logging, "RPCs", "parse", "parse", (x) => { });
-                VRCToggle? Log_Events = new(Logging, "Events", "parse", "parse",
-                    (x) => { Config.Logging.LogVoicePackets_Event1 = !Config.Logging.LogVoicePackets_Event1; });
-                VRCToggle? Udon_Events = new(Logging, "Udon Events", "parse", "parse", (x) => { });
+                VRCToggle? Log_RPCs = new(Logging, "RPC", "parse", "parse", (x) => { Config.Logging.RPC = !Config.Logging.RPC; });
+                VRCToggle? Log_Events = new(Logging, "Photon", "parse", "parse", (x) => { Config.Logging.Photon = !Config.Logging.Photon; });
+                VRCToggle? Udon_Events = new(Logging, "Udon", "parse", "parse", (x) => { Config.Logging.Udon = !Config.Logging.Udon;});
 
-
+                /*VRCModalContainer? Modal_Config_RPCs = new("RPcs");*/
                 #region Modal Logging__MainPage2
 
                 VRCModalContainer? LoggingP2 = new("Logging Page 2");
                 VRCSmallButton Next = new(Logging, "Next", () => LoggingP2.Open());
-                /*VRCToggle? Debug_Log = new(LoggingP2, "Debug", "parse", "parse", (x) =>
+                VRCToggle? Debug_Log = new(LoggingP2, "Debug", "parse", "parse", (x) =>
                 {
                         Config.Advanced.DebugMode = !Config.Advanced.DebugMode;
                 });
-                VRCToggle? Log_RPCs = new(Logging, "RPCs", "parse", "parse", (x) =>
+                /*VRCToggle? Log_RPCs = new(Logging, "RPCs", "parse", "parse", (x) =>
                 {
 
                 });
@@ -151,7 +150,7 @@ internal class QM
         {
             try
             {
-                VRCToggle toggle = new(QMMenus.QMSubmenus.SelectedUser_Local().GetComponentInChildren<VerticalLayoutGroup>().gameObject.transform, "FREEZE!", "FREEZE CRIMINAL SCUM, ","UNFREEZE NICE INDIVIUAL!", (x) =>
+                VRCToggle toggle = new(QMMenus.QMSubmenus.SelectedUser_Local().GetComponentInChildren<VerticalLayoutGroup>().gameObject.transform.GetChild(0), "FREEZE!", "FREEZE CRIMINAL SCUM, ","UNFREEZE NICE INDIVIUAL!", (x) =>
                 {
                     var selecteduser= GameUtils.PlayerModel.Matchmaking.GetSelectedUser();
                     if (selecteduser != null)

@@ -33,11 +33,10 @@ internal class esp : MonoBehaviour
     public Player _player { get; set; }
     private SkinnedMeshRenderer[] _avatarender;
     private HighlightsFXStandalone FX;
-
-   
-
+    public static Dictionary<VRC.Player, esp> _esp = new Dictionary<VRC.Player, esp>();
     void LateUpdate()
     {
+        Config.Render.esp = !Config.Render.esp;
         _player = transform.GetComponent<VRC.Player>();
         GetSelectRegion(_player);
     }
@@ -50,7 +49,7 @@ internal class esp : MonoBehaviour
             FX = GameUtils.Camera.Get.GetComponent<HighlightsFXStandalone>();
             FX.Method_Public_Void_MeshFilter_PDM_0(Capsule.GetComponent<MeshFilter>());
             FX.highlightColor = Config.Appearance.Platte.HighlightFX;
-            FX.blurSize = 1f;
+            FX.blurSize = 0.3f;
         }
     }
     
