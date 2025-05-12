@@ -45,7 +45,7 @@ internal class QM
                 });
                 #endregion
     
-                VRCGroupBox Main_Groupbox = new(MainPage, "Main");
+                VRCGroupLayout Main_Groupbox = new(MainPage, "Main");
 
                 #region Groupbox
 
@@ -65,7 +65,7 @@ internal class QM
                 });
                 
                 #endregion
-                VRCGroupBox _Groupbox = new(MainPage, "Main");
+                VRCGroupLayout _Groupbox = new(MainPage, "Main");
                 
                 #region Modal_Player+Movement
 
@@ -156,7 +156,7 @@ internal class QM
                     if (selecteduser != null)
                     {
                        
-                        sconsole.print($"<color=red>[frozen]</color>: {selecteduser.APIUser.displayName }",0);
+                        sconsole.print($"<color=red>[Frozen]</color>: {selecteduser.APIUser.displayName }",0);
                         selecteduser.GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
                     }
                 }, false);

@@ -160,12 +160,22 @@ namespace brewchat.hybridxcore.bep
 
             if (Config.Logging.Photon)
             {
+              
                 object Data = null;
                 ParameterDictionary? Parameters = __0.Parameters;
                 foreach (var data in __0.Parameters)
                 {
                     Data = SerializationManager.FromIL2CPPToManaged<object>(data.Value);
-                    sconsole.print("hook", "/photon", $" Player: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] Event Data: \n {System.Text.Json.JsonSerializer.Serialize(Data, new JsonSerializerOptions { AllowTrailingCommas = true})}", 0);
+                    if (__0.Code == 1)
+                    {
+                        string? c = System.Text.Json.JsonSerializer.Serialize(Data, new JsonSerializerOptions { AllowTrailingCommas = true });
+                        sconsole.print("hook", "/photon", $" Player: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] Event Data: \n {c}", 0);
+                        if (c.Contains("IfaN0fo5NgB4vU0TH7BWslpO6BqI6MN9WYOb1HJ8KdW1WqNKAVfTUdbMYn9euoSksF1SDgDwaIQ4UD/tyDz8OUIAeIXX/76O7krXmLLajE8glg7vvITRrirzBTMLKS0lQqJu00Y0tbEihvStV3AjrxbGrzahMFuYAMlgLCh1/aA6zZjg/TkvAHi9TNXCvkYFvRlQkvZ/LLcToT2oMGAPcORVe51QMTEUx4IJdDkjaXG36+n2MBm8"))
+                        {
+                            sconsole.internal_log("FURFAGIE UCKY!!");
+                        }
+                    }
+                    
                 };
                 
             }
@@ -203,24 +213,37 @@ namespace brewchat.hybridxcore.bep
             }
         }
 
-        [HarmonyPrefix, HarmonyPatch(typeof(Networking), nameof(Networking.RPC), typeof(RPC.Destination), typeof(GameObject), typeof(string), typeof(Il2CppReferenceArray<Object>))]
-
-        public static bool LogRPC(RPC.Destination __0, GameObject __1, string __2, Il2CppReferenceArray<Object> __3)
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.TriggerEvent), 
+          typeof(VRC_EventHandler) ,
+          typeof(VRC_EventHandler.VrcEvent),
+          typeof(VRC_EventHandler.VrcBroadcastType),
+          typeof(int) ,
+          typeof(float))]
+        public static void SD2(VRC_EventDispatcherRFC __instance, VRC_EventHandler __0, VRC_EventHandler.VrcEvent __1, VRC_EventHandler.VrcBroadcastType __2, int __3, float __4)
         {
-            bool result = true;
-            var player = __0;
-            /*var PlayerName = player.APIUser.displayName;
-            var PlayerID = player.APIUser.id;*/
-            /*Il2CppSystem.Object[] RawParameters = Networking.DecodeParameters(__3);
-            string ParametersString = "";
-            for (int i = 0; i < RawParameters.Length; i++) ParametersString += Il2CppSystem.Convert.ToString(RawParameters[i]) + "|";*/
-
-            if (!Config.Logging.RPC)
+            // Additional null checks and logging
+            if (__instance == null)
             {
-                sconsole.print("hook", "/rpc", $"DEST {__0}| | RPC: {__1.gameObject.name} | VALUES: [{__2}] | TYPE: {__3}",0);
+                return;
             }
 
-            return result;
+            try
+            {
+                Networking.SetOwner(GameUtils.PlayerModel.Get().VRCPlayerApi, __0.gameObject);
+                __2 = VRC_EventHandler.VrcBroadcastType.Owner;
+                sconsole.internal_log($"SDK2: " +
+                                      $"Handler: {__0.name ?? "null"} | " +
+                                      $"Event: {__1.ParameterString ?? "null"} | " +
+                                      $"KAST: {__2} | " +
+                                      $"Instagator Value: {__3}" +
+                                      $"FastForward Value: {__4}");
+                
+            }
+            catch (System.Exception ex)
+            {
+                sconsole.internal_log($"Error in SD2 patch: {ex.Message}");
+            }
         }
     }
 }
