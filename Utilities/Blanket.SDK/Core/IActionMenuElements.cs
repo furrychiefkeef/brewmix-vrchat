@@ -16,40 +16,40 @@ public class IActionMenuElements
             GameObject.Find("ActionMenu/Container/MenuL/ActionMenu")?.transform
         ];
     }
-    
-  
-    internal class ClassName // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING ME A FUCKING MENTALBREAK DOWN CAUSE MY CODE STYLE NEEDS TO BE CHANGED.
+
+    // Put RootObjects
+    ActionMenu ActionMenu() => ActionMenus()[0].GetComponentInChildren<ActionMenu>();
+
+    protected struct AcMenus
     {
-        // Put RootObjects
 
-        protected struct QMMenus
+        // Put Menus
+        public struct AcSubmenus
         {
-            // Put Menus
-            public struct QMSubmenus
-            {
-                // Put Subs
-            }
-        }
-      
 
-        protected struct QMControls
-        { 
-            // Put Controls
-            public struct Buttons
-            {
-                //Put Buttons   
-            }
-        
-        }
 
-        protected struct QMElements
+            // Put Subs
+        }
+    }
+
+
+    protected struct AcControls
+    {
+        // Put Controls
+        public struct Buttons
         {
-            //Put Elements
+            //Put Buttons   
         }
 
-        protected struct QMFallbacks
-        {
-            //Put Fallbacks
-        }
+    }
+
+    protected struct QMElements
+    {
+        //Put Elements
+    }
+
+    protected struct QMFallbacks
+    {
+        //Put Fallbacks
     }
 }

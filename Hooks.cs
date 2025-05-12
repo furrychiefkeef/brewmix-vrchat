@@ -203,18 +203,17 @@ namespace brewchat.hybridxcore.bep
             }
         }
 
-        /*[HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(Networking.RPC), 
-             typeof(RPC.Destination), typeof(GameObject), typeof(string), typeof(Il2CppReferenceArray<Object>))]
+        [HarmonyPrefix, HarmonyPatch(typeof(Networking), nameof(Networking.RPC), typeof(RPC.Destination), typeof(GameObject), typeof(string), typeof(Il2CppReferenceArray<Object>))]
 
         public static bool LogRPC(RPC.Destination __0, GameObject __1, string __2, Il2CppReferenceArray<Object> __3)
         {
             bool result = true;
             var player = __0;
             /*var PlayerName = player.APIUser.displayName;
-            var PlayerID = player.APIUser.id;#1#
+            var PlayerID = player.APIUser.id;*/
             /*Il2CppSystem.Object[] RawParameters = Networking.DecodeParameters(__3);
             string ParametersString = "";
-            for (int i = 0; i < RawParameters.Length; i++) ParametersString += Il2CppSystem.Convert.ToString(RawParameters[i]) + "|";#1#
+            for (int i = 0; i < RawParameters.Length; i++) ParametersString += Il2CppSystem.Convert.ToString(RawParameters[i]) + "|";*/
 
             if (!Config.Logging.RPC)
             {
@@ -222,7 +221,7 @@ namespace brewchat.hybridxcore.bep
             }
 
             return result;
-        }*/
+        }
     }
 }
   
