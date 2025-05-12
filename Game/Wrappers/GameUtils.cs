@@ -1,4 +1,5 @@
 ﻿using BlanketSDK.Core;
+using Brewchat.Cheat.Modules;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -132,7 +133,7 @@ internal class GameUtils
     public class Camera
     {
 
-        public static UnityEngine.Camera? Get { get; set; } = UnityEngine.Camera.main;
+        public static UnityEngine.Camera Get { get; set; } = UnityEngine.Camera.main;
         public static GameObject CameraObj => GameObject.Find("Camera");
     }
 

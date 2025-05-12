@@ -24,7 +24,7 @@ public class Config
         #region Fly
 
         public static bool fly { get; set; }
-        public static bool abruptness2motion { get; set; }
+        public static bool abruptness2motion { get; set; } = false;
         public static float? speed { get; set; } = 6.5f;
 
         #endregion

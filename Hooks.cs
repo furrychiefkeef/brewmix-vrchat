@@ -99,8 +99,8 @@ namespace brewchat.hybridxcore.bep
             MM.SelectedMenu.Apply();
         }
 
-        [HarmonyPostfix, HarmonyPatch(typeof(StyleEngine), nameof(StyleEngine.Start))]
-        public static void StyleEngine_Initialize_HOOK(ref StyleEngine? __instance)
+        [HarmonyPostfix, HarmonyPatch(typeof(VRCUIBackground), nameof(VRCUIBackground.Start))]
+        public static void StyleEngine_Initialize_HOOK(ref VRCUIBackground? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
             OnlineUILoaded = true;

@@ -181,7 +181,7 @@ internal class PlayerModule
                     switch (view)
                     {
                         case CameraView.second_person:
-                            obj.transform.Rotate(new Vector3(0f, 180f, 0f), 75f);
+                            obj.transform.Rotate(new Vector3(0f, 180f, 0f));
                             break;
                         case CameraView.third_person:
                             obj.transform.Rotate(Vector3.zero);
@@ -189,7 +189,7 @@ internal class PlayerModule
                         case CameraView.freecam:
                             cache = obj;
                             obj.AddComponent<AudioListener>();
-                            obj.AddComponent<FlyManager>().Rotation = true;
+                            obj.AddComponent<FlyManager>().AnyObject = true;
                             break;
                     }
                     

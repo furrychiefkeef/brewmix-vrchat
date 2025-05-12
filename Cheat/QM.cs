@@ -51,21 +51,9 @@ internal class QM
 
                 VRCModalContainer? PlayerMovementModal = new("Player+Movement");
                 VRCButton? T = new(Main_Groupbox, "Player", "Modify The Player", () => PlayerMovementModal.Open());
-                VRCToggle E = new(Main_Groupbox, "Enable", "Enable The Player", "Disable The Player", (x) =>
-                {
-                    var _player = GameUtils.PlayerModel.Get();
-                    var gameObject = PlayerModule.Body.Clone(_player);
-                    if (gameObject != null && x == false)
-                    {
-                        UnityEngine.Object.Destroy(gameObject);
-                    }
-                    _player.GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
-                    
-                    
-                });
+                
                 
                 #endregion
-                VRCGroupLayout _Groupbox = new(MainPage, "Main");
                 
                 #region Modal_Player+Movement
 
@@ -81,7 +69,18 @@ internal class QM
                     (x) => { PlayerModule.Movement.Spinbot(x); });
                 VRCToggle? ForceJump = new(PlayerMovementModal, "Force Jump", "Force Jump Off", "Fly Off",
                     (x) => { PlayerModule.Movement.ForceJump(x); });
-
+                VRCToggle Ghost = new(PlayerMovementModal, "Ghost", "Booo I'm a ghostttt", "awh I'm solid again", (x) =>
+                {
+                    var _player = GameUtils.PlayerModel.Get();
+                    var gameObject = PlayerModule.Body.Clone(_player);
+                    if (gameObject != null && x == false)
+                    {
+                        UnityEngine.Object.Destroy(gameObject);
+                    }
+                    _player.GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
+                    
+                    
+                });
                 #endregion
 
                 #region Modal Logging__Main

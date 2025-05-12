@@ -37,8 +37,9 @@ public class simgui : MonoBehaviour
 
     void Awake()
     {
-        sconsole.print($"{ Guid.NewGuid().ToString() } {console_flag} HI!!!! <color=#9185E6><b>{Environment.UserName}</b></color> !!! get ready to make some noise :D",0);
-        sconsole.internal_log("────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+        string? introduct = $"{Guid.NewGuid().ToString()} {console_flag} HI!!!! <color=#9185E6><b>{Environment.UserName}</b></color> !!! get ready to make some noise :D";
+        sconsole.print(introduct,0);
+        sconsole.internal_log(new string('─',introduct.Length));
     }
     void Update() => KeysHandler();
 
