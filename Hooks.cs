@@ -15,8 +15,12 @@ using VRC.Core;
 using VRC.SDKBase;
 using VRC.Udon;
 using VRC.Udon.Common.Interfaces;
+using VRC.UI.Client;
+using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
+using Object = Il2CppSystem.Object;
+using Player = VRC.Player;
 
 namespace brewchat.hybridxcore.bep
 {
@@ -25,7 +29,7 @@ namespace brewchat.hybridxcore.bep
     {
         static bool OfflineUILoaded = false;
         static bool OnlineUILoaded = false;
-
+        public static Il2CppSystem.Collections.Generic.KeyValuePair<byte, Object>? xdata;
         #region INTERNAL_CORE
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCApplication), nameof(VRCApplication.Awake))]
@@ -44,16 +48,20 @@ namespace brewchat.hybridxcore.bep
         #region INTERNAL_UI
 
         /*[HarmonyPostfix, HarmonyPatch(typeof(VRCUIManager), nameof(VRCUIManager.Start))]
-               public static void UI_Initialize_HOOK(ref QuickMenu? __instance)
-               {
-                   if (__instance == null && !OnlineUILoaded) return;
-                   #region QM
-                   UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel,
-                       true);
-                   #endregion
-                   QM.Apply();
-                   Toolbox.LoadMyUI();
-               }*/
+        public static void UI_Initialize_HOOK(ref VRCUIManager? __instance)
+        {
+            if (__instance == null && !OnlineUILoaded) return;
+            #region QM
+            UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel,
+                true);
+            #endregion
+            QM._Pinkstar.Apply();
+            MM._Pinkstar.Apply();
+            
+            MM.SelectedMenu.Apply();
+            QM.SelectedMenu.Apply();
+            Toolbox.LoadMyUI();
+        }*/
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
         public static void VRCLoadingSequence_IsEnable_HOOK(ref VRCUiPageLoading? __instance)
         {
@@ -76,8 +84,7 @@ namespace brewchat.hybridxcore.bep
         {
             if (__instance == null && !OnlineUILoaded) return;
             __instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
-            UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel,
-                true);
+            UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             QM._Pinkstar.Apply();
             QM.SelectedMenu.Apply();
             Toolbox.LoadMyUI();
@@ -92,8 +99,8 @@ namespace brewchat.hybridxcore.bep
             MM.SelectedMenu.Apply();
         }
 
-        [HarmonyPostfix, HarmonyPatch(typeof(VRCUIBackground), nameof(VRCUIBackground.Start))]
-        public static void BG_Initialize_HOOK(ref VRCUIBackground? __instance)
+        [HarmonyPostfix, HarmonyPatch(typeof(StyleEngine), nameof(StyleEngine.Start))]
+        public static void StyleEngine_Initialize_HOOK(ref StyleEngine? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
             OnlineUILoaded = true;
@@ -151,20 +158,16 @@ namespace brewchat.hybridxcore.bep
         {
             if (__0 is null && __0.CustomData is null) return;
 
-            if (!Config.Logging.Photon)
+            if (Config.Logging.Photon)
             {
+                object Data = null;
                 ParameterDictionary? Parameters = __0.Parameters;
                 foreach (var data in __0.Parameters)
                 {
-
-                    var Data = SerializationManager.FromIL2CPPToManaged<object>(data.Value);
-
-                    sconsole.print("hook", "/photon", $" Player: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] [RAW DATA :{__0.CustomData}]  " +
-                                                      $"Event Data: \n {System.Text.Json.JsonSerializer.Serialize(Data, new JsonSerializerOptions
-                                                      {
-                                                          WriteIndented = true
-                                                      })}", 0);
-                }
+                    Data = SerializationManager.FromIL2CPPToManaged<object>(data.Value);
+                    sconsole.print("hook", "/photon", $" Player: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] Event Data: \n {System.Text.Json.JsonSerializer.Serialize(Data, new JsonSerializerOptions { AllowTrailingCommas = true})}", 0);
+                };
+                
             }
         }
 
@@ -172,7 +175,7 @@ namespace brewchat.hybridxcore.bep
         public static void UdonEventLog(ref UdonBehaviour __instance, ref NetworkEventTarget __0, string __1)
         {
 
-            if (!Config.Logging.Udon)
+            if (Config.Logging.Udon)
             {
                 if (__1.Contains("_"))
                 {
@@ -182,8 +185,10 @@ namespace brewchat.hybridxcore.bep
                 sconsole.print("hook", "/udon", $"Node Event: {__1}", 0);
 
 
-                var eventTableField = typeof(UdonBehaviour).GetField("_eventTable",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                var eventTableField = typeof(UdonBehaviour).GetField("_eventTable", 
+                    
+                    System.Reflection.BindingFlags.NonPublic 
+                    | System.Reflection.BindingFlags.Instance);
                 if (eventTableField != null)
                 {
                     var eventTable = eventTableField.GetValue(__instance) as Dictionary<string, uint>;
@@ -198,26 +203,26 @@ namespace brewchat.hybridxcore.bep
             }
         }
 
-        /*[HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(Networking.RPC), []
-        {})]*/
+        /*[HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(Networking.RPC), 
+             typeof(RPC.Destination), typeof(GameObject), typeof(string), typeof(Il2CppReferenceArray<Object>))]
 
-    public static bool LogRPC(VRC.Player __0, GameObject __1, bool __2)
+        public static bool LogRPC(RPC.Destination __0, GameObject __1, string __2, Il2CppReferenceArray<Object> __3)
         {
             bool result = true;
             var player = __0;
-            var PlayerName = player.APIUser.displayName;
-            var PlayerID = player.APIUser.id;
-            /*Il2CppSystem.Object[] RawParameters = Networking.DecodeParameters(__1.ParameterBytes);*/
+            /*var PlayerName = player.APIUser.displayName;
+            var PlayerID = player.APIUser.id;#1#
+            /*Il2CppSystem.Object[] RawParameters = Networking.DecodeParameters(__3);
             string ParametersString = "";
-            /*for (int i = 0; i < RawParameters.Length; i++) ParametersString += Il2CppSystem.Convert.ToString(RawParameters[i]) + "|";*/
+            for (int i = 0; i < RawParameters.Length; i++) ParametersString += Il2CppSystem.Convert.ToString(RawParameters[i]) + "|";#1#
 
             if (!Config.Logging.RPC)
             {
-                sconsole.print("hook", "/rpc", $"{PlayerName} ({PlayerID}) | RPC: {__1.name} | VALUES: [{ParametersString}] | TYPE: {__2}",0);
+                sconsole.print("hook", "/rpc", $"DEST {__0}| | RPC: {__1.gameObject.name} | VALUES: [{__2}] | TYPE: {__3}",0);
             }
 
             return result;
-        }
+        }*/
     }
 }
   

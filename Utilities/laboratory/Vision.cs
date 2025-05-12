@@ -1,6 +1,21 @@
-﻿namespace Pasted.WTFBlaze.Utils.Managers;
+﻿using System.Runtime.InteropServices;
+using Brewchat.Game.Wrappers;
 
-public class Vision
+namespace Visionary;
+
+public static class Vision
 {
+    public struct API
+    {
+        public static void GiveTag([Optional] string player)
+        {
+            GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter Tag:", (x) =>
+            {
+                
+            }, Placeholder: "This sets the players tag", MultiLine: false );
+        }
+    }
+
+
     
 }

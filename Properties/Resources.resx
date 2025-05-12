@@ -130,14 +130,8 @@
   <data name="action-menu_joystick" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Textures\UI\ActionMenu\action-menu_joystick.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="action-menu_radial_bg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Assets\Textures\UI\ActionMenu\action-menu_radial_bg.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="capsule_voice_glow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Textures\UI\Nameplate\capsule_voice_glow.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="capsule_voice_glow_full_groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Assets\Textures\UI\Nameplate\capsule_voice_glow_full_groups.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="capsule_voice_glow_half" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Textures\UI\Nameplate\capsule_voice_glow_half.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -151,14 +145,8 @@
   <data name="capsule_voice_pulse_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Textures\UI\Nameplate\capsule_voice_pulse_left.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="capsule_voice_pulse_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Assets\Textures\UI\Nameplate\capsule_voice_pulse_right.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="capsule_background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Textures\UI\Nameplate\capsule_background.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="capsule_background_bar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Assets\Textures\UI\Nameplate\capsule_background_bar.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="D-Contact" xml:space="preserve">
     <value>@drywrld</value>

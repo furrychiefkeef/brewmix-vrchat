@@ -598,7 +598,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Assets\Textures\Branding\_oldlogo.png" />
+    <EmbeddedResource Include="Assets\Textures\Branding\logo.png" />
     <EmbeddedResource Include="Assets\Textures\UI\ActionMenu\action-menu_*.png" />
     <EmbeddedResource Include="Assets\Textures\UI\Nameplate\capsule_*.png" />
   </ItemGroup>

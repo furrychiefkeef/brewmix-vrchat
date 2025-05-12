@@ -92,16 +92,6 @@ namespace brewchat.hybridxcore.bep.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] action_menu_radial_bg {
-            get {
-                object obj = ResourceManager.GetObject("action-menu_radial_bg", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] capsule_background {
             get {
                 object obj = ResourceManager.GetObject("capsule_background", resourceCulture);
@@ -112,29 +102,9 @@ namespace brewchat.hybridxcore.bep.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] capsule_background_bar {
-            get {
-                object obj = ResourceManager.GetObject("capsule_background_bar", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] capsule_voice_glow {
             get {
                 object obj = ResourceManager.GetObject("capsule_voice_glow", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] capsule_voice_glow_full_groups {
-            get {
-                object obj = ResourceManager.GetObject("capsule_voice_glow_full_groups", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -175,16 +145,6 @@ namespace brewchat.hybridxcore.bep.Properties {
         internal static byte[] capsule_voice_pulse_left {
             get {
                 object obj = ResourceManager.GetObject("capsule_voice_pulse_left", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] capsule_voice_pulse_right {
-            get {
-                object obj = ResourceManager.GetObject("capsule_voice_pulse_right", resourceCulture);
                 return ((byte[])(obj));
             }
         }
