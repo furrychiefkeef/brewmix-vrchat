@@ -27,9 +27,8 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F5)) PlayerModule.Camera.View.ChangeCamera(PlayerModule.Camera.CameraView.third_person);
             if (Input.GetKeyDown(KeyCode.F6)) PlayerModule.Camera.View.ChangeCamera(PlayerModule.Camera.CameraView.second_person);
             if (Input.GetKeyDown(KeyCode.Backspace)) PlayerModule.Camera.View.DestoryCameras();
+            
             if (Input.GetKeyDown(KeyCode.Mouse2))  PlayerModule.Movement.ClickTP();
-            if (Input.GetKey(KeyCode.F10)) GameUtils.PlayerModel.Get().StartCoroutine(M4.UdonNukeCoroutine().WrapToIl2Cpp());
-
             #endregion
         }
         
@@ -67,8 +66,6 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
                 
             }, MultiLine: false);
         }
-
-        return; 
     }
 
     /*void Fly()

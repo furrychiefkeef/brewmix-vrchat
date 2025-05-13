@@ -38,11 +38,7 @@ internal class QM
                 VRCWingButton WING_B = new(null,
                     SDKUtils.Wing.Position.R, Entry.NAME, "The passion project.",
                     () => sconsole.print("passion_fruit", 1));
-
-                VRCWingButton WING_F = new(null, SDKUtils.Wing.Position.R,"Send GlobalUdon", "Send GlobalUdonEvent", () =>
-                {
-                    GameUtils.PlayerModel.Get().StartCoroutine(M4.UdonNukeCoroutine().WrapToIl2Cpp());
-                });
+                
                 #endregion
     
                 VRCGroupLayout Main_Groupbox = new(MainPage, "Main");
@@ -149,13 +145,19 @@ internal class QM
         {
             try
             {
-                VRCToggle toggle = new(QMMenus.QMSubmenus.SelectedUser_Local().GetComponentInChildren<VerticalLayoutGroup>().gameObject.transform.GetChild(0), "FREEZE!", "FREEZE CRIMINAL SCUM, ","UNFREEZE NICE INDIVIUAL!", (x) =>
+                VRCToggle toggle = new(QMElements.SelectedUser.SelectedUser_ButtonContainer(), "FREEZE!", "FREEZE CRIMINAL SCUM, ","UNFREEZE NICE INDIVIUAL!", (x) =>
                 {
                     var selecteduser= GameUtils.PlayerModel.Matchmaking.GetSelectedUser();
                     if (selecteduser != null)
                     {
+                        bool isFrozen = false;
                        
-                        sconsole.print($"<color=red>[Frozen]</color>: {selecteduser.APIUser.displayName }",0);
+                        sconsole.print(
+                            isFrozen 
+                                ? $"<color=red>[Frozen]</color>: {selecteduser.APIUser.displayName}" 
+                                : $"<color=red>[UnFrozen]</color>: {selecteduser.APIUser.displayName}", 
+                            0
+                        );
                         selecteduser.GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
                     }
                 }, false);

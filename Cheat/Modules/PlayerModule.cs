@@ -154,49 +154,45 @@ internal class PlayerModule
         }
         public class View
         {
-            public static GameObject cache;
-            public static void ChangeCamera(CameraView view)
+            public static Camera ChangeCamera(CameraView view)
             {
-                
+                GameObject cameraObject = new($"{view}_Camera");
+                cameraObject.AddComponent<UTag>().SetTag("V-Cams");
                 if (GameUtils.Camera.Get != null)
-                { 
-                    UnityEngine.Camera? reference = GameUtils.Camera.Get;
-                    GameObject obj = new($"{view}_Camera");   obj.AddComponent<UTag>().SetTag("V-Cams");
-                    UnityEngine.Camera? camera = obj.AddComponent<UnityEngine.Camera>();
-                    
-                    if(reference != null)
+                {
+                    UnityEngine.Camera? referenceCamera = GameUtils.Camera.Get;
+
+                    if (referenceCamera != null)
                     {
-                        obj.transform.localScale = reference.transform.localScale;
-                        obj.transform.parent = reference.transform;
-                        obj.transform.rotation = reference.transform.rotation;
-                        
-                        obj.transform.position = reference.transform.position;
-                        obj.transform.position = reference.transform.position + (-camera.transform.forward * 2f);
+                        cameraObject.transform.localScale = referenceCamera.transform.localScale;
+                        cameraObject.transform.parent = referenceCamera.transform;
+                        cameraObject.transform.rotation = referenceCamera.transform.rotation;
+
+                        // First apply rotation based on the view type
+                        switch (view)
+                        {
+                            case CameraView.second_person:
+                                cameraObject.transform.Rotate(new Vector3(0f, 180f, 0f));
+                                cameraObject.transform.position = referenceCamera.transform.position + (referenceCamera.transform.forward * 2f);
+                                break;
+                            case CameraView.third_person:
+                                cameraObject.transform.Rotate(Vector3.zero);
+                                cameraObject.transform.position = referenceCamera.transform.position + (-referenceCamera.transform.forward * 2f);
+                                break;
+                            case CameraView.freecam:
+                                cameraObject.transform.position = referenceCamera.transform.position + (-cameraObject.transform.forward * 2f);
+                                cameraObject.AddComponent<AudioListener>();
+                                cameraObject.AddComponent<FlyManager>().AnyObject = true;
+                                break;
+                        }
+
+                        var camera = cameraObject.AddComponent<UnityEngine.Camera>();
+                        camera.fieldOfView = referenceCamera.fieldOfView;
+                        camera.nearClipPlane /= 4f;
+                        if (referenceCamera != null) camera.cullingMask = -524289;
                     }
-                    
-                    camera.fieldOfView = reference.fieldOfView;
-                    camera.nearClipPlane /= 4f;
-                    if (reference != null) camera.cullingMask = -524289;
-                    
-                    switch (view)
-                    {
-                        case CameraView.second_person:
-                            obj.transform.Rotate(new Vector3(0f, 180f, 0f));
-                            break;
-                        case CameraView.third_person:
-                            obj.transform.Rotate(Vector3.zero);
-                            break;
-                        case CameraView.freecam:
-                            cache = obj;
-                            obj.AddComponent<AudioListener>();
-                            obj.AddComponent<FlyManager>().AnyObject = true;
-                            break;
-                    }
-                    
                 }
-               
-               
-            } 
+            }
             public static void DestoryCameras()
             {
                 foreach (var VARIABLE in UnityEngine.Object.FindObjectsOfType<UTag>().Where(x => x.identifer.Contains("V-Cams")))
