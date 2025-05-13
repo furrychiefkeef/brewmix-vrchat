@@ -19,7 +19,7 @@ internal class VRCButton : IQuickMenuElements
     /// <param name="tooltip">The tooltip text for the button.</param>
     /// <param name="func">The action to execute when the button is clicked.</param>
     /// <param name="sprite">An optional sprite to display on the button.</param>
-    public VRCButton(Transform parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null)
+    public VRCButton(Transform parent, string? name, string? tooltip, System.Action func, bool submenu, Sprite? sprite = null)
     {
         if (!QuickMenu() | !QMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_Buttons();
@@ -30,6 +30,7 @@ internal class VRCButton : IQuickMenuElements
         VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();
         TextMeshProUGUIEx _1 = obj.GetComponentInChildren<TextMeshProUGUIEx>(true);
         ImageEx _2 = obj.GetChild(3).GetChild(0).GetComponent<ImageEx>();
+        obj.GetChild(4).GetComponent<ImageEx>().gameObject.SetActive(submenu); // Expanded Button
         UnityEngine.Object.DestroyImmediate(obj.GetComponent<ToolTip>());
         ToolTip _3 = obj.GetComponent<ToolTip>();
         #endregion
@@ -67,6 +68,7 @@ internal class VRCButton : IQuickMenuElements
         VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();
         TextMeshProUGUIEx _1 = obj.GetComponentInChildren<TextMeshProUGUIEx>(true);
         ImageEx _2 = obj.GetChild(3).GetChild(0).GetComponent<ImageEx>();
+        
         UnityEngine.Object.DestroyImmediate(obj.GetComponent<ToolTip>());
         ToolTip _3 = obj.GetComponent<ToolTip>();
         #endregion
@@ -105,6 +107,9 @@ internal class VRCButton : IQuickMenuElements
         VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();
         TextMeshProUGUIEx _1 = obj.GetComponentInChildren<TextMeshProUGUIEx>(true);
         ImageEx _2 = obj.GetChild(3).GetChild(0).GetComponent<ImageEx>();
+        
+        obj.GetChild(4).GetComponent<ImageEx>().gameObject.SetActive(true);
+        
         UnityEngine.Object.DestroyImmediate(obj.GetComponent<ToolTip>());
         ToolTip _3 = obj.GetComponent<ToolTip>();
         #endregion
@@ -146,6 +151,6 @@ internal class VRCButton : IQuickMenuElements
         return TMPro;
     }
     /*public VRCButton(VRCModalContainer parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.parent_menu, name, tooltip, func, sprite) { }*/
-    public VRCButton(VRCGroupBox parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.container, name, tooltip, func, sprite) { }
-    public VRCButton(VRCGroupLayout parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.container, name, tooltip, func, sprite) { }
+    public VRCButton(VRCGroupBox parent, string? name, string? tooltip, System.Action func, bool submenu, Sprite? sprite = null) : this(parent.container, name, tooltip, func, sprite) { }
+    public VRCButton(VRCGroupLayout parent, string? name, string? tooltip, System.Action func, bool submenu, Sprite? sprite = null) : this(parent.container, name, tooltip, func, submenu ,sprite) { }
 }

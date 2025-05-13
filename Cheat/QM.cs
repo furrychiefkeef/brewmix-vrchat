@@ -46,7 +46,7 @@ internal class QM
                 #region Groupbox
 
                 VRCModalContainer? PlayerMovementModal = new("Player+Movement");
-                VRCButton? T = new(Main_Groupbox, "Player", "Modify The Player", () => PlayerMovementModal.Open());
+                VRCButton? T = new(Main_Groupbox, "Player", "Modify The Player", () => PlayerMovementModal.Open(),true);
                 
                 
                 #endregion
@@ -82,7 +82,7 @@ internal class QM
                 VRCSmallButton CRL = new(Logging, "Configure RPCs List", () => Console.Beep());
                 VRCSmallButton CUEL = new(Logging, "Configure Udon Events List", () => Console.Beep());
 
-                VRCButton? R = new(Main_Groupbox, "Logging", "Configure Logging", () => Logging.Open());
+                VRCButton? R = new(Main_Groupbox, "Logging", "Configure Logging", () => Logging.Open(),true);
 
 
                 VRCToggle? Log_RPCs = new(Logging, "RPC", "parse", "parse", (x) => { Config.Logging.RPC = !Config.Logging.RPC; });
@@ -118,7 +118,7 @@ internal class QM
                 #region Modal_Render
 
                 VRCModalContainer? Renders = new("Renderer");
-                VRCButton? AC = new(Main_Groupbox, "Renders", "Render Properties", () => Renders.Open());
+                VRCButton? AC = new(Main_Groupbox, "Renders", "Render Properties", () => Renders.Open(),true);
 
                 VRCToggle? ESP = new(Renders, "ESP", "parse", "parse", (x) => { Config.Render.esp = !Config.Render.esp; });
                 VRCToggle? WALLHACKS = new(Renders, "Wallhacks", "parse", "parse", (x) =>

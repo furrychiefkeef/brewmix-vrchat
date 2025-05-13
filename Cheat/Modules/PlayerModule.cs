@@ -14,8 +14,9 @@ internal class PlayerModule
 {
     public class Movement
     {
-       
+
         static readonly List<string> _disabledColliders = new();
+
         public static void Fly()
         {
             Player player = GameUtils.PlayerModel.Get();
@@ -44,7 +45,7 @@ internal class PlayerModule
                             if (!_disabledColliders.Contains(colliderbox.gameObject.name))
                                 _disabledColliders.Add(colliderbox.gameObject.name);
                         }
-                       
+
                         break;
                     case false:
                         fly_component.enabled = true;
@@ -54,16 +55,18 @@ internal class PlayerModule
                         UnityEngine.Object.DestroyImmediate(fly_component);
                         break;
                 }
-                
-                
+
+
                 sconsole.print($"[LOCAL_PLAYER] Fly is Set to {Config.Movement.fly}", 1);
                 GameUtils.UI.HUD.ToastV2("Player+Movement", $"Fly is set to {Config.Movement.fly}");
                 GameUtils.UI.HUD.Alert($"Fly is set to {Config.Movement.fly}", GameUtils.UI.HUD.AlertType.QuickMenu);
+
                 #endregion
 
             }
 
         }
+
         public static void ForceJump(bool state)
         {
             #region REQUIRED_COMPONENTS
@@ -101,16 +104,17 @@ internal class PlayerModule
         public static void ClickTP()
         {
             Player player = GameUtils.PlayerModel.Get();
-            if(!player && !GameUtils.World.IsWorldLoaded() || GameUtils.Gameplay.CallbackEvents.IsInMainMenu) return;
-            if(Physics.Raycast(GameUtils.Camera.Get.transform.position, GameUtils.Camera.Get.transform.forward, out RaycastHit hit)) player.transform.position = hit.point;
+            if (!player && !GameUtils.World.IsWorldLoaded() || GameUtils.Gameplay.CallbackEvents.IsInMainMenu) return;
+            if (Physics.Raycast(GameUtils.Camera.Get.transform.position, GameUtils.Camera.Get.transform.forward, out RaycastHit hit)) player.transform.position = hit.point;
         }
 
         private static Coroutine _spinbotCoroutine;
+
         public static void Spinbot(bool state, float spinSpeed = 1f)
-        {   
+        {
             /*Player player = GameUtils.PlayerModel.Get();
             if (!player) return;
-            
+
             if(state && _spinbotCoroutine == null)
             {
                 _spinbotCoroutine = player.StartCoroutine(SpinbotRoutine(player, spinSpeed).WrapToIl2Cpp());
@@ -125,120 +129,130 @@ internal class PlayerModule
             GameUtils.UI.HUD.Alert($"Spinbot is set to {state}", GameUtils.UI.HUD.AlertType.QuickMenu);
 
         }
- 
+
     }
-    public class Camera
+
+    public class CCamera
     {
-        public enum CameraView
+        public enum View
         {
-            second_person, 
+            second_person,
             third_person,
             freecam,
         }
-        public class View
+
+        private static UnityEngine.Camera MakeCameras(View view)
         {
-            private static UnityEngine.Camera MakeCameras(CameraView view)
+            GameObject cameraObject = new($"{view}_Camera");
+            cameraObject.AddComponent<UniversialTags>().AddTagToObject("V-Cams");
+            if (GameUtils.Camera.Get != null)
             {
-                GameObject cameraObject = new($"{view}_Camera");
-                cameraObject.AddComponent<UniversialTags>().AddTagToObject("V-Cams");
-                if (GameUtils.Camera.Get != null)
-                {
-                    UnityEngine.Camera? referenceCamera = GameUtils.Camera.Get;
+                UnityEngine.Camera? referenceCamera = GameUtils.Camera.Get;
 
-                    if (referenceCamera != null)
-                    {
-                        cameraObject.transform.localScale = referenceCamera.transform.localScale;
-                        cameraObject.transform.parent = referenceCamera.transform;
-                        cameraObject.transform.rotation = referenceCamera.transform.rotation;
+                if (referenceCamera != null)
+                {
+                    cameraObject.transform.localScale = referenceCamera.transform.localScale;
+                    cameraObject.transform.parent = referenceCamera.transform;
+                    cameraObject.transform.rotation = referenceCamera.transform.rotation;
 
-                        var camera = cameraObject.AddComponent<UnityEngine.Camera>();
-                        camera.fieldOfView = referenceCamera.fieldOfView;
-                        camera.nearClipPlane /= 4f;
-                        if (referenceCamera != null) camera.cullingMask = -524289;
-                        // First apply rotation based on the view type
-                        switch (view)
-                        {
-                            case CameraView.second_person:
-                                cameraObject.transform.Rotate(new Vector3(0f, 180f, 0f));
-                                cameraObject.transform.position = referenceCamera.transform.position + (referenceCamera.transform.forward * 2f);
-                                return camera;
-                            case CameraView.third_person:
-                                cameraObject.transform.Rotate(Vector3.zero);
-                                cameraObject.transform.position = referenceCamera.transform.position + (-referenceCamera.transform.forward * 2f);
-                                return camera;
-                            case CameraView.freecam:
-                                cameraObject.transform.position = referenceCamera.transform.position + (-cameraObject.transform.forward * 2f);
-                                cameraObject.AddComponent<AudioListener>();
-                                cameraObject.AddComponent<FlyManager>().AnyObject = true;
-                                return camera;
-                        }
-                    }
-                }
-                return null;
-            }
-            private static int currentView = -1;
-            public static UnityEngine.Camera[] camera;
-            public static void CameraController()
-            {
-                if(camera[0] == null && camera[1] == null && camera[2] == null)
-                {
-                    camera[0] = MakeCameras(CameraView.third_person); 
-                    camera[1] = MakeCameras(CameraView.second_person);
-                    camera[2] = MakeCameras(CameraView.freecam);
-                }
-                currentView = (currentView + 1) % 3;
-                if (camera[0] != null && s != null && f != null)
-                {
-                    switch (currentView)
+                    var camera = cameraObject.AddComponent<UnityEngine.Camera>();
+                    camera.fieldOfView = referenceCamera.fieldOfView;
+                    camera.nearClipPlane /= 4f;
+                    if (referenceCamera != null) camera.cullingMask = -524289;
+
+                    switch (view)
                     {
-                        case 0:
-                            GameUtils.UI.HUD.ToastV1("Third Person Activated!");
-                            camera[0].enabled = true;
-                            camera[1].enabled = false;
-                            camera[2].enabled = false;
-                            break;
-                        case 1:
-                            GameUtils.UI.HUD.ToastV1("Second Person Activated!");
-                            camera[0].enabled = false;
-                            camera[1].enabled = true;
-                            camera[2].enabled = false;
-                            break;
-                        case 2:
-                            GameUtils.UI.HUD.ToastV1("FreeCam Activated! Right Click (To Move Camera)");
-                            GameUtils.PlayerModel.Get().VRCPlayerApi.Immobilize(true);
-                            camera[0].enabled = false;
-                            camera[1].enabled = false;
-                            camera[2].enabled = true;
-                            break;
-                        case 3:
-                            DestoryCameras();
-                            break;
+                        case View.second_person:
+                            cameraObject.transform.Rotate(new Vector3(0f, 180f, 0f));
+                            cameraObject.transform.position = referenceCamera.transform.position + (referenceCamera.transform.forward * 2f);
+                            return camera;
+                        case View.third_person:
+                            cameraObject.transform.Rotate(Vector3.zero);
+                            cameraObject.transform.position = referenceCamera.transform.position + (-referenceCamera.transform.forward * 2f);
+                            return camera;
+                        case View.freecam:
+                            cameraObject.transform.position = referenceCamera.transform.position + (-cameraObject.transform.forward * 2f);
+                            cameraObject.AddComponent<AudioListener>();
+                            cameraObject.AddComponent<FlyManager>().AnyObject = true;
+                            return camera;
                     }
                 }
             }
-            public static void DestoryCameras() => UniversialTags.Destory("V-Cams");
+
+            return null;
         }
+
+        private static int currentView = -1;
+        public static UnityEngine.Camera[]? camera = new UnityEngine.Camera[3];
+
+        public static void CameraController()
+        {
+            if (camera == null) camera = new UnityEngine.Camera[3];
+            if (camera[0] == null && camera[1] == null && camera[2] == null)
+            {
+                camera[0] = MakeCameras(View.third_person);
+                camera[1] = MakeCameras(View.second_person);
+                camera[2] = MakeCameras(View.freecam);
+            }
+
+            currentView = (currentView + 1) % 4;
+            if (camera[0] != null && camera[1] != null && camera[2] != null)
+            {
+                switch (currentView)
+                {
+                    case 0:
+                        GameUtils.UI.HUD.ToastV1("Third Person Activated!");
+                        camera[0].enabled = true;
+                        camera[1].enabled = false;
+                        camera[2].enabled = false;
+                        break;
+                    case 1:
+                        GameUtils.UI.HUD.ToastV1("Second Person Activated!");
+                        camera[0].enabled = false;
+                        camera[1].enabled = true;
+                        camera[2].enabled = false;
+                        break;
+                    case 2:
+                        GameUtils.UI.HUD.ToastV1("FreeCam Activated! Right Click (To Move Camera)");
+                        camera[0].enabled = false;
+                        camera[1].enabled = false;
+                        camera[2].enabled = true;
+                        break;
+                    case 3:
+                        GameUtils.UI.HUD.ToastV1("Cameras Destoryed");
+                        DestoryCameras();
+                        break;
+                }
+            }
+        }
+
+        public static void DestoryCameras() => UniversialTags.Destory("V-Cams");
     }
 
     public static class Body
     {
         static GameObject AvatarObj;
+
         public static GameObject Clone(VRC.Player player)
         {
             Transform? head = player._vrcplayer.VRCPlayerApi.GetBoneTransform(HumanBodyBones.Head);
             head.localScale = new Vector3(1f, 1f, 1f);
-            if (AvatarObj ==null)
+            if (AvatarObj == null)
             {
                 AvatarObj = UnityEngine.Object.Instantiate(player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0);
                 AvatarObj.transform.position = player.transform.position;
             }
+
             return AvatarObj;
         }
     }
+    
+    
+    
+    
+    
+    
 }
-
-
- 
 
 
 

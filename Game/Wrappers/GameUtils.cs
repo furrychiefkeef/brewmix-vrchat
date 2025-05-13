@@ -286,7 +286,7 @@ internal class GameUtils
 
                 foreach (var carousel in UnityEngine.Object.FindObjectsOfType<Hud_UserEventCarousel>())
                 {
-                    if (carousel?.field_Private_List_1_MonoBehaviourPublicObteCaSiImSidiCaSiUnique_0.Count != 0)
+                    if (carousel?.field_Private_List_1_MonoBehaviourPublicObteCaSiImSidiCaSiUnique_0.Count == 0)
                         return _carousel = carousel;
                 }
 
@@ -306,7 +306,7 @@ internal class GameUtils
             }
 
             public static void ToastV2(string? title, string? content = null, float duration = 2f,
-                Sprite? sprite = null)
+                Sprite? sprite = default)
             {
                 VRC.UI.Client.HUD.HudController
                     .field_Public_Static_HudController_0
