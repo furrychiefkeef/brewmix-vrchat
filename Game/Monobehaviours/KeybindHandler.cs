@@ -24,8 +24,7 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
         
             #region Keybinds
 
-            if (Input.GetKeyDown(KeyCode.F5)) PlayerModule.Camera.View.ChangeCamera(PlayerModule.Camera.CameraView.third_person);
-            if (Input.GetKeyDown(KeyCode.F6)) PlayerModule.Camera.View.ChangeCamera(PlayerModule.Camera.CameraView.second_person);
+            if (Input.GetKeyDown(KeyCode.F5)) PlayerModule.Camera.View.CameraController();
             if (Input.GetKeyDown(KeyCode.Backspace)) PlayerModule.Camera.View.DestoryCameras();
             
             if (Input.GetKeyDown(KeyCode.Mouse2))  PlayerModule.Movement.ClickTP();

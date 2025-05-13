@@ -20,8 +20,7 @@ internal class CSS : UnityEngine.MonoBehaviour
     {
         if (Instance is null)
         {
-            Instance = this;
-            DontDestroyOnLoad(this);
+            Instance = this; DontDestroyOnLoad(this);
         }   
         else Destroy(this);
     }

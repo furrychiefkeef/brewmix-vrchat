@@ -297,8 +297,7 @@ internal class GameUtils
             {
                 try
                 {
-                    GetCarousel()
-                        ?.Method_Private_Void_LocalizableString_Sprite_Single_0(content.Localize(), sprite, duration);
+                    GetCarousel()?.Method_Private_Void_LocalizableString_Sprite_Single_0(content.Localize(), sprite, duration);
                 }
                 catch (Exception ex)
                 {
@@ -465,27 +464,71 @@ internal class GameUtils
         }
     }
 
-   
 }
 
 
-public static class Player_Extensions
-{
-    public static VRC.Player? GetPlayer(this string name)
+    public static class PlayerExtensions
     {
-
-        if (string.IsNullOrEmpty(name))
-            return null;
-        
-        foreach (var player in GameUtils.PlayerModel.Matchmaking.GetAllPlayers)
+        public static Color GetTrustColor(this VRC.Player player)
         {
-            if (player.APIUser.IsSelf || player._vrcplayer == null || player._vrcplayer._player == null)
-                continue;
-            
-            if (string.Equals(player.APIUser.displayName, name, StringComparison.OrdinalIgnoreCase))
-                return player._vrcplayer._player;
+            return player.APIUser switch
+            {
+                { hasTrustedTrustLevel: true } => VRCPlayer.field_Internal_Static_Color_6,
+                { hasKnownTrustLevel: true } => VRCPlayer.field_Internal_Static_Color_5,
+                { hasBasicTrustLevel: true } => VRCPlayer.field_Internal_Static_Color_4,
+                { isNewUser: true } => VRCPlayer.field_Internal_Static_Color_3,
+                { hasNegativeTrustLevel : true } => VRCPlayer.field_Internal_Static_Color_9,
+                { hasVeryNegativeTrustLevel : true } => VRCPlayer.field_Internal_Static_Color_0,
+                _ => Color.white
+            };
         }
+        public static string? GetTrustRank(this VRC.Player player)
+        {
+            return player.APIUser switch
+            {
+                { hasTrustedTrustLevel: true } => "Trusted",
+                { hasKnownTrustLevel: true } => "Known",
+                { isNewUser: true } => "New User",
+                { hasBasicTrustLevel: true } => "User",
+                { hasNegativeTrustLevel : true } => "Nuisance",
+                { hasVeryNegativeTrustLevel : true } => "Very Retarded",
+                _ => "Visitor"
+            };
+        }
+        public static string? IsFriend(this VRC.Player player)
+        {
+            return player.APIUser.isFriend ? "Friend" : null;
+        }
+        public static string? IsAdult(this VRC.Player player)
+        {
+            return player.APIUser.isAdult ? "[18+]" : "[-18]";
+        }
+        public static VRC.Player? GetPlayer(this string name)
+        {
+
+            if (string.IsNullOrEmpty(name))
+                return null;
+        
+            foreach (var player in GameUtils.PlayerModel.Matchmaking.GetAllPlayers)
+            {
+                if (player.APIUser.IsSelf || player._vrcplayer == null || player._vrcplayer._player == null)
+                    continue;
+            
+                if (string.Equals(player.APIUser.displayName, name, StringComparison.OrdinalIgnoreCase))
+                    return player._vrcplayer._player;
+            }
     
-        return null;
+            return null;
+        }
+        public static VRC.Player? GetPlayerFromActor(this int id)
+        {
+            foreach (var player in GameUtils.PlayerModel.Matchmaking.GetAllPlayers)
+            {
+                if (player.VRCPlayerApi.playerId == id)
+                {
+                    return player;
+                }
+            }
+            return null;
+        }
     }
-}

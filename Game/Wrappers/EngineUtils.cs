@@ -9,13 +9,18 @@ namespace Brewchat.Game.Wrappers
 {
     internal static class EngineUtils
     {
-        
-        public struct Conversion 
+
+        public struct Conversion
         {
             public static Color HexToColor(string hex)
             {
                 ColorUtility.TryParseHtmlString(hex, out Color color);
                 return color;
+            }
+
+            public static string ColorToHex(Color color)
+            {
+                return ColorUtility.ToHtmlStringRGB(color);
             }
         }
 

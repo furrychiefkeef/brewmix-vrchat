@@ -131,10 +131,9 @@ namespace brewchat.hybridxcore.bep
         {
             if (__0 != null && !__0.APIUser.IsSelf)
             {
-                if (__0.APIUser.allowAvatarCopying != true) __0.APIUser.allowAvatarCopying = true;
-
-                /*__0.gameObject.AddComponent<wallhacks>();*/
-                sconsole.print($"Player Joined: {__0.VRCPlayerApi.displayName} | Actor: {__0.VRCPlayerApi.playerId}", 0);
+                Player? player = __0;
+                if (player.APIUser.allowAvatarCopying != true) player.APIUser.allowAvatarCopying = true;
+                sconsole.print($"Player Joined:  <color=#ff0000>{player.IsAdult()}</color> <color=#{EngineUtils.Conversion.ColorToHex(player.GetTrustColor())}>[{player.GetTrustRank()}]</color> {player.VRCPlayerApi.displayName} : ({player.APIUser.id}) | ACTOR: {player.VRCPlayerApi.playerId}", 0);
             }
         }
 
@@ -143,7 +142,8 @@ namespace brewchat.hybridxcore.bep
         {
             if (__0 != null && !__0.APIUser.IsSelf)
             {
-                sconsole.print($"Player Left: {__0.VRCPlayerApi.displayName}", 0);
+                Player? player = __0;
+                sconsole.print($"Player Left: {player.VRCPlayerApi.displayName} : ({player.APIUser.id})", 0);
             }
         }
 
@@ -212,41 +212,9 @@ namespace brewchat.hybridxcore.bep
                 }
             }
         }
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.TriggerEvent), 
-          typeof(VRC_EventHandler) ,
-          typeof(VRC_EventHandler.VrcEvent),
-          typeof(VRC_EventHandler.VrcBroadcastType),
-          typeof(int) ,
-          typeof(float))]
-        public static void SD2(VRC_EventDispatcherRFC __instance, VRC_EventHandler __0, VRC_EventHandler.VrcEvent __1, VRC_EventHandler.VrcBroadcastType __2, int __3, float __4)
-        {
-            // Additional null checks and logging
-            if (__instance == null)
-            {
-                return;
-            }
-
-            try
-            {
-                Networking.SetOwner(GameUtils.PlayerModel.Get().VRCPlayerApi, __0.gameObject);
-                __2 = VRC_EventHandler.VrcBroadcastType.Owner;
-                sconsole.internal_log($"SDK2: " +
-                                      $"Handler: {__0.name ?? "null"} | " +
-                                      $"Event: {__1.ParameterString ?? "null"} | " +
-                                      $"KAST: {__2} | " +
-                                      $"Instagator Value: {__3}" +
-                                      $"FastForward Value: {__4}");
-                
-            }
-            catch (System.Exception ex)
-            {
-                sconsole.internal_log($"Error in SD2 patch: {ex.Message}");
-            }
-        }
     }
 }
-  
+
+
 
   

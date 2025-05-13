@@ -21,9 +21,9 @@ internal class VRCWingButton : IMainMenuElements
     public VRCWingButton(Transform parent, SDKUtils.Wing.Position position, string? name,  string? tooltip, System.Action func, Sprite? sprite = null)
         {
             if (!MainMenu() | !MMControls.Buttons.WingButton("Left") || !MMControls.Buttons.WingButton("Right")) throw new($"wing button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-            parent ??= MMFallbacks._Fallback_Dashboard_Group_MM_UI_WingButtons(SDKUtils.Wing.SetWingPosition(position));
+            parent ??= MMFallbacks._Fallback_Dashboard_Group_MM_UI_WingButtons($"{position}");
          
-             UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.WingButton(SDKUtils.Wing.SetWingPosition(position)), parent);
+             UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.WingButton($"{position}"), parent);
              obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_WINGBUTTON_BUTTON";
 
            

@@ -9,7 +9,7 @@ public static class Vision
     {
         public static void GiveTag([Optional] string player)
         {
-            GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter Tag:", (x) =>
+            GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter Tag", (x) =>
             {
                 
             }, Placeholder: "This sets the players tag", MultiLine: false );

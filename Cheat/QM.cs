@@ -27,16 +27,16 @@ internal class QM
      
                 #region Begin
 
-                var MainPage = new VRCPage(Entry.FULLNAME, ShowScrollWheel: false);
+                var MainPage = new VRCPage(Entry.FULLNAME, ShowScrollWheel: true);
                 new VRCTab(MainPage, "The passion project.",
                     sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
 
                 VRCWingButton WING_A = new(null,
-                    SDKUtils.Wing.Position.L, Entry.NAME, "The passion project.",
+                    SDKUtils.Wing.Position.Left, Entry.NAME, "The passion project.",
                     () => sconsole.print("passion_fruit", 1));
                 
                 VRCWingButton WING_B = new(null,
-                    SDKUtils.Wing.Position.R, Entry.NAME, "The passion project.",
+                    SDKUtils.Wing.Position.Right, Entry.NAME, "The passion project.",
                     () => sconsole.print("passion_fruit", 1));
                 
                 #endregion
@@ -69,13 +69,8 @@ internal class QM
                 {
                     var _player = GameUtils.PlayerModel.Get();
                     var gameObject = PlayerModule.Body.Clone(_player);
-                    if (gameObject != null && x == false)
-                    {
-                        UnityEngine.Object.Destroy(gameObject);
-                    }
+                    if (gameObject != null && x == false) UnityEngine.Object.Destroy(gameObject);
                     _player.GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
-                    
-                    
                 });
                 #endregion
 
@@ -150,12 +145,9 @@ internal class QM
                     var selecteduser= GameUtils.PlayerModel.Matchmaking.GetSelectedUser();
                     if (selecteduser != null)
                     {
-                        bool isFrozen = false;
-                       
-                        sconsole.print(
-                            isFrozen 
-                                ? $"<color=red>[Frozen]</color>: {selecteduser.APIUser.displayName}" 
-                                : $"<color=red>[UnFrozen]</color>: {selecteduser.APIUser.displayName}", 
+                        sconsole.print(x ? 
+                                $"<color=red>[Frozen]</color>: {selecteduser.APIUser.displayName}" : 
+                                $"<color=red>[UnFrozen]</color>: {selecteduser.APIUser.displayName}", 
                             0
                         );
                         selecteduser.GetComponent<FlatBufferNetworkSerializer>().enabled = !x;

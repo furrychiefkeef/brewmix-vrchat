@@ -12,8 +12,7 @@ internal class Toolbox : UnityEngine.MonoBehaviour
     {
         if (Instance is null)
         {
-            Instance = this;
-            DontDestroyOnLoad(this);
+            Instance = this; DontDestroyOnLoad(this);
         }
         else Destroy(this);
     }
@@ -28,7 +27,7 @@ internal class Toolbox : UnityEngine.MonoBehaviour
     }
     public static void LoadMyUI()
     {
-       GameObject? load = EngineUtils.Assets.AssetBundle(new Uri("https://cdn.discordapp.com/attachments/1365105880965713960/1365105938251386890/intro?ex=68232bba&is=6821da3a&hm=6e8b77a1f2fba56d6a476f260204a060ec26a1c8a216af7f9582d50d9bb31abf&"), "february introduction", false);
+       GameObject? load = EngineUtils.Assets.AssetBundle(new Uri("https://cdn.discordapp.com/attachments/1365105880965713960/1365105938251386890/intro?ex=68247d3a&is=68232bba&hm=8a026d36846a51f600c155bf93d0532ada945f9758047a75b2a5058a9c712b73&"), "february introduction", false);
        load.GetComponentInChildren<GraphicRaycaster>().enabled = false;
     }
 }

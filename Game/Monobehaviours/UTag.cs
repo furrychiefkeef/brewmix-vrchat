@@ -1,12 +1,26 @@
-﻿namespace Brewchat.Game.Monobehaviours;
+﻿using UnityEngine;
 
-public class UTag : UnityEngine.MonoBehaviour
+namespace Brewchat.Game.Monobehaviours;
+
+
+/// <summary>
+/// Universial Tags (NOT FOR VRCHAT)
+/// </summary>
+public class UniversialTags : UnityEngine.MonoBehaviour
 {
-    void Awake(){}
+    public static Dictionary<GameObject, string>? Objects { get; } = new(); 
     
-    public string identifer { get; set; }
-    public void SetTag(string tag)
+    public void AddTagToObject(string tag)
     {
-        identifer = tag;
+        Objects?.Add(transform.gameObject, tag);
+    }
+    public static void Destory(string id)
+    {
+        Objects?.ToList().ForEach(x =>
+        {
+            if (x.Value == id) Destroy(x.Key);
+        });
     }
 }
+        
+   

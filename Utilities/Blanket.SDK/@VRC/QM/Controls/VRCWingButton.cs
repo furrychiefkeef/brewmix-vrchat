@@ -21,9 +21,9 @@ internal class VRCWingButton : IQuickMenuElements
     public VRCWingButton(Transform parent, SDKUtils.Wing.Position position, string? name,  string? tooltip, System.Action func, Sprite? sprite = null)
         {
             if (!QuickMenu() | !QMControls.Buttons.WingButton("Left") || !QMControls.Buttons.WingButton("Right")) throw new($"wing button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-            parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_WingButtons(SDKUtils.Wing.SetWingPosition(position));
+            parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_WingButtons($"{position}");
          
-             UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.WingButton(SDKUtils.Wing.SetWingPosition(position)), parent);
+             UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.WingButton($"{position}"), parent);
              obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_WINGBUTTON_BUTTON";
 
            
