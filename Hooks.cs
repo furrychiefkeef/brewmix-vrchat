@@ -29,7 +29,7 @@ namespace brewchat.hybridxcore.bep
     {
         static bool OfflineUILoaded = false;
         static bool OnlineUILoaded = false;
-        public static Il2CppSystem.Collections.Generic.KeyValuePair<byte, Object>? xdata;
+        
         #region INTERNAL_CORE
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCApplication), nameof(VRCApplication.Awake))]
@@ -133,7 +133,7 @@ namespace brewchat.hybridxcore.bep
             {
                 Player? player = __0;
                 if (player.APIUser.allowAvatarCopying != true) player.APIUser.allowAvatarCopying = true;
-                sconsole.print($"Player Joined:  <color=#ff0000>{player.IsAdult()}</color> <color=#{EngineUtils.Conversion.ColorToHex(player.GetTrustColor())}>[{player.GetTrustRank()}]</color> {player.VRCPlayerApi.displayName} : ({player.APIUser.id}) | ACTOR: {player.VRCPlayerApi.playerId}", 0);
+                sconsole.print($"Player Joined: <color=#ff0000>[{player.IsAdult()}]</color> <color=#{EngineUtils.Conversion.ColorToHex(player.GetTrustColor())}>[{player.GetTrustRank()}]</color> {player.VRCPlayerApi.displayName} : ({player.APIUser.id}) | ACTOR: {player.VRCPlayerApi.playerId}", 0);
             }
         }
 
@@ -181,7 +181,7 @@ namespace brewchat.hybridxcore.bep
             }
         }
 
-        [HarmonyPostfix, HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomNetworkEvent), new Type[] { typeof(NetworkEventTarget), typeof(string) })]
+        [HarmonyPostfix, HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomNetworkEvent), typeof(NetworkEventTarget), typeof(string) )]
         public static void UdonEventLog(ref UdonBehaviour __instance, ref NetworkEventTarget __0, string __1)
         {
 
@@ -211,6 +211,12 @@ namespace brewchat.hybridxcore.bep
                     }
                 }
             }
+        }
+        [HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.Method_Public_Void_Player_VrcEvent_VrcBroadcastType_Int32_Single_0))]
+        public static void RFC(ref VRC.Player __0, ref VRC_EventHandler.VrcEvent __1, ref VRC_EventHandler.VrcBroadcastType __3, ref int __4, ref float ___5)
+        {
+            __3 = VRC_EventHandler.VrcBroadcastType.Always;
+            sconsole.internal_log($"{__0.APIUser.displayName},{__1.ParameterString},{__3},{__4},{___5}");
         }
     }
 }

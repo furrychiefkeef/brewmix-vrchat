@@ -86,7 +86,7 @@ namespace Brewchat.Game.Wrappers
  
             public static Texture2D? INTERNAL_Texture(byte[] data)
             {
-                Texture2D texture = new(512, 512);
+                Texture2D texture = new(0, 0);
                 texture.LoadImage(data);
                 if (texture != null) texture.name = "resources.dev";
                 return texture;

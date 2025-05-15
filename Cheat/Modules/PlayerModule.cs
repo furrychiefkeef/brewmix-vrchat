@@ -36,8 +36,8 @@ internal class PlayerModule
                 switch (Config.Movement.fly)
                 {
                     case true:
+                        motion_state.field_Private_EnumNPrivateSealedvaNoPrFoAi5vUnique_0 = VRCMotionState.EnumNPrivateSealedvaNoPrFoAi5vUnique.None;
                         fly_component.enabled = true;
-                        motion_state.enabled = false;
                         characterController.enabled = false;
                         List<Collider> body_colliders = player.GetComponents<Collider>().ToList();
                         foreach (Collider colliderbox in body_colliders)
@@ -49,7 +49,6 @@ internal class PlayerModule
                         break;
                     case false:
                         fly_component.enabled = true;
-                        motion_state.enabled = true;
                         characterController.enabled = true;
                         motion_state.Reset();
                         UnityEngine.Object.DestroyImmediate(fly_component);
@@ -171,9 +170,10 @@ internal class PlayerModule
                             cameraObject.transform.position = referenceCamera.transform.position + (-referenceCamera.transform.forward * 2f);
                             return camera;
                         case View.freecam:
+                            cameraObject.transform.parent = null;
                             cameraObject.transform.position = referenceCamera.transform.position + (-cameraObject.transform.forward * 2f);
                             cameraObject.AddComponent<AudioListener>();
-                            cameraObject.AddComponent<FlyManager>().AnyObject = true;
+                            cameraObject.AddComponent<FlyManager>().AllowRotation = true;
                             return camera;
                     }
                 }

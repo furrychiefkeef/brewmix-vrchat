@@ -6,7 +6,7 @@ namespace Brewchat.Game.Monobehaviours;
 
 internal class FlyManager : UnityEngine.MonoBehaviour
 {
-    public bool AnyObject { get; set; } = false;
+    public bool AllowRotation { get; set; } = false;
     public bool Player { get; set; } = false;
     void LateUpdate() => Controller();
 
@@ -35,13 +35,13 @@ internal class FlyManager : UnityEngine.MonoBehaviour
         targetDirection += GameUtils.Camera.Get.transform.right * GameUtils.VRChatUtils.InputManager.GetInput("Horizontal").prop_Single_2;
         targetDirection.Normalize();
 
-        if (!Config.Movement.abruptness2motion)
+        /*if (!Config.Movement.abruptness2motion)
         {
             if (targetDirection != Vector3.zero) velocity = Vector3.Lerp(velocity, targetDirection * speed, acceleration * Time.deltaTime);
             else velocity = Vector3.Lerp(velocity, Vector3.zero, deceleration * Time.deltaTime);
-        }
-        transform.position += velocity * Time.deltaTime;
+        }*/
+        transform.position += targetDirection * (speed * Time.deltaTime) ;
 
-        if (AnyObject) transform.rotation = GameUtils.Camera.Get.transform.rotation;
+        if (AllowRotation) transform.rotation = GameUtils.Camera.Get.transform.rotation;
     }
 }

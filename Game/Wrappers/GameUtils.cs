@@ -495,13 +495,14 @@ internal class GameUtils
                 _ => "Visitor"
             };
         }
-        public static string? IsFriend(this VRC.Player player)
+        public static string IsFriend(this VRC.Player player)
         {
+            
             return player.APIUser.isFriend ? "Friend" : null;
         }
-        public static string? IsAdult(this VRC.Player player)
+        public static string IsAdult(this VRC.Player player)
         {
-            return player.APIUser.isAdult ? "[18+]" : "[-18]";
+            return player.APIUser.ageVerified ? "+18" : "-18";
         }
         public static VRC.Player? GetPlayer(this string name)
         {
@@ -524,10 +525,7 @@ internal class GameUtils
         {
             foreach (var player in GameUtils.PlayerModel.Matchmaking.GetAllPlayers)
             {
-                if (player.VRCPlayerApi.playerId == id)
-                {
-                    return player;
-                }
+                if (player.VRCPlayerApi.playerId == id) return player;
             }
             return null;
         }

@@ -18,7 +18,7 @@ public class simgui : MonoBehaviour
     static string console_flag = "[SYSTEM]";
     Rect console_container_rect = new (0, 0, 0, 0);
     bool CONSOLE_UI; 
-    int fontSize = 14;
+    int fontSize = 11;
     private Dictionary<int, float> textAlpha = new Dictionary<int, float>();
    
     private string v = string.Empty;
@@ -39,7 +39,7 @@ public class simgui : MonoBehaviour
     {
         string? introduct = $"{Guid.NewGuid().ToString()} {console_flag} HI!!!! <color=#9185E6><b>{Environment.UserName}</b></color> !!! get ready to make some noise :D";
         sconsole.print(introduct,0);
-        sconsole.internal_log(new string('─',introduct.Length));
+        sconsole.internal_log(new string('─',introduct.Length));    
     }
     void Update() => KeysHandler();
 
@@ -83,7 +83,7 @@ public class simgui : MonoBehaviour
     void KeysHandler()
     {
         if (UnityEngine.Input.GetKeyDown(KeyCode.Home)) CONSOLE_UI = !CONSOLE_UI;
-        if (UnityEngine.Input.GetKeyDown(KeyCode.PageUp)) { sconsole.clr(); sconsole.internal_log("clear!"); sconsole.clr(); }
+        if (UnityEngine.Input.GetKeyDown(KeyCode.PageUp)) { sconsole.clr(); }
     }
 }
 
