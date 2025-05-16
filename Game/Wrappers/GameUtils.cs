@@ -360,15 +360,15 @@ internal class GameUtils
 
             #region HUD_V1
 
-            public static void PopUp(string? title = null, string? content = null, float duration = 10f)
+            public static void PopUp(string title = null, string content = null, float duration = 10f)
             {
-                VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
+                VRCUiManager.prop_VRCUiManager_0.prop_VRCUiPopupManager_0
                     .Method_Public_Void_LocalizableString_LocalizableString_Single_0
                         (title.Localize(), content.Localize(), duration);
             }
-            public static void PopUp2(string? title = null, string? content = null, string? uhz = null, Action func = null)
+            public static void PopUp2(string title = null, string content = null, string? uhz = null, Action func = null)
             {
-                VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
+                VRCUiManager.prop_VRCUiManager_0.prop_VRCUiPopupManager_0
                     .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_Action_1_VRCUiPopup_0
                         (title.Localize(), content.Localize(), uhz.Localize(),func);
             }

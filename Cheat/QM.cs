@@ -48,15 +48,13 @@ internal class QM
                 #region Groupbox
 
                 VRCModalContainer? PlayerMovementModal = new("Player+Movement");
-                VRCButton? T = new(Main_Groupbox, "Player", "Modify The Player", () => PlayerMovementModal.Open(),true);
-                
-                
+                VRCButton? T = new(Main_Groupbox, "Player", "Modify The Player", PlayerMovementModal.Open,true);
+         
                 #endregion
                 
                 #region Modal_Player+Movement
 
-                VRCSmallButton Injection = new(PlayerMovementModal, "Injection",
-                    () => sconsole.print("passion_fruit", 1));
+                VRCSmallButton Injection = new(PlayerMovementModal, "Injection", () => sconsole.print("passion_fruit", 1));
                 VRCToggle? Fly = new(PlayerMovementModal, "Fly", "Turn Fly On", "Turn Fly Off", (x) =>
                 {
 
@@ -132,11 +130,12 @@ internal class QM
 
                 VRCModalContainer trigger = new ("trigger");
                 VRCButton? M = new(Main_Groupbox, "Trigger", "Misc Properties", () => trigger.Open(),true);
+                VRCSmallButton? trigger_button = new(trigger, "Trigger", OptimizeBox.DestoryWalls);
                 
-                VRCButton? Color = new(trigger, "Color", "Color", OptimizeBox.Color);
-                VRCButton? Walls = new(trigger, "Walls", "Walls", OptimizeBox.Walls); 
-                VRCButton? Normal_Mirror = new(trigger, "Normal Mirror", "Change Mirror", OptimizeBox.NormalMirror);
-                VRCButton? Optimize_Mirror = new(trigger, "Optimize Mirror", "Change Mirror", OptimizeBox.OptimizedMirror);
+                trigger.AddButton("Color", "Color", OptimizeBox.Color);
+                trigger.AddButton("Walls", "Walls", OptimizeBox.Walls); 
+                trigger.AddButton( "Normal Mirror", "Change Mirror", OptimizeBox.NormalMirror);
+                trigger.AddButton("Optimize Mirror", "Change Mirror", OptimizeBox.OptimizedMirror);
                 
                 #endregion
 
