@@ -1,8 +1,10 @@
 ﻿using BlanketSDK.Core;
 using Brewchat.Cheat.Modules;
+using Brewchat.Game.Wrappers;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using Syrup.IMGUI;
 using TMPro;
 using UnityEngine;
 using VRC;
@@ -249,8 +251,7 @@ internal class GameUtils
                         .field_Private_IUser_0.prop_String_1.GetPlayer()
                         ?._vrcplayer._player;
             }
-            public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetAllPlayers =>
-                PlayerManager.prop_PlayerManager_0.PlayerList;
+            public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetAllPlayers => PlayerManager.prop_PlayerManager_0.PlayerList;
         }
     }
 
@@ -261,6 +262,22 @@ internal class GameUtils
         {
             Networking.GoToRoom(worldId);
             return worldId;
+        }
+
+        public class SDK2
+        {
+            public static void InteractWithTrigger(string triggerobj)
+            {
+                foreach (VRCSDK2.VRC_Trigger? trigger in UnityEngine.Object.FindObjectsOfType<VRCSDK2.VRC_Trigger>())
+                {
+                    if (trigger.gameObject.name.Contains(triggerobj))
+                    {
+                        trigger.Interact();
+                        UI.HUD.ToastV2("Sent Trigger", trigger.gameObject.name);
+                        return;
+                    }
+                }
+            } 
         }
     }
 

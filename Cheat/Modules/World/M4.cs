@@ -6,7 +6,7 @@ using VRC.Udon;
 using VRC.Udon.Common.Interfaces;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
-namespace Brewchat.Cheats.World;
+namespace Brewchat.Cheats.SDK3.World;
     
 public class M4
 {

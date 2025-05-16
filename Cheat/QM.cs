@@ -6,9 +6,11 @@ using BlanketSDK.QM.Elements.Modals;
 using BlanketSDK.Utilities;
 using Brewchat.Cheat.Flaws;
 using Brewchat.Cheat.Modules;
+using Brewchat.Cheats.SDK2.World;
 using Brewchat.Cheats.World;
 using Brewchat.Game.Wrappers;
 using UnityEngine.UI;
+using UNIXEngine.IL2CPPModding.Shims;
 using UNIXEngine.IL2CPPModding.Utils.Collections;
 using VRC.Core;
 using VRC.Networking;
@@ -77,14 +79,12 @@ internal class QM
                 #region Modal Logging__Main
 
                 VRCModalContainer? Logging = new("Logging");
+                VRCButton? R = new(Main_Groupbox, "Logging", "Configure Logging", () => Logging.Open(),true);
 
                 VRCSmallButton CEL = new(Logging, "Configure Events List", () => Console.Beep());
                 VRCSmallButton CRL = new(Logging, "Configure RPCs List", () => Console.Beep());
                 VRCSmallButton CUEL = new(Logging, "Configure Udon Events List", () => Console.Beep());
-
-                VRCButton? R = new(Main_Groupbox, "Logging", "Configure Logging", () => Logging.Open(),true);
-
-
+                
                 VRCToggle? Log_RPCs = new(Logging, "RPC", "parse", "parse", (x) => { Config.Logging.RPC = !Config.Logging.RPC; });
                 VRCToggle? Log_Events = new(Logging, "Photon", "parse", "parse", (x) => { Config.Logging.Photon = !Config.Logging.Photon; });
                 VRCToggle? Udon_Events = new(Logging, "Udon", "parse", "parse", (x) => { Config.Logging.Udon = !Config.Logging.Udon;});
@@ -127,6 +127,19 @@ internal class QM
                 });
 
                 #endregion
+                
+                #region Modal_Misc
+
+                VRCModalContainer trigger = new ("trigger");
+                VRCButton? M = new(Main_Groupbox, "Trigger", "Misc Properties", () => trigger.Open(),true);
+                
+                VRCButton? Color = new(trigger, "Color", "Color", OptimizeBox.Color);
+                VRCButton? Walls = new(trigger, "Walls", "Walls", OptimizeBox.Walls); 
+                VRCButton? Normal_Mirror = new(trigger, "Normal Mirror", "Change Mirror", OptimizeBox.NormalMirror);
+                VRCButton? Optimize_Mirror = new(trigger, "Optimize Mirror", "Change Mirror", OptimizeBox.OptimizedMirror);
+                
+                #endregion
+
             }
             catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
             finally { sconsole.print("Created The QuickMenu+BlanketSDK.UI", 1); }

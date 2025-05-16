@@ -29,7 +29,7 @@ namespace brewchat.hybridxcore.bep
     {
         static bool OfflineUILoaded = false;
         static bool OnlineUILoaded = false;
-        
+
         #region INTERNAL_CORE
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCApplication), nameof(VRCApplication.Awake))]
@@ -57,7 +57,7 @@ namespace brewchat.hybridxcore.bep
             #endregion
             QM._Pinkstar.Apply();
             MM._Pinkstar.Apply();
-            
+
             MM.SelectedMenu.Apply();
             QM.SelectedMenu.Apply();
             Toolbox.LoadMyUI();
@@ -160,67 +160,49 @@ namespace brewchat.hybridxcore.bep
 
             if (Config.Logging.Photon)
             {
-              
+
+                bool printed = false;
                 object Data = null;
                 ParameterDictionary? Parameters = __0.Parameters;
                 foreach (var data in __0.Parameters)
                 {
-                    Data = SerializationManager.FromIL2CPPToManaged<object>(data.Value);
-                    if (__0.Code == 1)
+                    if (!printed)
                     {
+                        Data = SerializationManager.FromIL2CPPToManaged<object>(data.Value);
                         string? c = System.Text.Json.JsonSerializer.Serialize(Data, new JsonSerializerOptions { AllowTrailingCommas = true });
                         sconsole.print("hook", "/photon", $" Player: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] Event Data: \n {c}", 0);
-                        if (c.Contains("IfaN0fo5NgB4vU0TH7BWslpO6BqI6MN9WYOb1HJ8KdW1WqNKAVfTUdbMYn9euoSksF1SDgDwaIQ4UD/tyDz8OUIAeIXX/76O7krXmLLajE8glg7vvITRrirzBTMLKS0lQqJu00Y0tbEihvStV3AjrxbGrzahMFuYAMlgLCh1/aA6zZjg/TkvAHi9TNXCvkYFvRlQkvZ/LLcToT2oMGAPcORVe51QMTEUx4IJdDkjaXG36+n2MBm8"))
-                        {
-                            sconsole.internal_log("FURFAGIE UCKY!!");
-                        }
+                        printed = true;
                     }
-                    
-                };
-                
-            }
-        }
-
-        [HarmonyPostfix, HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomNetworkEvent), typeof(NetworkEventTarget), typeof(string) )]
-        public static void UdonEventLog(ref UdonBehaviour __instance, ref NetworkEventTarget __0, string __1)
-        {
-
-            if (Config.Logging.Udon)
-            {
-                if (__1.Contains("_"))
-                {
-                    sconsole.print("hook", "/udon", $"Network Event: {__1}", 0);
-                }
-
-                sconsole.print("hook", "/udon", $"Node Event: {__1}", 0);
-
-
-                var eventTableField = typeof(UdonBehaviour).GetField("_eventTable", 
-                    
-                    System.Reflection.BindingFlags.NonPublic 
-                    | System.Reflection.BindingFlags.Instance);
-                if (eventTableField != null)
-                {
-                    var eventTable = eventTableField.GetValue(__instance) as Dictionary<string, uint>;
-                    if (eventTable != null)
+                    /*if (c.Contains("IfaN0fo5NgB4vU0TH7BWslpO6BqI6MN9WYOb1HJ8KdW1WqNKAVfTUdbMYn9euoSksF1SDgDwaIQ4UD/tyDz8OUIAeIXX/76O7krXmLLajE8glg7vvITRrirzBTMLKS0lQqJu00Y0tbEihvStV3AjrxbGrzahMFuYAMlgLCh1/aA6zZjg/TkvAHi9TNXCvkYFvRlQkvZ/LLcToT2oMGAPcORVe51QMTEUx4IJdDkjaXG36+n2MBm8"))
                     {
-                        foreach (var entry in eventTable)
-                        {
-                            sconsole.internal_log($"global: {entry.Key} | VAL >> [{entry.Value}]");
-                        }
-                    }
+                        sconsole.internal_log("FURFAGIE UCKY!!");
+                    }*/
                 }
+
+                ;
+
             }
         }
-        [HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.Method_Public_Void_Player_VrcEvent_VrcBroadcastType_Int32_Single_0))]
-        public static void RFC(ref VRC.Player __0, ref VRC_EventHandler.VrcEvent __1, ref VRC_EventHandler.VrcBroadcastType __3, ref int __4, ref float ___5)
+
+       
+        [HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.Method_Public_Void_Player_VrcEvent_VrcBroadcastType_Int32_Single_0))]
+        private static bool __RFCPatch(ref VRC.Player __0, ref VRC_EventHandler.VrcEvent __1, ref VRCSDK2.VRC_EventHandler.VrcBroadcastType __2, ref int __3, ref float __4)
         {
-            __3 = VRC_EventHandler.VrcBroadcastType.Always;
-            sconsole.internal_log($"{__0.APIUser.displayName},{__1.ParameterString},{__3},{__4},{___5}");
+           
+            if (__0?.VRCPlayerApi?.displayName == APIUser.CurrentUser?.displayName)
+            {
+               
+                __2 = VRC_EventHandler.VrcBroadcastType.AlwaysUnbuffered;
+                return true;
+            }
+            return true;
         }
+        
+        
+        
     }
 }
-
-
-
+    
+       
+   
   

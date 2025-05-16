@@ -174,6 +174,7 @@ internal class PlayerModule
                             cameraObject.transform.position = referenceCamera.transform.position + (-cameraObject.transform.forward * 2f);
                             cameraObject.AddComponent<AudioListener>();
                             cameraObject.AddComponent<FlyManager>().AllowRotation = true;
+                            cameraObject.transform.position = GameUtils.PlayerModel.Get().VRCPlayerApi.GetBonePosition(HumanBodyBones.Head);
                             return camera;
                     }
                 }

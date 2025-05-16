@@ -61,7 +61,7 @@ public class Config
 
     public struct Appearance
     {
-        public static string QueueAudio { get; set; } = "https://github.com/riotlu/fake-cdn/raw/refs/heads/master/Audio/1 pound bish.mp3?raw=true";
+        public static string QueueAudio { get; set; } = "https://github.com/riotlu/fake-cdn/raw/refs/heads/master/Audio/axxturell.ogg?raw=true";
 
         public struct Platte
         {
@@ -119,6 +119,10 @@ public class Config
         }
     }
 
+    public struct Exploits
+    {
+        public static bool RPC_ForceGlobal { get; set; } = false;
+    }
     public struct Advanced
     {
         public static bool DebugMode { get; set; } = false;
