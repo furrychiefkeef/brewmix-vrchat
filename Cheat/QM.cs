@@ -127,7 +127,7 @@ internal class QM
                 
                 Triggers_Modal.AddButton("Color", "Color", OptimizeBox.Color);
                 Triggers_Modal.AddButton("Walls", "Walls", OptimizeBox.Walls); 
-                Triggers_Modal.AddButton( "Normal Mirror", "Change Mirror", OptimizeBox.NormalMirror);
+                Triggers_Modal.AddButton("Normal Mirror", "Change Mirror", OptimizeBox.NormalMirror);
                 Triggers_Modal.AddButton("Optimize Mirror", "Change Mirror", OptimizeBox.OptimizedMirror);
                 
                 #endregion
@@ -172,15 +172,10 @@ internal class QM
            {
                     var panel =  new VRCPanel();
                     var choiceSelection = new VRCRadialSelect(panel.container, "Wallhacks", "Shows Players Through Walls with there Avatar Meshs (Buggy)")
+                        {
+                            
+                        }
                         
-                   .AddChoice("Nameplates + Players", () => sconsole.internal_log("1"))
-                   .AddChoice("Nameplates", () => sconsole.internal_log("2"))
-                   .AddChoice("Players", () => sconsole.internal_log("3"));
-                    
-                    
-                    
-                    var panel1 =  new VRCPanel();
-                    var choiceSelectio1 = new VRCRadialSelect(panel1.container, "Esp", "Shows Players Through Walls within a capsule. (Rework)")
                    .AddChoice("Nameplates + Players", () => sconsole.internal_log("1"))
                    .AddChoice("Nameplates", () => sconsole.internal_log("2"))
                    .AddChoice("Players", () => sconsole.internal_log("3"));

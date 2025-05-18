@@ -73,15 +73,14 @@ namespace BlanketSDK.QM.Elements.Modals
             #region RIGHT_CONTAINER
 
             Transform _0 = RIGHT_CONTAINER;
-            /*if (_0.transform.childCount > 0) UnityEngine.Object.Destroy(_0.gameObject);
-            else if (_rightLayout > 0) UnityEngine.Object.Destroy(RIGHT_CONTAINER.gameObject);*/
+             _0.DestroyChildren();
              _rightLayout = _0.transform;
             #endregion
 
      
             #region BUTTON_CONTAINER_LOGIC_FOR_API
             Transform BUTTON_SHEILD_LEVEL_CONTAINER = _obj.GetChild(1).GetChild(2).DestroyChildren();
-            /*if (parent_menu.childCount > 0) UnityEngine.Object.Destroy(BUTTON_SHEILD_LEVEL_CONTAINER.gameObject);*/
+            
             _verticallayoutgroup = BUTTON_SHEILD_LEVEL_CONTAINER.transform;
             #endregion
 

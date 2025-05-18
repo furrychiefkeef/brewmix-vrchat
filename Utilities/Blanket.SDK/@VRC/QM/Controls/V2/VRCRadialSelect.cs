@@ -33,7 +33,7 @@ internal class VRCRadialSelect : IQuickMenuElements
     /// <param name="name"> The name of the element. </param>
     /// <param name="callback"> ??? < /param>
     /// <exception cref="Exception"></exception>
-    public VRCRadialSelect(Transform parent, string name, [Optional] string? tooltip, System.Action callback = null)
+    public VRCRadialSelect(Transform parent, string name,[Optional] string? tooltip, [Optional] bool isChild,  System.Action callback = null)
     {
         // Your existing instantiation code
         if(!QM() || !QMParent() || !QMMenus.QMSubmenus.Menu_QM_GeneralSettings()) 
@@ -66,7 +66,7 @@ internal class VRCRadialSelect : IQuickMenuElements
 
         #region TOOLTIP_COMPONENT
         radialSelector._optionTooltip._localizableString = tooltip.Localize();
-
+        radialSelector._childIndicator.SetActive(isChild);
         #endregion
         
         #region BUTTONS_LOGIC
