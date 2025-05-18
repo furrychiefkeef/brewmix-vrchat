@@ -13,8 +13,7 @@ namespace BlanketSDK.QM.Elements.Modals
         public string Name;
         public Transform? _obj = null;
         public UIPage ModalLogic;
-        
-        public Transform? _layout;
+        public Transform? _verticallayoutgroup;
         public Transform? _rightLayout;
         public VRCModalContainer(string? header, Sprite? sprite = null)
         {
@@ -74,23 +73,23 @@ namespace BlanketSDK.QM.Elements.Modals
             #region RIGHT_CONTAINER
 
             Transform _0 = RIGHT_CONTAINER;
-             if (_0.transform.childCount <= 0) UnityEngine.Object.Destroy(_0.gameObject);
-             else if (_rightLayout.childCount <= 0) UnityEngine.Object.Destroy(RIGHT_CONTAINER.gameObject);
+            /*if (_0.transform.childCount > 0) UnityEngine.Object.Destroy(_0.gameObject);
+            else if (_rightLayout > 0) UnityEngine.Object.Destroy(RIGHT_CONTAINER.gameObject);*/
              _rightLayout = _0.transform;
             #endregion
 
      
             #region BUTTON_CONTAINER_LOGIC_FOR_API
             Transform BUTTON_SHEILD_LEVEL_CONTAINER = _obj.GetChild(1).GetChild(2).DestroyChildren();
-            if (_layout.childCount <= 0) UnityEngine.Object.Destroy(BUTTON_SHEILD_LEVEL_CONTAINER.gameObject);
-            _layout = BUTTON_SHEILD_LEVEL_CONTAINER.transform;
+            /*if (parent_menu.childCount > 0) UnityEngine.Object.Destroy(BUTTON_SHEILD_LEVEL_CONTAINER.gameObject);*/
+            _verticallayoutgroup = BUTTON_SHEILD_LEVEL_CONTAINER.transform;
             #endregion
 
 
             #region TEXT COMPONENT_HEADER
             _1.text = header;
             _1.richText = true;
-            #endregion   
+            #endregion
 
 
             #region BUTTONS_MODAL_CONTAINER

@@ -61,7 +61,7 @@ internal class VRCButton : IQuickMenuElements
     public VRCButton(VRCModalContainer modal, string? name, string? tooltip, System.Action func, Sprite? sprite = null)
     {
         if (!QuickMenu() | !QMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.SingleButton(), modal._layout);
+        Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.SingleButton(), modal._verticallayoutgroup);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_SINGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS
