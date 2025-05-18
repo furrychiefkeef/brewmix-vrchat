@@ -2,15 +2,16 @@
 using BlanketSDK.QM.Elements;
 using Syrup.IMGUI;
 using BlanketSDK.QM.Elements.Controls;
-using BlanketSDK.QM.Elements.Controls.Operation;
+using BlanketSDK.QM.Elements.Controls.V2;
 using BlanketSDK.QM.Elements.Modals;
+using BlanketSDK.QM.Elements.V2;
 using BlanketSDK.Utilities;
 
 using Brewchat.Cheat.Modules;
 using Brewchat.Cheats.SDK2.World;
-using Brewchat.Cheats.SDK3.World;
+
 using Brewchat.Game.Wrappers;
-using UNIXEngine.IL2CPPModding.Utils.Collections;
+
 using VRC.Networking;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
@@ -170,11 +171,20 @@ internal class QM
            try
            {
                     var panel =  new VRCPanel();
-                    var choiceSelection = new VRCChoiceSelection(panel, "My Choices")
+                    var choiceSelection = new VRCRadialSelect(panel.container, "Wallhacks", "Shows Players Through Walls with there Avatar Meshs (Buggy)")
                         
-                   .AddChoice("Bitchy", () => GameUtils.UI.HUD.Alert("Bitch",GameUtils.UI.HUD.AlertType.QuickMenu))
-                   .AddChoice("Witchc", () => GameUtils.UI.HUD.Alert("Witch",GameUtils.UI.HUD.AlertType.QuickMenu))
-                   .AddChoice("NitchA", () => GameUtils.UI.HUD.Alert("Nitch",GameUtils.UI.HUD.AlertType.QuickMenu));
+                   .AddChoice("Nameplates + Players", () => sconsole.internal_log("1"))
+                   .AddChoice("Nameplates", () => sconsole.internal_log("2"))
+                   .AddChoice("Players", () => sconsole.internal_log("3"));
+                    
+                    
+                    
+                    var panel1 =  new VRCPanel();
+                    var choiceSelectio1 = new VRCRadialSelect(panel1.container, "Esp", "Shows Players Through Walls within a capsule. (Rework)")
+                   .AddChoice("Nameplates + Players", () => sconsole.internal_log("1"))
+                   .AddChoice("Nameplates", () => sconsole.internal_log("2"))
+                   .AddChoice("Players", () => sconsole.internal_log("3"));
+                    
            }
            catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
            finally { sconsole.print("Created The Selected_QuickMenu+BlanketSDK.UI", 1); }

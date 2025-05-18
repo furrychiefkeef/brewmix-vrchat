@@ -141,6 +141,8 @@ internal class VRCButton : IQuickMenuElements
         #endregion
 
     }
+    
+    #region DEV_ONLY_ADVANCED_METHODS
     public void Invoke()
     {
         BUTTONCLICKED_EVENT_0?.Invoke();
@@ -150,6 +152,8 @@ internal class VRCButton : IQuickMenuElements
         TMPro.text = text;
         return TMPro;
     }
+    #endregion
+ 
     /*public VRCButton(VRCModalContainer parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.parent_menu, name, tooltip, func, sprite) { }*/
     public VRCButton(VRCGroupBox parent, string? name, string? tooltip, System.Action func, bool submenu = false, Sprite? sprite = null) : this(parent.container, name, tooltip, func, sprite) { }
     public VRCButton(VRCGroupLayout parent, string? name, string? tooltip, System.Action func, bool submenu = false, Sprite? sprite = null) : this(parent.container, name, tooltip, func, submenu , sprite) { }

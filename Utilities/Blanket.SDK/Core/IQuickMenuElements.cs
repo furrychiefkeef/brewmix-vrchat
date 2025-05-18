@@ -50,9 +50,14 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         [Obsolete("QMButtonContainer is not QMButtonGroup")]
         public static Transform QMButtonGrp() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
         public static Transform QMLayoutGroup() => QMMenus.QMSubmenus.Menu_Here().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
-
+        public static Transform QMSpace() => QMMenus.QMSubmenus.Menu_Here().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Spacer");
         public static Transform FourButtons_Modal() => QMParent().transform.FindChild("Modal_QM_ChangeShieldLevel");
-        public static Transform QM_Settings_Panel() => QMMenus.QMSubmenus.Menu_QM_GeneralSettings().transform.FindChild("Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/Sharing/QM_Settings_Panel");
+        public static Transform QMPanel() => QMMenus.QMSubmenus.Menu_QM_GeneralSettings().transform.FindChild("Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/Sharing/QM_Settings_Panel");
+
+        public struct QMPanelElements
+        {
+            public static Transform QMSeparator => QMPanel().transform.FindChild("VerticalLayoutGroup/Separator");
+        }
         /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
 
         public interface SelectedUser
@@ -69,6 +74,7 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
 
         public static Transform _Fallback_Dashboard_Group_QM_UI_Buttons() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions");
         public static Transform _Fallback_Dashboard_Group_QM_UI_WingButtons(string position) => QMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");
+        public static Transform _Fallback_Dashboard_Group_QM_UI_ChoiceSelection_Element() => QMMenus.QMSubmenus.Menu_QM_GeneralSettings();
     }
 }
 
