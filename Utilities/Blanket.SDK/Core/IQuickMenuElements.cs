@@ -52,7 +52,7 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         public static Transform QMLayoutGroup() => QMMenus.QMSubmenus.Menu_Here().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
 
         public static Transform FourButtons_Modal() => QMParent().transform.FindChild("Modal_QM_ChangeShieldLevel");
-        public static Transform QM_Settings_Panel() => QMMenus.QMSubmenus.Menu_QM_GeneralSettings().transform.FindChild("/Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/Sharing/QM_Settings_Panel");
+        public static Transform QM_Settings_Panel() => QMMenus.QMSubmenus.Menu_QM_GeneralSettings().transform.FindChild("Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/Sharing/QM_Settings_Panel");
         /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
 
         public interface SelectedUser

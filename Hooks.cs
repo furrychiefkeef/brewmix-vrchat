@@ -76,7 +76,7 @@ namespace brewchat.hybridxcore.bep
             AudioSource? LoadingScreenAudio = __instance.gameObject.transform.GetChild(1).GetComponent<AudioSource>();
             UnityEngine.Object.DestroyImmediate(LoadingScreenAudio);
             EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent = __instance.gameObject.transform;
-
+    
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
@@ -87,7 +87,7 @@ namespace brewchat.hybridxcore.bep
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             QM._Pinkstar.Apply();
             QM.SelectedMenu.Apply();
-            /*QM.TestMenu.Apply();*/
+            QM.TestMenu.Apply();
             Toolbox.LoadMyUI();
 
         }

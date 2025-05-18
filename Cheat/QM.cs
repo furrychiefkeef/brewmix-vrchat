@@ -8,9 +8,9 @@ using BlanketSDK.Utilities;
 
 using Brewchat.Cheat.Modules;
 using Brewchat.Cheats.SDK2.World;
-
+using Brewchat.Cheats.SDK3.World;
 using Brewchat.Game.Wrappers;
-
+using UNIXEngine.IL2CPPModding.Utils.Collections;
 using VRC.Networking;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
@@ -165,14 +165,23 @@ internal class QM
 
     public class TestMenu : IQuickMenuElements
     {
-      
-
        public static void Apply()
        {
-           var panel =  new VRCPanel();
-           new VRCChoiceSelection(panel,"forreral");
+           try
+           {
+                    var panel =  new VRCPanel();
+                    var choiceSelection = new VRCChoiceSelection(panel, "My Choices")
+                        
+                   .AddChoice("Bitchy", () => GameUtils.UI.HUD.Alert("Bitch",GameUtils.UI.HUD.AlertType.QuickMenu))
+                   .AddChoice("Witchc", () => GameUtils.UI.HUD.Alert("Witch",GameUtils.UI.HUD.AlertType.QuickMenu))
+                   .AddChoice("NitchA", () => GameUtils.UI.HUD.Alert("Nitch",GameUtils.UI.HUD.AlertType.QuickMenu));
+           }
+           catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
+           finally { sconsole.print("Created The Selected_QuickMenu+BlanketSDK.UI", 1); }
        }
-    }
-}
+           
+       }
+    }   
+   
 
 
