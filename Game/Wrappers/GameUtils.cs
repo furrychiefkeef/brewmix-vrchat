@@ -246,6 +246,7 @@ internal class GameUtils
         {
             public static VRC.Player? GetSelectedUser()
             {
+                
                     return UnityEngine.Object.FindObjectOfType<SelectedUserMenuQM>().transform
                         .GetComponent<MonoBehaviourPublicTeObSlGrImSiObUnique>()
                         .field_Private_IUser_0.prop_String_1.GetPlayer()
@@ -260,7 +261,7 @@ internal class GameUtils
         public static bool IsWorldLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.currentApiWorld != null;
         public static string Join(string worldId)
         {
-            Networking.GoToRoom(worldId);
+            Networking.GoToRoom(string.Format("{0}", worldId));
             return worldId;
         }
 
@@ -273,7 +274,7 @@ internal class GameUtils
                     if (trigger.gameObject.name.Contains(triggerobj))
                     {
                         trigger.Interact();
-                        UI.HUD.ToastV2("Sent Trigger", trigger.gameObject.name);
+                        if (!Config.Advanced.DebugMode) UI.HUD.ToastV2("Sent Trigger", trigger.gameObject.name);
                         return;
                     }
                 }

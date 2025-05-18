@@ -41,8 +41,7 @@ public class Config
         public static bool esp { get; set; } = false;
         public static bool nameplate_wallhack { get; set; }
     }
-
-
+    
     public struct Logging
     {
         public static bool Photon { get; set; } = false;

@@ -51,5 +51,5 @@ internal class VRCSmallButton : IMainMenuElements
         _1.sprite = sprite;
         #endregion
     }
-    public VRCSmallButton(VRCModalContainer parent, string? tooltip, int priority ,System.Action func, Sprite? sprite = null) : this(parent.parent_rightbuttons, tooltip, priority, func, sprite) { }
+    public VRCSmallButton(VRCModalContainer parent, string? tooltip, int priority ,System.Action func, Sprite? sprite = null) : this(parent._rightLayout, tooltip, priority, func, sprite) { }
 }

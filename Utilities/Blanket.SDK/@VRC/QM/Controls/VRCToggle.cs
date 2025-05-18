@@ -60,7 +60,7 @@ internal class VRCToggle : IQuickMenuElements
         _2off.sprite = sprite_off;
         #endregion
     }
-    public VRCToggle(VRCModalContainer parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.parent_menu, name, tooltip_on, tooltip_off, func, sprite_on, sprite_off) { }
-    public VRCToggle(VRCGroupBox parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.container, name, tooltip_on, tooltip_off, func, sprite_on, sprite_off) { }
-    public VRCToggle(VRCGroupLayout parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.container, name, tooltip_on, tooltip_off, func, sprite_on, sprite_off) { }
+    public VRCToggle(VRCModalContainer parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent._layout, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
+    public VRCToggle(VRCGroupBox parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.container, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
+    public VRCToggle(VRCGroupLayout parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.container, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
 }

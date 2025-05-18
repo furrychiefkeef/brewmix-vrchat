@@ -23,16 +23,17 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
             public static Transform Menu_Here() => QMParent().transform.FindChild("Menu_Here");
             public static Transform Menu_DevTools() => QMParent().transform.FindChild("Menu_DevTools");
             public static Transform SelectedUser_Local() => QMParent().transform.FindChild("Menu_SelectedUser_Local");
+            public static Transform Menu_QM_GeneralSettings() => QMParent().transform.FindChild("Menu_QM_GeneralSettings");
         }
     }
 
     internal interface QMControls
     {
         public static Transform Tab() => QuickMenu().transform.FindChild("Container/Window/Page_Buttons_QM/HorizontalLayoutGroup/Page_Settings");
-
+        public static Transform OptionSelection() => QMMenus.QMSubmenus.Menu_QM_GeneralSettings().transform.FindChild("Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/Sharing/QM_Settings_Panel/VerticalLayoutGroup/DirectSharingVisibility");
         public interface Buttons
         {
-
+            
             public static Transform SingleButton() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions/Button_Respawn");
 
             public static Transform ExpandButton() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("Header_H1/RightItemContainer/Button_QM_Expand");
@@ -51,6 +52,7 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         public static Transform QMLayoutGroup() => QMMenus.QMSubmenus.Menu_Here().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
 
         public static Transform FourButtons_Modal() => QMParent().transform.FindChild("Modal_QM_ChangeShieldLevel");
+        public static Transform QM_Settings_Panel() => QMMenus.QMSubmenus.Menu_QM_GeneralSettings().transform.FindChild("/Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/Sharing/QM_Settings_Panel");
         /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
 
         public interface SelectedUser

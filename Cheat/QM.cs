@@ -2,17 +2,15 @@
 using BlanketSDK.QM.Elements;
 using Syrup.IMGUI;
 using BlanketSDK.QM.Elements.Controls;
+using BlanketSDK.QM.Elements.Controls.Operation;
 using BlanketSDK.QM.Elements.Modals;
 using BlanketSDK.Utilities;
-using Brewchat.Cheat.Flaws;
+
 using Brewchat.Cheat.Modules;
 using Brewchat.Cheats.SDK2.World;
-using Brewchat.Cheats.World;
+
 using Brewchat.Game.Wrappers;
-using UnityEngine.UI;
-using UNIXEngine.IL2CPPModding.Shims;
-using UNIXEngine.IL2CPPModding.Utils.Collections;
-using VRC.Core;
+
 using VRC.Networking;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
@@ -48,24 +46,23 @@ internal class QM
                 #region Groupbox
 
                 VRCModalContainer? PlayerMovementModal = new("Player+Movement");
-                VRCButton? T = new(Main_Groupbox, "Player", "Modify The Player", PlayerMovementModal.Open,true);
+                Main_Groupbox.AddButton("Player", "Modify The Player", PlayerMovementModal.Open,true);
          
                 #endregion
                 
                 #region Modal_Player+Movement
 
                 VRCSmallButton Injection = new(PlayerMovementModal, "Injection", () => sconsole.print("passion_fruit", 1));
-                VRCToggle? Fly = new(PlayerMovementModal, "Fly", "Turn Fly On", "Turn Fly Off", (x) =>
+                PlayerMovementModal.AddToggle("Fly", "Turn Fly On", "Turn Fly Off", (x) =>
                 {
-
                     Config.Movement.fly = !Config.Movement.fly;
                     PlayerModule.Movement.Fly();
                 });
-                VRCToggle? Spinbot = new(PlayerMovementModal, "Spinbot", "Spinbot On", "Spinbot Off",
-                    (x) => { PlayerModule.Movement.Spinbot(x); });
-                VRCToggle? ForceJump = new(PlayerMovementModal, "Force Jump", "Force Jump Off", "Fly Off",
-                    (x) => { PlayerModule.Movement.ForceJump(x); });
-                VRCToggle Ghost = new(PlayerMovementModal, "Ghost", "Booo I'm a ghostttt", "awh I'm solid again", (x) =>
+                
+                PlayerMovementModal.AddToggle("Spinbot", "Spinbot On", "Spinbot Off", (x) => { PlayerModule.Movement.Spinbot(x); });
+                PlayerMovementModal.AddToggle("Force Jump", "Force Jump Off", "Fly Off", (x) => { PlayerModule.Movement.ForceJump(x); });
+                
+                PlayerMovementModal.AddToggle("Ghost", "Booo I'm a ghostttt", "awh I'm solid again", (x) =>
                 {
                     var _player = GameUtils.PlayerModel.Get();
                     var gameObject = PlayerModule.Body.Clone(_player);
@@ -78,24 +75,22 @@ internal class QM
 
                 VRCModalContainer? Logging = new("Logging");
                 VRCButton? R = new(Main_Groupbox, "Logging", "Configure Logging", () => Logging.Open(),true);
-
-                VRCSmallButton CEL = new(Logging, "Configure Events List", () => Console.Beep());
-                VRCSmallButton CRL = new(Logging, "Configure RPCs List", () => Console.Beep());
-                VRCSmallButton CUEL = new(Logging, "Configure Udon Events List", () => Console.Beep());
+              
+                Logging.AddMiniButton( "Configure Events List", () => Console.Beep());
+                Logging.AddMiniButton( "Configure RPCs List", () => Console.Beep());
+                Logging.AddMiniButton( "Configure Udon Events List", () => Console.Beep());
                 
-                VRCToggle? Log_RPCs = new(Logging, "RPC", "parse", "parse", (x) => { Config.Logging.RPC = !Config.Logging.RPC; });
-                VRCToggle? Log_Events = new(Logging, "Photon", "parse", "parse", (x) => { Config.Logging.Photon = !Config.Logging.Photon; });
-                VRCToggle? Udon_Events = new(Logging, "Udon", "parse", "parse", (x) => { Config.Logging.Udon = !Config.Logging.Udon;});
+                
+                Logging.AddToggle("RPC", "parse", "parse", (x) => { Config.Logging.RPC = !Config.Logging.RPC; });
+                Logging.AddToggle("Photon", "parse", "parse", (x) => { Config.Logging.Photon = !Config.Logging.Photon; });
+                Logging.AddToggle("Udon", "parse", "parse", (x) => { Config.Logging.Udon = !Config.Logging.Udon;});
 
                 /*VRCModalContainer? Modal_Config_RPCs = new("RPcs");*/
                 #region Modal Logging__MainPage2
 
                 VRCModalContainer? LoggingP2 = new("Logging Page 2");
                 VRCSmallButton Next = new(Logging, "Next", () => LoggingP2.Open());
-                VRCToggle? Debug_Log = new(LoggingP2, "Debug", "parse", "parse", (x) =>
-                {
-                        Config.Advanced.DebugMode = !Config.Advanced.DebugMode;
-                });
+                LoggingP2.AddToggle("Debug", "parse", "parse", (x) => { Config.Advanced.DebugMode = !Config.Advanced.DebugMode; });
                 /*VRCToggle? Log_RPCs = new(Logging, "RPCs", "parse", "parse", (x) =>
                 {
 
@@ -116,26 +111,23 @@ internal class QM
                 #region Modal_Render
 
                 VRCModalContainer? Renders = new("Renderer");
-                VRCButton? AC = new(Main_Groupbox, "Renders", "Render Properties", () => Renders.Open(),true);
+                Main_Groupbox.AddButton("Renders", "Render Properties", () => Renders.Open(),true);
 
-                VRCToggle? ESP = new(Renders, "ESP", "parse", "parse", (x) => { Config.Render.esp = !Config.Render.esp; });
-                VRCToggle? WALLHACKS = new(Renders, "Wallhacks", "parse", "parse", (x) =>
-                {
-                    Config.Render.player_wallhack = !Config.Render.player_wallhack;
-                });
+                Renders.AddToggle("ESP", "parse", "parse", (x) => { Config.Render.esp = !Config.Render.esp; });
+                Renders.AddToggle("Wallhacks", "parse", "parse", (x) => { Config.Render.player_wallhack = !Config.Render.player_wallhack; });
 
                 #endregion
                 
                 #region Modal_Misc
 
-                VRCModalContainer trigger = new ("trigger");
-                VRCButton? M = new(Main_Groupbox, "Trigger", "Misc Properties", () => trigger.Open(),true);
-                VRCSmallButton? trigger_button = new(trigger, "Trigger", OptimizeBox.DestoryWalls);
+                VRCModalContainer Triggers_Modal = new ("Trigger");
+                VRCButton? M = new(Main_Groupbox, "Trigger", "Misc Properties", () => Triggers_Modal.Open(),true);
+                Triggers_Modal.AddMiniButton("Trigger", OptimizeBox.DestoryWalls);
                 
-                trigger.AddButton("Color", "Color", OptimizeBox.Color);
-                trigger.AddButton("Walls", "Walls", OptimizeBox.Walls); 
-                trigger.AddButton( "Normal Mirror", "Change Mirror", OptimizeBox.NormalMirror);
-                trigger.AddButton("Optimize Mirror", "Change Mirror", OptimizeBox.OptimizedMirror);
+                Triggers_Modal.AddButton("Color", "Color", OptimizeBox.Color);
+                Triggers_Modal.AddButton("Walls", "Walls", OptimizeBox.Walls); 
+                Triggers_Modal.AddButton( "Normal Mirror", "Change Mirror", OptimizeBox.NormalMirror);
+                Triggers_Modal.AddButton("Optimize Mirror", "Change Mirror", OptimizeBox.OptimizedMirror);
                 
                 #endregion
 
@@ -169,6 +161,17 @@ internal class QM
             catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
             finally { sconsole.print("Created The Selected_QuickMenu+BlanketSDK.UI", 1); }
         }
+    }
+
+    public class TestMenu : IQuickMenuElements
+    {
+      
+
+       public static void Apply()
+       {
+           var panel =  new VRCPanel();
+           new VRCChoiceSelection(panel,"forreral");
+       }
     }
 }
 

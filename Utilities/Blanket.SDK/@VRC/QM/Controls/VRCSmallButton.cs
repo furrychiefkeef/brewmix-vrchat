@@ -44,5 +44,5 @@ internal class VRCSmallButton : IQuickMenuElements
         _1.sprite = sprite;
         #endregion
     }
-    public VRCSmallButton(VRCModalContainer parent, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.parent_rightbuttons, tooltip, func, sprite) { }
+    public VRCSmallButton(VRCModalContainer parent, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent._rightLayout, tooltip, func, sprite) { }
 }
