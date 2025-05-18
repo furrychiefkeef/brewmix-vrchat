@@ -27,6 +27,14 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
         }
     }
 
+    protected interface MMElements
+    {
+        //Put Elements
+        public static Transform ProfileRow() => MMMenus.MMSubmenus.MenuUser_Details().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Row3");
+
+        public static Transform VRCCellContainer() => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Content/Viewport/VerticalLayoutGroup/Debug");
+        /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
+    }
     protected interface MMControls
     {
         // Put Controls
@@ -45,15 +53,6 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
             /*public static Transform MMTABGAINTSHIELD() => MenuDevTools().transform.FindChild("Scrollrect/Viewport/VerticalLayoutGroup/Buttons/Button_Tag");*/
         }
 
-    }
-
-    protected interface MMElements
-    {
-        //Put Elements
-        public static Transform ProfileRow() => MMMenus.MMSubmenus.MenuUser_Details().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Row3");
-
-        public static Transform VRCCellContainer() => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Content/Viewport/VerticalLayoutGroup/Debug");
-        /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
     }
 
     internal interface MMFallbacks

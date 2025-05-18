@@ -6,7 +6,7 @@ using BlanketSDK.QM.Elements.Controls.V2;
 using BlanketSDK.QM.Elements.Modals;
 using BlanketSDK.QM.Elements.V2;
 using BlanketSDK.Utilities;
-
+using BlanketSDK.Utilities.VRC;
 using Brewchat.Cheat.Modules;
 using Brewchat.Cheats.SDK2.World;
 
@@ -171,15 +171,24 @@ internal class QM
            try
            {
                     var panel =  new VRCPanel();
-                    var choiceSelection = new VRCRadialSelect(panel.container, "Wallhacks", "Shows Players Through Walls with there Avatar Meshs (Buggy)")
-                        {
-                            
-                        }
-                        
+                    VRCRadialSelect choiceSelection = new VRCRadialSelect(panel.container, "Wallhacks", "Shows Players Through Walls with there Avatar Meshs (Buggy)")
                    .AddChoice("Nameplates + Players", () => sconsole.internal_log("1"))
                    .AddChoice("Nameplates", () => sconsole.internal_log("2"))
                    .AddChoice("Players", () => sconsole.internal_log("3"));
                     
+                    panel.AddSeperator();
+                    
+                    VRCRadialSelect choiceSelection1 = new VRCRadialSelect(panel.container, "Wallhacks", "Shows Players Through Walls with there Avatar Meshs (Buggy)")
+                    .AddChoice("Nameplates + Players", () => sconsole.internal_log("1"))
+                    .AddChoice("Nameplates", () => sconsole.internal_log("2"))
+                    .AddChoice("Players", () => sconsole.internal_log("3"));
+                    
+                    panel.AddSeperator();
+
+                    new VRCToggleOperator(panel, "[GLOBAL BROADCASTING]", x=>
+                    {
+                        sconsole.internal_log(x ? "Enabled" : "Disabled");
+                    });
            }
            catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
            finally { sconsole.print("Created The Selected_QuickMenu+BlanketSDK.UI", 1); }

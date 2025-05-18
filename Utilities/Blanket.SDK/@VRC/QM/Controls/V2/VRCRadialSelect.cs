@@ -39,7 +39,7 @@ internal class VRCRadialSelect : IQuickMenuElements
         if(!QM() || !QMParent() || !QMMenus.QMSubmenus.Menu_QM_GeneralSettings()) 
             throw new Exception($"{name} element has moved to a different location or index contact: {Resources.D_Contact}");
         parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_ChoiceSelection_Element();
-        var obj = UnityEngine.Object.Instantiate(QMControls.OptionSelection(), parent);
+        var obj = UnityEngine.Object.Instantiate(QMControls.OperatorRadialSelection(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_CHOICE_SELECTION>";
         #region CONTAINERS
 

@@ -27,10 +27,31 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         }
     }
 
+    internal interface QMElements
+    {
+        [Obsolete("QMButtonContainer is not QMButtonGroup")]
+        public static Transform QMButtonGrp() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
+        public static Transform QMLayoutGroup() => QMMenus.QMSubmenus.Menu_Here().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
+        public static Transform QMSpace() => QMMenus.QMSubmenus.Menu_Here().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Spacer");
+        public static Transform FourButtons_Modal() => QMParent().transform.FindChild("Modal_QM_ChangeShieldLevel");
+        public static Transform QMPanel(string MenuName) => QMMenus.QMSubmenus.Menu_QM_GeneralSettings().transform.FindChild($"Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/{MenuName}/QM_Settings_Panel");
+
+        public struct QMPanelElements
+        {
+            public static Transform QMSeparator() => QMPanel("Sharing").transform.FindChild("VerticalLayoutGroup/Separator");
+        }
+        /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
+
+        public interface SelectedUser
+        {
+            public static Transform SelectedUser_ButtonContainer() => QMMenus.QMSubmenus.SelectedUser_Local().FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_UserActions");
+        }
+    }
     internal interface QMControls
     {
         public static Transform Tab() => QuickMenu().transform.FindChild("Container/Window/Page_Buttons_QM/HorizontalLayoutGroup/Page_Settings");
-        public static Transform OptionSelection() => QMMenus.QMSubmenus.Menu_QM_GeneralSettings().transform.FindChild("Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/Sharing/QM_Settings_Panel/VerticalLayoutGroup/DirectSharingVisibility");
+        public static Transform OperatorRadialSelection() => QMElements.QMPanel("Sharing").transform.FindChild("VerticalLayoutGroup/DirectSharingVisibility");
+        public static Transform OperatorToggle() => QMElements.QMPanel("Debug").transform.FindChild("VerticalLayoutGroup/PinFPS&Ping");
         public interface Buttons
         {
             
@@ -44,28 +65,6 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
             public static Transform WingButton(string position) => QMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Explore");
         }
     }
-
-    internal interface QMElements
-    {
-        [Obsolete("QMButtonContainer is not QMButtonGroup")]
-        public static Transform QMButtonGrp() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
-        public static Transform QMLayoutGroup() => QMMenus.QMSubmenus.Menu_Here().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
-        public static Transform QMSpace() => QMMenus.QMSubmenus.Menu_Here().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Spacer");
-        public static Transform FourButtons_Modal() => QMParent().transform.FindChild("Modal_QM_ChangeShieldLevel");
-        public static Transform QMPanel() => QMMenus.QMSubmenus.Menu_QM_GeneralSettings().transform.FindChild("Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/Sharing/QM_Settings_Panel");
-
-        public struct QMPanelElements
-        {
-            public static Transform QMSeparator => QMPanel().transform.FindChild("VerticalLayoutGroup/Separator");
-        }
-        /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
-
-        public interface SelectedUser
-        {
-            public static Transform SelectedUser_ButtonContainer() => QMMenus.QMSubmenus.SelectedUser_Local().FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_UserActions");
-        }
-    }
-
     internal interface QMFallbacks
     {
         public static Transform _Fallback_Dashboard_Group_QM_UI_Buttons_TAB() => QuickMenu().transform.FindChild("Container/Window/Page_Buttons_QM/HorizontalLayoutGroup");
