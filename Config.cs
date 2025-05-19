@@ -60,7 +60,7 @@ public class Config
 
     public struct Appearance
     {
-        public static string QueueAudio { get; set; } = "https://github.com/riotlu/fake-cdn/raw/refs/heads/master/Audio/axxturell.ogg?raw=true";
+        public static string QueueAudio { get; set; } = "https://github.com/riotlu/fake-cdn/raw/refs/heads/master/Audio/raygun.ogg?raw=true";
 
         public struct Platte
         {

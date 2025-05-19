@@ -21,14 +21,18 @@ class VRCToggleOperator : IQuickMenuElements
         #region LOGIC_REQUIRED_API
 
         VRCToggleHandle? _0 = __0._toggle;
-        UnityEngine.Object.DestroyImmediate(__0._toggleSwitch);
-        Toggle.ToggleEvent? LISTENER = _0.onValueChanged = new();
+        RadioButton? __1 = __0._toggleSwitch;
+        __1.field_Private_Single_0 = 27.4f; // Fix it going off element
+        __1.field_Private_Single_1 = 95.4124f; // Fix it going off element
+        Toggle.ToggleEvent? LISTENER = _0.onValueChanged;
         
         _0.isOn = state;
-        
-        LISTENER.RemoveAllListeners();
-        LISTENER.AddListener(func);
-        
+        /*QM().field_Protected_MenuStateController_0.inte);*/
+        LISTENER.AddListener(new System.Action<bool>(x =>
+        {
+            __1.Method_Public_Void_Boolean_PDM_0(x);
+            func(x);
+        }));
         _0._controlName = name;
         _0.field_Private_Boolean_0 = true;
         _0._sendAnalytics = false;

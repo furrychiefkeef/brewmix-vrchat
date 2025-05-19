@@ -50,9 +50,7 @@ internal class CSS : UnityEngine.MonoBehaviour
         {
             var render =  gameobject.GetComponentInChildren<VRCUIBackground>();
             if (render is null) return;
-
-            UnityGIF.LoadGif(new("https://github.com/smooshs/fake-cdn/blob/master/bbb/5fa69562ad749e12d588a1351d1b04f8.gif?raw=true"));
-            Texture? texture = UnityGIF.GetCurrentFrame();
+            Texture? texture = EngineUtils.Assets.Texture(new Uri("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy_1.png?raw=true"));
             Image? rm = render.field_Private_Image_0;
             Material? rm_m = rm.material;
             rm_m.mainTexture = texture;
