@@ -25,7 +25,12 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
             #region Keybinds
 
             if (Input.GetKeyDown(KeyCode.F5)) PlayerModule.CCamera.CameraController();
-            if (Input.GetKeyDown(KeyCode.Mouse2))  PlayerModule.Movement.ClickTP();
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Mouse2))  PlayerModule.Movement.ClickTP();
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F))
+            {
+                Config.Movement.fly = !Config.Movement.fly;
+                PlayerModule.Movement.Fly();
+            }
             #endregion
         }
         

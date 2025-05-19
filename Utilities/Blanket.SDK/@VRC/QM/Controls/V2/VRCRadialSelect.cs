@@ -147,7 +147,7 @@ internal class VRCRadialSelect : IQuickMenuElements
     
     // Helper methods for getting current selection
 
-    #region DEV_ONLY_ADVANCED_METHODS
+    #region DEV_ONLY_ADVANCED_FUNCS
 
     public string GetCurrentChoiceName()
     {

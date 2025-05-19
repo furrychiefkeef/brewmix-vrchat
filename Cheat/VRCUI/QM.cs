@@ -13,6 +13,7 @@ using Brewchat.Cheats.SDK2.World;
 using Brewchat.Game.Wrappers;
 
 using VRC.Networking;
+using VRC.Udon;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
 namespace Brewchat.Cheat;
@@ -54,7 +55,7 @@ internal class QM
                 #region Modal_Player+Movement
 
                 VRCSmallButton Injection = new(PlayerMovementModal, "Injection", () => sconsole.print("passion_fruit", 1));
-                PlayerMovementModal.AddToggle("Fly", "Turn Fly On", "Turn Fly Off", (x) =>
+                UIRefs.Fly = PlayerMovementModal.AddToggle("Fly", "Turn Fly On", "Turn Fly Off", (x) =>
                 {
                     Config.Movement.fly = !Config.Movement.fly;
                     PlayerModule.Movement.Fly();
@@ -117,19 +118,6 @@ internal class QM
                 Renders.AddToggle("ESP", "parse", "parse", (x) => { Config.Render.esp = !Config.Render.esp; });
                 Renders.AddToggle("Wallhacks", "parse", "parse", (x) => { Config.Render.player_wallhack = !Config.Render.player_wallhack; });
 
-                #endregion
-                
-                #region Modal_Misc
-
-                VRCModalContainer Triggers_Modal = new ("Trigger");
-                VRCButton? M = new(Main_Groupbox, "Trigger", "Misc Properties", () => Triggers_Modal.Open(),true);
-                Triggers_Modal.AddMiniButton("Trigger", OptimizeBox.DestoryWalls);
-                
-                Triggers_Modal.AddButton("Color", "Color", OptimizeBox.Color);
-                Triggers_Modal.AddButton("Walls", "Walls", OptimizeBox.Walls); 
-                Triggers_Modal.AddButton("Normal Mirror", "Change Mirror", OptimizeBox.NormalMirror);
-                Triggers_Modal.AddButton("Optimize Mirror", "Change Mirror", OptimizeBox.OptimizedMirror);
-                
                 #endregion
 
             }
