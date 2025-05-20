@@ -52,6 +52,7 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         public static Transform Tab() => QuickMenu().transform.FindChild("Container/Window/Page_Buttons_QM/HorizontalLayoutGroup/Page_Settings");
         public static Transform OperatorRadialSelection() => QMElements.QMPanel("Sharing").transform.FindChild("VerticalLayoutGroup/DirectSharingVisibility");
         public static Transform OperatorToggle() => QMElements.QMPanel("Debug").transform.FindChild("VerticalLayoutGroup/PinFPS&Ping");
+        public static Transform OperatorButton() => QMElements.QMPanel("Debug").transform.FindChild("VerticalLayoutGroup/DebugButtons");
         public interface Buttons
         {
             

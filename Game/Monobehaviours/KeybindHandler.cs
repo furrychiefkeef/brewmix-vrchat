@@ -1,4 +1,5 @@
 ﻿
+using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Cheats.World;
 using Brewchat.Game.Wrappers;
@@ -29,7 +30,7 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F))
             {
                 Config.Movement.fly = !Config.Movement.fly;
-                PlayerModule.Movement.Fly();
+                UIRefs.Fly.SetState(Config.Movement.fly);
             }
             #endregion
         }

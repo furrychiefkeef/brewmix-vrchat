@@ -18,7 +18,6 @@ public class M4
     
         foreach (UdonBehaviour behaviour in cachedUdonBehaviours)
         {
-
             foreach (string eventKey in behaviour._eventTable.Keys)
             {
                 behaviour.SendCustomEvent(eventKey);

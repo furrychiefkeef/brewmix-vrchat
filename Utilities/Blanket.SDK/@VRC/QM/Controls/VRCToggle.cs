@@ -9,6 +9,8 @@ using VRC.UI.Elements.Tooltips;
 namespace BlanketSDK.QM.Elements.Controls;
 internal class VRCToggle : IQuickMenuElements
 {
+    private VRCToggleHandle? Controller;
+    private System.Action<bool> callback;
     /// <summary>
     ///  VRCButton this is used to create a TOGGLE_QUICKMENU_BUTTON
     /// </summary>
@@ -41,7 +43,9 @@ internal class VRCToggle : IQuickMenuElements
         UnityEngine.UI.Toggle.ToggleEvent? TOGGLE_EVENT_LISTENER_0 = _0.onValueChanged;
         _0.isOn = state;
         TOGGLE_EVENT_LISTENER_0.AddListener(func);
+        callback = func;
         _0._controlName = name;
+        Controller = _0;
         #endregion
 
         #region TEXT COMPONENT
@@ -61,10 +65,7 @@ internal class VRCToggle : IQuickMenuElements
         #endregion
     }
 
-    public void SetState(bool state)
-    {
-        
-    }
+    public void SetState(bool state)  => Controller?.Method_Private_Virtual_Final_New_Void_Boolean_0(!state);
     public VRCToggle(VRCModalContainer parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent._verticallayoutgroup, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
     public VRCToggle(VRCGroupBox parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.container, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
     public VRCToggle(VRCGroupLayout parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.container, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
