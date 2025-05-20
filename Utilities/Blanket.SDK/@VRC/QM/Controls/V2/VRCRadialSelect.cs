@@ -33,7 +33,7 @@ internal class VRCRadialSelect : IQuickMenuElements
     /// <param name="name"> The name of the element. </param>
     /// <param name="callback"> ??? < /param>
     /// <exception cref="Exception"></exception>
-    public VRCRadialSelect(Transform parent, string name,[Optional] string? tooltip, [Optional] bool isChild,  System.Action callback = null)
+    public VRCRadialSelect(Transform parent, string name, [Optional] string? tooltip, [Optional] bool isChild,  System.Action callback = null)
     {
         // Your existing instantiation code
         if(!QM() || !QMParent() || !QMMenus.QMSubmenus.Menu_QM_GeneralSettings()) 

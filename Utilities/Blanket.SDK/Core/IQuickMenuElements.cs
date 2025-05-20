@@ -34,11 +34,11 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         public static Transform QMLayoutGroup() => QMMenus.QMSubmenus.Menu_Here().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
         public static Transform QMSpace() => QMMenus.QMSubmenus.Menu_Here().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Spacer");
         public static Transform FourButtons_Modal() => QMParent().transform.FindChild("Modal_QM_ChangeShieldLevel");
-        public static Transform QMPanel(string MenuName) => QMMenus.QMSubmenus.Menu_QM_GeneralSettings().transform.FindChild($"Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/{MenuName}/QM_Settings_Panel");
-
+        public static Transform QMPanelGroup(string MenuName) => QMMenus.QMSubmenus.Menu_QM_GeneralSettings().transform.FindChild($"Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/{MenuName}");
+        public static Transform QMPanel() => QMPanelGroup("Sharing").transform.FindChild("QM_Settings_Panel");
         public struct QMPanelElements
         {
-            public static Transform QMSeparator() => QMPanel("Sharing").transform.FindChild("VerticalLayoutGroup/Separator");
+            public static Transform QMSeparator() => QMPanelGroup("Sharing").transform.FindChild("VerticalLayoutGroup/Separator");
         }
         /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
 
@@ -50,9 +50,9 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
     internal interface QMControls
     {
         public static Transform Tab() => QuickMenu().transform.FindChild("Container/Window/Page_Buttons_QM/HorizontalLayoutGroup/Page_Settings");
-        public static Transform OperatorRadialSelection() => QMElements.QMPanel("Sharing").transform.FindChild("VerticalLayoutGroup/DirectSharingVisibility");
-        public static Transform OperatorToggle() => QMElements.QMPanel("Debug").transform.FindChild("VerticalLayoutGroup/PinFPS&Ping");
-        public static Transform OperatorButton() => QMElements.QMPanel("Debug").transform.FindChild("VerticalLayoutGroup/DebugButtons");
+        public static Transform OperatorRadialSelection() => QMElements.QMPanelGroup("Sharing").transform.FindChild("VerticalLayoutGroup/DirectSharingVisibility");
+        public static Transform OperatorToggle() => QMElements.QMPanelGroup("Debug").transform.FindChild("VerticalLayoutGroup/PinFPS&Ping");
+        public static Transform OperatorButton() => QMElements.QMPanelGroup("Debug").transform.FindChild("VerticalLayoutGroup/DebugButtons");
         public interface Buttons
         {
             
@@ -75,6 +75,24 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         public static Transform _Fallback_Dashboard_Group_QM_UI_Buttons() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions");
         public static Transform _Fallback_Dashboard_Group_QM_UI_WingButtons(string position) => QMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");
         public static Transform _Fallback_Dashboard_Group_QM_UI_ChoiceSelection_Element() => QMMenus.QMSubmenus.Menu_QM_GeneralSettings();
+    }
+
+    internal interface QUICKMENU_FLAGS
+    {
+        public enum Menus
+        {
+            Here,
+            Dashboard,
+            DevTools,
+            SelectedUser_Local,
+            QM_GeneralSettings,
+        }
+        public enum Panels
+        {
+            Sharing,
+            Debug,
+            DevTools,
+        }
     }
 }
 

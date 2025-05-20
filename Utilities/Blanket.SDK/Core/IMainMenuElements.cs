@@ -18,6 +18,7 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
     protected interface MMMenus
     {
         public static Transform WingMenu(string position) => MainMenu().transform.FindChild($"Wing_{position}/Container/InnerContainer");
+
         // Put Menus
         public interface MMSubmenus
         {
@@ -35,6 +36,7 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
         public static Transform VRCCellContainer() => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Content/Viewport/VerticalLayoutGroup/Debug");
         /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
     }
+
     protected interface MMControls
     {
         // Put Controls
@@ -57,16 +59,30 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
 
     internal interface MMFallbacks
     {
-        //Put Fallbacks
         public static Transform _Fallback_Dashboard_Group_MM_UI_Buttons_TAB() => MainMenu().transform.FindChild("PageButtons/HorizontalLayoutGroup");
-
         public static Transform _Fallback_Dashboard_Group_MM_UI_ExpandButtons() => MMParent().transform.FindChild("Panel_MM_Header/HeaderRight");
-
         public static Transform _Fallback_Dashboard_Group_MM_UI_Buttons() => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Navigation/Viewport/VerticalLayoutGroup");
-
         public static Transform _Fallback_Dashboard_Group_MM_UI_WingButtons(string position) => MMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");
         public static Transform _Fallback_Dashboard_Group_MM_UI_ProfileButtons() => MMMenus.MMSubmenus.MenuUser_Details().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Row3/CellGrid_MM_Content");
-
         public static Transform _Fallback_Dashboard_Group_MM_UI_ProfileRows() => MMMenus.MMSubmenus.MenuUser_Details().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
     }
-}       
+
+    internal interface MENUMENU_FLAGS
+    {
+        public enum Menus
+        {
+            Here,
+            Dashboard,
+            DevTools,
+            SelectedUser_Local,
+            QM_GeneralSettings,
+        }
+
+        public enum Panels
+        {
+            Sharing,
+            Debug,
+            DevTools,
+        }
+    }
+}

@@ -10,7 +10,7 @@ class VRCButtonOperator : IQuickMenuElements
 {
     public VRCButtonOperator(VRCPanel panel, string name, System.Action func, bool state = false)
     {
-        if(!QM() || !QMElements.QMPanel("Sharing") || !QMControls.OperatorToggle()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if(!QM() || !QMElements.QMPanelGroup($"{QUICKMENU_FLAGS.Panels.Sharing}") || !QMControls.OperatorToggle()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         Transform? obj  = UnityEngine.Object.Instantiate(QMControls.OperatorToggle(), panel.container);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_TOGGLE_OPERATOR_{name}";
 
