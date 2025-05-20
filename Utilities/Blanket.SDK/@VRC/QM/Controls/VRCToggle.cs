@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.InteropServices;
+using UnityEngine;
 using VRC.Localization;
 using VRC.UI.Elements.Controls;
 using BlanketSDK.QM.Elements.Modals;
@@ -9,8 +10,9 @@ using VRC.UI.Elements.Tooltips;
 namespace BlanketSDK.QM.Elements.Controls;
 internal class VRCToggle : IQuickMenuElements
 {
-    private VRCToggleHandle? Controller;
+    private VRCToggleHandle Controller;
     private System.Action<bool> callback;
+
     /// <summary>
     ///  VRCButton this is used to create a TOGGLE_QUICKMENU_BUTTON
     /// </summary>
@@ -19,9 +21,10 @@ internal class VRCToggle : IQuickMenuElements
     /// <param name="tooltip_on">The tooltip text for the button.</param>
     /// <param name="tooltip_off">The tooltip text for the button.</param>
     /// <param name="func">The action to execute when the button is clicked.</param>
+    /// <param name="state">the default state of the button.</param>
     /// <param name="sprite_on">An optional sprite to display on the button.</param>
     /// <param name="sprite_off">An optional sprite to display on the button.</param>
-    public VRCToggle(Transform? parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null)
+    public VRCToggle(Transform? parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, [Optional] Sprite? sprite_on, [Optional] Sprite? sprite_off = null)
     {
         if (!QuickMenu() | !QMControls.Buttons.ToggleButton()) throw new($"toggle has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_Buttons();
@@ -65,7 +68,7 @@ internal class VRCToggle : IQuickMenuElements
         #endregion
     }
 
-    public void SetState(bool state)  => Controller?.Method_Private_Virtual_Final_New_Void_Boolean_0(!state);
+    public void SetState(bool state)  => Controller.isOn = !state;
     public VRCToggle(VRCModalContainer parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent._verticallayoutgroup, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
     public VRCToggle(VRCGroupBox parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.container, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
     public VRCToggle(VRCGroupLayout parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.container, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
