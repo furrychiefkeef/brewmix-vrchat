@@ -24,7 +24,7 @@ internal class VRCToggle : IQuickMenuElements
     /// <param name="state">the default state of the button.</param>
     /// <param name="sprite_on">An optional sprite to display on the button.</param>
     /// <param name="sprite_off">An optional sprite to display on the button.</param>
-    public VRCToggle(Transform? parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, [Optional] Sprite? sprite_on, [Optional] Sprite? sprite_off = null)
+    public VRCToggle(Transform? parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, [Optional] bool state, [Optional] Sprite? sprite_on, [Optional] Sprite? sprite_off)
     {
         if (!QuickMenu() | !QMControls.Buttons.ToggleButton()) throw new($"toggle has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_Buttons();

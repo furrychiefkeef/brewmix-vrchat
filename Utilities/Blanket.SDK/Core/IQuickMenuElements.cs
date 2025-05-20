@@ -50,9 +50,9 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
     internal interface QMControls
     {
         public static Transform Tab() => QuickMenu().transform.FindChild("Container/Window/Page_Buttons_QM/HorizontalLayoutGroup/Page_Settings");
-        public static Transform OperatorRadialSelection() => QMElements.QMPanelGroup("Sharing").transform.FindChild("VerticalLayoutGroup/DirectSharingVisibility");
-        public static Transform OperatorToggle() => QMElements.QMPanelGroup("Debug").transform.FindChild("VerticalLayoutGroup/PinFPS&Ping");
-        public static Transform OperatorButton() => QMElements.QMPanelGroup("Debug").transform.FindChild("VerticalLayoutGroup/DebugButtons");
+        public static Transform OperatorRadialSelection() => QMElements.QMPanelGroup("Sharing").transform.FindChild("QM_Settings_Panel/VerticalLayoutGroup/DirectSharingVisibility");
+        public static Transform OperatorToggle() => QMElements.QMPanelGroup("Debug").transform.FindChild("QM_Settings_Panel/VerticalLayoutGroup/PinFPS&Ping");
+        public static Transform OperatorButton() => QMElements.QMPanelGroup("Debug").transform.FindChild("QM_Settings_Panel/VerticalLayoutGroup/DebugButtons");
         public interface Buttons
         {
             
