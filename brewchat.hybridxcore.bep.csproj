@@ -43,11 +43,23 @@
     <Reference Include="Cpp2IL.Core">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\core\Cpp2IL.Core.dll</HintPath>
     </Reference>
+    <Reference Include="CppInterop">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\CppInterop.dll</HintPath>
+    </Reference>
     <Reference Include="DataModel">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\managed\DataModel.dll</HintPath>
     </Reference>
+    <Reference Include="DearImGuiInjection">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\DearImGuiInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="DearImguiSharp">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\DearImguiSharp.dll</HintPath>
+    </Reference>
     <Reference Include="DOTween">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\managed\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="EditAndContinue">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\EditAndContinue.dll</HintPath>
     </Reference>
     <Reference Include="Epic.OnlineServices">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\managed\Epic.OnlineServices.dll</HintPath>
@@ -154,6 +166,9 @@
     <Reference Include="Il2CppSystem.Xml.Linq">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\managed\Il2CppSystem.Xml.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="ImGui.NET">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\ImGui.NET.dll</HintPath>
+    </Reference>
     <Reference Include="io.sentry.unity.runtime">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\managed\io.sentry.unity.runtime.dll</HintPath>
     </Reference>
@@ -184,17 +199,53 @@
     <Reference Include="MonoMod.Utils">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\core\MonoMod.Utils.dll</HintPath>
     </Reference>
+    <Reference Include="NativeMemory">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\NativeMemory.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\managed\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Photon-DotNet">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\managed\Photon-DotNet.dll</HintPath>
     </Reference>
+    <Reference Include="PortableExecutable">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\PortableExecutable.dll</HintPath>
+    </Reference>
+    <Reference Include="Reloaded.Assembler">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\Reloaded.Assembler.dll</HintPath>
+    </Reference>
+    <Reference Include="Reloaded.Hooks">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\Reloaded.Hooks.dll</HintPath>
+    </Reference>
+    <Reference Include="Reloaded.Hooks.Definitions">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\Reloaded.Hooks.Definitions.dll</HintPath>
+    </Reference>
+    <Reference Include="Reloaded.Memory">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\Reloaded.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="Reloaded.Memory.Buffers">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\Reloaded.Memory.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="RendererFinder">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\RendererFinder.dll</HintPath>
+    </Reference>
     <Reference Include="Sentry.Unity">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\managed\Sentry.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Sentry.Unity.Native">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\managed\Sentry.Unity.Native.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D12">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\SharpDX.Direct3D12.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods\ImGui\SharpDX.DXGI.dll</HintPath>
     </Reference>
     <Reference Include="UniTask">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\managed\UniTask.dll</HintPath>

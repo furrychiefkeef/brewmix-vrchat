@@ -33,7 +33,8 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
         //Put Elements
         public static Transform ProfileRow() => MMMenus.MMSubmenus.MenuUser_Details().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Row3");
 
-        public static Transform VRCCellContainer() => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Content/Viewport/VerticalLayoutGroup/Debug");
+        public static Transform CellContainer() => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Content/Viewport/VerticalLayoutGroup/Debug");
+        public static Transform Panel() => CellContainer().transform.FindChild("Debug/Settings_Panel_1");
         /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
     }
 
@@ -41,7 +42,7 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
     {
         // Put Controls
         public static Transform Tab() => MainMenu().transform.FindChild("PageButtons/HorizontalLayoutGroup/Launch_Pad_Button_Tab");
-
+        public static Transform OperatorRadialSelection() => CellContainer);
         public interface Buttons
         {
             //Put Buttons   

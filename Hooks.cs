@@ -37,7 +37,7 @@ namespace brewchat.hybridxcore.bep
         {
             if (__instance is null) return;
             __instance?.gameObject.GetOrAddComponent<CSS>();
-            __instance.gameObject.GetOrAddComponent<KeybindManager>();
+            /*__instance.gameObject.GetOrAddComponent<KeybindManager>()*/;
 
             /*__instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();*/
             CSS.Offline();
@@ -192,7 +192,6 @@ namespace brewchat.hybridxcore.bep
            
             if (__0?.VRCPlayerApi?.displayName == APIUser.CurrentUser?.displayName)
             {
-               
                 __2 = VRC_EventHandler.VrcBroadcastType.AlwaysUnbuffered;
                 return true;
             }

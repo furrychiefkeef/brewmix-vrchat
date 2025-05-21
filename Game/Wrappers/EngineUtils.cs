@@ -116,8 +116,6 @@ namespace Brewchat.Game.Wrappers
                 => Texture(dir).ToSprite();
             public static Sprite Data_LoadSprite(Uri? dir) 
                 => Texture(dir).ToSprite();
-            
-
             #endregion
 
             #region Source

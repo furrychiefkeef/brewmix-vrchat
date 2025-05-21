@@ -1,19 +1,18 @@
-﻿using Brewchat.Cheat.Modules;
-using Brewchat.Game.Wrappers;
-using Syrup.IMGUI;
-using UnityEngine;
-using VRC.Core;
+﻿using UNIXEngine.IL2CPPModding.Utils.Collections;
 
 namespace Brewview;
 
 public static class CorutineHandler
 {
-    public static System.Collections.IEnumerator CSSONLINE_RUNTIME()
+    public static System.Collections.IEnumerator Start(System.Collections.IEnumerator routine)
     {
-        CSS.Online();
-        yield return new WaitForSeconds(0.12f); // Delay for 2 seconds (adjust as needed)
-        // You can add more code here if needed after the delay
+        VRCUiManager.field_Private_Static_VRCUiManager_0.StartCoroutine(routine.WrapToIl2Cpp());
+        return routine;
     }
+    /*public static System.Collections.IEnumerator Stop(System.Collections.IEnumerator routine)
+    {
+      
+    }*/
 
   
 }
