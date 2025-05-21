@@ -35,10 +35,10 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         public static Transform QMSpace() => QMMenus.QMSubmenus.Menu_Here().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Spacer");
         public static Transform FourButtons_Modal() => QMParent().transform.FindChild("Modal_QM_ChangeShieldLevel");
         public static Transform QMPanelGroup(string MenuName) => QMMenus.QMSubmenus.Menu_QM_GeneralSettings().transform.FindChild($"Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/{MenuName}");
-        public static Transform QMPanel() => QMPanelGroup("Sharing").transform.FindChild("QM_Settings_Panel");
+        public static Transform QMPanel(string name) => QMPanelGroup(name).transform.FindChild("QM_Settings_Panel");
         public struct QMPanelElements
         {
-            public static Transform QMSeparator() => QMPanelGroup("Sharing").transform.FindChild("VerticalLayoutGroup/Separator");
+            public static Transform QMSeparator() => QMPanel("Sharing").transform.FindChild("VerticalLayoutGroup/Separator");
         }
         /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
 
@@ -50,9 +50,9 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
     internal interface QMControls
     {
         public static Transform Tab() => QuickMenu().transform.FindChild("Container/Window/Page_Buttons_QM/HorizontalLayoutGroup/Page_Settings");
-        public static Transform OperatorRadialSelection() => QMElements.QMPanelGroup("Sharing").transform.FindChild("QM_Settings_Panel/VerticalLayoutGroup/DirectSharingVisibility");
-        public static Transform OperatorToggle() => QMElements.QMPanelGroup("Debug").transform.FindChild("QM_Settings_Panel/VerticalLayoutGroup/PinFPS&Ping");
-        public static Transform OperatorButton() => QMElements.QMPanelGroup("Debug").transform.FindChild("QM_Settings_Panel/VerticalLayoutGroup/DebugButtons");
+        public static Transform OperatorRadialSelection() => QMElements.QMPanel("Sharing").transform.FindChild("VerticalLayoutGroup/DirectSharingVisibility");
+        public static Transform OperatorToggle() => QMElements.QMPanel("Debug").transform.FindChild("VerticalLayoutGroup/PinFPS&Ping");
+        public static Transform OperatorButton() => QMElements.QMPanel("Debug").transform.FindChild("VerticalLayoutGroup/DebugButtons");
         public interface Buttons
         {
             

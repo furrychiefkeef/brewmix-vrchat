@@ -118,6 +118,26 @@ internal class QM
                 Renders.AddToggle("ESP", "parse", "parse", (x) => { Config.Render.esp = !Config.Render.esp; });
                 Renders.AddToggle("Wallhacks", "parse", "parse", (x) => { Config.Render.player_wallhack = !Config.Render.player_wallhack; });
 
+                var root = new VRCPanelRoot();
+                var panel =  new VRCPanel();
+                VRCRadialSelect choiceSelection = new VRCRadialSelect(panel, "Wallhacks", "Shows Players Through Walls with there Avatar Meshs (Buggy)")
+                    .AddChoice("Nameplates + Players", () => sconsole.internal_log("1"))
+                    .AddChoice("Nameplates", () => sconsole.internal_log("2"))
+                    .AddChoice("Players", () => sconsole.internal_log("3"));
+                    
+                panel.AddSeperator();
+                    
+                VRCRadialSelect choiceSelection1 = new VRCRadialSelect(panel, "Wallhacks", "Shows Players Through Walls with there Avatar Meshs (Buggy)")
+                    .AddChoice("Nameplates + Players", () => sconsole.internal_log("1"))
+                    .AddChoice("Nameplates", () => sconsole.internal_log("2"))
+                    .AddChoice("Players", () => sconsole.internal_log("3"));
+                    
+                panel.AddSeperator();
+
+                new VRCToggleOperator(panel, "[GLOBAL BROADCASTING]", x=>
+                {
+                    sconsole.internal_log(x ? "Enabled" : "Disabled");
+                });
                 #endregion
 
             }
@@ -158,25 +178,7 @@ internal class QM
        {
            try
            {
-                    var panel =  new VRCPanel();
-                    VRCRadialSelect choiceSelection = new VRCRadialSelect(panel.container, "Wallhacks", "Shows Players Through Walls with there Avatar Meshs (Buggy)")
-                   .AddChoice("Nameplates + Players", () => sconsole.internal_log("1"))
-                   .AddChoice("Nameplates", () => sconsole.internal_log("2"))
-                   .AddChoice("Players", () => sconsole.internal_log("3"));
-                    
-                    panel.AddSeperator();
-                    
-                    VRCRadialSelect choiceSelection1 = new VRCRadialSelect(panel.container, "Wallhacks", "Shows Players Through Walls with there Avatar Meshs (Buggy)")
-                    .AddChoice("Nameplates + Players", () => sconsole.internal_log("1"))
-                    .AddChoice("Nameplates", () => sconsole.internal_log("2"))
-                    .AddChoice("Players", () => sconsole.internal_log("3"));
-                    
-                    panel.AddSeperator();
-
-                    new VRCToggleOperator(panel, "[GLOBAL BROADCASTING]", x=>
-                    {
-                        sconsole.internal_log(x ? "Enabled" : "Disabled");
-                    });
+                   
            }
            catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
            finally { sconsole.print("Created The Selected_QuickMenu+BlanketSDK.UI", 1); }

@@ -10,10 +10,7 @@ public class UniversialTags : UnityEngine.MonoBehaviour
 {
     public static Dictionary<GameObject, string>? Objects { get; } = new(); 
     
-    public void AddTagToObject(string tag)
-    {
-        Objects?.Add(transform.gameObject, tag);
-    }
+    public void AddTagToObject(string tag) =>  Objects?.Add(transform.gameObject, tag);
     public static void Destory(string id)
     {
         Objects?.ToList().ForEach(x =>

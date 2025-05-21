@@ -1,7 +1,7 @@
 ﻿
 using System.Runtime.InteropServices;
 using BlanketSDK.Core;
-
+using BlanketSDK.QM.Elements.V2;
 using UnityEngine;
 using VRC.Localization;
 using VRC.UI.Elements;
@@ -33,13 +33,13 @@ internal class VRCRadialSelect : IQuickMenuElements
     /// <param name="name"> The name of the element. </param>
     /// <param name="callback"> ??? < /param>
     /// <exception cref="Exception"></exception>
-    public VRCRadialSelect(Transform parent, string name, [Optional] string? tooltip, [Optional] bool isChild,  System.Action callback = null)
+    public VRCRadialSelect(VRCPanel parent, string name, [Optional] string? tooltip, [Optional] bool isChild,  System.Action callback = null)
     {
         // Your existing instantiation code
         if(!QM() || !QMParent() || !QMMenus.QMSubmenus.Menu_QM_GeneralSettings()) 
             throw new Exception($"{name} element has moved to a different location or index contact: {Resources.D_Contact}");
-        parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_ChoiceSelection_Element();
-        var obj = UnityEngine.Object.Instantiate(QMControls.OperatorRadialSelection(), parent);
+        parent.obj ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_ChoiceSelection_Element();
+        var obj = UnityEngine.Object.Instantiate(QMControls.OperatorRadialSelection(), parent.container);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_CHOICE_SELECTION>";
         #region CONTAINERS
 
