@@ -7,8 +7,8 @@ using VRC.Localization;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
-namespace BlanketSDK.QM.Elements.Controls.V2;
-internal class VRCRadialSelect : IQuickMenuElements
+namespace BlanketSDK.MM.Elements.Controls.V2;
+internal class VRCRadialSelect :  IMainMenuElements
 {
     RadialSelector radialSelector;
     TextMeshProUGUIEx titleText;
@@ -33,13 +33,13 @@ internal class VRCRadialSelect : IQuickMenuElements
     /// <param name="name"> The name of the element. </param>
     /// <param name="callback"> ??? < /param>
     /// <exception cref="Exception"></exception>
-    public VRCRadialSelect(VRCPanel parent, string name, [Optional] string? tooltip, [Optional] bool isChild,  System.Action callback = null)
+    public VRCRadialSelect(VRCCellContainer parent, string name, [Optional] string? tooltip, [Optional] bool isChild,  System.Action callback = null)
     {
         // Your existing instantiation code
-        if(!QM() || !QMParent() || !QMMenus.QMSubmenus.Menu_QM_GeneralSettings()) 
+        if(!MM() || !MMParent() || !MMMenus.MMSubmenus.Menu_Setting()) 
             throw new Exception($"{name} element has moved to a different location or index contact: {Resources.D_Contact}");
-        parent.obj ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_ChoiceSelection_Element();
-        var obj = UnityEngine.Object.Instantiate(QMControls.OperatorRadialSelection(), parent.container);
+        /*parent.obj ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_ChoiceSelection_Element();*/
+        var obj = UnityEngine.Object.Instantiate(MMControls.OperatorRadialSelection(), parent._panelContainer);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_CHOICE_SELECTION>";
         #region CONTAINERS
 
@@ -138,7 +138,7 @@ internal class VRCRadialSelect : IQuickMenuElements
         if (choices.Count == 0) return;
         
         var currentChoice = choices[currentIndex];
-        QM().field_Private_ModalAlert_0.Method_Public_Void_LocalizableString_PDM_0(choices[currentIndex].Name.Localize());
+        MM().field_Private_ModalAlert_0.Method_Public_Void_LocalizableString_PDM_0(choices[currentIndex].Name.Localize());
         currentChoice.Callback?.Invoke();
     }
 

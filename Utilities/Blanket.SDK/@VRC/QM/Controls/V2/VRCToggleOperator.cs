@@ -5,12 +5,13 @@ using UnityEngine.UI;
 using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.QM.Elements.Controls.V2;
-class VRCToggleOperator : IQuickMenuElements
+internal class VRCToggleOperator : IQuickMenuElements
 {
     public VRCToggleOperator(VRCPanel panel, string name, Action<bool> func, bool state = false)
     {
         if(!QM() || !QMElements.QMPanelGroup("Debug") || !QMControls.OperatorToggle()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         Transform? obj  = UnityEngine.Object.Instantiate(QMControls.OperatorToggle(), panel.container);
+        
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_TOGGLE_OPERATOR_{name}";
 
         #region REQUIRED_COMPONENTS
@@ -27,7 +28,6 @@ class VRCToggleOperator : IQuickMenuElements
         Toggle.ToggleEvent? LISTENER = _0.onValueChanged;
         
         _0.isOn = state;
-        /*QM().field_Protected_MenuStateController_0.inte);*/
         LISTENER.AddListener(new System.Action<bool>(x =>
         {
             __1.Method_Public_Void_Boolean_PDM_0(x);

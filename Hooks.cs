@@ -112,11 +112,11 @@ namespace brewchat.hybridxcore.bep
 
         #region INTERNAL_API
 
-        [HarmonyPostfix, HarmonyPatch(typeof(VRCPlusStatus), nameof(VRCPlusStatus.prop_Object1PublicTYBoTYUnique_1_Boolean_0), MethodType.Getter)]
-        public static void ExSpoof_VRChatPlus_HOOK(ref Object1PublicTYBoTYUnique<bool> __result)
+        [HarmonyPostfix, HarmonyPatch(typeof(VRCPlusStatus), nameof(VRCPlusStatus.prop_Object1PublicTBoTUnique_1_Boolean_0), MethodType.Getter)]
+        public static void ExSpoof_VRChatPlus_HOOK(ref Object1PublicTBoTUnique<bool> __result)
         {
             if (__result != null && !APIUser.CurrentUser.isSupporter)
-                __result.prop_TYPE_0 = true;
+                __result.field_Protected_T_0 = true;
         }
 
         #endregion

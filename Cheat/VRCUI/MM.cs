@@ -3,11 +3,11 @@ using Syrup.IMGUI;
 
 using BlanketSDK.MM.Elements.Controls;
 using BlanketSDK.Core;
+using BlanketSDK.MM.Elements.Controls.V2;
 using BlanketSDK.Utilities;
 using Brewchat.Game.Wrappers;
-using FragLabs.Audio.Codecs.Opus;
 using Visionary;
-using VRC.Core;
+
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
 namespace Brewchat.Cheat;
@@ -31,14 +31,22 @@ internal class MM : IMainMenuElements
                 
          
                 
-                var ace = new VRCCellContainer(aware, "The passion project.", 1);
-                VRCCellButton? AE = new(aware, ace, "Passion", "Fruit");
+                var ace = new VRCCellContainer(aware, "User", 1);
+                VRCCellButton? AE = new(aware, ace, "UI", "Fruit");
                 VRCCellButton? AC = new(aware.navigation_buttons, "Fruit", "Passion", () =>
                 {
                     sconsole.print("passion_fruit", 1);
                 });
-                
-                
+
+                var w0_0 = new VRCRadialSelect(ace, "bitch", "unknownentity")
+                    .AddChoice("Faggot", () => sconsole.internal_log("1"))
+                    .AddChoice("Loser", () => sconsole.internal_log("2"))
+                    .AddChoice("Bitch", () => sconsole.internal_log("3"));
+
+                new VRCToggleOperator(ace, "[GLOBAL BROADCASTING]", x=>
+                {
+                    sconsole.internal_log(x ? "Enabled" : "Disabled");
+                });
             }
             catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source ,2); }
             finally{sconsole.print("Created The MainMenu+BlanketSDK.UI",1);}

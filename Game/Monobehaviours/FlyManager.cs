@@ -1,5 +1,6 @@
 ﻿using Brewchat.Game.Wrappers;
 using UnityEngine;
+using VRC.Animation;
 using VRC.SDKBase;
 
 namespace Brewchat.Game.Monobehaviours;
@@ -30,7 +31,11 @@ internal class FlyManager : UnityEngine.MonoBehaviour
         {
             
         }
-        
+
+
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_0 = true;
+        GameUtils.PlayerModel._components._motion.prop_Boolean_0 = true;
+        GameUtils.PlayerModel._components._motion.prop_Boolean_3 = true;
         targetDirection += GameUtils.Camera.Get.transform.forward * GameUtils.VRChatUtils.InputManager.GetInput("Vertical").prop_Single_2;
         targetDirection += GameUtils.Camera.Get.transform.right * GameUtils.VRChatUtils.InputManager.GetInput("Horizontal").prop_Single_2;
         targetDirection.Normalize();

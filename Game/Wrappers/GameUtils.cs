@@ -8,9 +8,11 @@ using Syrup.IMGUI;
 using TMPro;
 using UnityEngine;
 using VRC;
+using VRC.Animation;
 using VRC.Core;
 using VRC.DataModel;
 using VRC.Localization;
+using VRC.Networking;
 using VRC.SDK3.Components;
 using VRC.SDK3.Internal;
 using VRC.SDKBase;
@@ -143,6 +145,12 @@ internal class GameUtils
     {
         public static VRC.Player Get() => Player.prop_Player_0;
 
+        public struct _components
+        {
+            public static VRCMotionState _motion = Get().GetComponent<VRCMotionState>();
+            public static FlatBufferNetworkSerializer _serializer = Get().GetComponent<FlatBufferNetworkSerializer>();
+            public static SyncPhysics _SyncPhysics = Get().GetComponent<SyncPhysics>();
+        }
         public static VRC.Player? GrabPlayerFromDisplayName(string name)
         {
 
