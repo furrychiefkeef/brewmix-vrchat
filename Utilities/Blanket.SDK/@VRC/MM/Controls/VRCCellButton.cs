@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRC.Localization;
 using VRC.UI;
+using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
 using Object = Il2CppSystem.Object;
 
@@ -68,7 +69,7 @@ internal class VRCCellButton : IMainMenuElements
 
         #region REQUIRED_COMPONENTS
         VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();
-        MonoBehaviourPublicSt_ILo_nObGa_n_tToGaUnique? _1 = obj.GetComponent<MonoBehaviourPublicSt_ILo_nObGa_n_tToGaUnique>();
+        CellButtonHandler? _1 = obj.GetComponent<CellButtonHandler>();
         TextMeshProUGUIEx _2 = obj.GetChild(2).GetComponentInChildren<TextMeshProUGUIEx>(true);
         ImageEx _3 = obj.GetChild(6).GetComponent<ImageEx>();
         ToolTip _4 = obj.GetComponent<ToolTip>();

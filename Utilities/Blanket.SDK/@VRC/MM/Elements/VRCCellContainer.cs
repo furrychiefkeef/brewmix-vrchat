@@ -38,7 +38,7 @@ internal class VRCCellContainer : IMainMenuElements
 
         Label.text = name;
         Label.richText = true;
-        
+        obj.DestroyChildren(child => child.GetSiblingIndex() != 0);
         Transform? panel = obj.transform.GetChild(0).GetChild(2).GetComponentInChildren<VerticalLayoutGroup>().transform;
 
         panel.DestroyChildren(child => child.GetSiblingIndex() != 0);

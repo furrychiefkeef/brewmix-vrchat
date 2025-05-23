@@ -652,6 +652,7 @@
     <EmbeddedResource Include="Assets\Textures\Branding\0logo.png" />
     <EmbeddedResource Include="Assets\Textures\UI\ActionMenu\action-menu_*.png" />
     <EmbeddedResource Include="Assets\Textures\UI\Nameplate\capsule_*.png" />
+    <EmbeddedResource Include="Assets\Textures\UI\Icons\*.svg" />
   </ItemGroup>
 
   <ItemGroup>

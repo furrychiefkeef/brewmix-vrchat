@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Brewchat.Game.Monobehaviours;
 
-public class CameraZ : MonoBehaviour
+public class CameraZoom : MonoBehaviour
 {
     float targetFOV;
     float CacheFOV;
@@ -19,9 +19,7 @@ public class CameraZ : MonoBehaviour
 
     private void Update()
     {
-        targetFOV = (Input.GetKey(KeyCode.Z)) ? zoomedFOV : CacheFOV;
-        
-        Camera.allCameras[0].fieldOfView = Mathf.Lerp(GameUtils.Camera.Get.fieldOfView, targetFOV, Time.deltaTime * zspeed);
-        Camera.allCameras[1].fieldOfView = Mathf.Lerp(GameUtils.Camera.Get.fieldOfView, targetFOV, Time.deltaTime * zspeed);
+        targetFOV = Input.GetKey(KeyCode.LeftAlt) ? zoomedFOV : CacheFOV;
+        Camera.allCameras.ToList().ForEach(x => x.fieldOfView = Mathf.Lerp(GameUtils.Camera.Get.fieldOfView, targetFOV, Time.deltaTime * zspeed));
     }
 }

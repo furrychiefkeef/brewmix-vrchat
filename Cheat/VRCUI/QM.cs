@@ -126,13 +126,6 @@ internal class QM
                     .AddChoice("Players", () => sconsole.internal_log("3"));
                     
                 panel.AddSeperator();
-                    
-                VRCRadialSelect choiceSelection1 = new VRCRadialSelect(panel, "Wallhacks", "Shows Players Through Walls with there Avatar Meshs (Buggy)")
-                    .AddChoice("Nameplates + Players", () => sconsole.internal_log("1"))
-                    .AddChoice("Nameplates", () => sconsole.internal_log("2"))
-                    .AddChoice("Players", () => sconsole.internal_log("3"));
-                    
-                panel.AddSeperator();
 
                 new VRCToggleOperator(panel, "[GLOBAL BROADCASTING]", x=>
                 {

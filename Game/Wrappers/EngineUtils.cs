@@ -7,6 +7,9 @@ using WebSocketSharp;
 
 namespace Brewchat.Game.Wrappers
 {
+    /// <summary>
+    /// The Game Engine Wrapper (UnityEngine)
+    /// </summary>
     internal static class EngineUtils
     {
 
@@ -91,7 +94,7 @@ namespace Brewchat.Game.Wrappers
                 if (texture != null) texture.name = "resources.dev";
                 return texture;
             }
-            [Obsolete("")]
+            [Obsolete("We used Uri Now.")]
             public static Texture2D? Texture(string dir)
             {
                 byte[] data = File.ReadAllBytesAsync(dir).GetAwaiter().GetResult();
@@ -111,7 +114,7 @@ namespace Brewchat.Game.Wrappers
                 return texture2D;
             }
             
-            [Obsolete]
+            [Obsolete("We used Uri Now.")]
             public static Sprite Sprite(string dir) 
                 => Texture(dir).ToSprite();
             public static Sprite Data_LoadSprite(Uri? dir) 

@@ -2,6 +2,9 @@
 
 namespace MaterialEditing.UI;
 
+/// <summary>
+/// Thanks (Smoosh)
+/// </summary>
 public static class MaterialUtils
 {
 

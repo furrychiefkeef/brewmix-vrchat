@@ -6,7 +6,7 @@ namespace BlanketSDK.Utilities.VRC;
 
 internal static class PUZZLE_TEST
 {
-    public static VRCPanel? AddSeperator(this VRCPanel panel)
+    public static VRCPanel? AddSeperator(this BlanketSDK.QM.Elements.V2.VRCPanel panel)
     {
         UnityEngine.Object.Instantiate(IQuickMenuElements.QMElements.QMPanelElements.QMSeparator(), panel.container);
         return panel;

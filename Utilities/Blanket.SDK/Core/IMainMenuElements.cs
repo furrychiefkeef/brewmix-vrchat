@@ -34,7 +34,7 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
         public static Transform ProfileRow() => MMMenus.MMSubmenus.MenuUser_Details().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Row3");
 
         public static Transform CellContainer(string Name) => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild($"Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Content/Viewport/VerticalLayoutGroup/{Name}");
-        public static Transform Panel() => CellContainer("Debug").transform.FindChild("Debug/Settings_Panel_1");
+        public static Transform Panel() => CellContainer("Debug").transform.FindChild("Debug");
         /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
     }
 
