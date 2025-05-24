@@ -66,6 +66,7 @@ internal class QM
                 
                 PlayerMovementModal.AddToggle("Ghost", "Booo I'm a ghostttt", "awh I'm solid again", (x) =>
                 {
+                    Widgets.QM.ghostmode_widget.SetState(x);
                     var _player = GameUtils.PlayerModel.Get();
                     var gameObject = PlayerModule.Body.Clone(_player);
                     if (gameObject != null && x == false) UnityEngine.Object.Destroy(gameObject);

@@ -1,5 +1,8 @@
-﻿using Brewchat.Game.Monobehaviours;
+﻿using BlanketSDK.Utilities.VRC.QM.Widgets;
+using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
+using brewchat.hybridxcore.bep.Game.Wrappers;
+using Brewchat.Wrappers;
 using Syrup.IMGUI;
 using UnityEngine;
 using UNIXEngine.IL2CPPModding.Utils.Collections;
@@ -185,43 +188,50 @@ internal class PlayerModule
 
         private static int currentView = -1;
         public static UnityEngine.Camera[]? camera = new UnityEngine.Camera[3];
-
         public static void CameraController()
         {
+           
             if (camera == null) camera = new UnityEngine.Camera[3];
             if (camera[0] == null && camera[1] == null && camera[2] == null)
-            {
+            { 
+                
                 camera[0] = MakeCameras(View.third_person);
                 camera[1] = MakeCameras(View.second_person);
                 camera[2] = MakeCameras(View.freecam);
             }
-
+            Widgets.QM.cameramode_widget.SetState(true);
             currentView = (currentView + 1) % 4;
             if (camera[0] != null && camera[1] != null && camera[2] != null)
             {
+                Sprite? video = UICore.Sprites.Video();
+                Sprite? video_slash = UICore.Sprites.Video(false);
                 switch (currentView)
                 {
                     case 0:
-                        GameUtils.UI.HUD.ToastV1("Third Person Activated!");
+                        Widgets.QM.cameramode_widget.SetText($"Third Person");
+                        GameUtils.UI.HUD.ToastV1("Third Person Activated!", sprite: video );
                         camera[0].enabled = true;
                         camera[1].enabled = false;
                         camera[2].enabled = false;
                         break;
                     case 1:
-                        GameUtils.UI.HUD.ToastV1("Second Person Activated!");
+                        Widgets.QM.cameramode_widget.SetText($"Second Person");
+                        GameUtils.UI.HUD.ToastV1("Second Person Activated!", sprite: video);
                         camera[0].enabled = false;
                         camera[1].enabled = true;
                         camera[2].enabled = false;
                         break;
                     case 2:
-                        GameUtils.UI.HUD.ToastV1("FreeCam Activated! Right Click (To Move Camera)");
+                        Widgets.QM.cameramode_widget.SetText($"FreeCam");
+                        GameUtils.UI.HUD.ToastV1("FreeCam Activated! Right Click (To Move Camera)", sprite: video);
                         camera[0].enabled = false;
                         camera[1].enabled = false;
                         camera[2].enabled = true;
                         break;
                     case 3:
-                        GameUtils.UI.HUD.ToastV1("Cameras Destoryed");
-                        DestoryCameras();
+                        GameUtils.UI.HUD.ToastV1("Cameras Destoryed", sprite: video_slash);
+                        DestoryCameras(); 
+                        Widgets.QM.cameramode_widget.SetState(false);
                         break;
                 }
             }

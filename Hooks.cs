@@ -86,9 +86,11 @@ namespace brewchat.hybridxcore.bep
             __instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             QM._Pinkstar.Apply();
+           
             QM.SelectedMenu.Apply();
             QM.TestMenu.Apply();
             Toolbox.LoadMyUI();
+            Widgets.QM.Initalize();
 
         }
 

@@ -12,7 +12,7 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
 
     protected static QuickMenu? QM() => UnityEngine.Object.FindObjectOfType<QuickMenu>();
     public static Transform QMParent() => QuickMenu().transform.FindChild("Container/Window/QMParent");
-
+    public static Transform QMWidgetParent() => QMParent().parent.transform.FindChild("Panel_QM_Widget");
     protected interface QMMenus
     {
         public static Transform WingMenu(string position) => QuickMenu().transform.FindChild($"Container/Window/Wing_{position}/Container/InnerContainer");
@@ -32,6 +32,10 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         [Obsolete("QMButtonContainer is not QMButtonGroup")]
         public static Transform QMButtonGrp() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
         public static Transform QMLayoutGroup() => QMMenus.QMSubmenus.Menu_Here().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
+        public struct Widgets
+        {
+            public static Transform QMWidgetHeader() => QMWidgetParent().transform.FindChild("Header_StreamerMode");
+        }
         public static Transform QMSpace() => QMMenus.QMSubmenus.Menu_Here().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Spacer");
         public static Transform FourButtons_Modal() => QMParent().transform.FindChild("Modal_QM_ChangeShieldLevel");
         public static Transform QMPanelGroup(string MenuName) => QMMenus.QMSubmenus.Menu_QM_GeneralSettings().transform.FindChild($"Panel_QM_ScrollRect/Viewport/VerticalLayoutGroup/{MenuName}");

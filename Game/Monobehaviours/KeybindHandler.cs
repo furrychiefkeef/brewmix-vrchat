@@ -3,6 +3,7 @@ using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Cheats.World;
 using Brewchat.Game.Wrappers;
+using Brewchat.Wrappers;
 using Syrup.IMGUI;
 using UnityEngine;
 using UNIXEngine.IL2CPPModding.Utils.Collections;
@@ -18,11 +19,11 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
 
     void Update()
     {
-        if (GameUtils.World.IsWorldLoaded())
+        if (!GameUtils.World.IsWorldLoaded()) return;
         {
-            if(GameUtils.Gameplay.CallbackEvents.IsInMainMenu || GameUtils.Gameplay.CallbackEvents.IsInQuickMenu) return;
             CommandHandler();
-        
+            if(GameUtils.Gameplay.CallbackEvents.IsInMainMenu || GameUtils.Gameplay.CallbackEvents.IsInQuickMenu) return;
+            
             #region Keybinds
 
             if (Input.GetKeyDown(KeyCode.F5)) PlayerModule.CCamera.CameraController();
@@ -34,40 +35,17 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
             }
             #endregion
         }
-        
-       
-            
-       
-       
-        
     }
 
     void CommandHandler()
     {
         if (Input.GetKeyDown(KeyCode.F9))
         {
-            /*GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a Command", (command) =>
+           
+            GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a Command ", (id) =>
             {
-                if (command == "*help")
-                {
-                    sconsole.internal_log("*debug: {1,2,3}");
-                    sconsole.internal_log("*player:teleport: {player}");
-                }
-            }, MultiLine: false);*/
-            GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter World ID", (id) =>
-            {
-                if (id.StartsWith("wrld_"))
-                {
-                    sconsole.print("WORLD LOADED",0);
-                    GameUtils.World.Join(id);
-                }
-                if (id.StartsWith("avtr_"))
-                {
-                    sconsole.print("AVATAR LOADED" ,0);
-                    GameUtils.PlayerModel.Avatar.SetAvatar(id);
-                }
                 
-            }, MultiLine: false);
+            }, MultiLine: false, Placeholder: "type *help");
         }
     }
 
