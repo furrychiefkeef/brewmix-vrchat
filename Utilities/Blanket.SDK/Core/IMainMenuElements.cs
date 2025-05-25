@@ -49,7 +49,12 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
         public interface Buttons
         {
             //Put Buttons       
-            public static Transform AvatarButton() => MMMenus.MMSubmenus.MenuAvatarAVM().transform.FindChild("Dynamic_Content_Container/Viewport/Panel_SelectedAvatar/Avatar_Marketplace_Panel/Avatar_Functions_Container/Favorite_Avatar_Button");
+            public interface AvatarMenuRelated
+            {
+                public static Transform AvatarButtonSmall() => MMMenus.MMSubmenus.MenuAvatarAVM().transform.FindChild("Dynamic_Content_Container/Viewport/Panel_SelectedAvatar/Avatar_Marketplace_Panel/Avatar_Functions_Container/Favorite_Avatar_Button");
+                public static Transform AvatarButton() => MMMenus.MMSubmenus.MenuAvatarAVM().transform.FindChild("Dynamic_Content_Container/Viewport/Panel_SelectedAvatar/Avatar_Marketplace_Panel/Avatar_Functions_Container");
+            }
+           
             public static Transform SingleButton() => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Navigation/Viewport/VerticalLayoutGroup/Cell_MM_Debug");
 
             public static Transform WingButton(string position) => MMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Explore");

@@ -7,13 +7,13 @@ using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.MM.Elements.Controls.AvatarMenu;
 
-internal class VRCAvatarButton : IMainMenuElements
+internal class VRCAvatarButton: IMainMenuElements
 {
-    public VRCAvatarButton([Optional] string tooltip, Action func, [Optional] UnityEngine.Sprite? sprite, [Optional] int priority )
+    public VRCAvatarButton(string name , string tooltip, Action func, [Optional] UnityEngine.Sprite? sprite, [Optional] int priority )
     {
-        if(!MM() || !MMParent() || !MMControls.Buttons.AvatarButton()) throw new($"avatar button element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if(!MM() || !MMParent() || !MMControls.Buttons.AvatarMenuRelated.AvatarButton()) throw new($"avatar button element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         
-        UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.AvatarButton(), MMControls.Buttons.AvatarButton().parent);
+        UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.AvatarMenuRelated.AvatarButton(), MMControls.Buttons.AvatarMenuRelated.AvatarButton().parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_AVATAR_BUTTON";
         if(priority != 0 || priority != null) obj.SetSiblingIndex(priority);
         
@@ -31,7 +31,7 @@ internal class VRCAvatarButton : IMainMenuElements
 
         #region REQUIRED_LOGIC_API
         
-        _0._controlName = text;
+        _0._controlName = $"BlanketSDK_AvatarButton_{name}";
         Button.ButtonClickedEvent LISTENER_0_EVENT = _0.onClick;
         
         LISTENER_0_EVENT.RemoveAllListeners();

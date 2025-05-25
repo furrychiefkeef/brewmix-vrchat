@@ -72,10 +72,14 @@ internal class MM : IMainMenuElements
     {
         public static void Apply()
         {
-            new VRCAvatarButton("Ava", "Package It!", () =>
+            new VRCAvatarButtonSmall("AvatarSwitchID","Select Avatar Through ID",  () =>
             {
                 GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Change Avatar", (id) => { GameUtils.PlayerModel.Avatar.SetAvatar(id); }, MultiLine: false, Placeholder: "avtr_*");
             }, sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+            /*new VRCAvatarButton("GetAvatarID","Get Avatar ID",  () =>
+            {
+                
+            }, sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());*/
         }
     }
 
