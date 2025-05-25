@@ -9,7 +9,7 @@ namespace BlanketSDK.MM.Elements.Controls.AvatarMenu;
 
 internal class VRCAvatarButton : IMainMenuElements
 {
-    public VRCAvatarButton(string text, [Optional] string tooltip, Action func, [Optional] UnityEngine.Sprite? sprite, [Optional] int priority )
+    public VRCAvatarButton([Optional] string tooltip, Action func, [Optional] UnityEngine.Sprite? sprite, [Optional] int priority )
     {
         if(!MM() || !MMParent() || !MMControls.Buttons.AvatarButton()) throw new($"avatar button element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
         
@@ -24,8 +24,7 @@ internal class VRCAvatarButton : IMainMenuElements
         #region REQUIRED_COMPONENTS
         VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();
         ToolTip _1 = obj.GetComponent<ToolTip>();
-        
-        TextMeshProUGUIEx _3 =  obj.GetComponentInChildren<TextMeshProUGUIEx>();
+        ImageEx? _2 = obj.GetChild(1).GetComponent<ImageEx>();
 
         #endregion
 
@@ -44,22 +43,10 @@ internal class VRCAvatarButton : IMainMenuElements
         _1._localizableString = tooltip.Localize();
         #endregion
         
-        #region IMAGE_COMPONENT
-
-        _3.text = text;
-        _3.richText = true;
-        
-        #endregion
-        
         #region TEXT_COMPONENT
-
-        /*
-        if (!sprite || sprite == null) return;
         
-        
+        if (!sprite || sprite == null) return; 
         _2.sprite = sprite;
-        _2.overrideSprite = sprite;*/
-
         #endregion
-    }
+  }
 }

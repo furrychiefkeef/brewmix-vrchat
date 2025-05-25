@@ -6,20 +6,14 @@ using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
 using ExitGames.Client.Photon;
 using HarmonyLib;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Pasted.WTFBlaze.Utils.Managers;
 using Photon.Realtime;
 using Syrup.IMGUI;
 using UnityEngine;
 using VRC.Core;
 using VRC.SDKBase;
-using VRC.Udon;
-using VRC.Udon.Common.Interfaces;
-using VRC.UI.Client;
-using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
-using Object = Il2CppSystem.Object;
 using Player = VRC.Player;
 
 namespace brewchat.hybridxcore.bep
@@ -100,7 +94,8 @@ namespace brewchat.hybridxcore.bep
             if (__instance == null && !OnlineUILoaded) return;
             MM._Pinkstar.Apply();
             MM.SelectedMenu.Apply();
-            MM.PricingAvatar.Apply();
+            MM.AvatarAVMMenu.Apply();
+            MM.WorldMenu.Apply();
             Console.Clear();
         }
 

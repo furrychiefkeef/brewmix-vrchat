@@ -23,7 +23,7 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
         public interface MMSubmenus
         {
             public static Transform Menu_Setting() => MMParent().transform.FindChild("HeaderOffset/Menu_Settings");
-
+            public static Transform Menu_WorldInfo() => MMParent().transform.FindChild("HeaderOffset/Menu_MM_WorldInformation");
             public static Transform MenuUser_Details() => MMParent().transform.FindChild("HeaderOffset/Menu_UserDetail");
             public static Transform MenuAvatarAVM() => MMParent().transform.FindChild("HeaderOffset/Menu_MM_Avatars_AVM");
         }
@@ -31,7 +31,8 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
 
     protected interface MMElements
     {
-        //Put Elements
+        //Put Elements  
+        public static Transform WorldRow() => MMMenus.MMSubmenus.Menu_WorldInfo().transform.FindChild("Menu_MM_WorldInformation/Panel_World_Information/Content/Viewport/BodyContainer_World_Details/ScrollRect/Viewport/VerticalLayoutGroup/Actions");
         public static Transform ProfileRow() => MMMenus.MMSubmenus.MenuUser_Details().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Row3");
 
         public static Transform CellContainer(string Name) => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild($"Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Content/Viewport/VerticalLayoutGroup/{Name}");

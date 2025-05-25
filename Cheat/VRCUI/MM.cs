@@ -45,13 +45,13 @@ internal class MM : IMainMenuElements
             try
             {
 
-                var row4 = new VRCProfileRow(IMainMenuElements.MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"{Entry.NAME} Actions");
+                var row4 = new VRCRowGroup(IMainMenuElements.MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"{Entry.NAME} Actions");
                 VRCBigButton? Teleport = new(row4, "Teleport", $"Teleport to this player's Position", () => { GameUtils.PlayerModel.Get().transform.position = GameUtils.PlayerModel.Matchmaking.GetSelectedUser().transform.position; });
 
                 #region Admin
 
-                var row5 = new VRCProfileRow(IMainMenuElements.MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"<color=red>{Entry.NAME}</color>");
-                VRCRowGroup? Tag = new(row5, "Give Tag", $"Give a Specific Tag to User", () => { Vision.API.GiveTag(); });
+                var row5 = new VRCRowGroup(IMainMenuElements.MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"<color=red>{Entry.NAME}</color>");
+                VRCBigButton? Tag = new(row5, "Give Tag", $"Give a Specific Tag to User", () => { Vision.API.GiveTag(); });
 
                 #endregion
 
@@ -68,11 +68,22 @@ internal class MM : IMainMenuElements
         }
     }
 
-    public class PricingAvatar
+    public class AvatarAVMMenu
     {
         public static void Apply()
         {
-            new VRCAvatarButton("", "Package It!", Console.Beep, sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+            new VRCAvatarButton("Ava", "Package It!", () =>
+            {
+                GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Change Avatar", (id) => { GameUtils.PlayerModel.Avatar.SetAvatar(id); }, MultiLine: false, Placeholder: "avtr_*");
+            }, sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+        }
+    }
+
+    public class WorldMenu : IMainMenuElements
+    {
+        public static void Apply()
+        {
+            new VRCBigButton(MMElements.WorldRow(), "Avatar ID", "Test", () => { Console.Beep();} );
         }
     }
 }
