@@ -17,7 +17,7 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
         sconsole.print(" Monobehaviours", "/KeybindManager", "KeybindManager", 0);
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (!GameUtils.World.IsWorldLoaded()) return;
         {

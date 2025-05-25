@@ -83,7 +83,7 @@ namespace brewchat.hybridxcore.bep
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
-            __instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();
+            /*__instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();*/
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             QM._Pinkstar.Apply();
            
@@ -100,6 +100,8 @@ namespace brewchat.hybridxcore.bep
             if (__instance == null && !OnlineUILoaded) return;
             MM._Pinkstar.Apply();
             MM.SelectedMenu.Apply();
+            MM.PricingAvatar.Apply();
+            Console.Clear();
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUIBackground), nameof(VRCUIBackground.Start))]

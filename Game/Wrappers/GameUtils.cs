@@ -254,11 +254,7 @@ internal class GameUtils
         {
             public static VRC.Player? GetSelectedUser()
             {
-                
-                    return UnityEngine.Object.FindObjectOfType<SelectedUserMenuQM>().transform
-                        .GetComponent<MonoBehaviourPublicTeObSlGrImSiObUnique>()
-                        .field_Private_IUser_0.prop_String_1.GetPlayer()
-                        ?._vrcplayer._player;
+                    return  UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_IUser_0.prop_String_1.GetPlayer()?._vrcplayer._player;
             }
             public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetAllPlayers => PlayerManager.prop_PlayerManager_0.PlayerList;
         }

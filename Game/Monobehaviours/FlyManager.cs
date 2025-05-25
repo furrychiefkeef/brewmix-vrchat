@@ -9,7 +9,7 @@ internal class FlyManager : UnityEngine.MonoBehaviour
 {
     public bool AllowRotation { get; set; } = false;
     public bool Player { get; set; } = false;
-    void LateUpdate() => Controller();
+    void Update() => Controller();
 
     Vector3 velocity = Vector3.zero;
     float acceleration = 10f; // How fast you reach target speed
@@ -27,12 +27,27 @@ internal class FlyManager : UnityEngine.MonoBehaviour
         if (Input.GetKey(KeyCode.Q)) targetDirection += Vector3.down;
         if (Input.GetKey(KeyCode.E)) targetDirection += Vector3.up;
 
-        if (Player)
-        {
-            
-        }
+        
 
-
+        /*
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_1 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_2 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_3 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_4 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_5 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_5 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_6 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_7 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_8 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_9 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_10 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_11 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_12 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_13 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_Boolean_14 = true;
+        GameUtils.PlayerModel._components._motion.field_Private_EnumNPrivateSealedvaNoPrFoAi5vUnique_0 = VRCMotionState.EnumNPrivateSealedvaNoPrFoAi5vUnique.ForceApplied;
+        */
+        
         
         targetDirection += GameUtils.Camera.Get.transform.forward * GameUtils.VRChatUtils.InputManager.GetInput("Vertical").prop_Single_2;
         targetDirection += GameUtils.Camera.Get.transform.right * GameUtils.VRChatUtils.InputManager.GetInput("Horizontal").prop_Single_2;
