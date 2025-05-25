@@ -32,7 +32,7 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
     protected interface MMElements
     {
         //Put Elements  
-        public static Transform WorldRow() => MMMenus.MMSubmenus.Menu_WorldInfo().transform.FindChild("Menu_MM_WorldInformation/Panel_World_Information/Content/Viewport/BodyContainer_World_Details/ScrollRect/Viewport/VerticalLayoutGroup/Actions");
+        public static Transform WorldRow() => MMMenus.MMSubmenus.Menu_WorldInfo().transform.FindChild("Panel_World_Information/Content/Viewport/BodyContainer_World_Details/ScrollRect/Viewport/VerticalLayoutGroup/Actions");
         public static Transform ProfileRow() => MMMenus.MMSubmenus.MenuUser_Details().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Row3");
 
         public static Transform CellContainer(string Name) => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild($"Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Content/Viewport/VerticalLayoutGroup/{Name}");
@@ -52,7 +52,7 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
             public interface AvatarMenuRelated
             {
                 public static Transform AvatarButtonSmall() => MMMenus.MMSubmenus.MenuAvatarAVM().transform.FindChild("Dynamic_Content_Container/Viewport/Panel_SelectedAvatar/Avatar_Marketplace_Panel/Avatar_Functions_Container/Favorite_Avatar_Button");
-                public static Transform AvatarButton() => MMMenus.MMSubmenus.MenuAvatarAVM().transform.FindChild("Dynamic_Content_Container/Viewport/Panel_SelectedAvatar/Avatar_Marketplace_Panel/Avatar_Functions_Container");
+                public static Transform AvatarButton() => MMMenus.MMSubmenus.MenuAvatarAVM().transform.FindChild("Dynamic_Content_Container/Viewport/Panel_SelectedAvatar/Avatar_Marketplace_Panel/Avatar_Details_Button");
             }
            
             public static Transform SingleButton() => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Navigation/Viewport/VerticalLayoutGroup/Cell_MM_Debug");

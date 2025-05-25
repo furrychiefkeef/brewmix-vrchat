@@ -23,7 +23,7 @@ internal class VRCBigButton : IMainMenuElements
     {
         if (!MainMenu() || !MMControls.Buttons.ProfileButton()) throw new($"profile button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
        
-        parent ??= MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileButtons();
+        /*parent ??= MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileButtons();*/
         Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.ProfileButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_SINGLE_BUTTON-{name}";
 

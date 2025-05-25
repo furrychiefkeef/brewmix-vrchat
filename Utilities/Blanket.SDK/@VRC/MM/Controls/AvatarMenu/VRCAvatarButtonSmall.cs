@@ -15,7 +15,7 @@ internal class VRCAvatarButtonSmall : IMainMenuElements
         
         UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.AvatarMenuRelated.AvatarButtonSmall(), MMControls.Buttons.AvatarMenuRelated.AvatarButtonSmall().parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_AVATAR_BUTTON";
-        if(priority != 0 || priority != null) obj.SetSiblingIndex(priority);
+        if(priority != 0 || priority != null) obj.SetSiblingIndex(priority); 
         
         UnityEngine.Object.DestroyImmediate(obj.GetComponent<MonoBehaviourPublicLoInLoBoInLoInLoLoLoUnique>());
         UnityEngine.Object.DestroyImmediate(obj.GetComponent<MonoBehaviourPublicSt_sStObBoStObLoAcObUnique>());
@@ -43,7 +43,7 @@ internal class VRCAvatarButtonSmall : IMainMenuElements
         _1._localizableString = tooltip.Localize();
         #endregion
         
-        #region TEXT_COMPONENT
+        #region IMAGE_COMPONENT
         
         if (!sprite || sprite == null) return; 
         _2.sprite = sprite;

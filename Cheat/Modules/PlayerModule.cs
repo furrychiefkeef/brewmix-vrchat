@@ -23,7 +23,7 @@ internal class PlayerModule
         public static void Fly()
         {
             Player player = GameUtils.PlayerModel.Get();
-            if (!player && !GameUtils.World.IsWorldLoaded()) return;
+            if (!player && !GameUtils.World.IsLoaded()) return;
             else
             {
                 #region REQUIRED_COMPONENTS
@@ -81,7 +81,7 @@ internal class PlayerModule
 
             #region LOGIC
 
-            if (!player && !GameUtils.World.IsWorldLoaded()) return;
+            if (!player && !GameUtils.World.IsLoaded()) return;
             {
                 switch (state)
                 {
@@ -106,7 +106,7 @@ internal class PlayerModule
         public static void ClickTP()
         {
             Player player = GameUtils.PlayerModel.Get();
-            if (!player && !GameUtils.World.IsWorldLoaded() || GameUtils.Gameplay.CallbackEvents.IsInMainMenu) return;
+            if (!player && !GameUtils.World.IsLoaded() || GameUtils.Gameplay.CallbackEvents.IsInMainMenu) return;
             if (Physics.Raycast(GameUtils.Camera.Get.transform.position, GameUtils.Camera.Get.transform.forward, out RaycastHit hit)) player.transform.position = hit.point;
         }
 

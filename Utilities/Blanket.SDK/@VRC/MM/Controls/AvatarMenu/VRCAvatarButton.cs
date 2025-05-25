@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using BlanketSDK.Core;
+using UnityEngine;
 using UnityEngine.UI;
 using VRC.Localization;
 using VRC.UI;
@@ -15,25 +16,25 @@ internal class VRCAvatarButton: IMainMenuElements
         
         UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.AvatarMenuRelated.AvatarButton(), MMControls.Buttons.AvatarMenuRelated.AvatarButton().parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_AVATAR_BUTTON";
-        if(priority != 0 || priority != null) obj.SetSiblingIndex(priority);
+        if (priority != 0 || priority != null) obj.SetSiblingIndex(priority);
         
-        UnityEngine.Object.DestroyImmediate(obj.GetComponent<MonoBehaviourPublicLoInLoBoInLoInLoLoLoUnique>());
-        UnityEngine.Object.DestroyImmediate(obj.GetComponent<MonoBehaviourPublicSt_sStObBoStObLoAcObUnique>());
        
         
         #region REQUIRED_COMPONENTS
         VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();
         ToolTip _1 = obj.GetComponent<ToolTip>();
-        ImageEx? _2 = obj.GetChild(1).GetComponent<ImageEx>();
-
+        Transform? _I  = obj.GetChild(1);
+        ImageEx? _2 = _I.GetChild(0).GetComponent<ImageEx>();
+        TextMeshProUGUIEx? _3 = obj.GetComponentInChildren<TextMeshProUGUIEx>();
+        
         #endregion
 
 
-        #region REQUIRED_LOGIC_API
+        #region REQUIRED_LOGIC_API  
         
         _0._controlName = $"BlanketSDK_AvatarButton_{name}";
         Button.ButtonClickedEvent LISTENER_0_EVENT = _0.onClick;
-        
+            
         LISTENER_0_EVENT.RemoveAllListeners();
         LISTENER_0_EVENT.AddListener(func);
         #endregion
@@ -44,9 +45,17 @@ internal class VRCAvatarButton: IMainMenuElements
         #endregion
         
         #region TEXT_COMPONENT
+        _3.text = name;
+        _3.richText = true;
+        #endregion
+        
+        
+        #region IMAGE_COMPONENT
         
         if (!sprite || sprite == null) return; 
+        _I.gameObject.SetActive(true);
         _2.sprite = sprite;
+        
         #endregion
   }
 }

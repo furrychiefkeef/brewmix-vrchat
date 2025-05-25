@@ -19,7 +19,7 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
 
     void LateUpdate()
     {
-        if (!GameUtils.World.IsWorldLoaded()) return;
+        if (!GameUtils.World.IsLoaded()) return;
         {
             CommandHandler();
             if(GameUtils.Gameplay.CallbackEvents.IsInMainMenu || GameUtils.Gameplay.CallbackEvents.IsInQuickMenu) return;

@@ -76,10 +76,11 @@ internal class MM : IMainMenuElements
             {
                 GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Change Avatar", (id) => { GameUtils.PlayerModel.Avatar.SetAvatar(id); }, MultiLine: false, Placeholder: "avtr_*");
             }, sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
-            /*new VRCAvatarButton("GetAvatarID","Get Avatar ID",  () =>
+            
+            new VRCAvatarButton("GetAvatarID","Get Avatar ID",  () =>
             {
                 
-            }, sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());*/
+            }, sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite(),5);
         }
     }
 
@@ -87,7 +88,7 @@ internal class MM : IMainMenuElements
     {
         public static void Apply()
         {
-            new VRCBigButton(MMElements.WorldRow(), "Avatar ID", "Test", () => { Console.Beep();} );
+            new VRCBigButton(MMElements.WorldRow(), "Get World ID", "Get World ID", () => { Console.WriteLine($@"WORLD ID: {GameUtils.World.GetID()}");});
         }
     }
 }

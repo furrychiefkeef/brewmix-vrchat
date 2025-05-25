@@ -10,6 +10,7 @@ using Pasted.WTFBlaze.Utils.Managers;
 using Photon.Realtime;
 using Syrup.IMGUI;
 using UnityEngine;
+using UnityEngine.UI;
 using VRC.Core;
 using VRC.SDKBase;
 using VRC.UI.Elements;
@@ -56,6 +57,20 @@ namespace brewchat.hybridxcore.bep
             QM.SelectedMenu.Apply();
             Toolbox.LoadMyUI();
         }*/
+
+        [HarmonyPostfix, HarmonyPatch(typeof(FlatLoadingOverlay), nameof(FlatLoadingOverlay.Method_Private_Void_0))]
+        public static void FlatLoadingOverlay_Initialize_HOOK(ref FlatLoadingOverlay? __instance)
+        {
+            /*if (__instance is null && !OfflineUILoaded) return;
+            var RAW = __instance._container.GetComponent<Canvas>().gameObject
+            Console.Clear();
+            Console.WriteLine("--- IMAGE PROPERTIES ---");
+            foreach (var VARIABLE in RAW.material.shaderKeywords)
+            {
+                Console.WriteLine($"{VARIABLE}");
+            }*/
+        }
+        
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
         public static void VRCLoadingSequence_IsEnable_HOOK(ref VRCUiPageLoading? __instance)
         {
@@ -164,7 +179,7 @@ namespace brewchat.hybridxcore.bep
                 bool printed = false;
                 object Data = null;
                 ParameterDictionary? Parameters = __0.Parameters;
-                foreach (var data in __0.Parameters)
+                foreach (var data in Parameters)
                 {
                     if (!printed)
                     {
@@ -196,9 +211,6 @@ namespace brewchat.hybridxcore.bep
             }
             return true;
         }
-        
-        
-        
     }
 }
     

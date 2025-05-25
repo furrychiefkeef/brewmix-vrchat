@@ -262,10 +262,11 @@ internal class GameUtils
 
     public class World
     {
-        public static bool IsWorldLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.currentApiWorld != null;
+        public static string GetID() => RoomManager.field_Private_Static_ApiWorldInstance_1.id;
+        public static bool IsLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.currentApiWorld != null;
         public static string Join(string worldId)
         {
-            Networking.GoToRoom(string.Format("{0}", worldId));
+            Networking.GoToRoom(worldId);
             return worldId;
         }
 
