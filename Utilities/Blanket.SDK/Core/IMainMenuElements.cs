@@ -15,7 +15,7 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
 
     // Put RootObjects
 
-    protected interface MMMenus
+    public interface MMMenus
     {
         public static Transform WingMenu(string position) => MainMenu().transform.FindChild($"Wing_{position}/Container/InnerContainer");
 

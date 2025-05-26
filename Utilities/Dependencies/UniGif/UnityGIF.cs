@@ -2,7 +2,6 @@
 using UnityEngine;
 using UNIXEngine.IL2CPPModding.Utils.Collections;
 
-
 public static class UnityGIF
 {
     private static Texture2D[] gifFrames;
@@ -12,8 +11,8 @@ public static class UnityGIF
 
     public static void LoadGif(Uri path)
     {
-        byte[] gifData = new System.Net.Http.HttpClient().GetByteArrayAsync(path).GetAwaiter().GetResult();
-        GameUtils.PlayerModel.Get().StartCoroutine(DecodeGif(gifData).WrapToIl2Cpp());
+        byte[] gifData = File.ReadAllBytes(path.LocalPath);
+        UnityEngine.Object.FindObjectOfType<FlatLoadingOverlay>().StartCoroutine(DecodeGif(gifData).WrapToIl2Cpp());
     }
 
     private static System.Collections.IEnumerator DecodeGif(byte[] gifData)
@@ -28,7 +27,7 @@ public static class UnityGIF
         {
             gifFrames = frames.Select(f => f.m_texture2d).ToArray();
             frameDelays = frames.Select(f => f.m_delaySec).ToArray();
-            GameUtils.PlayerModel.Get().StartCoroutine(PlayGifAnimation().WrapToIl2Cpp());
+            UnityEngine.Object.FindObjectOfType<FlatLoadingOverlay>().StartCoroutine(PlayGifAnimation().WrapToIl2Cpp());
         }
     }
 

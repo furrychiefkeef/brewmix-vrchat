@@ -11,7 +11,9 @@ using Photon.Realtime;
 using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.UI;
+using UNIXEngine.IL2CPPModding.Utils.Collections;
 using VRC.Core;
+using VRC.DataModel.Textures;
 using VRC.SDKBase;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
@@ -22,9 +24,10 @@ namespace brewchat.hybridxcore.bep
     [HarmonyPatch]
     internal class Hooks
     {
+        static bool OverlayLoadedLoaded = false;
         static bool OfflineUILoaded = false;
         static bool OnlineUILoaded = false;
-
+        public static FlatLoadingOverlay? __instanceC;
         #region INTERNAL_CORE
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCApplication), nameof(VRCApplication.Awake))]
@@ -32,6 +35,7 @@ namespace brewchat.hybridxcore.bep
         {
             if (__instance is null) return;
             __instance?.gameObject.GetOrAddComponent<CSS>();
+            __instance?.gameObject.GetOrAddComponent<GifLoader>();
             /*__instance.gameObject.GetOrAddComponent<KeybindManager>()*/;
 
             /*__instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();*/
@@ -57,30 +61,28 @@ namespace brewchat.hybridxcore.bep
             QM.SelectedMenu.Apply();
             Toolbox.LoadMyUI();
         }*/
+        
 
-        [HarmonyPostfix, HarmonyPatch(typeof(FlatLoadingOverlay), nameof(FlatLoadingOverlay.Awake))]
-        public static void FlatLoadingOverlay_Initialize_HOOK(ref FlatLoadingOverlay? __instance)
+        [HarmonyPostfix, HarmonyPatch(typeof(LoadingOverlayController), nameof(LoadingOverlayController.Start))]
+        public static void FlatLoadingOverlay_Initialize_HOOK(ref LoadingOverlayController __instance)
         {
-            if (__instance is null && !OfflineUILoaded) return;
-            var Background = __instance._container.gameObject.transform.FindChild("Canvas/Background").GetComponent<Image>();
-            
-            if (Config.Appearance.Hiders.HideLoadingOverlay)  Background.gameObject.SetActive(false);
-
+            if (__instance is null && !OverlayLoadedLoaded) return;
+            var Background = __instance.gameObject.transform.Find("FlatLoadingOverlay(Clone)/Container").transform.FindChild("Canvas/Background").GetComponent<Image>();
+            if (Config.Appearance.Hiders.HideLoadingOverlay)
+            {
+                UnityEngine.Object.DestroyImmediate(Background, true);
+                return;
+            }
             if (Config.Appearance.FlatLoadingOverlay != null)
             {
-                Background.color = Color.white;
-                Background.material.mainTexture = EngineUtils.Assets.Texture(new Uri($"{Config.Appearance.FlatLoadingOverlay}", UriKind.Absolute));
+                    
+                    Background.color = new Color(0, 0, 0, 0.9f);
+                    var iso = GifLoader.CreateIsolatedImage(Background);
+                    GifLoader.Instance.AddAnimatedGif(iso, new Uri(Config.Appearance.FlatLoadingOverlay));
+
             }
-            
-            /*var RAW = __instance._container.GetComponent<Canvas>().gameObject
-            Console.Clear();
-            Console.WriteLine("--- IMAGE PROPERTIES ---");
-            foreach (var VARIABLE in RAW.material.shaderKeywords)
-            {
-                Console.WriteLine($"{VARIABLE}");
-            }*/
         }
-        
+
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
         public static void VRCLoadingSequence_IsEnable_HOOK(ref VRCUiPageLoading? __instance)
         {
@@ -104,12 +106,13 @@ namespace brewchat.hybridxcore.bep
             if (__instance == null && !OnlineUILoaded) return;
             /*__instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();*/
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
-            QM._Pinkstar.Apply();
-           
-            QM.SelectedMenu.Apply();
-            QM.TestMenu.Apply();
-            Toolbox.LoadMyUI();
             Widgets.QM.Initalize();
+ 
+//        ============================
+            QM._Pinkstar.Apply();
+            QM.SelectedMenu.Apply();
+            QM.TestMenu.Apply();    
+//        ============================
 
         }
 
@@ -125,7 +128,7 @@ namespace brewchat.hybridxcore.bep
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUIBackground), nameof(VRCUIBackground.Start))]
-        public static void StyleEngine_Initialize_HOOK(ref VRCUIBackground? __instance)
+        public static void QuickMenuBackground_Initialize_HOOK(ref VRCUIBackground? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
             OnlineUILoaded = true;

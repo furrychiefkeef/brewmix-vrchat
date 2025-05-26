@@ -19,8 +19,6 @@ internal class VRCWidgets : IQuickMenuElements
     {
         Transform? obj = UnityEngine.Object.Instantiate(QMElements.Widgets.QMWidgetHeader(), QMElements.Widgets.QMWidgetHeader().parent);
 
-       
-        
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_WIDGET";
         Transform? Header = obj.GetChild(0);
         

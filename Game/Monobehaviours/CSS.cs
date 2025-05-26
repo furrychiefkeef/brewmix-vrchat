@@ -7,6 +7,7 @@ using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.UI;
 using UNIXEngine.IL2CPPModding.Utils.Collections;
+using VRC.UI;
 using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
@@ -46,6 +47,11 @@ internal class CSS : UnityEngine.MonoBehaviour
     {
         #region UI
 
+        var verify = IMainMenuElements.MMMenus.MMSubmenus.MenuUser_Details().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Row1/Profile/DetailsArea/ScrollRect/Viewport/VerticalLayoutGroup/Field_AgeVerification/Icon_AgeVerification");
+        verify.GetComponent<ImageEx>().color = Color.red;
+        
+        
+        
         foreach (GameObject gameobject in Templates.AdvancedMenus)
         {
             var render =  gameobject.GetComponentInChildren<VRCUIBackground>();

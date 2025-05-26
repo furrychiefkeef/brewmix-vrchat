@@ -106,9 +106,17 @@ namespace Brewchat.Game.Wrappers
           
             public static Texture2D? Texture(Uri? url)
             {
-                HttpClient http = new();
-                byte[] data = http.GetByteArrayAsync(url.ToString()).GetAwaiter().GetResult();
-                Texture2D texture2D = new(0, 0);
+                if (url == null) throw new ArgumentNullException(nameof(url));
+                byte[] data;
+                if (url.IsFile) data = File.ReadAllBytes(url.LocalPath); // Works with file:// or plain path
+                else if (url.Scheme == Uri.UriSchemeHttp || url.Scheme == Uri.UriSchemeHttps)
+                {
+                    using HttpClient http = new();
+                    data = http.GetByteArrayAsync(url.ToString()).GetAwaiter().GetResult();
+                }
+                else throw new NotSupportedException($"Unsupported URI scheme: {url.Scheme}");
+
+                Texture2D texture2D = new(2048, 2048); // Always give a dummy size
                 texture2D.LoadImage(data);
                 texture2D.name = Path.GetFileNameWithoutExtension(url.LocalPath);
                 return texture2D;
