@@ -61,7 +61,10 @@ public class Config
     public struct Appearance
     {
         public static string QueueAudio { get; set; } = "https://github.com/riotlu/fake-cdn/raw/refs/heads/master/Audio/raygun.ogg?raw=true";
-
+        public static string FlatLoadingOverlay { get; set; } = "C:\\Users\\riot\\Pictures\\Saved Pictures\\furry\\twitter\\GrWvzVha8AAj9hm.jpg";
+        
+        public static string Mm_Background { get; set; } = "https://github.com/smooshs/fake-cdn/blob/master/bbb/GpowaDuXgAA77ES.jpg?raw=true";
+        public static string Qm_Background { get; set; } = "https://github.com/smooshs/fake-cdn/blob/master/bbb/GpowaDuXgAA77ES.jpg?raw=true";
         public struct Platte
         {
             public static UnityEngine.Color Main { get; set; } = EngineUtils.Conversion.HexToColor("#c60e7b");
@@ -116,8 +119,12 @@ public class Config
            Color Hover { get; set; } ;
            Color Hover { get; set; } ; = EngineUtils.Conversion.HexToColor("#c60e7b");*/
         }
+        public struct Hiders
+        {
+            public static bool HideLoadingOverlay { get; set; }
+        }
     }
-
+    
     public struct Exploits
     {
         public static bool RPC_ForceGlobal { get; set; } = false;

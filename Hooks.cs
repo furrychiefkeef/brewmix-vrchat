@@ -58,11 +58,21 @@ namespace brewchat.hybridxcore.bep
             Toolbox.LoadMyUI();
         }*/
 
-        [HarmonyPostfix, HarmonyPatch(typeof(FlatLoadingOverlay), nameof(FlatLoadingOverlay.Method_Private_Void_0))]
+        [HarmonyPostfix, HarmonyPatch(typeof(FlatLoadingOverlay), nameof(FlatLoadingOverlay.Awake))]
         public static void FlatLoadingOverlay_Initialize_HOOK(ref FlatLoadingOverlay? __instance)
         {
-            /*if (__instance is null && !OfflineUILoaded) return;
-            var RAW = __instance._container.GetComponent<Canvas>().gameObject
+            if (__instance is null && !OfflineUILoaded) return;
+            var Background = __instance._container.gameObject.transform.FindChild("Canvas/Background").GetComponent<Image>();
+            
+            if (Config.Appearance.Hiders.HideLoadingOverlay)  Background.gameObject.SetActive(false);
+
+            if (Config.Appearance.FlatLoadingOverlay != null)
+            {
+                Background.color = Color.white;
+                Background.material.mainTexture = EngineUtils.Assets.Texture(new Uri($"{Config.Appearance.FlatLoadingOverlay}", UriKind.Absolute));
+            }
+            
+            /*var RAW = __instance._container.GetComponent<Canvas>().gameObject
             Console.Clear();
             Console.WriteLine("--- IMAGE PROPERTIES ---");
             foreach (var VARIABLE in RAW.material.shaderKeywords)
