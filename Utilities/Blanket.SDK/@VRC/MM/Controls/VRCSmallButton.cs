@@ -35,6 +35,7 @@ internal class VRCSmallButton : IMainMenuElements
         #endregion
 
         #region BUTTON COMPONENT
+        _0._controlName = $"SmallButton_{tooltip}";
         UnityEngine.UI.Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_0 = _0.onClick;
         _0.field_Private_MenuStateController_0 = MM()?.field_Protected_MenuStateController_0;
         

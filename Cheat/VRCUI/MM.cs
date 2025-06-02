@@ -7,6 +7,7 @@ using BlanketSDK.MM.Elements.Controls.AvatarMenu;
 using BlanketSDK.MM.Elements.Controls.V2;
 using BlanketSDK.Utilities;
 using Brewchat.Game.Wrappers;
+using Brewchat.Wrappers;
 using Visionary;
 
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
@@ -21,10 +22,32 @@ internal class MM : IMainMenuElements
         {
             try
             {
+                var a = new VRCPage(Entry.NAME, EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+                new VRCTab(a, Entry.FULLNAME, "The passion project.", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
                 new VRCWingButton(MMFallbacks._Fallback_Dashboard_Group_MM_UI_WingButtons("Left"), SDKUtils.Wing.Position.Left, "Test", "Test", () => { });
-                VRCSmallButton acee2 = new(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ExpandButtons(), "The passion project.", 5, () => GameUtils.UI.HUD.Alert("bitch2", GameUtils.UI.HUD.AlertType.MainMenu), EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
-                var aware = new VRCPage(Entry.NAME, EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
-                new VRCTab(aware, Entry.FULLNAME, "The passion project.", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+                
+                #region Header_Container
+                VRCSmallButton acee2 = new(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ExpandButtons(), "The passion project.", 5, () => GameUtils.UI.HUD.Alert("bitch2"), EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+                #endregion
+               
+                #region VRCPage_CodeName:Aware
+
+                var UI_PROPERTIES = new VRCCellContainer(a, "Properties [QOL]"); 
+                var UI_HANDLER = new VRCCellContainer(a, "HANDLERS [PERFORMANCE]"); 
+                var UI_MUSIC = new VRCCellContainer(a, "Music"); 
+               
+                
+                #region VRCPage_CodeName:Aware_NavContainer
+
+                new VRCCellButton(a, UI_PROPERTIES, "Properties", "[Properties]");
+                new VRCCellButton(a, UI_HANDLER, "Handlers", "[Handlers]");
+                new VRCCellButton(a, UI_MUSIC, "Music","[Music]", AstriekLib.Sprites.Music()); 
+                #endregion
+                
+                
+                
+                #endregion
+
 
             }
             catch (Exception e)
@@ -38,35 +61,7 @@ internal class MM : IMainMenuElements
         }
     }
 
-    public class SelectedMenu
-    {
-        public static void Apply()
-        {
-            try
-            {
-
-                var row4 = new VRCRowGroup(IMainMenuElements.MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"{Entry.NAME} Actions");
-                VRCBigButton? Teleport = new(row4, "Teleport", $"Teleport to this player's Position", () => { GameUtils.PlayerModel.Get().transform.position = GameUtils.PlayerModel.Matchmaking.GetSelectedUser().transform.position; });
-
-                #region Admin
-
-                var row5 = new VRCRowGroup(IMainMenuElements.MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"<color=red>{Entry.NAME}</color>");
-                VRCBigButton? Tag = new(row5, "Give Tag", $"Give a Specific Tag to User", () => { Vision.API.GiveTag(); });
-
-                #endregion
-
-            }
-            catch (Exception e)
-            {
-                sconsole.print(e.Message + "\n" + e.Source, 2);
-            }
-            finally
-            {
-                sconsole.print("Created The Selected_MainMenu+BlanketSDK.UI", 1);
-            }
-
-        }
-    }
+  
 
     public class AvatarAVMMenu
     {
@@ -83,8 +78,37 @@ internal class MM : IMainMenuElements
             }, sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite(),5);
         }
     }
+    
+    public class SelectedUserMenu : IMainMenuElements
+    {
+        public static void Apply()
+        {
+            try
+            {
 
-    public class WorldMenu : IMainMenuElements
+                var row4 = new VRCRowGroup(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"{Entry.NAME} Actions");
+                VRCBigButton? Teleport = new(row4, "Teleport", $"Teleport to this player's Position", () => { GameUtils.PlayerModel.Get().transform.position = GameUtils.PlayerModel.Matchmaking.GetSelectedUser().transform.position; });
+
+                #region Admin
+
+                var row5 = new VRCRowGroup(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"<color=red>{Entry.NAME}</color>");
+                VRCBigButton? Tag = new(row5, "Give Tag", $"Give a Specific Tag to User", () => { Vision.API.GiveTag(); });
+
+                #endregion
+
+            }
+            catch (Exception e)
+            {
+                sconsole.print(e.Message + "\n" + e.Source, 2);
+            }
+            finally
+            {
+                sconsole.print("Created The Selected_MainMenu+BlanketSDK.UI", 1);
+            }
+
+        }
+    }
+    public class SelectedWorldMenu : IMainMenuElements
     {
         public static void Apply()
         {

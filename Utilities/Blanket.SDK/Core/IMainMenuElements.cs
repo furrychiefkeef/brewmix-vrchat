@@ -24,8 +24,10 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
         {
             public static Transform Menu_Setting() => MMParent().transform.FindChild("HeaderOffset/Menu_Settings");
             public static Transform Menu_WorldInfo() => MMParent().transform.FindChild("HeaderOffset/Menu_MM_WorldInformation");
+            public static Transform Menu_Worlds() => MMParent().transform.FindChild("HeaderOffset/Menu_MM_Worlds");
             public static Transform MenuUser_Details() => MMParent().transform.FindChild("HeaderOffset/Menu_UserDetail");
-            public static Transform MenuAvatarAVM() => MMParent().transform.FindChild("HeaderOffset/Menu_MM_Avatars_AVM");
+            public static Transform MenuAvatar_AVM() => MMParent().transform.FindChild("HeaderOffset/Menu_MM_Avatars_AVM");
+            
         }
     }
 
@@ -34,7 +36,6 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
         //Put Elements  
         public static Transform WorldRow() => MMMenus.MMSubmenus.Menu_WorldInfo().transform.FindChild("Panel_World_Information/Content/Viewport/BodyContainer_World_Details/ScrollRect/Viewport/VerticalLayoutGroup/Actions");
         public static Transform ProfileRow() => MMMenus.MMSubmenus.MenuUser_Details().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Row3");
-
         public static Transform CellContainer(string Name) => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild($"Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Content/Viewport/VerticalLayoutGroup/{Name}");
         public static Transform Panel() => CellContainer("Debug").transform.FindChild("Debug");
         /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
@@ -51,8 +52,13 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
             //Put Buttons       
             public interface AvatarMenuRelated
             {
-                public static Transform AvatarButtonSmall() => MMMenus.MMSubmenus.MenuAvatarAVM().transform.FindChild("Dynamic_Content_Container/Viewport/Panel_SelectedAvatar/Avatar_Marketplace_Panel/Avatar_Functions_Container/Favorite_Avatar_Button");
-                public static Transform AvatarButton() => MMMenus.MMSubmenus.MenuAvatarAVM().transform.FindChild("Dynamic_Content_Container/Viewport/Panel_SelectedAvatar/Avatar_Marketplace_Panel/Avatar_Details_Button");
+                public static Transform AvatarButtonSmall() => MMMenus.MMSubmenus.MenuAvatar_AVM().transform.FindChild("Dynamic_Content_Container/Viewport/Panel_SelectedAvatar/Avatar_Marketplace_Panel/Avatar_Functions_Container/Favorite_Avatar_Button");
+                public static Transform AvatarButton() => MMMenus.MMSubmenus.MenuAvatar_AVM().transform.FindChild("Dynamic_Content_Container/Viewport/Panel_SelectedAvatar/Avatar_Marketplace_Panel/Avatar_Details_Button");
+            }
+
+            public interface WorldMenuRelated
+            {
+                public static Transform CellButton() => MMMenus.MMSubmenus.Menu_Worlds().transform.Find("Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Content/Viewport/Header_MM_H2/RightItemContainer/Button_CellSize");
             }
            
             public static Transform SingleButton() => MMMenus.MMSubmenus.Menu_Setting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Navigation/Viewport/VerticalLayoutGroup/Cell_MM_Debug");
@@ -63,7 +69,6 @@ internal class IMainMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVING
             public static Transform ExpandButton() => MMParent().transform.FindChild("Panel_MM_Header/HeaderRight/Button_Settings");
             /*public static Transform MMTABGAINTSHIELD() => MenuDevTools().transform.FindChild("Scrollrect/Viewport/VerticalLayoutGroup/Buttons/Button_Tag");*/
         }
-
     }
 
     internal interface MMFallbacks

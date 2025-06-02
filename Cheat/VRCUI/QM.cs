@@ -26,7 +26,7 @@ internal class QM
         {
             try
             {
-     
+
                 #region Begin
 
                 var MainPage = new VRCPage(Entry.FULLNAME, ShowScrollWheel: true);
@@ -36,22 +36,22 @@ internal class QM
                 VRCWingButton WING_A = new(null,
                     SDKUtils.Wing.Position.Left, Entry.NAME, "The passion project.",
                     () => sconsole.print("passion_fruit", 1));
-                
+
                 VRCWingButton WING_B = new(null,
                     SDKUtils.Wing.Position.Right, Entry.NAME, "The passion project.",
                     () => sconsole.print("passion_fruit", 1));
-                
+
                 #endregion
-    
+
                 VRCGroupLayout Main_Groupbox = new(MainPage, "Main");
 
                 #region Groupbox
 
                 VRCModalContainer? PlayerMovementModal = new("Player+Movement");
-                Main_Groupbox.AddButton("Player", "Modify The Player", PlayerMovementModal.Open,true);
-         
+                Main_Groupbox.AddButton("Player", "Modify The Player", PlayerMovementModal.Open, true);
+
                 #endregion
-                
+
                 #region Modal_Player+Movement
 
                 VRCSmallButton Injection = new(PlayerMovementModal, "Injection", () => sconsole.print("passion_fruit", 1));
@@ -60,10 +60,10 @@ internal class QM
                     Config.Movement.fly = !Config.Movement.fly;
                     PlayerModule.Movement.Fly();
                 });
-                
+
                 PlayerMovementModal.AddToggle("Spinbot", "Spinbot On", "Spinbot Off", (x) => { PlayerModule.Movement.Spinbot(x); });
                 PlayerMovementModal.AddToggle("Force Jump", "Force Jump Off", "Fly Off", (x) => { PlayerModule.Movement.ForceJump(x); });
-                
+
                 PlayerMovementModal.AddToggle("Ghost", "Booo I'm a ghostttt", "awh I'm solid again", (x) =>
                 {
                     Widgets.QM.ghostmode_widget.SetState(x);
@@ -72,23 +72,25 @@ internal class QM
                     if (gameObject != null && x == false) UnityEngine.Object.Destroy(gameObject);
                     _player.GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
                 });
+
                 #endregion
 
                 #region Modal Logging__Main
 
                 VRCModalContainer? Logging = new("Logging");
-                VRCButton? R = new(Main_Groupbox, "Logging", "Configure Logging", () => Logging.Open(),true);
-              
-                Logging.AddMiniButton( "Configure Events List", () => Console.Beep());
-                Logging.AddMiniButton( "Configure RPCs List", () => Console.Beep());
-                Logging.AddMiniButton( "Configure Udon Events List", () => Console.Beep());
-                
-                
+                VRCButton? R = new(Main_Groupbox, "Logging", "Configure Logging", () => Logging.Open(), true);
+
+                Logging.AddMiniButton("Configure Events List", () => Console.Beep());
+                Logging.AddMiniButton("Configure RPCs List", () => Console.Beep());
+                Logging.AddMiniButton("Configure Udon Events List", () => Console.Beep());
+
+
                 Logging.AddToggle("RPC", "parse", "parse", (x) => { Config.Logging.RPC = !Config.Logging.RPC; });
                 Logging.AddToggle("Photon", "parse", "parse", (x) => { Config.Logging.Photon = !Config.Logging.Photon; });
-                Logging.AddToggle("Udon", "parse", "parse", (x) => { Config.Logging.Udon = !Config.Logging.Udon;});
+                Logging.AddToggle("Udon", "parse", "parse", (x) => { Config.Logging.Udon = !Config.Logging.Udon; });
 
                 /*VRCModalContainer? Modal_Config_RPCs = new("RPcs");*/
+
                 #region Modal Logging__MainPage2
 
                 VRCModalContainer? LoggingP2 = new("Logging Page 2");
@@ -106,6 +108,7 @@ internal class QM
                 {
 
                 });*/
+
                 #endregion
 
 
@@ -114,72 +117,64 @@ internal class QM
                 #region Modal_Render
 
                 VRCModalContainer? Renders = new("Renderer");
-                Main_Groupbox.AddButton("Renders", "Render Properties", () => Renders.Open(),true);
+                Main_Groupbox.AddButton("Renders", "Render Properties", () => Renders.Open(), true);
 
                 Renders.AddToggle("ESP", "parse", "parse", (x) => { Config.Render.esp = !Config.Render.esp; });
                 Renders.AddToggle("Wallhacks", "parse", "parse", (x) => { Config.Render.player_wallhack = !Config.Render.player_wallhack; });
 
                 var root = new VRCPanelRoot();
-                var panel =  new VRCPanel();
+                var panel = new VRCPanel();
                 VRCRadialSelect choiceSelection = new VRCRadialSelect(panel, "Wallhacks", "Shows Players Through Walls with there Avatar Meshs (Buggy)")
                     .AddChoice("Nameplates + Players", () => sconsole.internal_log("1"))
                     .AddChoice("Nameplates", () => sconsole.internal_log("2"))
                     .AddChoice("Players", () => sconsole.internal_log("3"));
-                    
+
                 panel.AddSeperator();
 
-                new VRCToggleOperator(panel, "[GLOBAL BROADCASTING]", x=>
-                {
-                    sconsole.internal_log(x ? "Enabled" : "Disabled");
-                });
+                new VRCToggleOperator(panel, "[GLOBAL BROADCASTING]", x => { sconsole.internal_log(x ? "Enabled" : "Disabled"); });
+
                 #endregion
 
             }
-            catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
-            finally { sconsole.print("Created The QuickMenu+BlanketSDK.UI", 1); }
+            catch (Exception e)
+            {
+                sconsole.print(e.Message + "\n" + e.Source, 2);
+            }
+            finally
+            {
+                sconsole.print("Created The QuickMenu+BlanketSDK.UI", 1);
+            }
         }
 
-        
+
     }
+
     public class SelectedMenu : IQuickMenuElements
     {
         public static void Apply()
         {
             try
             {
-                VRCToggle toggle = new(QMElements.SelectedUser.SelectedUser_ButtonContainer(), "FREEZE!", "FREEZE CRIMINAL SCUM, ","UNFREEZE NICE INDIVIUAL!", (x) =>
+                VRCToggle toggle = new(QMElements.SelectedUser.SelectedUser_ButtonContainer(), "FREEZE!", "FREEZE CRIMINAL SCUM, ", "UNFREEZE NICE INDIVIUAL!", (x) =>
                 {
-                    var selecteduser= GameUtils.PlayerModel.Matchmaking.GetSelectedUser();
+                    var selecteduser = GameUtils.PlayerModel.Matchmaking.GetSelectedUser();
                     if (selecteduser != null)
                     {
-                        sconsole.print(x ? 
-                                $"<color=red>[Frozen]</color>: {selecteduser.APIUser.displayName}" : 
-                                $"<color=red>[UnFrozen]</color>: {selecteduser.APIUser.displayName}", 
+                        sconsole.print(x ? $"<color=red>[Frozen]</color>: {selecteduser.APIUser.displayName}" : $"<color=red>[UnFrozen]</color>: {selecteduser.APIUser.displayName}",
                             0
                         );
                         selecteduser.GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
                     }
                 }, false);
             }
-            catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
-            finally { sconsole.print("Created The Selected_QuickMenu+BlanketSDK.UI", 1); }
+            catch (Exception e)
+            {
+                sconsole.print(e.Message + "\n" + e.Source, 2);
+            }
+            finally
+            {
+                sconsole.print("Created The Selected_QuickMenu+BlanketSDK.UI", 1);
+            }
         }
     }
-
-    public class TestMenu : IQuickMenuElements
-    {
-       public static void Apply()
-       {
-           try
-           {
-                   
-           }
-           catch (Exception e) { sconsole.print(e.Message + "\n" + e.Source, 2); }
-           finally { sconsole.print("Created The Selected_QuickMenu+BlanketSDK.UI", 1); }
-       }
-           
-       }
-    }   
-   
-
-
+}

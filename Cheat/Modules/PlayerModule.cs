@@ -61,7 +61,7 @@ internal class PlayerModule
 
                 sconsole.print($"[LOCAL_PLAYER] Fly is Set to {Config.Movement.fly}", 1);
                 GameUtils.UI.HUD.ToastV2("Player+Movement", $"Fly is set to {Config.Movement.fly}");
-                GameUtils.UI.HUD.Alert($"Fly is set to {Config.Movement.fly}", GameUtils.UI.HUD.AlertType.QuickMenu);
+                GameUtils.UI.HUD.Alert($"Fly is set to {Config.Movement.fly}");
 
                 #endregion
 
@@ -95,7 +95,7 @@ internal class PlayerModule
 
                 sconsole.print($"Jump+Impulse is set to {state}", 1);
                 GameUtils.UI.HUD.ToastV2("Player+Movement", $"Jump+Impulse is set to {state}");
-                GameUtils.UI.HUD.Alert($"Jump+Impulse is set to {state}", GameUtils.UI.HUD.AlertType.QuickMenu);
+                GameUtils.UI.HUD.Alert($"Jump+Impulse is set to {state}");
 
 
                 #endregion
@@ -128,7 +128,7 @@ internal class PlayerModule
             }*/
             sconsole.print($"Spinbot is set to {state}", 1);
             GameUtils.UI.HUD.ToastV2("Player+Movement", $"Spinbot is set to {state}");
-            GameUtils.UI.HUD.Alert($"Spinbot is set to {state}", GameUtils.UI.HUD.AlertType.QuickMenu);
+            GameUtils.UI.HUD.Alert($"Spinbot is set to {state}");
 
         }
 
@@ -203,8 +203,8 @@ internal class PlayerModule
             currentView = (currentView + 1) % 4;
             if (camera[0] != null && camera[1] != null && camera[2] != null)
             {
-                Sprite? video = UICore.Sprites.Video();
-                Sprite? video_slash = UICore.Sprites.Video(false);
+                Sprite? video = AstriekLib.Sprites.Video();
+                Sprite? video_slash = AstriekLib.Sprites.Video(false);
                 switch (currentView)
                 {
                     case 0:

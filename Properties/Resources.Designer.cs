@@ -181,6 +181,16 @@ namespace brewchat.hybridxcore.bep.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] sprite_music {
+            get {
+                object obj = ResourceManager.GetObject("sprite_music", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] sprite_video {
             get {
                 object obj = ResourceManager.GetObject("sprite_video", resourceCulture);

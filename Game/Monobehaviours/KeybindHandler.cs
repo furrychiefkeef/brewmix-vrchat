@@ -21,18 +21,38 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
     {
         if (!GameUtils.World.IsLoaded()) return;
         {
+            #region Advanced
+
             CommandHandler();
+
+            #endregion
+          
             if(GameUtils.Gameplay.CallbackEvents.IsInMainMenu || GameUtils.Gameplay.CallbackEvents.IsInQuickMenu) return;
             
             #region Keybinds
 
-            if (Input.GetKeyDown(KeyCode.F5)) PlayerModule.CCamera.CameraController();
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Mouse2)) PlayerModule.Movement.ClickTP();
+          
+          
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Mouse2))
+            {
+                PlayerModule.Movement.ClickTP();
+            }
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F))
             {
                 Config.Movement.fly = !Config.Movement.fly;
                 UIRefs.Fly.SetState(Config.Movement.fly);
             }
+            
+            #region Camera
+
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
+                PlayerModule.CCamera.CameraController();
+            }
+
+            #endregion
+
+        
             #endregion
         }
     }

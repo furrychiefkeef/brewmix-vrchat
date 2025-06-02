@@ -127,8 +127,8 @@ public class GifLoader : MonoBehaviour
         {
             foreach (var sprite in gif.frames)
             {
-                UnityEngine.Object.DestroyImmediate(sprite.texture);
-                UnityEngine.Object.Destroy(sprite);
+                DestroyImmediate(sprite.texture);
+                Destroy(sprite);
             }
         }
     }

@@ -18,6 +18,7 @@ using VRC.SDK3.Internal;
 using VRC.SDKBase;
 using VRC.SDKBase.Network;
 using VRC.UI;
+using VRC.UI.Client;
 using VRC.UI.Client.HUD;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
@@ -296,37 +297,18 @@ internal class GameUtils
 
             #region HUD_V2
             
-            private static Hud_UserEventCarousel? _carousel;
-            private static float _lastCheckTime;
-            private const float CacheTimeout = 30f;
-            
-            private static Hud_UserEventCarousel GetCarousel()
-            {
-                if (_carousel != null && Time.realtimeSinceStartup - _lastCheckTime < CacheTimeout)
-                    return _carousel;
+           
 
-                _lastCheckTime = Time.realtimeSinceStartup;
-
-                foreach (var carousel in UnityEngine.Object.FindObjectsOfType<Hud_UserEventCarousel>())
-                {
-                    if (carousel?.field_Private_List_1_MonoBehaviourPublicObteCaSiImSidiCaSiUnique_0.Count == 0)
-                        return _carousel = carousel;
-                }
-
-                return _carousel;
-            }
-
-            public static void ToastV1(string content, float duration = 3f, Sprite? sprite = null)
+            public static void ToastV1(string content, float duration = 1f, Sprite? sprite = null)
             {
                 try
                 {
-                    GetCarousel()?.Method_Private_Void_LocalizableString_Sprite_Single_0(content.Localize(), sprite, duration);
+                    VRCUIManager.prop_VRCUIManager_0.Method_Public_Virtual_Final_New_Void_LocalizableString_Sprite_Single_0(content.Localize(), sprite, duration);
                 }
                 catch (Exception ex)
                 {
                     Debug.LogError($"[NotificationManager] Message error: {ex.Message}");
                 }
-            }
 
             public static void ToastV2(string? title, string? content = null, float duration = 2f,
                 Sprite? sprite = default)
@@ -346,18 +328,9 @@ internal class GameUtils
                 MainMenu,
             }
 
-            public static string Alert(string content, AlertType Alert)
+            public static string Alert(string content)
             {
-                if (Alert == AlertType.QuickMenu)
-                {
-                    UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_ModalAlert_0
-                        .Method_Public_Void_LocalizableString_PDM_0(content.Localize());
-                }
-                if (Alert == AlertType.MainMenu)
-                {
-                    UnityEngine.Object.FindObjectOfType<MainMenu>().field_Private_ModalAlert_0
-                        .Method_Public_Void_LocalizableString_PDM_0(content.Localize());
-                }
+                VRCUIManager.prop_VRCUIManager_0.Method_Public_Virtual_Final_New_Void_LocalizableString_0(content.Localize());
                 return content;
             }
 
