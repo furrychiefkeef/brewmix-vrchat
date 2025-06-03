@@ -296,10 +296,10 @@ internal class GameUtils
             #region NOTIFICATION MANAGER
 
             #region HUD_V2
-            
-           
 
-            public static void ToastV1(string content, float duration = 1f, Sprite? sprite = null)
+
+
+            public static void ToastV1(string content, float duration = 0.5f, Sprite? sprite = null)
             {
                 try
                 {
@@ -309,9 +309,9 @@ internal class GameUtils
                 {
                     Debug.LogError($"[NotificationManager] Message error: {ex.Message}");
                 }
+            }
 
-            public static void ToastV2(string? title, string? content = null, float duration = 2f,
-                Sprite? sprite = default)
+            public static void ToastV2(string? title, string? content = null, float duration = 2f, Sprite? sprite = default)
             {
                 VRC.UI.Client.HUD.HudController
                     .field_Public_Static_HudController_0
@@ -371,6 +371,11 @@ internal class GameUtils
 
             }
 
+            public static void PopUpBase(string? title)
+            {
+                VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0.field_Public_VRCUiPopupStandard_0.Method_Public_Virtual_Void_LocalizableString_LocalizableString_0();
+                   
+            }
             #endregion
 
             #endregion

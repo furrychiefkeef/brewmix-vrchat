@@ -138,7 +138,7 @@ internal class CSS : UnityEngine.MonoBehaviour
             X.field_Private_Dictionary_2_String_Color_0["Highlight"] = EngineUtils.Conversion.HexToColor("#c60e7b"); 
             X.field_Private_Dictionary_2_String_Color_0["Active"] = EngineUtils.Conversion.HexToColor("#c60e7b");
             X.field_Private_Dictionary_2_String_Color_0["Active2"] = EngineUtils.Conversion.HexToColor("#c60e7b");
-            X.field_Private_Dictionary_2_String_Co lor_0["BottomTabSelected"] = new UnityEngine.Color(0.9f, 0.1f, 0.8f, 1f);
+            X.field_Private_Dictionary_2_String_Color_0["BottomTabSelected"] = new UnityEngine.Color(0.9f, 0.1f, 0.8f, 1f);
             X.field_Private_Dictionary_2_String_Color_0["Subheader"] = EngineUtils.Conversion.HexToColor("#c60e7b");
             X.field_Private_Dictionary_2_String_Color_0["Hover"] = EngineUtils.Conversion.HexToColor("#c60e7b");
             X.field_Private_Dictionary_2_String_Color_0["ActiveDark"] = EngineUtils.Conversion.HexToColor("#c60e7b");
