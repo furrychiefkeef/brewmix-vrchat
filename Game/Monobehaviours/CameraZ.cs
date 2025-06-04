@@ -1,25 +1,27 @@
 ﻿using Brewchat.Game.Wrappers;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 
 namespace Brewchat.Game.Monobehaviours;
 
-public class CameraZoom : MonoBehaviour
+public class CameraModule : MonoBehaviour
 {
     float targetFOV;
     float CacheFOV;
-    
+    private Camera[]? Cameras { get; set; }
     public float zoomedFOV = 30f; 
     float zspeed = 5f;
     
-    private void Start()
+    void Start()
     {
         if (Camera.main != null) CacheFOV = Camera.main.fieldOfView;
         targetFOV = CacheFOV;
+        Cameras = Camera.allCameras;
     }
 
-    private void Update()
+    void Update()
     {
         targetFOV = Input.GetKey(KeyCode.LeftAlt) ? zoomedFOV : CacheFOV;
-        Camera.allCameras.ToList().ForEach(x => x.fieldOfView = Mathf.Lerp(GameUtils.Camera.Get.fieldOfView, targetFOV, Time.deltaTime * zspeed));
+        Cameras.ToList().ForEach(x => x.fieldOfView = Mathf.Lerp(GameUtils.Camera.Get.fieldOfView, targetFOV, Time.deltaTime * zspeed));
     }
 }

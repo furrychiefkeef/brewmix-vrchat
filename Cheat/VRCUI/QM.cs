@@ -8,10 +8,9 @@ using BlanketSDK.QM.Elements.V2;
 using BlanketSDK.Utilities;
 using BlanketSDK.Utilities.VRC;
 using Brewchat.Cheat.Modules;
-using Brewchat.Cheats.SDK2.World;
 
 using Brewchat.Game.Wrappers;
-
+using brewchat.hybridxcore.bep.Cheat.IMGUI;
 using VRC.Networking;
 using VRC.Udon;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
@@ -60,8 +59,7 @@ internal class QM
                     Config.Movement.fly = !Config.Movement.fly;
                     PlayerModule.Movement.Fly();
                 });
-
-                PlayerMovementModal.AddToggle("Spinbot", "Spinbot On", "Spinbot Off", (x) => { PlayerModule.Movement.Spinbot(x); });
+                
                 PlayerMovementModal.AddToggle("Force Jump", "Force Jump Off", "Fly Off", (x) => { PlayerModule.Movement.ForceJump(x); });
 
                 PlayerMovementModal.AddToggle("Ghost", "Booo I'm a ghostttt", "awh I'm solid again", (x) =>
@@ -135,6 +133,11 @@ internal class QM
 
                 #endregion
 
+             
+                Main_Groupbox.AddButton("Clear","test", () =>
+                {
+                    LimeConsole.Clear();
+                },false); 
             }
             catch (Exception e)
             {

@@ -39,7 +39,7 @@ internal class PlayerModule
                 switch (Config.Movement.fly)
                 {
                     case true:
-                        motion_state.field_Private_EnumNPrivateSealedvaNoPrFoAi5vUnique_0 = VRCMotionState.EnumNPrivateSealedvaNoPrFoAi5vUnique.None;
+                       
                         fly_component.enabled = true;
                         characterController.enabled = false;
                         List<Collider> body_colliders = player.GetComponents<Collider>().ToList();
@@ -111,26 +111,6 @@ internal class PlayerModule
         }
 
         private static Coroutine _spinbotCoroutine;
-
-        public static void Spinbot(bool state, float spinSpeed = 1f)
-        {
-            /*Player player = GameUtils.PlayerModel.Get();
-            if (!player) return;
-
-            if(state && _spinbotCoroutine == null)
-            {
-                _spinbotCoroutine = player.StartCoroutine(SpinbotRoutine(player, spinSpeed).WrapToIl2Cpp());
-            }
-            else if(!state && _spinbotCoroutine != null)
-            {
-                player.StopCoroutine(_spinbotCoroutine);
-                _spinbotCoroutine = null;
-            }*/
-            sconsole.print($"Spinbot is set to {state}", 1);
-            GameUtils.UI.HUD.ToastV2("Player+Movement", $"Spinbot is set to {state}");
-            GameUtils.UI.HUD.Alert($"Spinbot is set to {state}");
-
-        }
 
     }
 

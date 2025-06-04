@@ -653,11 +653,11 @@
     <EmbeddedResource Include="Assets\Textures\UI\ActionMenu\action-menu_*.png" />
     <EmbeddedResource Include="Assets\Textures\UI\Nameplate\capsule_*.png" />
     <EmbeddedResource Include="Assets\Textures\UI\Icons\*.astrieksprites" />
+    <EmbeddedResource Include="Assets\Prefabs\*.bundle" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Assets\Textures\" />
-    <Folder Include="Cheat\IMGUI\" />
     <Folder Include="Utilities\Blanket.SDK\@VRC\MM\Controls\Cell\" />
     <Folder Include="Utilities\Dir\" />
   </ItemGroup>

@@ -61,7 +61,7 @@ public class Config
     public struct Appearance
     {
         public static string QueueAudio { get; set; } = "https://github.com/riotlu/fake-cdn/raw/refs/heads/master/Audio/raygun.ogg?raw=true";
-        public static string FlatLoadingOverlay { get; set; } = "C:\\Users\\riot\\Pictures\\Saved Pictures\\furry\\e621\\straight\\5fa69562ad749e12d588a1351d1b04f8.gif";
+        public static string FlatLoadingOverlay { get; set; } = "C:\\Users\\riot\\Pictures\\Saved Pictures\\20250310_031133.gif";
         
         public static string Mm_Background { get; set; } = "https://github.com/smooshs/fake-cdn/blob/master/bbb/GpowaDuXgAA77ES.jpg?raw=true";
         public static string Qm_Background { get; set; } = "https://github.com/smooshs/fake-cdn/blob/master/bbb/GpowaDuXgAA77ES.jpg?raw=true";

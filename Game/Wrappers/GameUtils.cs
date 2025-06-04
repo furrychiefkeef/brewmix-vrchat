@@ -13,6 +13,7 @@ using VRC.Core;
 using VRC.DataModel;
 using VRC.Localization;
 using VRC.Networking;
+using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Components;
 using VRC.SDK3.Internal;
 using VRC.SDKBase;
@@ -61,6 +62,46 @@ internal class GameUtils
             }
         }
 
+        public struct NetworkUtils
+        {
+
+            public struct Player
+            {
+                public static void SpawnEmoji(string id)
+                {
+                }
+
+                public static void SpawnPrint(string id)
+                {
+                }
+
+                public static void SpawnPortal(string id)
+                {
+                }
+
+                public static void SpawnDrone(int actor)
+                {
+                }
+            }
+
+            private static int _eintMValue;
+
+            public static void SendEmojiRPC(int emoji)
+            {
+                Il2CppSystem.Int32 eint = default(Il2CppSystem.Int32);
+                _eintMValue = eint.m_value;
+                _eintMValue = emoji;
+                Il2CppSystem.Object @object = @eint.BoxIl2CppObject();
+                Networking.RPC(0, PlayerModel.Get().gameObject, "SendEmojiRPC", new Il2CppSystem.Object[] { emoji });
+            }
+
+            public static string Join(string worldId)
+            {
+                Networking.GoToRoom(worldId);
+                return worldId;
+            }
+        }
+
         public struct PhotonUtils
         {
             public enum Events : Byte
@@ -86,52 +127,7 @@ internal class GameUtils
                     field_Public_EventCaching_0 = EventCaching.DoNotCache
                 }, sendOptions);
             }
-            public static string GetPhotonEventName(byte code)
-            {
-                return code switch
-                {
-                    0 => "CustomEvent",
-                    43 => "Chatbox",
-                    200 => "CustomEvent",
-                    201 => "RaiseEvent",
-                    202 => "SerializeView",
-                    203 => "Instantiate",
-                    204 => "Destroy",
-                    205 => "RemoveCachedRPCs",
-                    206 => "SendSerializeReliable",
-                    207 => "DestroyPlayerObjects",
-                    208 => "DestroyAll",
-                    209 => "OwnershipRequest",
-                    210 => "OwnershipTransfer",
-                    251 => "Leave",
-                    252 => "Join",
-                    253 => "JoinLobby",
-                    254 => "LeaveLobby",
-                    255 => "JoinRandomFailed",
-                    _ => "Unknown"
-                };
-            }
-        }
 
-        public struct NetworkUtils
-        {
-
-            public struct Player
-            {
-                public static void SpawnEmoji(string id){}
-                public static void SpawnPrint(string id){}
-                public static void SpawnPortal(string id){}
-                public static void SpawnDrone(int actor){}
-            }
-            private static int _eintMValue;
-            public static void SendEmojiRPC(int emoji)
-            {
-                Il2CppSystem.Int32 eint = default(Il2CppSystem.Int32);
-                _eintMValue = eint.m_value;
-                _eintMValue = emoji;
-                Il2CppSystem.Object @object = @eint.BoxIl2CppObject();
-                Networking.RPC(0, PlayerModel.Get().gameObject, "SendEmojiRPC", new Il2CppSystem.Object[] { emoji });
-            }
         }
     }
 
@@ -253,10 +249,8 @@ internal class GameUtils
 
         public static class Matchmaking
         {
-            public static VRC.Player? GetSelectedUser()
-            {
-                    return  UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_IUser_0.prop_String_1.GetPlayer()?._vrcplayer._player;
-            }
+            public static VRC.Player? GetSelectedUser() => UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_IUser_0.prop_String_1.GetPlayer()?._vrcplayer._player;
+            
             public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetAllPlayers => PlayerManager.prop_PlayerManager_0.PlayerList;
         }
     }
@@ -265,11 +259,7 @@ internal class GameUtils
     {
         public static string GetID() => RoomManager.field_Private_Static_ApiWorldInstance_1.id;
         public static bool IsLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.currentApiWorld != null;
-        public static string Join(string worldId)
-        {
-            Networking.GoToRoom(worldId);
-            return worldId;
-        }
+        
 
         public class SDK2
         {
@@ -286,6 +276,11 @@ internal class GameUtils
                 }
             } 
         }
+
+        public class SDK3
+        {
+            
+        }
     }
 
     public static class UI
@@ -299,11 +294,13 @@ internal class GameUtils
 
 
 
-            public static void ToastV1(string content, float duration = 0.5f, Sprite? sprite = null)
+            public static void ToastV1(string content, float duration = 3f, Sprite? sprite = null)
             {
                 try
                 {
-                    VRCUIManager.prop_VRCUIManager_0.Method_Public_Virtual_Final_New_Void_LocalizableString_Sprite_Single_0(content.Localize(), sprite, duration);
+                    HudController.field_Public_Static_HudController_0
+                        .userEventCarousel
+                        .Method_Private_Void_LocalizableString_Sprite_Single_0(content.Localize(), sprite, duration);
                 }
                 catch (Exception ex)
                 {
@@ -313,13 +310,14 @@ internal class GameUtils
 
             public static void ToastV2(string? title, string? content = null, float duration = 2f, Sprite? sprite = default)
             {
-                VRC.UI.Client.HUD.HudController
+                HudController
                     .field_Public_Static_HudController_0
                     .notification
                     ?.ShowNotification(sprite, title.Localize(), content.Localize(), duration);
 
             }
 
+           
             #region Alert
 
             public enum AlertType
@@ -369,12 +367,6 @@ internal class GameUtils
                     .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_Action_1_VRCUiPopup_0
                         (title.Localize(), content.Localize(), button_text.Localize(), func, idk);
 
-            }
-
-            public static void PopUpBase(string? title)
-            {
-                VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0.field_Public_VRCUiPopupStandard_0.Method_Public_Virtual_Void_LocalizableString_LocalizableString_0();
-                   
             }
             #endregion
 
@@ -449,7 +441,7 @@ internal class GameUtils
                 inputfield.Method_Private_Void_0();
             }
         }
-
+        
         public static class RPCs
         {
 

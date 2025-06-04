@@ -130,17 +130,18 @@ namespace Brewchat.Game.Wrappers
             #endregion
 
             #region Source
-            public static UnityEngine.Object INTERNAL_AssetBundle(byte[]? data, string? name, bool? keep)
+            public static UnityEngine.GameObject INTERNAL_AssetBundle(byte[]? data, string? name, bool? keep)
             {   
                 if(data?.Length == 0) return null;
                 AssetBundle? bundle = UnityEngine.AssetBundle
                     .LoadFromMemoryAsync(data)
                     .GetAwaiter().GetResult();
 
-                UnityEngine.Object obj = bundle.LoadAssetAsync<GameObject>(name)
-                    .GetAwaiter().GetResult();
-                if(keep == true) UnityEngine.Object.DontDestroyOnLoad(obj);
-                return obj;
+                GameObject? obj = bundle.LoadAsset<GameObject>(name);
+                GameObject? instance = UnityEngine.Object.Instantiate(obj);
+                if(keep is true) UnityEngine.Object.DontDestroyOnLoad(obj);
+                bundle.Unload(false);
+                return instance;
             }
             [Obsolete]
             public static UnityEngine.Object AssetBundle(string? dir, string? prefab_name, bool? keep)
@@ -168,6 +169,7 @@ namespace Brewchat.Game.Wrappers
                 bundle.Unload(false);
                 return instance;
             }
+            
             #endregion
         }
     }

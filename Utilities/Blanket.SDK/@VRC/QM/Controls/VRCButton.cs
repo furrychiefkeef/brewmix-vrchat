@@ -30,9 +30,12 @@ internal class VRCButton : IQuickMenuElements
         VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();
         TextMeshProUGUIEx _1 = obj.GetComponentInChildren<TextMeshProUGUIEx>(true);
         ImageEx _2 = obj.GetChild(3).GetChild(0).GetComponent<ImageEx>();
+        
         obj.GetChild(4).GetComponent<ImageEx>().gameObject.SetActive(submenu); // Expanded Button
         UnityEngine.Object.DestroyImmediate(obj.GetComponent<ToolTip>());
         ToolTip _3 = obj.GetComponent<ToolTip>();
+        
+        
         #endregion
         #region BUTTON COMPONENT
         

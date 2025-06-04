@@ -92,6 +92,16 @@ namespace brewchat.hybridxcore.bep.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] assetbundle_console {
+            get {
+                object obj = ResourceManager.GetObject("assetbundle-console", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] capsule_background {
             get {
                 object obj = ResourceManager.GetObject("capsule_background", resourceCulture);
