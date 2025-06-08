@@ -7,13 +7,13 @@ using UNIXEngine;
 using UNIXEngine.Logging;
 using VRC.SDKBase;
 
-[UnixModDescriptor("0000000000","astriek","0.0.0.0")]
+[UnixModDescriptor("0000000000","Autumn","0.0.0.0")]
 public class Entry : UNIXEngine.IL2CPPModding.UnixMod
 {
-    public const string NAME = "Astriek";
-    public const string FULLNAME = "Astriek";
+    public const string NAME = "Autumn";
+    public const string FULLNAME = "Autumn";
     Harmony h = new(Guid.NewGuid().ToString());
-    public static ManualLogSource Console = new("astriek");
+    public static ManualLogSource Console = new("Autumn");
   
     public override void Load()
     {
@@ -27,7 +27,7 @@ public class Entry : UNIXEngine.IL2CPPModding.UnixMod
             Console.LogMessage($"Registering Monobehaviours: {monos.Name}");
             ClassInjector.RegisterTypeInIl2Cpp(monos);
         } 
-        Console.LogMessage($"Setting Hooks...");
+      
         h.PatchAll();
         #endregion
     } 

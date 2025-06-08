@@ -7,6 +7,7 @@ using Brewchat.Game.Wrappers;
 using brewchat.hybridxcore.bep.Cheat.IMGUI;
 using ExitGames.Client.Photon;
 using HarmonyLib;
+using MonoMod.RuntimeDetour;
 using Pasted.WTFBlaze.Utils.Managers;
 using Photon.Realtime;
 using Syrup.IMGUI;
@@ -31,6 +32,7 @@ namespace brewchat.hybridxcore.bep
         static bool OnlineUILoaded = false;
 
 
+        
         #region INTERNAL_CORE
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCApplication), nameof(VRCApplication.Awake))]
@@ -198,28 +200,14 @@ namespace brewchat.hybridxcore.bep
 
             if (Config.Logging.Photon)
             {
-
-                bool printed = false;
                 object Data = null;
                 ParameterDictionary? Parameters = __0.Parameters;
                 foreach (var data in Parameters)
                 {
-                    if (!printed)
-                    {
                         Data = SerializationManager.FromIL2CPPToManaged<object>(data.Value);
                         string? c = System.Text.Json.JsonSerializer.Serialize(Data, new JsonSerializerOptions { AllowTrailingCommas = true });
                         sconsole.print("hook", "/photon", $" Player: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] Event Data: \n {c}", 0);
-                        printed = true;
-                    }
-                    /*if (c.Contains("IfaN0fo5NgB4vU0TH7BWslpO6BqI6MN9WYOb1HJ8KdW1WqNKAVfTUdbMYn9euoSksF1SDgDwaIQ4UD/tyDz8OUIAeIXX/76O7krXmLLajE8glg7vvITRrirzBTMLKS0lQqJu00Y0tbEihvStV3AjrxbGrzahMFuYAMlgLCh1/aA6zZjg/TkvAHi9TNXCvkYFvRlQkvZ/LLcToT2oMGAPcORVe51QMTEUx4IJdDkjaXG36+n2MBm8"))
-                    {
-                        sconsole.internal_log("FURFAGIE UCKY!!");
-                    }*/
                 }
-
-                ;
-
-            }
         }
 
 
