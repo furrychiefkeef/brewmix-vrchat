@@ -9,6 +9,7 @@ using UNIXEngine.IL2CPPModding.Utils.Collections;
 using VRC;
 using VRC.Animation;
 using VRC.Core;
+using VRC.SDK3.Avatars.Components;
 
 
 namespace Brewchat.Cheat.Modules;
@@ -59,10 +60,6 @@ internal class PlayerModule
                 }
 
 
-                sconsole.print($"[LOCAL_PLAYER] Fly is Set to {Config.Movement.fly}", 1);
-                GameUtils.UI.HUD.ToastV2("Player+Movement", $"Fly is set to {Config.Movement.fly}");
-                GameUtils.UI.HUD.Alert($"Fly is set to {Config.Movement.fly}");
-
                 #endregion
 
             }
@@ -93,11 +90,6 @@ internal class PlayerModule
                         break;
                 }
 
-                sconsole.print($"Jump+Impulse is set to {state}", 1);
-                GameUtils.UI.HUD.ToastV2("Player+Movement", $"Jump+Impulse is set to {state}");
-                GameUtils.UI.HUD.Alert($"Jump+Impulse is set to {state}");
-
-
                 #endregion
 
             }
@@ -109,8 +101,6 @@ internal class PlayerModule
             if (!player && !GameUtils.World.IsLoaded() || GameUtils.Gameplay.CallbackEvents.IsInMainMenu) return;
             if (Physics.Raycast(GameUtils.Camera.Get.transform.position, GameUtils.Camera.Get.transform.forward, out RaycastHit hit)) player.transform.position = hit.point;
         }
-
-        private static Coroutine _spinbotCoroutine;
 
     }
 
@@ -216,33 +206,8 @@ internal class PlayerModule
                 }
             }
         }
-
         public static void DestoryCameras() => UniversialTags.Destory("V-Cams");
     }
-
-    public static class Body
-    {
-        static GameObject AvatarObj;
-
-        public static GameObject Clone(VRC.Player player)
-        {
-            Transform? head = player._vrcplayer.VRCPlayerApi.GetBoneTransform(HumanBodyBones.Head);
-            head.localScale = new Vector3(1f, 1f, 1f);
-            if (AvatarObj == null)
-            {
-                AvatarObj = UnityEngine.Object.Instantiate(player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0);
-                AvatarObj.transform.position = player.transform.position;
-            }
-
-            return AvatarObj;
-        }
-    }
-    
-    
-    
-    
-    
-    
 }
 
 

@@ -16,7 +16,7 @@ public enum Logging
     SDK3,
     Hooks,
     Photon,
-    GameServer,
+    GameServer
     
 }
 public class LimeConsole

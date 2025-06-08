@@ -95,7 +95,6 @@ internal class VRCPage : IQuickMenuElements
             _2.field_Public_Boolean_0 = isScrollable;
             Transform? Scrollbar = ScrollRectObj.gameObject.transform.FindChild("Scrollbar");
             Scrollbar.gameObject.SetActive(true);
-            sconsole.internal_log($"{Scrollbar.name} was found");
             _2.verticalScrollbar = Scrollbar.GetComponent<Scrollbar>();
 
             if (!ShowScrollWheel)

@@ -18,6 +18,7 @@ using VRC.SDK3.Components;
 using VRC.SDK3.Internal;
 using VRC.SDKBase;
 using VRC.SDKBase.Network;
+using VRC.Udon;
 using VRC.UI;
 using VRC.UI.Client;
 using VRC.UI.Client.HUD;
@@ -104,7 +105,7 @@ internal class GameUtils
 
         public struct PhotonUtils
         {
-            public enum Events : Byte
+            public enum Events : byte
             {
                 VoiceData = 1,
                 MovementData = 12,
@@ -115,7 +116,7 @@ internal class GameUtils
                 Social = 74,
                 OnPlayerJoin = 253,
                 OnPlayerLeft = 254,
-                OnPlayerFailedJoin = byte.MaxValue,
+                OnPlayerFailedJoin = byte.MaxValue
             }
 
             public static void SendRaiseEvent(byte code, object payload, SendOptions sendOptions)
@@ -168,7 +169,7 @@ internal class GameUtils
  
         public static VRC.Player? GetPlayerFromActor(int id)
         {
-            foreach (var player in Matchmaking.GetAllPlayers)
+            foreach (var player in Matchmaking.GetPlayers)
             {
                 if (player.VRCPlayerApi.playerId == id)
                 {
@@ -182,10 +183,8 @@ internal class GameUtils
         {
             public struct Networking
             {
-                
                 public static VRCPlayerApi Run_Speed(float v = 2f)
                 {
-                    
                     VRCPlayerApi? player = Get().VRCPlayerApi;
                     player.SetRunSpeed(v);
                     return player;
@@ -224,6 +223,20 @@ internal class GameUtils
 
         public static class Avatar
         {
+            public static GameObject? CloneAvatar(VRC.Player player, bool keepParameters)
+            {
+                GameObject? obj;
+                Transform? head = player._vrcplayer.VRCPlayerApi.GetBoneTransform(HumanBodyBones.Head);
+                head.localScale = new Vector3(1f, 1f, 1f);
+                if (player == null)
+                {
+              
+                    obj = UnityEngine.Object.Instantiate(player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0);
+                    obj.transform.position = player.transform.position;
+                    return obj;
+                }
+                return null;
+            }
             public static ApiAvatar SetAvatar(string id)
             {
                 ApiAvatar avatar = new() { id = id };
@@ -231,18 +244,15 @@ internal class GameUtils
                 return avatar;
             }
             public static ApiAvatar GetAvatar() => Get().ApiAvatar;
+            
             public static void AvatarScale(float v = 4f) =>
                 Get().VRCPlayerApi.SetAvatarEyeHeightByMeters(v);
-
             public static void AllowAvatarScaling(bool v = true) =>
                 Get().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
-
             public static void AvatarScaleMax(float v) =>
                 Get().VRCPlayerApi.SetAvatarEyeHeightMaximumByMeters(v);
-
             public static void AvatarScaleMin(float v) =>
                 Get().VRCPlayerApi.SetAvatarEyeHeightMinimumByMeters(v);
-
             public static void AllowScaling(bool v) =>
                 Get().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
         }
@@ -250,8 +260,7 @@ internal class GameUtils
         public static class Matchmaking
         {
             public static VRC.Player? GetSelectedUser() => UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_IUser_0.prop_String_1.GetPlayer()?._vrcplayer._player;
-            
-            public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetAllPlayers => PlayerManager.prop_PlayerManager_0.PlayerList;
+            public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers => PlayerManager.prop_PlayerManager_0.PlayerList;
         }
     }
 
@@ -279,13 +288,21 @@ internal class GameUtils
 
         public class SDK3
         {
-            
+            public static void LoadCustomEvent(string _event)
+            {
+                foreach (UdonBehaviour udon in UnityEngine.Object.FindObjectsOfType<UdonBehaviour>())
+                {
+                    if (udon._eventTable.ContainsKey(_event))
+                    {
+                        udon.SendCustomEvent(_event);
+                    }
+                }
+            }
         }
     }
 
     public static class UI
     {
-      
         public class HUD
         {
             #region NOTIFICATION MANAGER
@@ -378,17 +395,7 @@ internal class GameUtils
     {
         public static class InputManager
         {
-            public static VRCInput GetInput(string name) =>
-                VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name];
-
-            public static VRCInput GetInput(Get name) =>
-                VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name.ToString()];
-
-            public enum Get
-            {
-                Horizontial,
-                Vertical,
-            }
+            public static VRCInput GetInput(string name) => VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name];
         }
 
         public static class VRCKeyboard
@@ -441,17 +448,12 @@ internal class GameUtils
                 inputfield.Method_Private_Void_0();
             }
         }
-        
-        public static class RPCs
-        {
-
-        }
-
+ 
         public static class Events
         {
-            public static string SendEvent43_Chatbox(string msg)
+            public static string eventCode43_Chatbox(string msg)
             {
-                GameUtils.Gameplay.PhotonUtils.SendRaiseEvent(43, msg, default);
+                GameUtils.Gameplay.PhotonUtils.SendRaiseEvent(Gameplay.PhotonUtils.Events.Chatbox, msg, default);
                 return msg;
             }
         }
@@ -459,35 +461,12 @@ internal class GameUtils
 
 }
 
-
+        
     public static class PlayerExtensions
     {
-        public static Color GetTrustColor(this VRC.Player player)
-        {
-            return player.APIUser switch
-            {
-                { hasTrustedTrustLevel: true } => VRCPlayer.field_Internal_Static_Color_6,
-                { hasKnownTrustLevel: true } => VRCPlayer.field_Internal_Static_Color_5,
-                { hasBasicTrustLevel: true } => VRCPlayer.field_Internal_Static_Color_4,
-                { isNewUser: true } => VRCPlayer.field_Internal_Static_Color_3,
-                { hasNegativeTrustLevel : true } => VRCPlayer.field_Internal_Static_Color_9,
-                { hasVeryNegativeTrustLevel : true } => VRCPlayer.field_Internal_Static_Color_0,
-                _ => Color.white
-            };
-        }
-        public static string? GetTrustRank(this VRC.Player player)
-        {
-            return player.APIUser switch
-            {
-                { hasTrustedTrustLevel: true } => "Trusted",
-                { hasKnownTrustLevel: true } => "Known",
-                { isNewUser: true } => "New User",
-                { hasBasicTrustLevel: true } => "User",
-                { hasNegativeTrustLevel : true } => "Nuisance",
-                { hasVeryNegativeTrustLevel : true } => "Very Retarded",
-                _ => "Visitor"
-            };
-        }
+        public static Color GetTrustColor(this VRC.Player player) => player.GetTrustColor();
+        public static string? GetTrustRank(this VRC.Player player) => player.GetTrustRank();
+       
         public static string IsFriend(this VRC.Player player)
         {
             
@@ -497,13 +476,14 @@ internal class GameUtils
         {
             return player.APIUser.ageVerified ? "+18" : "-18";
         }
-        public static VRC.Player? GetPlayer(this string name)
+        
+        public static VRC.Player? getPlayer(this string name)
         {
 
             if (string.IsNullOrEmpty(name))
                 return null;
         
-            foreach (var player in GameUtils.PlayerModel.Matchmaking.GetAllPlayers)
+            foreach (var player in GameUtils.PlayerModel.Matchmaking.GetPlayers)
             {
                 if (player.APIUser.IsSelf || player._vrcplayer == null || player._vrcplayer._player == null)
                     continue;
@@ -514,9 +494,9 @@ internal class GameUtils
     
             return null;
         }
-        public static VRC.Player? GetPlayerFromActor(this int id)
+        public static VRC.Player? getPlayerFromActorID(this int networkId)
         {
-            foreach (var player in GameUtils.PlayerModel.Matchmaking.GetAllPlayers)
+            foreach (var player in GameUtils.PlayerModel.Matchmaking.GetPlayers)
             {
                 if (player.VRCPlayerApi.playerId == id) return player;
             }

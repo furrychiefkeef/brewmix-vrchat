@@ -16,7 +16,7 @@ namespace Brewchat.Cheat;
 
 internal class MM : IMainMenuElements
 {
-    public class _Pinkstar
+    public class Main
     {
         public static void Apply()
         {
@@ -24,7 +24,6 @@ internal class MM : IMainMenuElements
             {
                 var a = new VRCPage(Entry.NAME, EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
                 new VRCTab(a, Entry.FULLNAME, "The passion project.", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
-                new VRCWingButton(MMFallbacks._Fallback_Dashboard_Group_MM_UI_WingButtons("Left"), SDKUtils.Wing.Position.Left, "Test", "Test", () => { });
                 
                 #region Header_Container
                 VRCSmallButton acee2 = new(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ExpandButtons(), "The passion project.", 5, () => GameUtils.UI.HUD.Alert("bitch2"), EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
@@ -52,11 +51,11 @@ internal class MM : IMainMenuElements
             }
             catch (Exception e)
             {
-                sconsole.print(e.Message + "\n" + e.Source, 2);
+                
             }
             finally
             {
-                sconsole.print("Created The MainMenu+BlanketSDK.UI", 1);
+              
             }
         }
     }

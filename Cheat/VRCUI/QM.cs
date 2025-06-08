@@ -19,7 +19,7 @@ namespace Brewchat.Cheat;
 
 internal class QM
 {
-    public class _Pinkstar
+    public class Main
     {
         public static void Apply()
         {
@@ -31,14 +31,6 @@ internal class QM
                 var MainPage = new VRCPage(Entry.FULLNAME, ShowScrollWheel: true);
                 new VRCTab(MainPage, "The passion project.",
                     sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
-
-                VRCWingButton WING_A = new(null,
-                    SDKUtils.Wing.Position.Left, Entry.NAME, "The passion project.",
-                    () => sconsole.print("passion_fruit", 1));
-
-                VRCWingButton WING_B = new(null,
-                    SDKUtils.Wing.Position.Right, Entry.NAME, "The passion project.",
-                    () => sconsole.print("passion_fruit", 1));
 
                 #endregion
 
@@ -116,40 +108,20 @@ internal class QM
 
                 VRCModalContainer? Renders = new("Renderer");
                 Main_Groupbox.AddButton("Renders", "Render Properties", () => Renders.Open(), true);
-
                 Renders.AddToggle("ESP", "parse", "parse", (x) => { Config.Render.esp = !Config.Render.esp; });
                 Renders.AddToggle("Wallhacks", "parse", "parse", (x) => { Config.Render.player_wallhack = !Config.Render.player_wallhack; });
-
-                var root = new VRCPanelRoot();
-                var panel = new VRCPanel();
-                VRCRadialSelect choiceSelection = new VRCRadialSelect(panel, "Wallhacks", "Shows Players Through Walls with there Avatar Meshs (Buggy)")
-                    .AddChoice("Nameplates + Players", () => sconsole.internal_log("1"))
-                    .AddChoice("Nameplates", () => sconsole.internal_log("2"))
-                    .AddChoice("Players", () => sconsole.internal_log("3"));
-
-                panel.AddSeperator();
-
-                new VRCToggleOperator(panel, "[GLOBAL BROADCASTING]", x => { sconsole.internal_log(x ? "Enabled" : "Disabled"); });
-
+                
                 #endregion
-
-             
-                Main_Groupbox.AddButton("Clear","test", () =>
-                {
-                    LimeConsole.Clear();
-                },false); 
             }
-            catch (Exception e)
+            catch (Exception xe)
             {
-                sconsole.print(e.Message + "\n" + e.Source, 2);
+               
             }
             finally
             {
-                sconsole.print("Created The QuickMenu+BlanketSDK.UI", 1);
+                
             }
         }
-
-
     }
 
     public class SelectedMenu : IQuickMenuElements
@@ -163,20 +135,18 @@ internal class QM
                     var selecteduser = GameUtils.PlayerModel.Matchmaking.GetSelectedUser();
                     if (selecteduser != null)
                     {
-                        sconsole.print(x ? $"<color=red>[Frozen]</color>: {selecteduser.APIUser.displayName}" : $"<color=red>[UnFrozen]</color>: {selecteduser.APIUser.displayName}",
-                            0
-                        );
+                       
                         selecteduser.GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
                     }
                 }, false);
             }
             catch (Exception e)
             {
-                sconsole.print(e.Message + "\n" + e.Source, 2);
+               
             }
             finally
             {
-                sconsole.print("Created The Selected_QuickMenu+BlanketSDK.UI", 1);
+               
             }
         }
     }
