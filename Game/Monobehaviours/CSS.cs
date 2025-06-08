@@ -3,7 +3,6 @@ using BlanketSDK.Utilities;
 using BlanketSDK.Core;
 using Brewchat.Game.Wrappers;
 using MaterialEditing.UI;
-using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.UI;
 using UNIXEngine.IL2CPPModding.Utils.Collections;
@@ -78,7 +77,7 @@ internal class CSS : UnityEngine.MonoBehaviour
             if (childrenCollection == null)
             {
 
-                sconsole.print($"Container children collection is null",2);
+                
                 return;
             }
 

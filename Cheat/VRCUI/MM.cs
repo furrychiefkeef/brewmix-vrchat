@@ -1,5 +1,5 @@
 ﻿using BlanketSDK.MM.Elements;
-using Syrup.IMGUI;
+
 
 using BlanketSDK.MM.Elements.Controls;
 using BlanketSDK.Core;
@@ -98,11 +98,11 @@ internal class MM : IMainMenuElements
             }
             catch (Exception e)
             {
-                sconsole.print(e.Message + "\n" + e.Source, 2);
+               
             }
             finally
             {
-                sconsole.print("Created The Selected_MainMenu+BlanketSDK.UI", 1);
+                
             }
 
         }

@@ -1,5 +1,5 @@
 ﻿using Brewchat.Game.Wrappers;
-using Syrup.IMGUI;
+
 using UnityEngine;
 using VRC;
 using VRC.Core;

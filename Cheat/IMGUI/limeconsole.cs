@@ -26,13 +26,13 @@ public class LimeConsole
     public static string Text(string text, Logging logtype)
     {
         TEXT_LIST.Add($"[{logtype}] {text}");
-    
-        TextMeshProUGUI? TEXT = GameObject.Find("[Console]")
-            .transform.FindChild("+Root+")
-            .transform.FindChild("GroupLayout")
-            .GetComponentInChildren<TMPro.TextMeshProUGUI>();
-    
-        TEXT.text = string.Join("", TEXT_LIST);
+
+        #region LOGIC
+        TextMeshProUGUI? TEXT = GameObject.Find("Canvas_Console").transform.FindChild("Scroll View").transform.FindChild("Viewport").GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        #endregion
+            
+   
+        TEXT.text = string.Join("", TEXT_LIST); 
     
         return text;
     }

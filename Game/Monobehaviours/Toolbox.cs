@@ -36,13 +36,12 @@ internal class Toolbox : UnityEngine.MonoBehaviour
     }
     public void LoadMyUI_Console()
     {
-        GameObject? load = EngineUtils.Assets.INTERNAL_AssetBundle(Resources.assetbundle_console, "Console", true);
+        GameObject? load = EngineUtils.Assets.INTERNAL_AssetBundle(Resources.assetbundle_console, "Canvas", true);
         
        
-        load.name = "[Console]";
-        load.transform.FindChild("+Root+")
-            .transform.FindChild("GroupLayout")
-            .GetComponentInChildren<TMPro.TextMeshProUGUI>().text = null;
+        load.name = "Canvas_Console";
+        load.transform.FindChild("Scroll View").transform.FindChild("Viewport")
+            .GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
     }
     
     

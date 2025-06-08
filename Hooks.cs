@@ -27,7 +27,7 @@ namespace brewchat.hybridxcore.bep
         static bool OnlineUILoaded = false;
 
 
-        
+
         #region INTERNAL_CORE
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCApplication), nameof(VRCApplication.Awake))]
@@ -93,28 +93,30 @@ namespace brewchat.hybridxcore.bep
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
-           
+
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             Widgets.QM.Initalize();
+            LimeConsole.Text("Quick Menu Successfully Loaded!", 0);
+            QM.Main.Apply();
 
-//       
-            QM._Pinkstar.Apply();
+
+        } 
+        
+        [HarmonyPostfix, HarmonyPatch(typeof(SelectedUserMenuQM), nameof(SelectedUserMenuQM.Start))]
+        public static void QM_SelectdMenu_Initialize_HOOK(ref SelectedUserMenuQM? __instance)
+        {
+            if (__instance == null && !OnlineUILoaded) return;
             QM.SelectedMenu.Apply();
-
-//       
-
+            Console.Clear();
         }
-
+        
         [HarmonyPostfix, HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
         public static void MainMenu_Initialize_HOOK(ref MainMenu? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
-            MM._Pinkstar.Apply();
-            MM.SelectedUserMenu.Apply();
-            MM.AvatarAVMMenu.Apply();
-            MM.SelectedWorldMenu.Apply();
-            Console.Clear();
+            MM.Main.Apply();
         }
+       
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUIBackground), nameof(VRCUIBackground.Start))]
         public static void QuickMenuBackground_Initialize_HOOK(ref VRCUIBackground? __instance)
@@ -199,10 +201,11 @@ namespace brewchat.hybridxcore.bep
                 ParameterDictionary? Parameters = __0.Parameters;
                 foreach (var data in Parameters)
                 {
-                        Data = SerializationManager.FromIL2CPPToManaged<object>(data.Value);
-                        string? c = System.Text.Json.JsonSerializer.Serialize(Data, new JsonSerializerOptions { AllowTrailingCommas = true });
-                        sconsole.print("hook", "/photon", $" Player: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] Event Data: \n {c}", 0);
+                    Data = SerializationManager.FromIL2CPPToManaged<object>(data.Value);
+                    string? c = System.Text.Json.JsonSerializer.Serialize(Data, new JsonSerializerOptions { AllowTrailingCommas = true });
+                    /*sconsole.print("hook", "/photon", $" Player: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] Event Data: \n {c}", 0);*/
                 }
+            }
         }
 
 
@@ -222,18 +225,18 @@ namespace brewchat.hybridxcore.bep
 
             return true;
         }
-    }
-    #endregion
-    
-    
-    
-    
-    
-    
-    
-    
+        
+     
+        #endregion
+    }  
     
 }
+
+      
+
+
+
+
 
 
 

@@ -1,10 +1,8 @@
 ﻿using BlanketSDK.Core;
-using Brewchat.Cheat.Modules;
-using Brewchat.Game.Wrappers;
+
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using Syrup.IMGUI;
 using TMPro;
 using UnityEngine;
 using VRC;
@@ -13,9 +11,7 @@ using VRC.Core;
 using VRC.DataModel;
 using VRC.Localization;
 using VRC.Networking;
-using VRC.SDK3.Avatars.Components;
-using VRC.SDK3.Components;
-using VRC.SDK3.Internal;
+
 using VRC.SDKBase;
 using VRC.SDKBase.Network;
 using VRC.Udon;
@@ -24,7 +20,7 @@ using VRC.UI.Client;
 using VRC.UI.Client.HUD;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
-using VRC.UI.Elements.Menus;
+
 using Player = VRC.Player;
 
 namespace Brewchat.Game.Wrappers;
@@ -147,15 +143,15 @@ internal class GameUtils
         {
             public static VRCMotionState _motion = Get().GetComponent<VRCMotionState>();
             public static FlatBufferNetworkSerializer _serializer = Get().GetComponent<FlatBufferNetworkSerializer>();
-            public static SyncPhysics _SyncPhysics = Get().GetComponent<SyncPhysics>();
+            /*public static SyncPhysics _SyncPhysics = Get().GetComponent<SyncPhysics>();*/
         }
-        public static VRC.Player? GrabPlayerFromDisplayName(string name)
+        public static VRC.Player? GetPlayer(string name)
         {
 
             if (string.IsNullOrEmpty(name))
                 return null;
         
-            foreach (var player in Matchmaking.GetAllPlayers)
+            foreach (var player in Matchmaking.GetPlayers)
             {
                 if (player.APIUser.IsSelf || !player._vrcplayer || !player._vrcplayer._player)
                     continue;
@@ -167,7 +163,7 @@ internal class GameUtils
             return null;
         }
  
-        public static VRC.Player? GetPlayerFromActor(int id)
+        public static VRC.Player? GetPlayer(int id)
         {
             foreach (var player in Matchmaking.GetPlayers)
             {
@@ -259,7 +255,7 @@ internal class GameUtils
 
         public static class Matchmaking
         {
-            public static VRC.Player? GetSelectedUser() => UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_IUser_0.prop_String_1.GetPlayer()?._vrcplayer._player;
+            public static VRC.Player? GetSelectedUser() => UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_IUser_0.prop_String_1.getPlayer()?._vrcplayer._player;
             public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers => PlayerManager.prop_PlayerManager_0.PlayerList;
         }
     }
@@ -453,7 +449,7 @@ internal class GameUtils
         {
             public static string eventCode43_Chatbox(string msg)
             {
-                GameUtils.Gameplay.PhotonUtils.SendRaiseEvent(Gameplay.PhotonUtils.Events.Chatbox, msg, default);
+                GameUtils.Gameplay.PhotonUtils.SendRaiseEvent((byte)Gameplay.PhotonUtils.Events.Chatbox, msg, default);
                 return msg;
             }
         }
@@ -494,11 +490,11 @@ internal class GameUtils
     
             return null;
         }
-        public static VRC.Player? getPlayerFromActorID(this int networkId)
+        public static VRC.Player? getPlayer(this int networkId)
         {
             foreach (var player in GameUtils.PlayerModel.Matchmaking.GetPlayers)
             {
-                if (player.VRCPlayerApi.playerId == id) return player;
+                if (player.VRCPlayerApi.playerId == networkId) return player;
             }
             return null;
         }

@@ -1,7 +1,6 @@
 ﻿using BlanketSDK.Utilities;
 using BlanketSDK.Core;
 using Brewchat;
-using Syrup.IMGUI;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI;
@@ -73,8 +72,8 @@ internal class VRCPage : IMainMenuElements
 
             if (Config.Advanced.DebugMode)
             {
-                foreach (var VARIABLE in MM().field_Protected_MenuStateController_0.field_Public_Il2CppReferenceArray_1_UIPage_0.ToList()) 
-                    sconsole.internal_log($"{VARIABLE.field_Public_String_0}"); sconsole.internal_log($"{Name} was created");
+                foreach (var VARIABLE in MM().field_Protected_MenuStateController_0.field_Public_Il2CppReferenceArray_1_UIPage_0.ToList());
+
             }
         }
 

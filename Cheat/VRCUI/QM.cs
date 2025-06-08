@@ -1,18 +1,14 @@
 ﻿using BlanketSDK.Core;
 using BlanketSDK.QM.Elements;
-using Syrup.IMGUI;
+
 using BlanketSDK.QM.Elements.Controls;
-using BlanketSDK.QM.Elements.Controls.V2;
 using BlanketSDK.QM.Elements.Modals;
-using BlanketSDK.QM.Elements.V2;
 using BlanketSDK.Utilities;
-using BlanketSDK.Utilities.VRC;
+
 using Brewchat.Cheat.Modules;
 
 using Brewchat.Game.Wrappers;
-using brewchat.hybridxcore.bep.Cheat.IMGUI;
 using VRC.Networking;
-using VRC.Udon;
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
 namespace Brewchat.Cheat;
@@ -44,8 +40,7 @@ internal class QM
                 #endregion
 
                 #region Modal_Player+Movement
-
-                VRCSmallButton Injection = new(PlayerMovementModal, "Injection", () => sconsole.print("passion_fruit", 1));
+                
                 UIRefs.Fly = PlayerMovementModal.AddToggle("Fly", "Turn Fly On", "Turn Fly Off", (x) =>
                 {
                     Config.Movement.fly = !Config.Movement.fly;
@@ -53,15 +48,6 @@ internal class QM
                 });
                 
                 PlayerMovementModal.AddToggle("Force Jump", "Force Jump Off", "Fly Off", (x) => { PlayerModule.Movement.ForceJump(x); });
-
-                PlayerMovementModal.AddToggle("Ghost", "Booo I'm a ghostttt", "awh I'm solid again", (x) =>
-                {
-                    Widgets.QM.ghostmode_widget.SetState(x);
-                    var _player = GameUtils.PlayerModel.Get();
-                    var gameObject = PlayerModule.Body.Clone(_player);
-                    if (gameObject != null && x == false) UnityEngine.Object.Destroy(gameObject);
-                    _player.GetComponent<FlatBufferNetworkSerializer>().enabled = !x;
-                });
 
                 #endregion
 

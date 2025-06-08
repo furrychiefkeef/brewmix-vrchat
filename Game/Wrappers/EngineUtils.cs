@@ -139,7 +139,7 @@ namespace Brewchat.Game.Wrappers
 
                 GameObject? obj = bundle.LoadAsset<GameObject>(name);
                 GameObject? instance = UnityEngine.Object.Instantiate(obj);
-                if(keep is true) UnityEngine.Object.DontDestroyOnLoad(obj);
+                if (keep is true)  UnityEngine.Object.DontDestroyOnLoad(instance);
                 bundle.Unload(false);
                 return instance;
             }
@@ -151,9 +151,8 @@ namespace Brewchat.Game.Wrappers
                     .LoadFromFileAsync(dir)
                     .GetAwaiter().GetResult();
 
-                UnityEngine.Object obj = bundle.LoadAssetAsync<GameObject>(prefab_name)
-                    .GetAwaiter().GetResult();
-                if(keep == true) UnityEngine.Object.DontDestroyOnLoad(obj);
+                UnityEngine.Object obj = bundle.LoadAssetAsync<GameObject>(prefab_name).GetAwaiter().GetResult();
+                if (keep is true)  UnityEngine.Object.DontDestroyOnLoad(obj);
                 return obj;
             }
             

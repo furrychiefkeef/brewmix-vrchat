@@ -1,22 +1,14 @@
 ﻿
 using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
-using Brewchat.Cheats.World;
 using Brewchat.Game.Wrappers;
-using Brewchat.Wrappers;
-using Syrup.IMGUI;
 using UnityEngine;
-using UNIXEngine.IL2CPPModding.Utils.Collections;
+
 
 
 namespace Brewchat.Game.Monobehaviours;
 internal class KeybindManager : UnityEngine.MonoBehaviour
 {
-    private void Awake()
-    {
-        sconsole.print(" Monobehaviours", "/KeybindManager", "KeybindManager", 0);
-    }
-
     void LateUpdate()
     {
         if (!GameUtils.World.IsLoaded()) return;
@@ -31,8 +23,6 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
             
             #region Keybinds
 
-          
-          
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Mouse2))
             {
                 PlayerModule.Movement.ClickTP();
