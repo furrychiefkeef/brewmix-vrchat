@@ -4,11 +4,11 @@
 using BlanketSDK.MM.Elements.Controls;
 using BlanketSDK.Core;
 using BlanketSDK.MM.Elements.Controls.AvatarMenu;
-using BlanketSDK.MM.Elements.Controls.V2;
-using BlanketSDK.Utilities;
+
 using Brewchat.Game.Wrappers;
+using brewchat.hybridxcore.bep.Game.Wrappers;
 using Brewchat.Wrappers;
-using Visionary;
+
 
 using Resources = brewchat.hybridxcore.bep.Properties.Resources;
 
@@ -86,13 +86,15 @@ internal class MM : IMainMenuElements
             {
 
                 var row4 = new VRCRowGroup(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"{Entry.NAME} Actions");
-                VRCBigButton? Teleport = new(row4, "Teleport", $"Teleport to this player's Position", () => { GameUtils.PlayerModel.Get().transform.position = GameUtils.PlayerModel.Matchmaking.GetSelectedUser().transform.position; });
+                VRCBigButton? Teleport = new(row4, "Teleport", $"Teleport to this player's Position", () => { GameUtils.PlayerModel.GetLocalPlayer().transform.position = GameUtils.Gameplay.Matchmaking.GetSelectedUser()!.transform.position; });
 
                 #region Admin
 
-                var row5 = new VRCRowGroup(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"<color=red>{Entry.NAME}</color>");
-                VRCBigButton? Tag = new(row5, "Give Tag", $"Give a Specific Tag to User", () => { Vision.API.GiveTag(); });
-
+                if (GameUtils.PlayerModel.GetLocalPlayer().IsCheatAdmins())
+                {
+                    var row5 = new VRCRowGroup(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"<color=red>{Entry.NAME}</color>");
+                    VRCBigButton? Tag = new(row5, "Give Tag", $"Give a Specific Tag to User", () => {  });
+                }
                 #endregion
 
             }

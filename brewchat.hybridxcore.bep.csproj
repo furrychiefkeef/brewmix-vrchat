@@ -660,7 +660,6 @@
     <Folder Include="Assets\Textures\" />
     <Folder Include="Cheat\Modules\Local\" />
     <Folder Include="Utilities\Blanket.SDK\@VRC\MM\Controls\Cell\" />
-    <Folder Include="Utilities\Dir\" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat\UNIXEngine\mods&quot;&#xA;start steam://rungameid/438100" />

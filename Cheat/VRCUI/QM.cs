@@ -110,7 +110,7 @@ internal class QM
         }
     }
 
-    public class SelectedMenu : IQuickMenuElements
+    public class SelectedUserMenu : IQuickMenuElements
     {
         public static void Apply()
         {
@@ -118,7 +118,7 @@ internal class QM
             {
                 VRCToggle toggle = new(QMElements.SelectedUser.SelectedUser_ButtonContainer(), "FREEZE!", "FREEZE CRIMINAL SCUM, ", "UNFREEZE NICE INDIVIUAL!", (x) =>
                 {
-                    var selecteduser = GameUtils.PlayerModel.Matchmaking.GetSelectedUser();
+                    var selecteduser = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
                     if (selecteduser != null)
                     {
                        

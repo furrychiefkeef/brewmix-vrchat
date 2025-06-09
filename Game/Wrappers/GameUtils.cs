@@ -1,5 +1,4 @@
 ﻿using BlanketSDK.Core;
-
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -11,9 +10,8 @@ using VRC.Core;
 using VRC.DataModel;
 using VRC.Localization;
 using VRC.Networking;
-
 using VRC.SDKBase;
-using VRC.SDKBase.Network;
+
 using VRC.Udon;
 using VRC.UI;
 using VRC.UI.Client;
@@ -21,481 +19,540 @@ using VRC.UI.Client.HUD;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
 
-using Player = VRC.Player;
-
-namespace Brewchat.Game.Wrappers;
-
-internal class GameUtils
+namespace Brewchat.Game.Wrappers
 {
-    public class Gameplay
+    internal class GameUtils
     {
-        public struct RenderLayers
-        {
-            public static LayerMask InternalUI = LayerMask.NameToLayer("InternalUI");
-            public static LayerMask Default = LayerMask.NameToLayer("Default");
-        }
-
-        public struct CallbackEvents
-        {
-            static QuickMenu? QuickMenu_Cache;
-            static MainMenu? MainMenu_Cache;
-
-            public static bool IsInQuickMenu
-            {
-                get
-                {
-                    if (QuickMenu_Cache is null) QuickMenu_Cache = UnityEngine.Object.FindObjectOfType<QuickMenu>();
-                    return QuickMenu_Cache != null && QuickMenu_Cache.enabled;
-                }
-            }
-
-            public static bool IsInMainMenu
-            {
-                get
-                {
-                    if (MainMenu_Cache is null) MainMenu_Cache = UnityEngine.Object.FindObjectOfType<MainMenu>();
-                    return MainMenu_Cache != null && MainMenu_Cache.enabled;
-                }
-            }
-        }
-
-        public struct NetworkUtils
-        {
-
-            public struct Player
-            {
-                public static void SpawnEmoji(string id)
-                {
-                }
-
-                public static void SpawnPrint(string id)
-                {
-                }
-
-                public static void SpawnPortal(string id)
-                {
-                }
-
-                public static void SpawnDrone(int actor)
-                {
-                }
-            }
-
-            private static int _eintMValue;
-
-            public static void SendEmojiRPC(int emoji)
-            {
-                Il2CppSystem.Int32 eint = default(Il2CppSystem.Int32);
-                _eintMValue = eint.m_value;
-                _eintMValue = emoji;
-                Il2CppSystem.Object @object = @eint.BoxIl2CppObject();
-                Networking.RPC(0, PlayerModel.Get().gameObject, "SendEmojiRPC", new Il2CppSystem.Object[] { emoji });
-            }
-
-            public static string Join(string worldId)
-            {
-                Networking.GoToRoom(worldId);
-                return worldId;
-            }
-        }
-
-        public struct PhotonUtils
-        {
-            public enum Events : byte
-            {
-                VoiceData = 1,
-                MovementData = 12,
-                MovementData2 = 13,
-                EV = 11,
-                PlayerPrefab = 202,
-                Chatbox = 43,
-                Social = 74,
-                OnPlayerJoin = 253,
-                OnPlayerLeft = 254,
-                OnPlayerFailedJoin = byte.MaxValue
-            }
-
-            public static void SendRaiseEvent(byte code, object payload, SendOptions sendOptions)
-            {
-                var IL2CPP = Pasted.WTFBlaze.Utils.Managers.SerializationManager.FromManagedToIL2CPP<Il2CppSystem.Object>(payload);
-                PhotonNetwork.RaiseEvent(code, IL2CPP, new()
-                {
-                    field_Public_ReceiverGroup_0 = ReceiverGroup.Others,
-                    field_Public_EventCaching_0 = EventCaching.DoNotCache
-                }, sendOptions);
-            }
-
-        }
-    }
-
-    public class Camera
-    {
-
-        public static UnityEngine.Camera Get { get; set; } = UnityEngine.Camera.main;
-        public static GameObject CameraObj => GameObject.Find("Camera");
-    }
-
-    public class PlayerModel
-    {
-        public static VRC.Player Get() => Player.prop_Player_0;
-
-        public struct _components
-        {
-            public static VRCMotionState _motion = Get().GetComponent<VRCMotionState>();
-            public static FlatBufferNetworkSerializer _serializer = Get().GetComponent<FlatBufferNetworkSerializer>();
-            /*public static SyncPhysics _SyncPhysics = Get().GetComponent<SyncPhysics>();*/
-        }
-        public static VRC.Player? GetPlayer(string name)
-        {
-
-            if (string.IsNullOrEmpty(name))
-                return null;
+        // =============================================================================
+        // GAMEPLAY UTILITIES
+        // =============================================================================
         
-            foreach (var player in Matchmaking.GetPlayers)
+        public class Gameplay
+        {
+            public static class Matchmaking
             {
-                if (player.APIUser.IsSelf || !player._vrcplayer || !player._vrcplayer._player)
-                    continue;
-            
-                if (string.Equals(player.APIUser.displayName, name, StringComparison.OrdinalIgnoreCase))
-                    return player._vrcplayer._player;
+                public static VRC.Player? GetSelectedUser() => 
+                    UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_IUser_0.prop_String_1.getPlayer()?._vrcplayer._player;
+                
+                public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers => 
+                    PlayerManager.prop_PlayerManager_0.PlayerList;
             }
+
+            public struct RenderLayers
+            {
+                public static LayerMask InternalUI = LayerMask.NameToLayer("InternalUI");
+                public static LayerMask Default = LayerMask.NameToLayer("Default");
+            }
+
+            public struct CallbackEvents
+            {
+                static QuickMenu? QuickMenu_Cache;
+                static MainMenu? MainMenu_Cache;
+
+                public static bool IsInQuickMenu
+                {
+                    get
+                    {
+                        if (QuickMenu_Cache is null) 
+                            QuickMenu_Cache = UnityEngine.Object.FindObjectOfType<QuickMenu>();
+                        return QuickMenu_Cache != null && QuickMenu_Cache.enabled;
+                    }
+                }
+
+                public static bool IsInMainMenu
+                {
+                    get
+                    {
+                        if (MainMenu_Cache is null) 
+                            MainMenu_Cache = UnityEngine.Object.FindObjectOfType<MainMenu>();
+                        return MainMenu_Cache != null && MainMenu_Cache.enabled;
+                    }
+                }
+            }
+
+            public struct NetworkUtils
+            {
+                public struct Player
+                {
+                    public static void SpawnEmoji(string id) { }
+                    public static void SpawnPrint(string id) { }
+                    public static void SpawnPortal(string id) { }
+                    public static void SpawnDrone(int actor) { }
+                }
+
+                private static int _eintMValue;
+
+                public static void SendEmojiRPC(int emoji)
+                {
+                    Il2CppSystem.Int32 eint = default(Il2CppSystem.Int32);
+                    _eintMValue = eint.m_value;
+                    _eintMValue = emoji;
+                    Il2CppSystem.Object @object = @eint.BoxIl2CppObject();
+                    Networking.RPC(0, PlayerModel.GetLocalPlayer().gameObject, "SendEmojiRPC", new Il2CppSystem.Object[] { emoji });
+                }
+
+                public static string Join(string worldId)
+                {
+                    Networking.GoToRoom(worldId);
+                    return worldId;
+                }
+            }
+
+            public struct PhotonUtils
+            {
+                public enum Events : byte
+                {
+                    VoiceData = 1,
+                    MovementData = 12,
+                    MovementData2 = 13,
+                    EV = 11,
+                    PlayerPrefab = 202,
+                    Chatbox = 43,
+                    Social = 74,
+                    OnPlayerJoin = 253,
+                    OnPlayerLeft = 254,
+                    OnPlayerFailedJoin = byte.MaxValue
+                }
+
+                public static void SendRaiseEvent(byte code, object payload, SendOptions sendOptions)
+                {
+                    var IL2CPP = Pasted.WTFBlaze.Utils.Managers.SerializationManager.FromManagedToIL2CPP<Il2CppSystem.Object>(payload);
+                    PhotonNetwork.RaiseEvent(code, IL2CPP, new()
+                    {
+                        field_Public_ReceiverGroup_0 = ReceiverGroup.Others,
+                        field_Public_EventCaching_0 = EventCaching.DoNotCache
+                    }, sendOptions);
+                }
+            }
+        }
+
+        // =============================================================================
+        // CAMERA UTILITIES
+        // =============================================================================
+        
+        public class Camera
+        {
+            public static UnityEngine.Camera Get { get; set; } = UnityEngine.Camera.main;
+            public static GameObject CameraObj => GameObject.Find("Camera");
+        }
+
+        // =============================================================================
+        // PLAYER MODEL UTILITIES
+        // =============================================================================
+        
+        public class PlayerModel
+        {
+            public static VRC.Player GetLocalPlayer() => VRC.Player.prop_Player_0;
+            public static VRC.Player Get => VRC.Player.prop_Player_0;
+
+            public struct _components
+            {
+                public static VRCMotionState _motion = GetLocalPlayer().GetComponent<VRCMotionState>();
+                public static FlatBufferNetworkSerializer _serializer = GetLocalPlayer().GetComponent<FlatBufferNetworkSerializer>();
+                /*public static SyncPhysics _SyncPhysics = GetLocalPlayer().GetComponent<SyncPhysics>();*/
+            }
+
+            public static class Motion
+            {
+                public struct Networking
+                {
+                    public static VRCPlayerApi Run_Speed(float v = 2f)
+                    {
+                        VRCPlayerApi? player = GetLocalPlayer().VRCPlayerApi;
+                        player.SetRunSpeed(v);
+                        return player;
+                    }
+
+                    public static VRCPlayerApi Walk_Speed(float v = 2f)
+                    {
+                        VRCPlayerApi? player = GetLocalPlayer().VRCPlayerApi;
+                        player.SetWalkSpeed(v);
+                        return player;
+                    }
+
+                    public static VRCPlayerApi Jump_Impulse(float v = 3f)
+                    {
+                        VRCPlayerApi? player = GetLocalPlayer().VRCPlayerApi;
+                        player.SetJumpImpulse(v);
+                        return player;
+                    }
+
+                    public static VRCPlayerApi Velocity(Vector3 v)
+                    {
+                        VRCPlayerApi? player = GetLocalPlayer().VRCPlayerApi;
+                        player.SetVelocity(v);
+                        return player;
+                    }
+
+                    public static VRCPlayerApi Gravity(float v = 1f)
+                    {
+                        VRCPlayerApi? player = GetLocalPlayer().VRCPlayerApi;
+                        player.SetGravityStrength(v);
+                        return player;
+                    }
+                }
+            }
+
+            public static class Avatar
+            {
+                public static GameObject? CloneAvatar(VRC.Player player, bool keepParameters)
+                {
+                    GameObject? obj;
+                    Transform? head = player._vrcplayer.VRCPlayerApi.GetBoneTransform(HumanBodyBones.Head);
+                    head.localScale = new Vector3(1f, 1f, 1f);
+                    
+                    if (player == null)
+                    {
+                        obj = UnityEngine.Object.Instantiate(player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0);
+                        obj.transform.position = player.transform.position;
+                        return obj;
+                    }
+                    return null;
+                }
+
+                public static ApiAvatar SetAvatar(string id)
+                {
+                    ApiAvatar avatar = new() { id = id };
+                    PageAvatar.Method_Public_Static_Void_ApiAvatar_String_0(avatar, "AvatarMenu");
+                    return avatar;
+                }
+
+                public static ApiAvatar GetAvatar() => GetLocalPlayer().ApiAvatar;
+
+                public static void AvatarScale(float v = 4f) =>
+                    GetLocalPlayer().VRCPlayerApi.SetAvatarEyeHeightByMeters(v);
+
+                public static void AllowAvatarScaling(bool v = true) =>
+                    GetLocalPlayer().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
+
+                public static void AvatarScaleMax(float v) =>
+                    GetLocalPlayer().VRCPlayerApi.SetAvatarEyeHeightMaximumByMeters(v);
+
+                public static void AvatarScaleMin(float v) =>
+                    GetLocalPlayer().VRCPlayerApi.SetAvatarEyeHeightMinimumByMeters(v);
+
+                public static void AllowScaling(bool v) =>
+                    GetLocalPlayer().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
+            }
+
+            public static class Matchmaking
+            {
+                public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers => 
+                    PlayerManager.prop_PlayerManager_0.PlayerList;
+            }
+        }
+
+        // =============================================================================
+        // WORLD UTILITIES
+        // =============================================================================
+        
+        public class World
+        {
+            public static string GetID() => RoomManager.field_Private_Static_ApiWorldInstance_1.id;
+            public static bool IsLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.currentApiWorld != null;
+
+            public class SDK2
+            {
+                public static void InteractWithTrigger(string triggerobj)
+                {
+                    foreach (VRCSDK2.VRC_Trigger? trigger in UnityEngine.Object.FindObjectsOfType<VRCSDK2.VRC_Trigger>())
+                    {
+                        if (trigger.gameObject.name.Contains(triggerobj))
+                        {
+                            trigger.Interact();
+                            if (!Config.Advanced.DebugMode) 
+                                UI.HUD.ToastV2("Sent Trigger", trigger.gameObject.name);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            public class SDK3
+            {
+                public static void LoadCustomEvent(string _event)
+                {
+                    foreach (UdonBehaviour udon in UnityEngine.Object.FindObjectsOfType<UdonBehaviour>())
+                    {
+                        if (udon._eventTable.ContainsKey(_event))
+                        {
+                            udon.SendCustomEvent(_event);
+                        }
+                    }
+                }
+            }
+        }
+
+        // =============================================================================
+        // GAME SERVER UTILITIES
+        // =============================================================================
+        
+        public class GameServer
+        {
+            public static VRC.Player? getPlayer_displayName(string name)
+            {
+                if (string.IsNullOrEmpty(name)) return null;
+
+                foreach (var player in PlayerModel.Matchmaking.GetPlayers)
+                {
+                    if (player.APIUser.IsSelf || !player._vrcplayer || !player._vrcplayer._player)
+                        continue;
+
+                    if (string.Equals(player.APIUser.displayName, name, StringComparison.OrdinalIgnoreCase))
+                        return player._vrcplayer._player;
+                }
+
+                return null;
+            }
+            public static VRC.Player? getPlayer_networkId(int id)
+            {
+                if (id < 0 ) return null;
+
+                foreach (var player in PlayerModel.Matchmaking.GetPlayers)
+                {
+                    if (player.APIUser.IsSelf || !player._vrcplayer || !player._vrcplayer._player)
+                        continue;
+
+                    if (int.Equals(player.VRCPlayerApi.playerId, id))
+                        return player._vrcplayer._player;
+                }
+
+                return null;
+            }
+            public static VRC.Player? getPlayer_userId(string id)
+            {
+                if (string.IsNullOrEmpty(id)) return null;
+
+                foreach (var player in PlayerModel.Matchmaking.GetPlayers)
+                {
+                    if (player.APIUser.IsSelf || !player._vrcplayer || !player._vrcplayer._player)
+                        continue;
+
+                    if (string.Equals(player.APIUser.id, id, StringComparison.OrdinalIgnoreCase))
+                        return player._vrcplayer._player;
+                }
+
+                return null;
+            }
+            /*public static VRC.Player? GetPlayer(int id)
+            {
+                foreach (var player in PlayerModel.Matchmaking.GetPlayers)
+                {
+                    if (player.VRCPlayerApi.playerId == id)
+                    {
+                        return player;
+                    }
+                }
+
+                return null;
+            }*/
+        }
+
+        // =============================================================================
+        // UI UTILITIES
+        // =============================================================================
+        
+        public static class UI
+        {
+            public class HUD
+            {
+                #region NOTIFICATION MANAGER V2
+
+                public static void ToastV1(string content, float duration = 3f, Sprite? sprite = null)
+                {
+                    try
+                    {
+                        HudController.field_Public_Static_HudController_0
+                            .userEventCarousel
+                            .Method_Private_Void_LocalizableString_Sprite_Single_0(content.Localize(), sprite, duration);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError($"[NotificationManager] Message error: {ex.Message}");
+                    }
+                }
+
+                public static void ToastV2(string? title, string? content = null, float duration = 2f, Sprite? sprite = default)
+                {
+                    HudController
+                        .field_Public_Static_HudController_0
+                        .notification
+                        ?.ShowNotification(sprite, title.Localize(), content.Localize(), duration);
+                }
+
+                #endregion
+
+                #region ALERT SYSTEM
+
+                public enum AlertType
+                {
+                    QuickMenu,
+                    MainMenu,
+                }
+
+                public static string Alert(string content)
+                {
+                    VRCUIManager.prop_VRCUIManager_0.Method_Public_Virtual_Final_New_Void_LocalizableString_0(content.Localize());
+                    return content;
+                }
+
+                #endregion
+
+                #region POPUP SYSTEM V1
+
+                public static void PopUp(string title = null, string content = null, float duration = 10f)
+                {
+                    VRCUiManager.prop_VRCUiManager_0.prop_VRCUiPopupManager_0
+                        .Method_Public_Void_LocalizableString_LocalizableString_Single_0
+                            (title.Localize(), content.Localize(), duration);
+                }
+
+                public static void PopUp2(string title = null, string content = null, string? uhz = null, Action func = null)
+                {
+                    VRCUiManager.prop_VRCUiManager_0.prop_VRCUiPopupManager_0
+                        .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_Action_1_VRCUiPopup_0
+                            (title.Localize(), content.Localize(), uhz.Localize(), func);
+                }
+
+                public static void LoadingPopUp2(string? title, string? content, string? button_text, System.Action func,
+                    System.Action<VRCUiPopup> idk, float duration = 10f)
+                {
+                    VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
+                        .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_LocalizableString_Action_Action_1_VRCUiPopup_0
+                        (title.Localize(), content.Localize(), button_text.Localize(), func, button_text.Localize(),
+                            null, null);
+                }
+
+                public static void LoadingPopUp(string? title, string? content, string? button_text, System.Action func,
+                    System.Action<VRCUiPopup> idk, float duration = 10f)
+                {
+                    VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
+                        .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_Action_1_VRCUiPopup_0
+                            (title.Localize(), content.Localize(), button_text.Localize(), func, idk);
+                }
+
+                #endregion
+            }
+        }
+
+        // =============================================================================
+        // VRCHAT UTILITIES
+        // =============================================================================
+        
+        public class VRChatUtils
+        {
+            public static class InputManager
+            {
+                public static VRCInput GetInput(string name) => 
+                    VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name];
+            }
+
+            public static class VRCKeyboard
+            {
+                //vinyl thanks <3
+                private static VRCInputField? inputfield;
+                private static GameObject? Object;
+
+                public enum KeyBoardType
+                {
+                    Standard,
+                    Numeric,
+                    Search
+                }
+
+                public static void InputPopup(string Title, Action<string> EndString, Action<string>? RealTimeString = null,
+                    Action? OnClose = null, KeyBoardType keyBoardType = KeyBoardType.Standard,
+                    string Placeholder = "Enter Text", string OkButton = "OK", string CancelButton = "Cancel",
+                    bool MultiLine = true, int CharLimit = 0, bool KeepOpen = false, bool ReadOnly = false)
+                {
+                    if (inputfield == null)
+                    {
+                        Object = new GameObject($"[{Entry.NAME}] Keyboard");
+                        Object.transform.parent = IMainMenuElements.MMParent();
+                        UnityEngine.Object.DontDestroyOnLoad(Object);
+                        inputfield = Object.GetOrAddComponent<VRCInputField>();
+                    }
+
+                    KeyboardData keyboardData = new();
+                    KeyboardData keyboardData2 =
+                        keyboardData
+                            .Method_Public_KeyboardData_LocalizableString_LocalizableString_String_LocalizableString_LocalizableString_0(
+                                LocalizableStringExtensions.Localize(Title),
+                                LocalizableStringExtensions.Localize(Placeholder), "",
+                                LocalizableStringExtensions.Localize(OkButton),
+                                LocalizableStringExtensions.Localize(CancelButton));
+                    KeyboardData keyboardData3 =
+                        keyboardData2.Method_Public_KeyboardData_Action_1_String_Action_1_String_Action_Boolean_PDM_0(
+                            RealTimeString, EndString, OnClose, KeepOpen);
+                    KeyboardData keyboardData4 =
+                        keyboardData3.Method_Public_KeyboardData_InputPopupType_Boolean_PDM_0((InputPopupType)keyBoardType,
+                            param_2: true);
+                    KeyboardData keyboardData5 =
+                        keyboardData4
+                            .Method_Public_KeyboardData_InputType_ContentType_Int32_Boolean_Boolean_InterfacePublicAbstractBoStVoAc1VoAcSt1BoUnique_PDM_0(
+                                TMP_InputField.InputType.Standard, TMP_InputField.ContentType.Standard, CharLimit,
+                                MultiLine, ReadOnly);
+                    keyboardData5._isWorldKeyboard = true;
+                    inputfield._keyboardData = keyboardData5;
+                    inputfield.Method_Private_Void_0();
+                }
+            }
+
+            public static class Events
+            {
+                public static string eventCode43_Chatbox(string msg)
+                {
+                    GameUtils.Gameplay.PhotonUtils.SendRaiseEvent((byte)Gameplay.PhotonUtils.Events.Chatbox, msg, default);
+                    return msg;
+                }
+            }
+        }
+    }
+
+    // =============================================================================
+    // EXTENSION METHODS
+    // =============================================================================
     
-            return null;
-        }
- 
-        public static VRC.Player? GetPlayer(int id)
-        {
-            foreach (var player in Matchmaking.GetPlayers)
-            {
-                if (player.VRCPlayerApi.playerId == id)
-                {
-                    return player;
-                }
-            }
-
-            return null;
-        }
-        public static class Motion
-        {
-            public struct Networking
-            {
-                public static VRCPlayerApi Run_Speed(float v = 2f)
-                {
-                    VRCPlayerApi? player = Get().VRCPlayerApi;
-                    player.SetRunSpeed(v);
-                    return player;
-                }
-
-                public static VRCPlayerApi Walk_Speed(float v = 2f)
-                {
-                    VRCPlayerApi? player = Get().VRCPlayerApi;
-                    player.SetWalkSpeed(v);
-                    return player;
-                }
-
-                public static VRCPlayerApi Jump_Impulse(float v = 3f)
-                {
-                    VRCPlayerApi? player = Get().VRCPlayerApi;
-                    player.SetJumpImpulse(v);
-                    return player;
-                }
-
-                public static VRCPlayerApi Velocity(Vector3 v)
-                {
-                    VRCPlayerApi? player = Get().VRCPlayerApi;
-                    player.SetVelocity(v);
-                    return player;
-
-                }
-
-                public static VRCPlayerApi Gravity(float v = 1f)
-                {
-                    VRCPlayerApi? player = Get().VRCPlayerApi;
-                    player.SetGravityStrength(v);
-                    return player;
-                }
-            }
-        }
-
-        public static class Avatar
-        {
-            public static GameObject? CloneAvatar(VRC.Player player, bool keepParameters)
-            {
-                GameObject? obj;
-                Transform? head = player._vrcplayer.VRCPlayerApi.GetBoneTransform(HumanBodyBones.Head);
-                head.localScale = new Vector3(1f, 1f, 1f);
-                if (player == null)
-                {
-              
-                    obj = UnityEngine.Object.Instantiate(player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0);
-                    obj.transform.position = player.transform.position;
-                    return obj;
-                }
-                return null;
-            }
-            public static ApiAvatar SetAvatar(string id)
-            {
-                ApiAvatar avatar = new() { id = id };
-                PageAvatar.Method_Public_Static_Void_ApiAvatar_String_0(avatar, "AvatarMenu");
-                return avatar;
-            }
-            public static ApiAvatar GetAvatar() => Get().ApiAvatar;
-            
-            public static void AvatarScale(float v = 4f) =>
-                Get().VRCPlayerApi.SetAvatarEyeHeightByMeters(v);
-            public static void AllowAvatarScaling(bool v = true) =>
-                Get().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
-            public static void AvatarScaleMax(float v) =>
-                Get().VRCPlayerApi.SetAvatarEyeHeightMaximumByMeters(v);
-            public static void AvatarScaleMin(float v) =>
-                Get().VRCPlayerApi.SetAvatarEyeHeightMinimumByMeters(v);
-            public static void AllowScaling(bool v) =>
-                Get().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
-        }
-
-        public static class Matchmaking
-        {
-            public static VRC.Player? GetSelectedUser() => UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_IUser_0.prop_String_1.getPlayer()?._vrcplayer._player;
-            public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers => PlayerManager.prop_PlayerManager_0.PlayerList;
-        }
-    }
-
-    public class World
-    {
-        public static string GetID() => RoomManager.field_Private_Static_ApiWorldInstance_1.id;
-        public static bool IsLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.currentApiWorld != null;
-        
-
-        public class SDK2
-        {
-            public static void InteractWithTrigger(string triggerobj)
-            {
-                foreach (VRCSDK2.VRC_Trigger? trigger in UnityEngine.Object.FindObjectsOfType<VRCSDK2.VRC_Trigger>())
-                {
-                    if (trigger.gameObject.name.Contains(triggerobj))
-                    {
-                        trigger.Interact();
-                        if (!Config.Advanced.DebugMode) UI.HUD.ToastV2("Sent Trigger", trigger.gameObject.name);
-                        return;
-                    }
-                }
-            } 
-        }
-
-        public class SDK3
-        {
-            public static void LoadCustomEvent(string _event)
-            {
-                foreach (UdonBehaviour udon in UnityEngine.Object.FindObjectsOfType<UdonBehaviour>())
-                {
-                    if (udon._eventTable.ContainsKey(_event))
-                    {
-                        udon.SendCustomEvent(_event);
-                    }
-                }
-            }
-        }
-    }
-
-    public static class UI
-    {
-        public class HUD
-        {
-            #region NOTIFICATION MANAGER
-
-            #region HUD_V2
-
-
-
-            public static void ToastV1(string content, float duration = 3f, Sprite? sprite = null)
-            {
-                try
-                {
-                    HudController.field_Public_Static_HudController_0
-                        .userEventCarousel
-                        .Method_Private_Void_LocalizableString_Sprite_Single_0(content.Localize(), sprite, duration);
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogError($"[NotificationManager] Message error: {ex.Message}");
-                }
-            }
-
-            public static void ToastV2(string? title, string? content = null, float duration = 2f, Sprite? sprite = default)
-            {
-                HudController
-                    .field_Public_Static_HudController_0
-                    .notification
-                    ?.ShowNotification(sprite, title.Localize(), content.Localize(), duration);
-
-            }
-
-           
-            #region Alert
-
-            public enum AlertType
-            {
-                QuickMenu,
-                MainMenu,
-            }
-
-            public static string Alert(string content)
-            {
-                VRCUIManager.prop_VRCUIManager_0.Method_Public_Virtual_Final_New_Void_LocalizableString_0(content.Localize());
-                return content;
-            }
-
-            #endregion
-            #endregion
-
-            #region HUD_V1
-
-            public static void PopUp(string title = null, string content = null, float duration = 10f)
-            {
-                VRCUiManager.prop_VRCUiManager_0.prop_VRCUiPopupManager_0
-                    .Method_Public_Void_LocalizableString_LocalizableString_Single_0
-                        (title.Localize(), content.Localize(), duration);
-            }
-            public static void PopUp2(string title = null, string content = null, string? uhz = null, Action func = null)
-            {
-                VRCUiManager.prop_VRCUiManager_0.prop_VRCUiPopupManager_0
-                    .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_Action_1_VRCUiPopup_0
-                        (title.Localize(), content.Localize(), uhz.Localize(),func);
-            }
-
-            public static void LoadingPopUp2(string? title, string? content, string? button_text, System.Action func,
-                System.Action<VRCUiPopup> idk, float duration = 10f)
-            {
-                VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
-                    .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_LocalizableString_Action_Action_1_VRCUiPopup_0
-                    (title.Localize(), content.Localize(), button_text.Localize(), func, button_text.Localize(),
-                        null, null);
-
-            }
-
-            public static void LoadingPopUp(string? title, string? content, string? button_text, System.Action func,
-                System.Action<VRCUiPopup> idk, float duration = 10f)
-            {
-                VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
-                    .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_Action_1_VRCUiPopup_0
-                        (title.Localize(), content.Localize(), button_text.Localize(), func, idk);
-
-            }
-            #endregion
-
-            #endregion
-        }
-    }
-
-    public class VRChatUtils
-    {
-        public static class InputManager
-        {
-            public static VRCInput GetInput(string name) => VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name];
-        }
-
-        public static class VRCKeyboard
-        {
-            //vinyl thanks <3
-            private static VRCInputField? inputfield;
-            private static GameObject? Object;
-
-            public enum KeyBoardType
-            {
-                Standard,
-                Numeric,
-                Search
-            }
-
-            public static void InputPopup(string Title, Action<string> EndString, Action<string>? RealTimeString = null,
-                Action? OnClose = null, KeyBoardType keyBoardType = KeyBoardType.Standard,
-                string Placeholder = "Enter Text", string OkButton = "OK", string CancelButton = "Cancel",
-                bool MultiLine = true, int CharLimit = 0, bool KeepOpen = false, bool ReadOnly = false)
-            {
-                if (inputfield == null)
-                {
-                    Object = new GameObject($"[{Entry.NAME}] Keyboard");
-                    Object.transform.parent = IMainMenuElements.MMParent();
-                    UnityEngine.Object.DontDestroyOnLoad(Object);
-                    inputfield = Object.GetOrAddComponent<VRCInputField>();
-                }
-
-                KeyboardData keyboardData = new();
-                KeyboardData keyboardData2 =
-                    keyboardData
-                        .Method_Public_KeyboardData_LocalizableString_LocalizableString_String_LocalizableString_LocalizableString_0(
-                            LocalizableStringExtensions.Localize(Title),
-                            LocalizableStringExtensions.Localize(Placeholder), "",
-                            LocalizableStringExtensions.Localize(OkButton),
-                            LocalizableStringExtensions.Localize(CancelButton));
-                KeyboardData keyboardData3 =
-                    keyboardData2.Method_Public_KeyboardData_Action_1_String_Action_1_String_Action_Boolean_PDM_0(
-                        RealTimeString, EndString, OnClose, KeepOpen);
-                KeyboardData keyboardData4 =
-                    keyboardData3.Method_Public_KeyboardData_InputPopupType_Boolean_PDM_0((InputPopupType)keyBoardType,
-                        param_2: true);
-                KeyboardData keyboardData5 =
-                    keyboardData4
-                        .Method_Public_KeyboardData_InputType_ContentType_Int32_Boolean_Boolean_InterfacePublicAbstractBoStVoAc1VoAcSt1BoUnique_PDM_0(
-                            TMP_InputField.InputType.Standard, TMP_InputField.ContentType.Standard, CharLimit,
-                            MultiLine, ReadOnly);
-                keyboardData5._isWorldKeyboard = true;
-                inputfield._keyboardData = keyboardData5;
-                inputfield.Method_Private_Void_0();
-            }
-        }
- 
-        public static class Events
-        {
-            public static string eventCode43_Chatbox(string msg)
-            {
-                GameUtils.Gameplay.PhotonUtils.SendRaiseEvent((byte)Gameplay.PhotonUtils.Events.Chatbox, msg, default);
-                return msg;
-            }
-        }
-    }
-
-}
-
-        
     public static class PlayerExtensions
     {
-        public static Color GetTrustColor(this VRC.Player player) => player.GetTrustColor();
-        public static string? GetTrustRank(this VRC.Player player) => player.GetTrustRank();
-       
+        /*public static Color GetTrustColor(this VRC.Player player) => player.Method_Public_Static_Void_Object_Color_0();
+        public static string? GetTrustRank(this VRC.Player player) => player.Method_Public_Static_Void_Object_Single_String_0();*/
+        
         public static string IsFriend(this VRC.Player player)
         {
-            
             return player.APIUser.isFriend ? "Friend" : null;
         }
+
         public static string IsAdult(this VRC.Player player)
         {
             return player.APIUser.ageVerified ? "+18" : "-18";
         }
-        
+
         public static VRC.Player? getPlayer(this string name)
         {
-
             if (string.IsNullOrEmpty(name))
                 return null;
-        
+
             foreach (var player in GameUtils.PlayerModel.Matchmaking.GetPlayers)
             {
                 if (player.APIUser.IsSelf || player._vrcplayer == null || player._vrcplayer._player == null)
                     continue;
-            
+
                 if (string.Equals(player.APIUser.displayName, name, StringComparison.OrdinalIgnoreCase))
                     return player._vrcplayer._player;
             }
-    
+
             return null;
         }
+
         public static VRC.Player? getPlayer(this int networkId)
         {
             foreach (var player in GameUtils.PlayerModel.Matchmaking.GetPlayers)
             {
-                if (player.VRCPlayerApi.playerId == networkId) return player;
+                if (player.VRCPlayerApi.playerId == networkId) 
+                    return player;
             }
             return null;
         }
     }
+}

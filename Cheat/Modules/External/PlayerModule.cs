@@ -23,7 +23,7 @@ internal class PlayerModule
 
         public static void Fly()
         {
-            Player player = GameUtils.PlayerModel.Get();
+            Player player = GameUtils.PlayerModel.GetLocalPlayer();
             if (!player && !GameUtils.World.IsLoaded()) return;
             else
             {
@@ -70,7 +70,7 @@ internal class PlayerModule
         {
             #region REQUIRED_COMPONENTS
 
-            Player player = GameUtils.PlayerModel.Get();
+            Player player = GameUtils.PlayerModel.GetLocalPlayer();
             var player_motion = GameUtils.PlayerModel.Motion.Networking.Jump_Impulse();
             var cache_player_jump_ = player_motion.GetJumpImpulse();
 
@@ -97,7 +97,7 @@ internal class PlayerModule
 
         public static void ClickTP()
         {
-            Player player = GameUtils.PlayerModel.Get();
+            Player player = GameUtils.PlayerModel.GetLocalPlayer();
             if (!player && !GameUtils.World.IsLoaded() || GameUtils.Gameplay.CallbackEvents.IsInMainMenu) return;
             if (Physics.Raycast(GameUtils.Camera.Get.transform.position, GameUtils.Camera.Get.transform.forward, out RaycastHit hit)) player.transform.position = hit.point;
         }
@@ -147,7 +147,7 @@ internal class PlayerModule
                             cameraObject.transform.position = referenceCamera.transform.position + (-cameraObject.transform.forward * 2f);
                             cameraObject.AddComponent<AudioListener>();
                             cameraObject.AddComponent<FlyManager>().AllowRotation = true;
-                            cameraObject.transform.position = GameUtils.PlayerModel.Get().VRCPlayerApi.GetBonePosition(HumanBodyBones.Head);
+                            cameraObject.transform.position = GameUtils.PlayerModel.GetLocalPlayer().VRCPlayerApi.GetBonePosition(HumanBodyBones.Head);
                             return camera;
                     }
                 }

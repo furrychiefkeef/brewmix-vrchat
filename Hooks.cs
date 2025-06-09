@@ -4,7 +4,6 @@ using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
-using brewchat.hybridxcore.bep.Cheat.IMGUI;
 using ExitGames.Client.Photon;
 using HarmonyLib;
 using Pasted.WTFBlaze.Utils.Managers;
@@ -96,7 +95,6 @@ namespace brewchat.hybridxcore.bep
 
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             Widgets.QM.Initalize();
-            LimeConsole.Text("Quick Menu Successfully Loaded!", 0);
             QM.Main.Apply();
 
 
@@ -106,7 +104,9 @@ namespace brewchat.hybridxcore.bep
         public static void QM_SelectdMenu_Initialize_HOOK(ref SelectedUserMenuQM? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
-            QM.SelectedMenu.Apply();
+            QM.SelectedUserMenu.Apply();
+            MM.SelectedUserMenu.Apply();
+
             Console.Clear();
         }
         
@@ -169,7 +169,6 @@ namespace brewchat.hybridxcore.bep
             {
                 Player? player = __0;
                 if (player.APIUser.allowAvatarCopying != true) player.APIUser.allowAvatarCopying = true;
-                LimeConsole.Text($"Player Joined: <color=#ff0000>[{player.IsAdult()}]</color> <color=#{EngineUtils.Conversion.ColorToHex(player.GetTrustColor())}>[{player.GetTrustRank()}]</color> {player.VRCPlayerApi.displayName} : ({player.APIUser.id}) | ACTOR: {player.VRCPlayerApi.playerId}", Logging.GameServer);
 
             }
         }
@@ -180,7 +179,6 @@ namespace brewchat.hybridxcore.bep
             if (__0 != null && !__0.APIUser.IsSelf)
             {
                 Player? player = __0;
-                LimeConsole.Text($"Player Left: {player.VRCPlayerApi.displayName} : ({player.APIUser.id})", Logging.GameServer);
             }
         }
 
