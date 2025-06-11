@@ -15,7 +15,7 @@ internal class VRCWidgets : IQuickMenuElements
     public GameObject _obj { get; set; }
     public TextMeshProUGUIEx header_txt { get; set; }
     public bool state;
-    public static VRCWidgets Create(string text, [Optional] System.Action func, [Optional] UnityEngine.Color color, [Optional] float duration ,Sprite? sprite = null )
+    public static VRCWidgets Create(Sprite? sprite, string text, [Optional] System.Action func, [Optional] UnityEngine.Color color, [Optional] float duration)
     {
         Transform? obj = UnityEngine.Object.Instantiate(QMElements.Widgets.QMWidgetHeader(), QMElements.Widgets.QMWidgetHeader().parent);
 

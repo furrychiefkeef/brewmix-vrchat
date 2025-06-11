@@ -53,15 +53,12 @@ internal class VRCPage : IQuickMenuElements
         page.field_Public_String_0 = Name;
         page.field_Private_List_1_UIPage_0.Add(page);
 
-        if (QM()?.field_Protected_MenuStateController_0 != null &&
-            QM()?.field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0 != null)
+        if (QM()?.field_Protected_MenuStateController_0 != null && QM()?.field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0 != null)
         {
             QM()?.field_Protected_MenuStateController_0.field_Private_Dictionary_2_String_UIPage_0.Add(Name, page);
 
-            List<UIPage>? List = QM()?.field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0
-                .ToList();
+            List<UIPage>? List = QM()?.field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0.ToList();
             List?.Add(page);
-
 
             QM().field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0 = List.ToArray();
 

@@ -6,185 +6,251 @@ using UnityEngine;
 using UnityEngine.Networking;
 using VRC.Localization;
 using WebSocketSharp;
-namespace Brewchat.Game.Wrappers
+
+namespace Brewchat.Game.Wrappers;
+
+/// <summary>
+/// The Game Engine Wrapper (UnityEngine)
+/// </summary>
+internal static class EngineUtils
 {
-    /// <summary>
-    /// The Game Engine Wrapper (UnityEngine)
-    /// </summary>
-    internal static class EngineUtils
+
+    public struct Conversion
     {
-
-        public struct Conversion
+        public static Color HexToColor(string hex)
         {
-            public static Color HexToColor(string hex)
-            {
-                ColorUtility.TryParseHtmlString(hex, out Color color);
-                return color;
-            }
-
-            public static string ColorToHex(Color color)
-            {
-                return ColorUtility.ToHtmlStringRGB(color);
-            }
+            ColorUtility.TryParseHtmlString(hex, out Color color);
+            return color;
         }
 
-        public struct Assets 
+        public static string ColorToHex(Color color)
         {
-            #region Media
-            public static AudioClip? AudioClip(Uri url)
-            {
-                UnityWebRequest www = UnityWebRequest.Get(url.ToString());
-                var operation = www.SendWebRequest();
-                while (!operation.isDone) System.Threading.Thread.Sleep(1);
-                if (www.result != UnityWebRequest.Result.Success) return null;
-                AudioClip clip = WebRequestWWW.InternalCreateAudioClipUsingDH(www.downloadHandler, www.url, false,false,0);
-                
-                if (clip == null) return null;
-                if (url.IsFile) clip.name = Path.GetFileNameWithoutExtension(url.LocalPath);
-                return clip;
-            }
-             public static GameObject? CreateAudio(Uri url, float volume = 1f, bool loop = true, bool bypassAllEffects = true)
-            {
-                UnityWebRequest www = UnityWebRequest.Get(url.ToString());
-                var operation = www.SendWebRequest();
-                while (!operation.isDone) System.Threading.Thread.Sleep(1);
-                if (www.result != UnityWebRequest.Result.Success) return null;
-                AudioClip clip = WebRequestWWW.InternalCreateAudioClipUsingDH(www.downloadHandler, www.url, false,false,0);
-                
-                if (clip == null) return null;
-                var src = new GameObject($"Audio: [{url.LocalPath}]").AddComponent<AudioSource>();
-                if (url.IsFile)
-                {
-                    src.name = Path.GetFileNameWithoutExtension(url.LocalPath);
-                    clip.name = src.name;
-                }
-                src.clip = clip;
-                src.hideFlags += 32;
-                src.loop = loop;
-                src.volume = volume;
-                src.bypassListenerEffects = bypassAllEffects;
-                src.bypassReverbZones = bypassAllEffects;
-                src.Play();
-                UnityEngine.Object.DontDestroyOnLoad(src);
-                return src.gameObject;
-            }
-            public static AudioSource? AudioOverride(Uri url)
-            {
-                UnityWebRequest www = UnityWebRequest.Get(url.ToString());
-                var operation = www.SendWebRequest();
-                while (!operation.isDone) System.Threading.Thread.Sleep(1);
-                if (www.result != UnityWebRequest.Result.Success) return null;
-                AudioClip clip = WebRequestWWW.InternalCreateAudioClipUsingDH(www.downloadHandler, www.url, false,false,0);
-                AudioSource? audiosrc = null;
-                
-                if (audiosrc == null || clip == null) return null;
-                if (url.IsFile) clip.name = Path.GetFileNameWithoutExtension(url.LocalPath);
-                audiosrc.clip = clip;
-                audiosrc.hideFlags += 32;
-                audiosrc.Play();
-                return audiosrc;
-            }
-
-            #endregion
-            #region Imagebased
- 
-            public static Texture2D? INTERNAL_Texture(byte[] data)
-            {
-                Texture2D texture = new(0, 0);
-                ImageConversion.LoadImage(texture, data);
-                if (texture != null) texture.name = "resources.dev";
-                return texture;
-            }
-            public static Texture2D? Texture(Uri? url)
-            {
-                if (url == null) throw new ArgumentNullException(nameof(url));
-                byte[] data;
-                if (url.IsFile) data = File.ReadAllBytes(url.LocalPath); // Works with file:// or plain path
-                else if (url.Scheme == Uri.UriSchemeHttp || url.Scheme == Uri.UriSchemeHttps)
-                {
-                    using HttpClient http = new();
-                    data = http.GetByteArrayAsync(url.ToString()).GetAwaiter().GetResult();
-                }
-                else throw new NotSupportedException($"Unsupported URI scheme: {url.Scheme}");
-
-                Texture2D texture2D = new(2048, 2048); // Always give a dummy size
-                ImageConversion.LoadImage(texture2D, data);
-                texture2D.name = Path.GetFileNameWithoutExtension(url.LocalPath);
-                return texture2D;
-            }
-            
-            [Obsolete("We used Uri Now.")]
-            public static Sprite Sprite(Uri dir) 
-                => Texture(dir).ToSprite();
-            public static Sprite Data_LoadSprite(Uri? dir) 
-                => Texture(dir).ToSprite();
-            #endregion
-
-            #region Source
-            public static UnityEngine.GameObject INTERNAL_AssetBundle(byte[]? data, string? name, bool? keep)
-            {   
-                /*if(data?.Length == 0) return null;
-                AssetBundle? bundle = UnityEngine.AssetBundle
-                    .LoadFromMemoryAsync(data).GetAwaiter().GetResult();
-
-                GameObject? obj = bundle.LoadAsset<GameObject>(name);
-                GameObject? instance = UnityEngine.Object.Instantiate(obj);
-                if (keep is true)  UnityEngine.Object.DontDestroyOnLoad(instance);
-                bundle.Unload(false);
-                return instance;*/
-                return null;
-            }
-            [Obsolete]
-            public static UnityEngine.Object AssetBundle(string? dir, string? prefab_name, bool? keep)
-            {   
-                /*if(String.IsNullOrEmpty(dir)) return null;
-                AssetBundle? bundle = UnityEngine.AssetBundle
-                    .LoadFromFileAsync(dir).GetAwaiter().GetResult();
-
-                UnityEngine.Object obj = bundle.LoadAssetAsync<GameObject>(prefab_name).GetResult();
-                if (keep is true)  UnityEngine.Object.DontDestroyOnLoad(obj);
-                return obj;*/
-                return null;
-            }
-            
-            public static UnityEngine.GameObject AssetBundle(Uri? url, string? prefab_name, bool? keep)
-            {
-                /*HttpClient client = new ();
-                byte[] data = client.GetByteArrayAsync(url).Result;
-                AssetBundle? bundle = UnityEngine.AssetBundle.LoadFromMemory(data);
- 
-                GameObject? obj = bundle.LoadAsset<GameObject>(prefab_name);
-                GameObject? instance = UnityEngine.Object.Instantiate(obj);
-                if (keep is true) UnityEngine.Object.DontDestroyOnLoad(instance);
-                bundle.Unload(false);
-                return instance;*/
-                return null;
-            }
-            
-            #endregion
+            return ColorUtility.ToHtmlStringRGB(color);
         }
     }
-    public static class TextureExtensions
+
+    public struct Assets
     {
-        public static Sprite ToSprite(this Texture2D? texture)
+        #region Media
+
+        public static AudioClip? AudioClip(Uri url)
         {
-            // Create a sprite from the texture using default game settings
-            return Sprite.Create(
-                texture, 
-                new Rect(0, 0, texture.width, texture.height), 
-                Vector2.zero // Using game's default settings
-            );
+            UnityWebRequest www = UnityWebRequest.Get(url.ToString());
+            var operation = www.SendWebRequest();
+            while (!operation.isDone) System.Threading.Thread.Sleep(1);
+            if (www.result != UnityWebRequest.Result.Success) return null;
+            AudioClip clip = WebRequestWWW.InternalCreateAudioClipUsingDH(www.downloadHandler, www.url, false, false, 0);
+
+            if (clip == null) return null;
+            if (url.IsFile) clip.name = Path.GetFileNameWithoutExtension(url.LocalPath);
+            return clip;
         }
 
-        public static Texture2D? Change(this Texture2D texture, Uri dir) => EngineUtils.Assets.Texture(dir);
-    }
-
-    public static class Localiztion
-    {
-        public static LocalizableString UnityString(this string @string)
+        public static GameObject? CreateAudio(Uri url, float volume = 1f, bool loop = true, bool bypassAllEffects = true)
         {
-            return LocalizableStringExtensions.Localize(@string);
+            UnityWebRequest www = UnityWebRequest.Get(url.ToString());
+            var operation = www.SendWebRequest();
+            while (!operation.isDone) System.Threading.Thread.Sleep(1);
+            if (www.result != UnityWebRequest.Result.Success) return null;
+            AudioClip clip = WebRequestWWW.InternalCreateAudioClipUsingDH(www.downloadHandler, www.url, false, false, 0);
+
+            if (clip == null) return null;
+            var src = new GameObject($"Audio: [{url.LocalPath}]").AddComponent<AudioSource>();
+            if (url.IsFile)
+            {
+                src.name = Path.GetFileNameWithoutExtension(url.LocalPath);
+                clip.name = src.name;
+            }
+
+            src.clip = clip;
+            src.hideFlags += 32;
+            src.loop = loop;
+            src.volume = volume;
+            src.bypassListenerEffects = bypassAllEffects;
+            src.bypassReverbZones = bypassAllEffects;
+            src.Play();
+            UnityEngine.Object.DontDestroyOnLoad(src);
+            return src.gameObject;
         }
+
+        public static AudioSource? AudioOverride(Uri url)
+        {
+            UnityWebRequest www = UnityWebRequest.Get(url.ToString());
+            var operation = www.SendWebRequest();
+            while (!operation.isDone) System.Threading.Thread.Sleep(1);
+            if (www.result != UnityWebRequest.Result.Success) return null;
+            AudioClip clip = WebRequestWWW.InternalCreateAudioClipUsingDH(www.downloadHandler, www.url, false, false, 0);
+            AudioSource? audiosrc = null;
+
+            if (audiosrc == null || clip == null) return null;
+            if (url.IsFile) clip.name = Path.GetFileNameWithoutExtension(url.LocalPath);
+            audiosrc.clip = clip;
+            audiosrc.hideFlags += 32;
+            audiosrc.Play();
+            return audiosrc;
+        }
+
+        #endregion
+
+        #region Imagebased
+
+        public static Texture2D? INTERNAL_Texture(byte[] data)
+        {
+            Texture2D texture = new(0, 0);
+            ImageConversion.LoadImage(texture, data);
+            if (texture != null) texture.name = "resources.dev";
+            return texture;
+        }
+
+        public static Texture2D? Texture(Uri? url)
+        {
+            if (url == null) throw new ArgumentNullException(nameof(url));
+            byte[] data;
+            if (url.IsFile) data = File.ReadAllBytes(url.LocalPath); // Works with file:// or plain path
+            else if (url.Scheme == Uri.UriSchemeHttp || url.Scheme == Uri.UriSchemeHttps)
+            {
+                using HttpClient http = new();
+                data = http.GetByteArrayAsync(url.ToString()).GetAwaiter().GetResult();
+            }
+            else throw new NotSupportedException($"Unsupported URI scheme: {url.Scheme}");
+
+            Texture2D texture2D = new(2048, 2048); // Always give a dummy size
+            ImageConversion.LoadImage(texture2D, data);
+            texture2D.name = Path.GetFileNameWithoutExtension(url.LocalPath);
+            return texture2D;
+        }
+
+        [Obsolete("We used Uri Now.")]
+        public static Sprite Sprite(Uri dir)
+            => Texture(dir).ToSprite();
+
+        public static Sprite Data_LoadSprite(Uri? dir)
+            => Texture(dir).ToSprite();
+
+        #endregion
+
+        #region Source
+
+        public static UnityEngine.GameObject INTERNAL_AssetBundle(byte[]? data, string? name, bool? keep)
+        {
+            /*if(data?.Length == 0) return null;
+            AssetBundle? bundle = UnityEngine.AssetBundle
+                .LoadFromMemoryAsync(data).GetAwaiter().GetResult();
+
+            GameObject? obj = bundle.LoadAsset<GameObject>(name);
+            GameObject? instance = UnityEngine.Object.Instantiate(obj);
+            if (keep is true)  UnityEngine.Object.DontDestroyOnLoad(instance);
+            bundle.Unload(false);
+            return instance;*/
+            return null;
+        }
+
+        [Obsolete]
+        public static UnityEngine.Object AssetBundle(string? dir, string? prefab_name, bool? keep)
+        {
+            /*if(String.IsNullOrEmpty(dir)) return null;
+            AssetBundle? bundle = UnityEngine.AssetBundle
+                .LoadFromFileAsync(dir).GetAwaiter().GetResult();
+
+            UnityEngine.Object obj = bundle.LoadAssetAsync<GameObject>(prefab_name).GetResult();
+            if (keep is true)  UnityEngine.Object.DontDestroyOnLoad(obj);
+            return obj;*/
+            return null;
+        }
+
+        public static UnityEngine.GameObject AssetBundle(Uri? url, string? prefab_name, bool? keep)
+        {
+            /*HttpClient client = new ();
+            byte[] data = client.GetByteArrayAsync(url).Result;
+            AssetBundle? bundle = UnityEngine.AssetBundle.LoadFromMemory(data);
+
+            GameObject? obj = bundle.LoadAsset<GameObject>(prefab_name);
+            GameObject? instance = UnityEngine.Object.Instantiate(obj);
+            if (keep is true) UnityEngine.Object.DontDestroyOnLoad(instance);
+            bundle.Unload(false);
+            return instance;*/
+            return null;
+        }
+
+        #endregion
     }
 }
+
+public static class TextureExtensions
+{
+    public static Sprite ToSprite(this Texture2D? texture)
+    {
+        // Create a sprite from the texture using default game settings
+        return Sprite.Create(
+            texture,
+            new Rect(0, 0, texture.width, texture.height),
+            Vector2.zero // Using game's default settings
+        );
+    }
+
+    public static Texture2D? Change(this Texture2D texture, Uri dir) => EngineUtils.Assets.Texture(dir);
+}
+
+public static class Localiztion
+{
+    public static LocalizableString UnityString(this string @string)
+    {
+        return LocalizableStringExtensions.Localize(@string);
+    }
+}
+
+public static class ObjectExtension
+{
+    /// <summary>
+    /// Gets an existing component of type T from the GameObject, or adds one if it doesn't exist.
+    /// </summary>
+    /// <typeparam name="T">The component type to get or add</typeparam>
+    /// <param name="go">The GameObject to operate on</param>
+    /// <returns>The existing or newly added component of type T</returns>
+    public static T GetOrAddComponent<T>(this GameObject go) where T : Component
+    {
+        // Try to get the existing component
+        T component = go.GetComponent<T>();
+
+        // If it doesn't exist, add it
+        if (component == null)
+        {
+            component = go.AddComponent<T>();
+        }
+
+        return component;
+    }
+
+    // Alternative implementation with null checking
+    public static T GetOrAddComponentSafe<T>(this GameObject go) where T : Component
+    {
+        if (go == null)
+        {
+            throw new System.ArgumentNullException(nameof(go), "GameObject cannot be null");
+        }
+
+        T component = go.GetComponent<T>();
+        return component != null ? component : go.AddComponent<T>();
+    }
+
+    // Version that works with interface types (if needed)
+    public static T GetOrAddComponent<T>(this GameObject go, Il2CppSystem.Type componentType) where T : Component
+    {
+        if (go == null || componentType == null)
+            return null;
+
+        Component component = go.GetComponent(componentType);
+        if (component == null)
+        {
+            component = go.AddComponent(componentType);
+        }
+
+        return component as T;
+    }
+    
+    
+    
+    
+}
+
 

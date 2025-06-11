@@ -31,12 +31,12 @@ namespace brewchat.hybridxcore.bep
         public static void DomainApp_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null) return; 
-            __instance?.gameObject.AddComponent<CSS>();
+            __instance?.gameObject.GetOrAddComponentSafe<CSS>();
             /*__instance?.gameObject.GetOrAddComponent<GifLoader>();*/
-            __instance.gameObject.AddComponent<KeybindManager>();
-            __instance.gameObject.AddComponent<Toolbox>();
+            __instance.gameObject.GetOrAddComponentSafe<KeybindManager>();
+            __instance.gameObject.GetOrAddComponentSafe<Toolbox>();
             /*__instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();*/
-            /*CSS.Offline();*/
+            CSS.Offline();
         }
 
         #endregion
@@ -70,16 +70,16 @@ namespace brewchat.hybridxcore.bep
         public static void VRCLoadingSequence_IsEnable_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null && !OfflineUILoaded) return;
-            /*CSS.Offline();*/
+            CSS.Offline();
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.Start))]
         public static void VRCLoadingSequence_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null && !OfflineUILoaded) return;
-            /*AudioSource? LoadingScreenAudio = __instance.gameObject.transform.GetChild(1).GetComponent<AudioSource>();
+            AudioSource? LoadingScreenAudio = __instance.gameObject.transform.GetChild(1).GetComponent<AudioSource>();
             UnityEngine.Object.DestroyImmediate(LoadingScreenAudio);
-            EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent = __instance.gameObject.transform;*/
+            EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent = __instance.gameObject.transform;
 
         }
 
@@ -97,8 +97,8 @@ namespace brewchat.hybridxcore.bep
         public static void QM_SelectdMenu_Initialize_HOOK(ref SelectedUserMenuQM? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
-            /*QM.SelectedUserMenu.Apply();*/
-            /*MM.SelectedUserMenu.Apply();*/
+            MM.SelectedUserMenu.Apply();
+            MM.SelectedUserMenu.Apply();
         }
         
         [HarmonyPostfix, HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
@@ -112,10 +112,9 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUIBackground), nameof(VRCUIBackground.Start))]
         public static void QuickMenuBackground_Initialize_HOOK(ref VRCUIBackground? __instance)
         {
-
             if (__instance == null && !OnlineUILoaded) return;
             OnlineUILoaded = true;
-            /*CSS.Online();*/
+            CSS.Online();
         }
 
         #endregion

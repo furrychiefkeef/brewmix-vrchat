@@ -26,8 +26,7 @@ internal class QM
                 #region Begin
 
                 var MainPage = new VRCPage(Entry.FULLNAME, ShowScrollWheel: true);
-                new VRCTab(MainPage, "The passion project.",
-                    sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+                new VRCTab(MainPage, "The passion project.", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
 
                 #endregion
 

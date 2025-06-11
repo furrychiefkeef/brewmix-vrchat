@@ -30,7 +30,7 @@ internal class PlayerModule
                 #region REQUIRED_COMPONENTS
 
                 VRCMotionState? motion_state = player.GetComponent<VRC.Animation.VRCMotionState>();
-                FlyManager? fly_component = player.gameObject.AddComponent<FlyManager>();
+                FlyManager? fly_component = player.gameObject.GetOrAddComponentSafe<FlyManager>();
                 CharacterController? characterController = player.GetComponent<CharacterController>();
 
                 #endregion
@@ -127,7 +127,7 @@ internal class PlayerModule
                     cameraObject.transform.parent = referenceCamera.transform;
                     cameraObject.transform.rotation = referenceCamera.transform.rotation;
 
-                    var camera = cameraObject.AddComponent<UnityEngine.Camera>();
+                    var camera = cameraObject.GetOrAddComponentSafe<UnityEngine.Camera>();
                     camera.fieldOfView = referenceCamera.fieldOfView;
                     camera.nearClipPlane /= 4f;
                     if (referenceCamera != null) camera.cullingMask = -524289;
@@ -157,7 +157,7 @@ internal class PlayerModule
         }
 
         private static int currentView = -1;
-        public static UnityEngine.Camera[]? camera = new UnityEngine.Camera[3];
+        public static UnityEngine.Camera[] camera = new UnityEngine.Camera[3];
         public static void CameraController()
         {
            
