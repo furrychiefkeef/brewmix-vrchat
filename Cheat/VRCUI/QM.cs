@@ -8,8 +8,9 @@ using BlanketSDK.Utilities;
 using Brewchat.Cheat.Modules;
 
 using Brewchat.Game.Wrappers;
+using MelonLoader;
 using VRC.Networking;
-using Resources = brewchat.hybridxcore.bep.Properties.Resources;
+using Resources = autumn.ml.Properties.Resources;
 
 namespace Brewchat.Cheat;
 
@@ -99,9 +100,9 @@ internal class QM
                 
                 #endregion
             }
-            catch (Exception xe)
+            catch (Exception ex)
             {
-               
+               MelonLogger.Msg(ex);
             }
             finally
             {

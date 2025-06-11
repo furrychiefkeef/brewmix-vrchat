@@ -5,12 +5,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRC.Core;
 using VRC.Localization;
-using Resources = brewchat.hybridxcore.bep.Properties.Resources;
+using Resources = autumn.ml.Properties.Resources;
 
 namespace Brewchat.Game.Monobehaviours;
 
 internal class Toolbox : UnityEngine.MonoBehaviour
 {
+    public Toolbox(IntPtr ptr) : base(ptr) {}
     public static Toolbox? Instance { get; private set; }
     private void Awake()
     {

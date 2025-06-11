@@ -1,5 +1,6 @@
 ﻿using BlanketSDK.Utilities;
 using BlanketSDK.Core;
+using Brewchat.Game.Wrappers;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.Localization;
@@ -22,7 +23,7 @@ internal class VRCCellButton : IMainMenuElements
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCCellButton(Transform parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null)
     {
-        if (!MainMenu() | !MMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!MainMenu() | !MMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         parent ??= MMFallbacks._Fallback_Dashboard_Group_MM_UI_Buttons();
 
         Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.SingleButton(), parent);
@@ -50,7 +51,7 @@ internal class VRCCellButton : IMainMenuElements
         #endregion
         
         #region TOOLTIP COMPONENT
-        _3._localizableString = tooltip.Localize(); 
+        _3._localizableString = tooltip.UnityString(); 
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT
@@ -61,7 +62,7 @@ internal class VRCCellButton : IMainMenuElements
     }
     public VRCCellButton(VRCPage page, VRCCellContainer Menu, string? name, string? tooltip, Sprite? sprite = null)
     {
-        if (!MainMenu() | !MMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!MainMenu() | !MMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         page.navigation_buttons ??= MMFallbacks._Fallback_Dashboard_Group_MM_UI_Buttons();
 
         Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.SingleButton(), page.navigation_buttons);
@@ -96,7 +97,7 @@ internal class VRCCellButton : IMainMenuElements
         #endregion
         
         #region TOOLTIP COMPONENT
-        _4._localizableString = tooltip.Localize(); 
+        _4._localizableString = tooltip.UnityString(); 
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT

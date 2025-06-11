@@ -1,4 +1,5 @@
 ﻿
+/*
 namespace Pasted.WTFBlaze.Utils.Managers
 {
     
@@ -114,3 +115,4 @@ namespace Pasted.WTFBlaze.Utils.Managers
     }
 
 }
+*/

@@ -1,11 +1,11 @@
 ﻿using Brewchat.Game.Wrappers;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 
 namespace Brewchat.Game.Monobehaviours;
 
 public class CameraModule : MonoBehaviour
 {
+    public CameraModule(IntPtr ptr) : base(ptr) {}
     float targetFOV;
     float CacheFOV;
     private Camera[]? Cameras { get; set; }

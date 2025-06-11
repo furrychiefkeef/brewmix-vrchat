@@ -1,4 +1,5 @@
-﻿using BlanketSDK.MM.Elements;
+﻿using autumn.ml.Properties;
+using BlanketSDK.MM.Elements;
 
 
 using BlanketSDK.MM.Elements.Controls;
@@ -10,7 +11,7 @@ using brewchat.hybridxcore.bep.Game.Wrappers;
 using Brewchat.Wrappers;
 
 
-using Resources = brewchat.hybridxcore.bep.Properties.Resources;
+
 
 namespace Brewchat.Cheat;
 

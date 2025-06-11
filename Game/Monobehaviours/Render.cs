@@ -5,6 +5,7 @@ using VRC;
 
 internal class wallhacks : MonoBehaviour
 {
+    public wallhacks(IntPtr ptr) : base(ptr) {}
     public GameObject canvas_nameplate { get; set; }
     public PlayerNameplate _nameplate { get; set; }
     public  Player _player { get; set; }
@@ -30,6 +31,7 @@ internal class wallhacks : MonoBehaviour
 
 internal class esp : MonoBehaviour
 {
+    public esp(IntPtr ptr) : base(ptr) {}
     public Player _player { get; set; }
     private SkinnedMeshRenderer[] _avatarender;
     private HighlightsFXStandalone FX;

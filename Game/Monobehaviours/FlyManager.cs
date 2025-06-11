@@ -7,6 +7,7 @@ namespace Brewchat.Game.Monobehaviours;
 
 internal class FlyManager : UnityEngine.MonoBehaviour
 {
+    public FlyManager(IntPtr ptr) : base(ptr) {}
     public bool AllowRotation { get; set; } = false;
     public bool Player { get; set; } = false;
     void Update() => Controller();

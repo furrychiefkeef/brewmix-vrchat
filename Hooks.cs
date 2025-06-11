@@ -1,13 +1,11 @@
-﻿using System.Text.Json;
-using Brewchat;
+﻿using Brewchat;
 using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
 using ExitGames.Client.Photon;
 using HarmonyLib;
-using Pasted.WTFBlaze.Utils.Managers;
-using Photon.Realtime;
+/*using Pasted.WTFBlaze.Utils.Managers;*/
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.Core;
@@ -32,19 +30,16 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(VRCApplication), nameof(VRCApplication.Awake))]
         public static void DomainApp_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
-            if (__instance is null) return;
-            __instance?.gameObject.GetOrAddComponent<CSS>();
-            __instance?.gameObject.GetOrAddComponent<GifLoader>();
-            __instance.gameObject.GetOrAddComponent<KeybindManager>();
-            __instance.gameObject.GetOrAddComponent<Toolbox>();
-            Toolbox.Instance?.LoadMyUI_Console();
+            if (__instance is null) return; 
+            __instance?.gameObject.AddComponent<CSS>();
+            /*__instance?.gameObject.GetOrAddComponent<GifLoader>();*/
+            __instance.gameObject.AddComponent<KeybindManager>();
+            __instance.gameObject.AddComponent<Toolbox>();
             /*__instance?.gameObject.GetOrAddComponent<Syrup.IMGUI.simgui>();*/
-            CSS.Offline();
+            /*CSS.Offline();*/
         }
 
         #endregion
-
-
 
         #region INTERNAL_UI
 
@@ -65,8 +60,8 @@ namespace brewchat.hybridxcore.bep
             {
 
                 Background.color = new Color(0, 0, 0, 0.9f);
-                var iso = GifLoader.CreateIsolatedImage(Background);
-                GifLoader.Instance.AddAnimatedGif(iso, new Uri(Config.Appearance.FlatLoadingOverlay));
+                /*var iso = GifLoader.CreateIsolatedImage(Background);
+                GifLoader.Instance.AddAnimatedGif(iso, new Uri(Config.Appearance.FlatLoadingOverlay));*/
 
             }
         }
@@ -75,16 +70,16 @@ namespace brewchat.hybridxcore.bep
         public static void VRCLoadingSequence_IsEnable_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null && !OfflineUILoaded) return;
-            CSS.Offline();
+            /*CSS.Offline();*/
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.Start))]
         public static void VRCLoadingSequence_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null && !OfflineUILoaded) return;
-            AudioSource? LoadingScreenAudio = __instance.gameObject.transform.GetChild(1).GetComponent<AudioSource>();
+            /*AudioSource? LoadingScreenAudio = __instance.gameObject.transform.GetChild(1).GetComponent<AudioSource>();
             UnityEngine.Object.DestroyImmediate(LoadingScreenAudio);
-            EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent = __instance.gameObject.transform;
+            EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent = __instance.gameObject.transform;*/
 
         }
 
@@ -96,18 +91,14 @@ namespace brewchat.hybridxcore.bep
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             Widgets.QM.Initalize();
             QM.Main.Apply();
-
-
         } 
         
         [HarmonyPostfix, HarmonyPatch(typeof(SelectedUserMenuQM), nameof(SelectedUserMenuQM.Start))]
         public static void QM_SelectdMenu_Initialize_HOOK(ref SelectedUserMenuQM? __instance)
         {
             if (__instance == null && !OnlineUILoaded) return;
-            QM.SelectedUserMenu.Apply();
-            MM.SelectedUserMenu.Apply();
-
-            Console.Clear();
+            /*QM.SelectedUserMenu.Apply();*/
+            /*MM.SelectedUserMenu.Apply();*/
         }
         
         [HarmonyPostfix, HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
@@ -124,7 +115,7 @@ namespace brewchat.hybridxcore.bep
 
             if (__instance == null && !OnlineUILoaded) return;
             OnlineUILoaded = true;
-            CSS.Online();
+            /*CSS.Online();*/
         }
 
         #endregion
@@ -162,7 +153,7 @@ namespace brewchat.hybridxcore.bep
 
         #region NetworkManager
 
-        [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.OnPlayerJoined))]
+        [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.Method_Internal_Void_Player_0))]
         public static void PlayerJoined_HOOK(VRC.Player __0)
         {
             if (__0 != null && !__0.APIUser.IsSelf)
@@ -173,7 +164,7 @@ namespace brewchat.hybridxcore.bep
             }
         }
 
-        [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.OnPlayerLeave))]
+        [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.Method_Public_Void_Player_PDM_2))]
         public static void PlayerLeft_HOOK(VRC.Player __0)
         {
             if (__0 != null && !__0.APIUser.IsSelf)
@@ -184,11 +175,9 @@ namespace brewchat.hybridxcore.bep
 
         #endregion
 
-
-
         #region NetworkUtils
 
-        [HarmonyPostfix, HarmonyPatch(typeof(LoadBalancingClient), nameof(LoadBalancingClient.OnEvent))]
+        /*[HarmonyPostfix, HarmonyPatch(typeof(LoadBalancingClient), nameof(LoadBalancingClient.OnEvent))]
         public static void __PhotonLogging_HOOK(EventData __0)
         {
             if (__0 is null && __0.CustomData is null) return;
@@ -199,12 +188,12 @@ namespace brewchat.hybridxcore.bep
                 ParameterDictionary? Parameters = __0.Parameters;
                 foreach (var data in Parameters)
                 {
-                    Data = SerializationManager.FromIL2CPPToManaged<object>(data.Value);
+                    Data = SerializationManager.FromIL2CPPToManaged<object>(data.);
                     string? c = System.Text.Json.JsonSerializer.Serialize(Data, new JsonSerializerOptions { AllowTrailingCommas = true });
-                    /*sconsole.print("hook", "/photon", $" Player: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] Event Data: \n {c}", 0);*/
+                    /*sconsole.print("hook", "/photon", $" Player: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] Event Data: \n {c}", 0);#1#
                 }
             }
-        }
+        }*/
 
 
         [HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.Method_Public_Void_Player_VrcEvent_VrcBroadcastType_Int32_Single_0))]

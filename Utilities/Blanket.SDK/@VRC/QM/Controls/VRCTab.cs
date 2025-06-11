@@ -1,5 +1,6 @@
 ﻿using BlanketSDK.Utilities;
 using BlanketSDK.Core;
+using Brewchat.Game.Wrappers;
 using UnityEngine;
 using VRC.Localization;
 using VRC.UI;
@@ -18,7 +19,7 @@ internal class VRCTab : IQuickMenuElements
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCTab(VRCPage page, string? tooltip, System.Action func = null, Sprite? sprite = null)
     {
-        if (!QuickMenu() | !QMControls.Tab()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!QuickMenu() | !QMControls.Tab()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform parent = QMFallbacks._Fallback_Dashboard_Group_QM_UI_Buttons_TAB();
         Transform? obj = UnityEngine.Object.Instantiate(QMControls.Tab(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_TAB_BUTTON-{page.Name}";
@@ -48,7 +49,7 @@ internal class VRCTab : IQuickMenuElements
         #endregion
 
         #region TOOLTIP COMPONENT
-        _2._localizableString = tooltip.Localize();
+        _2._localizableString = tooltip.UnityString();
         #endregion
   
         #region IMAGE || IMAGE_EX COMPONENT

@@ -1,4 +1,4 @@
-﻿using Brewchat.Game.Wrappers;
+﻿/*using Brewchat.Game.Wrappers;
 using UnityEngine;
 using VRC.SDKBase;
 
@@ -88,7 +88,7 @@ public class PlayerDataInfo : UnityEngine.MonoBehaviour
         playerLeftLowerLegBoneR.localRotation = vrcPlayerApi.GetBoneTransform(HumanBodyBones.LeftLowerLeg).localRotation;
         playerRightLowerLegBoneR.localRotation = vrcPlayerApi.GetBoneTransform(HumanBodyBones.RightLowerLeg).localRotation;
         playerLeftFootBoneR.localRotation = vrcPlayerApi.GetBoneTransform(HumanBodyBones.LeftFoot).localRotation;
-        playerRightFootBoneR.localRotation = vrcPlayerApi.GetBoneTransform(HumanBodyBones.RightFoot).localRotation;*/
+        playerRightFootBoneR.localRotation = vrcPlayerApi.GetBoneTransform(HumanBodyBones.RightFoot).localRotation;#1#
 
     }   
-}
+}*/

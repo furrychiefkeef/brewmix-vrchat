@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using UnityEngine.UI;
 using UNIXEngine.IL2CPPModding.Utils.Collections;
 
@@ -53,7 +53,7 @@ public class GifLoader : MonoBehaviour
     /// <param name="url">The URL OR LOCALPATH </param>
     public void AddAnimatedGif(Image image, Uri? url)
     {
-        StartCoroutine(LoadGifCoroutine(image, url).WrapToIl2Cpp());
+        /*StartCoroutine(LoadGifCoroutine(image, url).WrapToIl2Cpp());#1#
     }
     
     System.Collections.IEnumerator LoadGifCoroutine(Image image, Uri? url)
@@ -150,4 +150,4 @@ public class GifLoader : MonoBehaviour
         newImage.color = Color.white;
         return newImage;
     }
-}
+}*/

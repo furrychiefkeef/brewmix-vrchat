@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -206,4 +206,4 @@ public class AnimationManager : MonoBehaviour
         public float currentDelay;
         public float timer;
     }
-}
+}*/

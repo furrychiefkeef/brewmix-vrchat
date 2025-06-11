@@ -18,7 +18,7 @@ internal class VRCPage : IMainMenuElements
     public Transform? _content_container;
     public VRCPage(string name, Sprite? sprite)
     {
-        if (!MMParent() || !MMMenus.MMSubmenus.Menu_Setting()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!MMParent() || !MMMenus.MMSubmenus.Menu_Setting()) throw new($"element has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform? obj = UnityEngine.Object.Instantiate(MMMenus.MMSubmenus.Menu_Setting(), MMParent().GetChild(2));
         obj.gameObject.SetActive(false);
         obj.SetSiblingIndex(5);
@@ -61,18 +61,18 @@ internal class VRCPage : IMainMenuElements
         page.field_Private_List_1_UIPage_0.Add(page);
 
         if (MM()?.field_Protected_MenuStateController_0 != null &&
-            MM()?.field_Protected_MenuStateController_0.field_Public_Il2CppReferenceArray_1_UIPage_0 != null)
+            MM()?.field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0 != null)
         {
             MM()?.field_Protected_MenuStateController_0.field_Private_Dictionary_2_String_UIPage_0.Add(Name, page);
 
-            List<UIPage>?  List = MM()?.field_Protected_MenuStateController_0.field_Public_Il2CppReferenceArray_1_UIPage_0
+            List<UIPage>?  List = MM()?.field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0
                 .ToList(); List?.Add(page);
 
-            MM().field_Protected_MenuStateController_0.field_Public_Il2CppReferenceArray_1_UIPage_0 = List.ToArray();
+            MM().field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0 = List.ToArray();
 
             if (Config.Advanced.DebugMode)
             {
-                foreach (var VARIABLE in MM().field_Protected_MenuStateController_0.field_Public_Il2CppReferenceArray_1_UIPage_0.ToList());
+                foreach (var VARIABLE in MM().field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0.ToList());
 
             }
         }

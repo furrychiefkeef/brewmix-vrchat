@@ -12,7 +12,7 @@ internal class VRCGroupBox : IQuickMenuElements
     public Transform? container;
     public VRCGroupBox(VRCPage page, string name = null)
     {
-        if (!QMMenus.QMSubmenus.Menu_Dashboard() || !QMElements.QMButtonGrp()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!QMMenus.QMSubmenus.Menu_Dashboard() || !QMElements.QMButtonGrp()) throw new($"element has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform? obj = UnityEngine.Object.Instantiate(QMElements.QMButtonGrp(), page.box);
         UnityEngine.Object.Destroy(obj.GetChild(1).transform.gameObject);
         UnityEngine.Object.Destroy(obj.GetChild(2).transform.gameObject);

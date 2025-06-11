@@ -11,7 +11,7 @@ internal class VRCPanel : IQuickMenuElements
         public Transform container;
         public VRCPanel()
         {
-                if(!QM() || !QMElements.QMPanel("Sharing")) throw new($"panel has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+                if(!QM() || !QMElements.QMPanel("Sharing")) throw new($"panel has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
                 
                 obj = UnityEngine.Object.Instantiate(QMElements.QMPanel($"{QUICKMENU_FLAGS.Panels.Sharing}"), QMElements.QMPanel($"{QUICKMENU_FLAGS.Panels.Sharing}").parent);
                 obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_PANEL";

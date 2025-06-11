@@ -1,5 +1,6 @@
 ﻿using BlanketSDK.QM.Elements.Modals;
 using BlanketSDK.Core;
+using Brewchat.Game.Wrappers;
 using UnityEngine;
 using VRC.Localization;
 using VRC.UI;
@@ -21,7 +22,7 @@ internal class VRCButton : IQuickMenuElements
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCButton(Transform parent, string? name, string? tooltip, System.Action func, bool submenu = false, Sprite? sprite = null)
     {
-        if (!QuickMenu() | !QMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!QuickMenu() | !QMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_Buttons();
         Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.SingleButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_SINGLE_BUTTON-{name}";
@@ -52,7 +53,7 @@ internal class VRCButton : IQuickMenuElements
         #endregion
         
         #region TOOLTIP COMPONENT
-        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.Localize(); 
+        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.UnityString(); 
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT
@@ -63,7 +64,7 @@ internal class VRCButton : IQuickMenuElements
     }
     public VRCButton(VRCModalContainer modal, string? name, string? tooltip, System.Action func, Sprite? sprite = null)
     {
-        if (!QuickMenu() | !QMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!QuickMenu() | !QMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.SingleButton(), modal._verticallayoutgroup);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_SINGLE_BUTTON-{name}";
 
@@ -91,7 +92,7 @@ internal class VRCButton : IQuickMenuElements
         #endregion
         
         #region TOOLTIP COMPONENT
-        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.Localize(); 
+        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.UnityString(); 
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT
@@ -102,7 +103,7 @@ internal class VRCButton : IQuickMenuElements
     }
     public VRCButton(VRCPage page, Transform parent, string? name, string? tooltip, System.Action func = null, Sprite? sprite = null)
     {
-        if (!QuickMenu() | !QMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!QuickMenu() | !QMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.SingleButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_SINGLE_BUTTON-{name}";
 
@@ -135,7 +136,7 @@ internal class VRCButton : IQuickMenuElements
         #endregion
         
         #region TOOLTIP COMPONENT
-        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.Localize(); 
+        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.UnityString(); 
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT

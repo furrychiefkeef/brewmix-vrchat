@@ -82,14 +82,14 @@ namespace Brewchat.Game.Wrappers
 
                 private static int _eintMValue;
 
-                public static void SendEmojiRPC(int emoji)
+                /*public static void SendEmojiRPC(int emoji)
                 {
                     Il2CppSystem.Int32 eint = default(Il2CppSystem.Int32);
                     _eintMValue = eint.m_value;
                     _eintMValue = emoji;
                     Il2CppSystem.Object @object = @eint.BoxIl2CppObject();
-                    Networking.RPC(0, PlayerModel.GetLocalPlayer().gameObject, "SendEmojiRPC", new Il2CppSystem.Object[] { emoji });
-                }
+                    Networking.RPC(0, PlayerModel.GetLocalPlayer().gameObject, "SendEmojiRPC", new Il2CppSystem.Object[] { (Object)emoji });
+                }*/
 
                 public static string Join(string worldId)
                 {
@@ -116,12 +116,12 @@ namespace Brewchat.Game.Wrappers
 
                 public static void SendRaiseEvent(byte code, object payload, SendOptions sendOptions)
                 {
-                    var IL2CPP = Pasted.WTFBlaze.Utils.Managers.SerializationManager.FromManagedToIL2CPP<Il2CppSystem.Object>(payload);
-                    PhotonNetwork.RaiseEvent(code, IL2CPP, new()
+                    /*var IL2CPP = Pasted.WTFBlaze.Utils.Managers.SerializationManager.FromManagedToIL2CPP<Il2CppSystem.Object>(payload);
+                    PhotonNetwork.Method_Public_Static_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0(code, IL2CPP, new()
                     {
                         field_Public_ReceiverGroup_0 = ReceiverGroup.Others,
                         field_Public_EventCaching_0 = EventCaching.DoNotCache
-                    }, sendOptions);
+                    }, sendOptions);*/
                 }
             }
         }
@@ -217,7 +217,7 @@ namespace Brewchat.Game.Wrappers
                     return avatar;
                 }
 
-                public static ApiAvatar GetAvatar() => GetLocalPlayer().ApiAvatar;
+                public static ApiAvatar GetAvatar() => GetLocalPlayer().prop_ApiAvatar_0;
 
                 public static void AvatarScale(float v = 4f) =>
                     GetLocalPlayer().VRCPlayerApi.SetAvatarEyeHeightByMeters(v);
@@ -364,7 +364,7 @@ namespace Brewchat.Game.Wrappers
                     {
                         HudController.field_Public_Static_HudController_0
                             .userEventCarousel
-                            .Method_Private_Void_LocalizableString_Sprite_Single_0(content.Localize(), sprite, duration);
+                            .Method_Private_Void_LocalizableString_Sprite_Single_0(content.UnityString(), sprite, duration);
                     }
                     catch (Exception ex)
                     {
@@ -377,7 +377,7 @@ namespace Brewchat.Game.Wrappers
                     HudController
                         .field_Public_Static_HudController_0
                         .notification
-                        ?.ShowNotification(sprite, title.Localize(), content.Localize(), duration);
+                        ?.Method_Public_Void_Sprite_LocalizableString_LocalizableString_Single_Object1PublicTBoTUnique_1_Boolean_0(sprite, title.UnityString(), content.UnityString(), duration);
                 }
 
                 #endregion
@@ -392,7 +392,7 @@ namespace Brewchat.Game.Wrappers
 
                 public static string Alert(string content)
                 {
-                    VRCUIManager.prop_VRCUIManager_0.Method_Public_Virtual_Final_New_Void_LocalizableString_0(content.Localize());
+                    VRCUIManager.prop_VRCUIManager_0.Method_Public_Virtual_Final_New_Void_LocalizableString_0(content.UnityString());
                     return content;
                 }
 
@@ -404,14 +404,14 @@ namespace Brewchat.Game.Wrappers
                 {
                     VRCUiManager.prop_VRCUiManager_0.prop_VRCUiPopupManager_0
                         .Method_Public_Void_LocalizableString_LocalizableString_Single_0
-                            (title.Localize(), content.Localize(), duration);
+                            (title.UnityString(), content.UnityString(), duration);
                 }
 
                 public static void PopUp2(string title = null, string content = null, string? uhz = null, Action func = null)
                 {
                     VRCUiManager.prop_VRCUiManager_0.prop_VRCUiPopupManager_0
                         .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_Action_1_VRCUiPopup_0
-                            (title.Localize(), content.Localize(), uhz.Localize(), func);
+                            (title.UnityString(), content.UnityString(), uhz.UnityString(), func);
                 }
 
                 public static void LoadingPopUp2(string? title, string? content, string? button_text, System.Action func,
@@ -419,7 +419,7 @@ namespace Brewchat.Game.Wrappers
                 {
                     VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
                         .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_LocalizableString_Action_Action_1_VRCUiPopup_0
-                        (title.Localize(), content.Localize(), button_text.Localize(), func, button_text.Localize(),
+                        (title.UnityString(), content.UnityString(), button_text.UnityString(), func, button_text.UnityString(),
                             null, null);
                 }
 
@@ -428,7 +428,7 @@ namespace Brewchat.Game.Wrappers
                 {
                     VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
                         .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_Action_1_VRCUiPopup_0
-                            (title.Localize(), content.Localize(), button_text.Localize(), func, idk);
+                            (title.UnityString(), content.UnityString(), button_text.UnityString(), func, idk);
                 }
 
                 #endregion
@@ -470,7 +470,7 @@ namespace Brewchat.Game.Wrappers
                         Object = new GameObject($"[{Entry.NAME}] Keyboard");
                         Object.transform.parent = IMainMenuElements.MMParent();
                         UnityEngine.Object.DontDestroyOnLoad(Object);
-                        inputfield = Object.GetOrAddComponent<VRCInputField>();
+                        inputfield = Object.AddComponent<VRCInputField>();
                     }
 
                     KeyboardData keyboardData = new();

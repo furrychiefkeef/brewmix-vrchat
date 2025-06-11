@@ -13,11 +13,11 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
     protected static QuickMenu? QM() => UnityEngine.Object.FindObjectOfType<QuickMenu>();
     public static Transform QMParent() => QuickMenu().transform.FindChild("Container/Window/QMParent");
     public static Transform QMWidgetParent() => QMParent().parent.transform.FindChild("Panel_QM_Widget");
-    protected interface QMMenus
+    protected class QMMenus
     {
         public static Transform WingMenu(string position) => QuickMenu().transform.FindChild($"Container/Window/Wing_{position}/Container/InnerContainer");
 
-        public interface QMSubmenus
+        public class QMSubmenus
         {
             public static Transform Menu_Dashboard() => QMParent().transform.FindChild("Menu_Dashboard");
             public static Transform Menu_Here() => QMParent().transform.FindChild("Menu_Here");
@@ -27,7 +27,7 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         }
     }
 
-    internal interface QMElements
+    internal class QMElements
     {
         [Obsolete("QMButtonContainer is not QMButtonGroup")]
         public static Transform QMButtonGrp() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup");
@@ -46,31 +46,38 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         }
         /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
 
-        public interface SelectedUser
+        public class SelectedUser
         {
             public static Transform SelectedUser_ButtonContainer() => QMMenus.QMSubmenus.SelectedUser_Local().FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_UserActions");
         }
     }
-    internal interface QMControls
+    internal class QMControls
     {
-        public static Transform Tab() => QuickMenu().transform.FindChild("Container/Window/Page_Buttons_QM/HorizontalLayoutGroup/Page_Settings");
+        public static Transform Tab() => QuickMenu().transform.FindChild("Container/Window/Page_Buttons_QM/HorizontalLayoutGroup/Page_Settings"); 
         public static Transform OperatorRadialSelection() => QMElements.QMPanel("Sharing").transform.FindChild("VerticalLayoutGroup/DirectSharingVisibility");
         public static Transform OperatorToggle() => QMElements.QMPanel("Debug").transform.FindChild("VerticalLayoutGroup/PinFPS&Ping");
-        public static Transform OperatorButton() => QMElements.QMPanel("Debug").transform.FindChild("VerticalLayoutGroup/DebugButtons");
-        public interface Buttons
+        public static Transform OperatorButton() =>  QMElements.QMPanel("Debug").transform.FindChild("VerticalLayoutGroup/DebugButtons");
+        public class Buttons
         {
             
-            public static Transform SingleButton() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions/Button_Respawn");
+            public static Transform SingleButton() =>  QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions/Button_Respawn");
 
-            public static Transform ExpandButton() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("Header_H1/RightItemContainer/Button_QM_Expand");
+                public static Transform ExpandButton() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("Header_H1/RightItemContainer/Button_QM_Expand");
+                
+                   
+                
 
-            public static Transform ToggleButton() => QMMenus.QMSubmenus.Menu_DevTools().transform.FindChild("Scrollrect/Viewport/VerticalLayoutGroup/Buttons/Button_Tag");
+                public static Transform ToggleButton() =>  QMMenus.QMSubmenus.Menu_DevTools().transform.FindChild("Scrollrect/Viewport/VerticalLayoutGroup/Buttons/Button_Tag");
+    
+                public static Transform CarouselButton() => QMMenus.QMSubmenus.SelectedUser_Local().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_AvatarActions");
+         
+                public static Transform WingButton(string position) => QMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Explore");
+             
 
-            public static Transform CarouselButton() => QMMenus.QMSubmenus.SelectedUser_Local().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_AvatarActions");
-            public static Transform WingButton(string position) => QMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Explore");
+                
         }
     }
-    internal interface QMFallbacks
+    internal class QMFallbacks
     {
         public static Transform _Fallback_Dashboard_Group_QM_UI_Buttons_TAB() => QuickMenu().transform.FindChild("Container/Window/Page_Buttons_QM/HorizontalLayoutGroup");
 
@@ -81,7 +88,7 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         public static Transform _Fallback_Dashboard_Group_QM_UI_ChoiceSelection_Element() => QMMenus.QMSubmenus.Menu_QM_GeneralSettings();
     }
 
-    internal interface QUICKMENU_FLAGS
+    internal class QUICKMENU_FLAGS
     {
         public enum Menus
         {

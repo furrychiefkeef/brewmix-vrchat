@@ -17,7 +17,7 @@ namespace BlanketSDK.QM.Elements.Modals
         public Transform? _rightLayout;
         public VRCModalContainer(string? header, Sprite? sprite = null)
         {
-            if (!QuickMenu() | !QMElements.FourButtons_Modal()) throw new($"modal or quickmenu has moved to a different location or been altered: " + $"{brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+            if (!QuickMenu() | !QMElements.FourButtons_Modal()) throw new($"modal or quickmenu has moved to a different location or been altered: " + $"{autumn.ml.Properties.Resources.D_Contact}");
             _obj = UnityEngine.Object.Instantiate(QMElements.FourButtons_Modal(), QMParent());
             _obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MODAL_CONTAINER-{header}";
             Name = $"Menu_{header}";

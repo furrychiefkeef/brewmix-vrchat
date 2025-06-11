@@ -1,4 +1,4 @@
-﻿using Brewchat.Game.Wrappers;
+﻿/*using Brewchat.Game.Wrappers;
 using UnityEngine;
 using UNIXEngine.IL2CPPModding.Utils.Collections;
 
@@ -12,7 +12,7 @@ public static class UnityGIF
     public static void LoadGif(Uri path)
     {
         byte[] gifData = File.ReadAllBytes(path.LocalPath);
-        UnityEngine.Object.FindObjectOfType<FlatLoadingOverlay>().StartCoroutine(DecodeGif(gifData).WrapToIl2Cpp());
+        /*UnityEngine.Object.FindObjectOfType<FlatLoadingOverlay>().StartCoroutine(DecodeGif(gifData));#1#
     }
 
     private static System.Collections.IEnumerator DecodeGif(byte[] gifData)
@@ -50,4 +50,4 @@ public static class UnityGIF
     {
         isPlaying = false;
     }
-}
+}*/

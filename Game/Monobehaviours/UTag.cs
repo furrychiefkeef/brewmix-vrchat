@@ -8,6 +8,7 @@ namespace Brewchat.Game.Monobehaviours;
 /// </summary>
 public class UniversialTags : UnityEngine.MonoBehaviour
 {
+    public UniversialTags(IntPtr ptr): base(ptr) {}
     public static Dictionary<GameObject, string>? Objects { get; } = new(); 
     
     public void AddTagToObject(string tag) =>  Objects?.Add(transform.gameObject, tag);

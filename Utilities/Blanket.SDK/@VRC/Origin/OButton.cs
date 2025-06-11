@@ -14,7 +14,7 @@ internal class OButton : Templates
     /// <param name="name">The display name of the button.</param>
     public OButton(Transform parent, float piviot_x ,float piviot_y, string? name, System.Action func)
     {
-        if (!USERINTERFACE() | !ORIGIN_BUTTON()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!USERINTERFACE() | !ORIGIN_BUTTON()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform? obj = UnityEngine.Object.Instantiate(ORIGIN_BUTTON(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.ORIGIN_BUTTON-{name}";
         

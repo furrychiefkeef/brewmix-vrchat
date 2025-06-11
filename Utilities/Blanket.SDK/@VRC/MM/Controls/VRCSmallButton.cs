@@ -1,6 +1,7 @@
 ﻿using BlanketSDK.QM.Elements.Modals;
 using BlanketSDK.Utilities;
 using BlanketSDK.Core;
+using Brewchat.Game.Wrappers;
 using UnityEngine;
 using VRC.Core;
 using VRC.Localization;
@@ -22,7 +23,7 @@ internal class VRCSmallButton : IMainMenuElements
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCSmallButton(Transform parent, string? tooltip, int priority, System.Action func, Sprite? sprite = null)
     {
-        if (!MainMenu() | !MMControls.Buttons.ExpandButton()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!MainMenu() | !MMControls.Buttons.ExpandButton()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         parent ??= MMFallbacks._Fallback_Dashboard_Group_MM_UI_ExpandButtons();
         UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.ExpandButton(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_SMALL_BUTTON";
@@ -44,7 +45,7 @@ internal class VRCSmallButton : IMainMenuElements
         #endregion
   
         #region TOOLTIP COMPONENT
-        _2._localizableString = tooltip.Localize();
+        _2._localizableString = tooltip.UnityString();
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT

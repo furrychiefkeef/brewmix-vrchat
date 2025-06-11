@@ -18,11 +18,11 @@ internal class VRCPage : IQuickMenuElements
 
     public VRCPage(string name, bool isScrollable = true, bool ShowScrollWheel = true)
     {
-        if (!QMParent() || !QMMenus.QMSubmenus.Menu_DevTools()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!QMParent() || !QMMenus.QMSubmenus.Menu_DevTools()) throw new($"element has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         _obj = UnityEngine.Object.Instantiate(QMMenus.QMSubmenus.Menu_DevTools(), QMParent());
         _obj.gameObject.SetActive(false);
         _obj.SetSiblingIndex(5);
-
+        
         Name = $"Menu_{name}";
         _obj.name = Name;
 
@@ -54,16 +54,16 @@ internal class VRCPage : IQuickMenuElements
         page.field_Private_List_1_UIPage_0.Add(page);
 
         if (QM()?.field_Protected_MenuStateController_0 != null &&
-            QM()?.field_Protected_MenuStateController_0.field_Public_Il2CppReferenceArray_1_UIPage_0 != null)
+            QM()?.field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0 != null)
         {
             QM()?.field_Protected_MenuStateController_0.field_Private_Dictionary_2_String_UIPage_0.Add(Name, page);
 
-            List<UIPage>? List = QM()?.field_Protected_MenuStateController_0.field_Public_Il2CppReferenceArray_1_UIPage_0
+            List<UIPage>? List = QM()?.field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0
                 .ToList();
             List?.Add(page);
 
 
-            QM().field_Protected_MenuStateController_0.field_Public_Il2CppReferenceArray_1_UIPage_0 = List.ToArray();
+            QM().field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0 = List.ToArray();
 
             if (Config.Advanced.DebugMode)
             {

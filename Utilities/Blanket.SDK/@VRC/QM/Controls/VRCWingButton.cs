@@ -1,5 +1,6 @@
 ﻿using BlanketSDK.Utilities;
 using BlanketSDK.Core;
+using Brewchat.Game.Wrappers;
 using UnityEngine;
 using VRC.Localization;
 using VRC.UI;
@@ -20,7 +21,7 @@ internal class VRCWingButton : IQuickMenuElements
     /// <param name="sprite">An optional sprite to display on the button.</param>
     public VRCWingButton(Transform parent, string position, string? name,  string? tooltip, System.Action func, Sprite? sprite = null)
         {
-            if (!QuickMenu() | !QMControls.Buttons.WingButton("Left") || !QMControls.Buttons.WingButton("Right")) throw new($"wing button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+            if (!QuickMenu() | !QMControls.Buttons.WingButton("Left") || !QMControls.Buttons.WingButton("Right")) throw new($"wing button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
             parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_WingButtons($"{position}");
          
              UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.WingButton($"{position}"), parent);
@@ -47,7 +48,7 @@ internal class VRCWingButton : IQuickMenuElements
             #endregion
             
             #region TOOLTIP COMPONENT
-            _2._localizableString = tooltip.Localize();
+            _2._localizableString = tooltip.UnityString();
             #endregion
             
             #region IMAGE || IMAGE_EX COMPONENT

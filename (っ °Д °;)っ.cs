@@ -1,36 +1,41 @@
 ﻿using System.Reflection;
+using Brewchat.Game.Monobehaviours;
 using HarmonyLib;
-using Il2CppInterop.Runtime.Injection;
-using ImGuiNET;
+
+
+using MelonLoader;
+using UnhollowerRuntimeLib;
 using UnityEngine;
-using UNIXEngine;
-using UNIXEngine.Logging;
 using VRC.SDKBase;
 
-[UnixModDescriptor("0000000000","Autumn","0.0.0.0")]
-public class Entry : UNIXEngine.IL2CPPModding.UnixMod
+[assembly: MelonInfo(typeof(Entry), "Autumn", "88", "as")]
+public class Entry : MelonMod
 {
     public const string NAME = "Autumn";
     public const string FULLNAME = "Autumn";
-    Harmony h = new(Guid.NewGuid().ToString());
-    public static ManualLogSource Console = new("Autumn");
-  
-    public override void Load()
-    {
+    HarmonyLib.Harmony h = new(Guid.NewGuid().ToString());
 
-        UNIXEngine.Logging.Logger.Sources.Add(Console);
-       
-        #region Components 
-         
-        foreach (Type monos in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(MonoBehaviour))))
+    public override void OnInitializeMelon()
+    {
+        #region Components
+        try
         {
-            Console.LogMessage($"Registering Monobehaviours: {monos.Name}");
-            ClassInjector.RegisterTypeInIl2Cpp(monos);
-        } 
+            foreach (Type monos in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(MonoBehaviour))))
+            {
+                MelonLogger.Msg($"Registering Monobehaviours: {monos.Name}");
+                ClassInjector.RegisterTypeInIl2Cpp(monos,true);
+            }
+        }
+        catch (Exception ex){ MelonLogger.Msg(ex); }
       
+      
+        
+        #endregion
+        
+        #region ASSEMBLY_CORE_STUFF
         h.PatchAll();
         #endregion
-    } 
-   
+       
+    }
 }
 

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using Brewchat.Game.Wrappers;
-using brewchat.hybridxcore.bep.Properties;
+using autumn.ml.Properties;
 
 namespace Brewchat.Wrappers;
 

@@ -14,7 +14,7 @@ internal class VRCGroupLayout : IQuickMenuElements
     public List<GameObject> gameobjects = new ();
     public VRCGroupLayout(VRCPage page, string name = null, bool isCollapsible  = true, bool alwaysVisable = true)
     {
-        if (!QMMenus.QMSubmenus.Menu_Here() || !QMElements.QMLayoutGroup()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!QMMenus.QMSubmenus.Menu_Here() || !QMElements.QMLayoutGroup()) throw new($"element has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform? obj = UnityEngine.Object.Instantiate(QMElements.QMLayoutGroup(), page.box);
 
         

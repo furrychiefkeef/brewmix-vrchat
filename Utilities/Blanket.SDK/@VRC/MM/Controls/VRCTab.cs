@@ -1,5 +1,6 @@
 ﻿using BlanketSDK.Utilities;
 using BlanketSDK.Core;
+using Brewchat.Game.Wrappers;
 using UnityEngine;
 using VRC.Localization;
 using VRC.UI;
@@ -19,7 +20,7 @@ internal class VRCTab : IMainMenuElements
     /// <param name="parent">The parent transform where the button will be placed.</param>
     public VRCTab(VRCPage page,string? name, string? tooltip, Action func = null, Sprite? sprite = null)
     {
-        if (!MainMenu() | !MMControls.Tab()) throw new($"button has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!MainMenu() | !MMControls.Tab()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform parent = MMFallbacks._Fallback_Dashboard_Group_MM_UI_Buttons_TAB();
         Transform? obj = UnityEngine.Object.Instantiate(MMControls.Tab(), parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_TAB_BUTTON-{name}";
@@ -53,7 +54,7 @@ internal class VRCTab : IMainMenuElements
         #endregion
         
         #region TOOLTIP COMPONENT
-        _3._localizableString = tooltip.Localize();
+        _3._localizableString = tooltip.UnityString();
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT

@@ -9,6 +9,7 @@ using UnityEngine;
 namespace Brewchat.Game.Monobehaviours;
 internal class KeybindManager : UnityEngine.MonoBehaviour
 {
+    public KeybindManager(IntPtr ptr) : base(ptr) {}
     void LateUpdate()
     {
         if (!GameUtils.World.IsLoaded()) return;

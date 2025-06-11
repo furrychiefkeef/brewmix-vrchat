@@ -2,11 +2,12 @@
 using System.Runtime.InteropServices;
 using BlanketSDK.Core;
 using BlanketSDK.QM.Elements.V2;
+using Brewchat.Game.Wrappers;
 using UnityEngine;
 using VRC.Localization;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
-using Resources = brewchat.hybridxcore.bep.Properties.Resources;
+using Resources = autumn.ml.Properties.Resources;
 namespace BlanketSDK.QM.Elements.Controls.V2;
 internal class VRCRadialSelect : IQuickMenuElements
 {
@@ -65,7 +66,7 @@ internal class VRCRadialSelect : IQuickMenuElements
         #endregion
 
         #region TOOLTIP_COMPONENT
-        radialSelector._optionTooltip._localizableString = tooltip.Localize();
+        radialSelector._optionTooltip._localizableString = tooltip.UnityString();
         radialSelector._childIndicator.SetActive(isChild);
         #endregion
         
@@ -138,7 +139,7 @@ internal class VRCRadialSelect : IQuickMenuElements
         if (choices.Count == 0) return;
         
         var currentChoice = choices[currentIndex];
-        QM().field_Private_ModalAlert_0.Method_Public_Void_LocalizableString_PDM_0(choices[currentIndex].Name.Localize());
+        QM().field_Private_ModalAlert_0.Method_Public_Void_LocalizableString_PDM_0(choices[currentIndex].Name.UnityString());
         currentChoice.Callback?.Invoke();
     }
 

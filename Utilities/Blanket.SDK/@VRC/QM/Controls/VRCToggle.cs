@@ -4,6 +4,7 @@ using VRC.Localization;
 using VRC.UI.Elements.Controls;
 using BlanketSDK.QM.Elements.Modals;
 using BlanketSDK.Core;
+using Brewchat.Game.Wrappers;
 using VRC.UI;
 using VRC.UI.Elements.Tooltips;
 
@@ -26,7 +27,7 @@ internal class VRCToggle : IQuickMenuElements
     /// <param name="sprite_off">An optional sprite to display on the button.</param>
     public VRCToggle(Transform? parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, [Optional] bool state, [Optional] Sprite? sprite_on, [Optional] Sprite? sprite_off)
     {
-        if (!QuickMenu() | !QMControls.Buttons.ToggleButton()) throw new($"toggle has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!QuickMenu() | !QMControls.Buttons.ToggleButton()) throw new($"toggle has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_Buttons();
 
         Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.ToggleButton(), parent);
@@ -57,8 +58,8 @@ internal class VRCToggle : IQuickMenuElements
         #endregion
         
         #region TOOLTIP COMPONENT
-        _3._localizableString = tooltip_on.Localize();
-        _3._alternateLocalizableString = tooltip_off.Localize();
+        _3._localizableString = tooltip_on.UnityString();
+        _3._alternateLocalizableString = tooltip_off.UnityString();
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT

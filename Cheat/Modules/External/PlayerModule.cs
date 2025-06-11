@@ -30,7 +30,7 @@ internal class PlayerModule
                 #region REQUIRED_COMPONENTS
 
                 VRCMotionState? motion_state = player.GetComponent<VRC.Animation.VRCMotionState>();
-                FlyManager? fly_component = player.gameObject.GetOrAddComponent<FlyManager>();
+                FlyManager? fly_component = player.gameObject.AddComponent<FlyManager>();
                 CharacterController? characterController = player.GetComponent<CharacterController>();
 
                 #endregion

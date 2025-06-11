@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using BlanketSDK.Core;
+using Brewchat.Game.Wrappers;
 using UnityEngine.UI;
 using VRC.Localization;
 using VRC.UI;
@@ -11,7 +12,7 @@ internal class VRCAvatarButtonSmall : IMainMenuElements
 {
     public VRCAvatarButtonSmall(string identifier , string tooltip, Action func, [Optional] UnityEngine.Sprite? sprite, [Optional] int priority )
     {
-        if(!MM() || !MMParent() || !MMControls.Buttons.AvatarMenuRelated.AvatarButtonSmall()) throw new($"avatar button element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if(!MM() || !MMParent() || !MMControls.Buttons.AvatarMenuRelated.AvatarButtonSmall()) throw new($"avatar button element has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         
         UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.AvatarMenuRelated.AvatarButtonSmall(), MMControls.Buttons.AvatarMenuRelated.AvatarButtonSmall().parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_AVATAR_BUTTON";
@@ -40,7 +41,7 @@ internal class VRCAvatarButtonSmall : IMainMenuElements
         
         #region TOOLTIP_COMPONENT
 
-        _1._localizableString = tooltip.Localize();
+        _1._localizableString = tooltip.UnityString();
         #endregion
         
         #region IMAGE_COMPONENT

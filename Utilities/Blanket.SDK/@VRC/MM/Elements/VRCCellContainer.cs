@@ -16,7 +16,7 @@ internal class VRCCellContainer : IMainMenuElements
 
     public VRCCellContainer(VRCPage page, string name, [Optional] int priority)
     {
-        if (!MMMenus.MMSubmenus.Menu_Setting() || !MMElements.CellContainer("Debug")) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
+        if (!MMMenus.MMSubmenus.Menu_Setting() || !MMElements.CellContainer("Debug")) throw new($"element has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform? obj = UnityEngine.Object.Instantiate(MMElements.CellContainer("Debug"), page._content_container);
         Object = obj.gameObject;
         obj.name = $"Cell_{name}";

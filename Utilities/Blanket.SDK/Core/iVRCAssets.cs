@@ -6,16 +6,9 @@ public class iVRCAssets
 {
 
     // Put Sprites
-    interface Sprites
+    class Sprites
     {
-        public enum Sprites
-        {
-            Rocket,
-            Ban,
-            Kick,
-            People,
-        }
-
+       
         public static Sprite? Get(Sprites _sprites)
         {
             foreach (ImageEx gameObject in UnityEngine.Object.FindObjectsOfType<ImageEx>())

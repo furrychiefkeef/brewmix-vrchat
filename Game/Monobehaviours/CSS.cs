@@ -2,18 +2,20 @@
 using BlanketSDK.Utilities;
 using BlanketSDK.Core;
 using Brewchat.Game.Wrappers;
+using Il2CppMono;
 using MaterialEditing.UI;
+using UnhollowerBaseLib;
 using UnityEngine;
 using UnityEngine.UI;
-using UNIXEngine.IL2CPPModding.Utils.Collections;
 using VRC.UI;
 using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
-using Resources = brewchat.hybridxcore.bep.Properties.Resources;
+using Resources = autumn.ml.Properties.Resources;
 
 namespace Brewchat.Cheat.Modules;
 internal class CSS : UnityEngine.MonoBehaviour
-{ 
+{
+    public CSS(IntPtr ptr) : base(ptr) {}
     public static CSS? Instance { get; private set; }
     public static PlayerNameplate _nameplate;
     private void Awake()
@@ -122,7 +124,7 @@ internal class CSS : UnityEngine.MonoBehaviour
 
         #region STYLE_ENGINE+QM+MM_COLORS
         
-        Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppArrayBase<StyleEngine>? VRC_UI = FindObjectsOfType<StyleEngine>();
+        Il2CppArrayBase<StyleEngine>? VRC_UI = FindObjectsOfType<StyleEngine>();
         foreach (StyleEngine? X in VRC_UI)
         {
             #region UI_Theme

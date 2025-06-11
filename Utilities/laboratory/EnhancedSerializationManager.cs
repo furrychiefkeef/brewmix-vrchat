@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -540,3 +541,4 @@ public static class EnhancedSerializationManager
 
 
 // Helper method to serialize any object to string
+*/
