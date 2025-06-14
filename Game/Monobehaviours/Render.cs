@@ -29,8 +29,9 @@ internal class wallhacks : MonoBehaviour
         }
     }
 
-internal class esp : MonoBehaviour
+/*internal class esp : MonoBehaviour
 {
+
     public esp(IntPtr ptr) : base(ptr) {}
     public Player _player { get; set; }
     private SkinnedMeshRenderer[] _avatarender;
@@ -55,9 +56,10 @@ internal class esp : MonoBehaviour
         }
     }
     
+    
 
    
-}
+}*/
 
 
 

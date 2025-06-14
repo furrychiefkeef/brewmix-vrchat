@@ -27,7 +27,8 @@ internal class VRCTab : IMainMenuElements
 
         #region REQUIRED_COMPONENTS
 
-        MenuTab _0 = obj.GetComponent<MenuTab>();
+        Button1PublicObSt_cBoSt_cStStUnique _0 = obj.GetComponent<Button1PublicObSt_cBoSt_cStStUnique
+        >();
         TextMeshProUGUIEx _1 = obj.GetComponentInChildren<TextMeshProUGUIEx>();
         ImageEx _2 = obj.GetChild(2).GetComponent<ImageEx>();
         ToolTip _3 = obj.GetComponent<ToolTip>();
@@ -54,7 +55,7 @@ internal class VRCTab : IMainMenuElements
         #endregion
         
         #region TOOLTIP COMPONENT
-        _3._localizableString = tooltip.UnityString();
+        _3._localizableString = tooltip.Localizable();
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT

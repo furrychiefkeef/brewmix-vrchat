@@ -5,8 +5,9 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using VRC.Localization;
+using System.Linq;
 using WebSocketSharp;
-
+using Object = Il2CppSystem.Object;
 namespace Brewchat.Game.Wrappers;
 
 /// <summary>
@@ -14,7 +15,19 @@ namespace Brewchat.Game.Wrappers;
 /// </summary>
 internal static class EngineUtils
 {
-
+    
+    public static Il2CppSystem.Collections.IEnumerator ConvertToIl2Cpp(this System.Collections.IEnumerator x)
+    {
+        var arrayList = new Il2CppSystem.Collections.ArrayList();
+        while (x.MoveNext())
+        {
+            var current = x.Current;
+            Il2CppSystem.Object il2cppCurrent = (Il2CppSystem.Object)(object)current;
+            arrayList.Add(il2cppCurrent);
+        }
+        return arrayList.GetEnumerator();
+    }
+    
     public struct Conversion
     {
         public static Color HexToColor(string hex)
@@ -27,6 +40,8 @@ internal static class EngineUtils
         {
             return ColorUtility.ToHtmlStringRGB(color);
         }
+
+       
     }
 
     public struct Assets
@@ -133,15 +148,14 @@ internal static class EngineUtils
 
         public static UnityEngine.GameObject INTERNAL_AssetBundle(byte[]? data, string? name, bool? keep)
         {
-            /*if(data?.Length == 0) return null;
-            AssetBundle? bundle = UnityEngine.AssetBundle
-                .LoadFromMemoryAsync(data).GetAwaiter().GetResult();
+            if(data?.Length == 0) return null;
+            AssetBundle? bundle = UnityEngine.AssetBundle.LoadFromMemory(data);
 
             GameObject? obj = bundle.LoadAsset<GameObject>(name);
             GameObject? instance = UnityEngine.Object.Instantiate(obj);
             if (keep is true)  UnityEngine.Object.DontDestroyOnLoad(instance);
             bundle.Unload(false);
-            return instance;*/
+            return instance;
             return null;
         }
 
@@ -160,7 +174,7 @@ internal static class EngineUtils
 
         public static UnityEngine.GameObject AssetBundle(Uri? url, string? prefab_name, bool? keep)
         {
-            /*HttpClient client = new ();
+            HttpClient client = new ();
             byte[] data = client.GetByteArrayAsync(url).Result;
             AssetBundle? bundle = UnityEngine.AssetBundle.LoadFromMemory(data);
 
@@ -168,7 +182,7 @@ internal static class EngineUtils
             GameObject? instance = UnityEngine.Object.Instantiate(obj);
             if (keep is true) UnityEngine.Object.DontDestroyOnLoad(instance);
             bundle.Unload(false);
-            return instance;*/
+            return instance;
             return null;
         }
 
@@ -191,11 +205,11 @@ public static class TextureExtensions
     public static Texture2D? Change(this Texture2D texture, Uri dir) => EngineUtils.Assets.Texture(dir);
 }
 
-public static class Localiztion
+public static class LocalizationExtensions
 {
-    public static LocalizableString UnityString(this string @string)
+    public static LocalizableString Localizable(this string? x)
     {
-        return LocalizableStringExtensions.Localize(@string);
+        return LocalizableStringExtensions.Localize(x);
     }
 }
 

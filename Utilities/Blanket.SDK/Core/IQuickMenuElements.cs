@@ -62,16 +62,13 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
             
             public static Transform SingleButton() =>  QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions/Button_Respawn");
 
-                public static Transform ExpandButton() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("Header_H1/RightItemContainer/Button_QM_Expand");
-                
-                   
-                
-
-                public static Transform ToggleButton() =>  QMMenus.QMSubmenus.Menu_DevTools().transform.FindChild("Scrollrect/Viewport/VerticalLayoutGroup/Buttons/Button_Tag");
+            public static Transform ExpandButton() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("Header_H1/RightItemContainer/Button_QM_Expand");
+  
+            public static Transform ToggleButton() =>  QMMenus.QMSubmenus.Menu_DevTools().transform.FindChild("Scrollrect/Viewport/VerticalLayoutGroup/Buttons/Button_Tag");
     
-                public static Transform CarouselButton() => QMMenus.QMSubmenus.SelectedUser_Local().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_AvatarActions");
+            public static Transform CarouselButton() => QMMenus.QMSubmenus.SelectedUser_Local().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_AvatarActions");
          
-                public static Transform WingButton(string position) => QMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Explore");
+            public static Transform WingButton(string position) => QMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Explore");
              
 
                 

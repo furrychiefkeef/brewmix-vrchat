@@ -12,7 +12,7 @@ namespace BlanketSDK.MM.Elements;
 internal class VRCCellContainer : IMainMenuElements
 {
     public GameObject Object;
-    public Transform? _panelContainer;
+    public Transform? _verticalLayoutGroup;
 
     public VRCCellContainer(VRCPage page, string name, [Optional] int priority)
     {
@@ -38,11 +38,12 @@ internal class VRCCellContainer : IMainMenuElements
 
         Label.text = name;
         Label.richText = true;
+        
         obj.DestroyChildren(child => child.GetSiblingIndex() != 0);
         Transform? panel = obj.transform.GetChild(0).GetChild(2).GetComponentInChildren<VerticalLayoutGroup>().transform;
 
         panel.DestroyChildren(child => child.GetSiblingIndex() != 0);
-        _panelContainer = panel;
+        _verticalLayoutGroup = panel;
         
         #endregion
     }

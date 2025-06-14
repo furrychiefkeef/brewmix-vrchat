@@ -53,7 +53,7 @@ internal class VRCButton : IQuickMenuElements
         #endregion
         
         #region TOOLTIP COMPONENT
-        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.UnityString(); 
+        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.Localizable(); 
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT
@@ -65,7 +65,7 @@ internal class VRCButton : IQuickMenuElements
     public VRCButton(VRCModalContainer modal, string? name, string? tooltip, System.Action func, Sprite? sprite = null)
     {
         if (!QuickMenu() | !QMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
-        Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.SingleButton(), modal._verticallayoutgroup);
+        Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.SingleButton(), modal._verticalLayoutGroup);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_SINGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS
@@ -92,7 +92,7 @@ internal class VRCButton : IQuickMenuElements
         #endregion
         
         #region TOOLTIP COMPONENT
-        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.UnityString(); 
+        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.Localizable(); 
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT
@@ -136,7 +136,7 @@ internal class VRCButton : IQuickMenuElements
         #endregion
         
         #region TOOLTIP COMPONENT
-        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.UnityString(); 
+        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.Localizable(); 
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT

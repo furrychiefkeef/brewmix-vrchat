@@ -48,7 +48,7 @@ internal class VRCWingButton : IQuickMenuElements
             #endregion
             
             #region TOOLTIP COMPONENT
-            _2._localizableString = tooltip.UnityString();
+            _2._localizableString = tooltip.Localizable();
             #endregion
             
             #region IMAGE || IMAGE_EX COMPONENT

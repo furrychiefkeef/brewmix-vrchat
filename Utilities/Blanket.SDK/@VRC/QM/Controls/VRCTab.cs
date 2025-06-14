@@ -9,6 +9,7 @@ using VRC.UI.Elements.Controls;
 namespace BlanketSDK.QM.Elements.Controls;
 internal class VRCTab : IQuickMenuElements
 {
+  
     /// <summary>
     ///  VRCButton this is used to create a TAB_QUICKMENU_BUTTON
     /// </summary>
@@ -26,7 +27,7 @@ internal class VRCTab : IQuickMenuElements
 
         #region REQUIRED_COMPONENTS
 
-        MenuTab _0 = obj.GetComponent<MenuTab>();
+        Button1PublicObSt_cBoSt_cStStUnique _0 = obj.GetComponent<Button1PublicObSt_cBoSt_cStStUnique>();
         ImageEx _1 = obj.GetChild(2).GetComponent<ImageEx>();
         ToolTip _2 = obj.GetComponent<ToolTip>();
  
@@ -49,7 +50,7 @@ internal class VRCTab : IQuickMenuElements
         #endregion
 
         #region TOOLTIP COMPONENT
-        _2._localizableString = tooltip.UnityString();
+        _2._localizableString = tooltip.Localizable();
         #endregion
   
         #region IMAGE || IMAGE_EX COMPONENT

@@ -15,7 +15,7 @@ public class Nameplates : UnityEngine.MonoBehaviour
     public void SetupPlayerInfo()
     {
          var tagsTransform = gameObject.transform.Find("PlayerNameplate/Canvas/NameplateGroup/Nameplate/Contents");
-         var getplayercolor = VRCPlayer.Method_Public_Static_Color_APIUser_0(GameUtils.PlayerModel.GetLocalPlayer().APIUser);
+         var getplayercolor = VRCPlayer.Method_Public_Static_Color_APIUser_0(GameUtils.PlayerModel.VRC_LocalPlayer().APIUser);
          
          tagsTransform.Find("Main/Background").GetComponent<ImageThreeSlice>().color = getplayercolor;
          tagsTransform.Find("Main/Pulse").GetComponent<ImageThreeSlice>().color = getplayercolor;

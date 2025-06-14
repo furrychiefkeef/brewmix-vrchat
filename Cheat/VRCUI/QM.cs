@@ -9,6 +9,7 @@ using Brewchat.Cheat.Modules;
 
 using Brewchat.Game.Wrappers;
 using MelonLoader;
+using VRC.Core;
 using VRC.Networking;
 using Resources = autumn.ml.Properties.Resources;
 
@@ -36,14 +37,14 @@ internal class QM
 
                 VRCModalContainer? PlayerMovementModal = new("Player+Movement");
                 Main_Groupbox.AddButton("Player", "Modify The Player", PlayerMovementModal.Open, true);
-
+                
                 #endregion
 
                 #region Modal_Player+Movement
                 
-                UIRefs.Fly = PlayerMovementModal.AddToggle("Fly", "Turn Fly On", "Turn Fly Off", (x) =>
+                var Fly = PlayerMovementModal.AddToggle("Fly", "Turn Fly On", "Turn Fly Off", (x) =>
                 {
-                    Config.Movement.fly = !Config.Movement.fly;
+                    Config.Player.Airborn.Fly = !Config.Player.Airborn.Fly;
                     PlayerModule.Movement.Fly();
                 });
                 
@@ -108,6 +109,8 @@ internal class QM
                 
             }
         }
+
+        
     }
 
     public class SelectedUserMenu : IQuickMenuElements

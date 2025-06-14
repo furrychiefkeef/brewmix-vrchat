@@ -30,7 +30,8 @@ internal class VRCSmallButton : IMainMenuElements
         obj.SetSiblingIndex(priority - 1) ;
         #region REQUIRED_COMPONENTS
         
-        MenuTab _0 = obj.GetComponent<MenuTab>();
+        Button1PublicObSt_cBoSt_cStStUnique
+            _0 = obj.GetComponent<Button1PublicObSt_cBoSt_cStStUnique>();
         ImageEx  _1 = obj.GetChild(1).GetComponent<ImageEx>();
         ToolTip  _2 = obj.GetComponent<ToolTip>();
         #endregion
@@ -45,7 +46,7 @@ internal class VRCSmallButton : IMainMenuElements
         #endregion
   
         #region TOOLTIP COMPONENT
-        _2._localizableString = tooltip.UnityString();
+        _2._localizableString = tooltip.Localizable();
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT

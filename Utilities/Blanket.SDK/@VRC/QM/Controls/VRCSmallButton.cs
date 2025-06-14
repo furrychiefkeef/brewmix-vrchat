@@ -9,7 +9,9 @@ using VRC.UI.Elements.Controls;
 namespace BlanketSDK.QM.Elements.Controls;
 
 internal class VRCSmallButton : IQuickMenuElements
-{  
+{
+
+    private static UnityEngine.UI.Button.ButtonClickedEvent action_;
     /// <summary>
     ///  VRCSmallButton this is used to create a SMALLBUTTON_QUICKMENU_BUTTON
     /// </summary>
@@ -17,6 +19,7 @@ internal class VRCSmallButton : IQuickMenuElements
     /// <param name="tooltip">The tooltip text for the button.</param>
     /// <param name="func">The action to execute when the button is clicked.</param>
     /// <param name="sprite">An optional sprite to display on the button.</param>
+    /// 
     public VRCSmallButton(Transform parent, string? tooltip, System.Action func, Sprite? sprite = null)
     {
         if (!QuickMenu() | !QMControls.Buttons.ExpandButton()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
@@ -32,12 +35,13 @@ internal class VRCSmallButton : IQuickMenuElements
 
         #region BUTTON COMPONENT
         UnityEngine.UI.Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_0 = _0.onClick;
+
         BUTTONCLICKED_EVENT_0.RemoveAllListeners();
         BUTTONCLICKED_EVENT_0.AddListener(func);
         #endregion
         
         #region TOOLTIP COMPONENT
-        _2._localizableString = tooltip.UnityString();
+        _2._localizableString = tooltip.Localizable();
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT

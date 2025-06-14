@@ -19,36 +19,15 @@ internal class FlyManager : UnityEngine.MonoBehaviour
     void Controller()
     {
         
-        float speed = (float)(Input.GetKey(KeyCode.LeftShift) ? (Config.Movement.speed * 5f) : Config.Movement.speed)!;
+        float speed = (float)(Input.GetKey(KeyCode.LeftShift) ? (Config.Movement.Speed * 5f) : Config.Movement.Speed)!;
     
-        if (transform is null || GameUtils.Gameplay.CallbackEvents.IsInMainMenu) return;
+        if (transform is null || GameUtils.Gameplay.CallbackEvents.IsInMainMenu()) return;
 
         Vector3 targetDirection = Vector3.zero;
 
         if (Input.GetKey(KeyCode.Q)) targetDirection += Vector3.down;
         if (Input.GetKey(KeyCode.E)) targetDirection += Vector3.up;
 
-        
-
-        /*
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_1 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_2 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_3 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_4 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_5 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_5 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_6 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_7 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_8 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_9 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_10 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_11 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_12 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_13 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_Boolean_14 = true;
-        GameUtils.PlayerModel._components._motion.field_Private_EnumNPrivateSealedvaNoPrFoAi5vUnique_0 = VRCMotionState.EnumNPrivateSealedvaNoPrFoAi5vUnique.ForceApplied;
-        */
-        
         
         targetDirection += GameUtils.Camera.Get.transform.forward * GameUtils.VRChatUtils.InputManager.GetInput("Vertical").prop_Single_2;
         targetDirection += GameUtils.Camera.Get.transform.right * GameUtils.VRChatUtils.InputManager.GetInput("Horizontal").prop_Single_2;

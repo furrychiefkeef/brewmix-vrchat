@@ -58,8 +58,8 @@ internal class VRCToggle : IQuickMenuElements
         #endregion
         
         #region TOOLTIP COMPONENT
-        _3._localizableString = tooltip_on.UnityString();
-        _3._alternateLocalizableString = tooltip_off.UnityString();
+        _3._localizableString = tooltip_on.Localizable();
+        _3._alternateLocalizableString = tooltip_off.Localizable();
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT
@@ -70,7 +70,7 @@ internal class VRCToggle : IQuickMenuElements
     }
 
     public void SetState(bool state)  => Controller.isOn = !state;
-    public VRCToggle(VRCModalContainer parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent._verticallayoutgroup, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
+    public VRCToggle(VRCModalContainer parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent._verticalLayoutGroup, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
     public VRCToggle(VRCGroupBox parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.container, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
     public VRCToggle(VRCGroupLayout parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.container, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
 }

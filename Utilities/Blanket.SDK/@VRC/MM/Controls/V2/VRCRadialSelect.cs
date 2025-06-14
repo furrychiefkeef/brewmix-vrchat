@@ -17,10 +17,12 @@ internal class VRCRadialSelect :  IMainMenuElements
     public class ChoiceOption
     {
         public string Name { get; set; }
+        public string Tooltip { get; set; }
         public Action Callback { get; set; }
-        public ChoiceOption(string name, Action callback)
+        public ChoiceOption(string name, string tooltip, Action callback)
         {
             Name = name;
+            Tooltip = tooltip;
             Callback = callback;
         }
     }
@@ -38,8 +40,8 @@ internal class VRCRadialSelect :  IMainMenuElements
         // Your existing instantiation code
         if(!MM() || !MMParent() || !MMMenus.MMSubmenus.Menu_Setting()) 
             throw new Exception($"{name} element has moved to a different location or index contact: {Resources.D_Contact}");
-        /*parent.obj ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_ChoiceSelection_Element();*/
-        var obj = UnityEngine.Object.Instantiate(MMControls.OperatorRadialSelection(), parent._panelContainer);
+        /*parent ??= MMFallbacks._Fallback_Dashboard_Group_QM_UI_ChoiceSelection_Element();*/
+        var obj = UnityEngine.Object.Instantiate(MMControls.OperatorRadialSelection(), parent._verticalLayoutGroup);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_CHOICE_SELECTION>";
         #region CONTAINERS
 
@@ -65,7 +67,7 @@ internal class VRCRadialSelect :  IMainMenuElements
         #endregion
 
         #region TOOLTIP_COMPONENT
-        radialSelector._optionTooltip._localizableString = tooltip.UnityString();
+        radialSelector._tooltips[0]._localizableString = tooltip.Localizable();
         radialSelector._childIndicator.SetActive(isChild);
         #endregion
         
@@ -82,15 +84,15 @@ internal class VRCRadialSelect :  IMainMenuElements
         // Add default callback if provided
         if (callback != null)
         {
-            AddChoice("Default", callback);
+            AddChoice("Default", "Default", callback);
         }
         #endregion
         
     }
     
-    public VRCRadialSelect AddChoice(string name, Action callback)
+    public VRCRadialSelect AddChoice(string name,string tooltip, Action callback)
     {
-        choices.Add(new ChoiceOption(name, callback));
+        choices.Add(new ChoiceOption(name, tooltip, callback));
         
         // If this is the first choice, display it
         if (choices.Count == 1)
@@ -130,6 +132,7 @@ internal class VRCRadialSelect :  IMainMenuElements
         if (radialSelector != null && radialSelector._currentOptionText != null)
         {
             radialSelector._currentOptionText.text = currentChoice.Name;
+            radialSelector._optionTooltip._localizableString = currentChoice.Tooltip.Localizable();
         }
     }
     
@@ -138,7 +141,7 @@ internal class VRCRadialSelect :  IMainMenuElements
         if (choices.Count == 0) return;
         
         var currentChoice = choices[currentIndex];
-        MM().field_Private_ModalAlert_0.Method_Public_Void_LocalizableString_PDM_0(choices[currentIndex].Name.UnityString());
+        MM().field_Private_ModalAlert_0.Method_Public_Void_LocalizableString_PDM_0(choices[currentIndex].Name.Localizable());
         currentChoice.Callback?.Invoke();
     }
 

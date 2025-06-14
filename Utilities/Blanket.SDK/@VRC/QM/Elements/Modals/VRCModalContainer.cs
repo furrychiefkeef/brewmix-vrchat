@@ -13,7 +13,7 @@ namespace BlanketSDK.QM.Elements.Modals
         public string Name;
         public Transform? _obj = null;
         public UIPage ModalLogic;
-        public Transform? _verticallayoutgroup;
+        public Transform? _verticalLayoutGroup;
         public Transform? _rightLayout;
         public VRCModalContainer(string? header, Sprite? sprite = null)
         {
@@ -43,7 +43,7 @@ namespace BlanketSDK.QM.Elements.Modals
             Il2CppSystem.Collections.Generic.Dictionary<Behaviour, bool>? behaviours = ModalLogic.field_Private_Dictionary_2_Behaviour_Boolean_0;
             behaviours.Clear();
             
-            behaviours.Add(_obj.GetComponent<MenuPanelRect>(), true);
+            behaviours.Add(_obj.GetComponent<MonoBehaviourPublicObReBoVeUnique>(), true);
             behaviours.Add(_obj.GetComponent<UnityEngine.Canvas>(), true);
             behaviours.Add(_obj.GetComponent<UnityEngine.CanvasGroup>(), true);
             behaviours.Add(_obj.GetComponent<UnityEngine.UI.GraphicRaycaster>(), true);
@@ -81,7 +81,7 @@ namespace BlanketSDK.QM.Elements.Modals
             #region BUTTON_CONTAINER_LOGIC_FOR_API
             Transform BUTTON_SHEILD_LEVEL_CONTAINER = _obj.GetChild(1).GetChild(2).DestroyChildren();
             
-            _verticallayoutgroup = BUTTON_SHEILD_LEVEL_CONTAINER.transform;
+            _verticalLayoutGroup = BUTTON_SHEILD_LEVEL_CONTAINER.transform;
             #endregion
 
 

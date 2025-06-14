@@ -1,7 +1,5 @@
 ﻿using BlanketSDK.Core;
 using ExitGames.Client.Photon;
-using Photon.Pun;
-using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using VRC;
@@ -13,11 +11,13 @@ using VRC.Networking;
 using VRC.SDKBase;
 
 using VRC.Udon;
+using VRC.Udon.Common.Interfaces;
 using VRC.UI;
 using VRC.UI.Client;
 using VRC.UI.Client.HUD;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
+using Object = Il2CppSystem.Object;
 
 namespace Brewchat.Game.Wrappers
 {
@@ -46,26 +46,26 @@ namespace Brewchat.Game.Wrappers
 
             public struct CallbackEvents
             {
-                static QuickMenu? QuickMenu_Cache;
-                static MainMenu? MainMenu_Cache;
+                static QuickMenu? _QuickMenu;
+                static MainMenu? _MainMenu;
 
-                public static bool IsInQuickMenu
+                public static Func<bool> IsInQuickMenu
                 {
                     get
                     {
-                        if (QuickMenu_Cache is null) 
-                            QuickMenu_Cache = UnityEngine.Object.FindObjectOfType<QuickMenu>();
-                        return QuickMenu_Cache != null && QuickMenu_Cache.enabled;
+                        if (_QuickMenu is null) 
+                            _QuickMenu = UnityEngine.Object.FindObjectOfType<QuickMenu>();
+                        return () => _QuickMenu != null && _QuickMenu.enabled;
                     }
                 }
 
-                public static bool IsInMainMenu
+                public static Func<bool> IsInMainMenu
                 {
                     get
                     {
-                        if (MainMenu_Cache is null) 
-                            MainMenu_Cache = UnityEngine.Object.FindObjectOfType<MainMenu>();
-                        return MainMenu_Cache != null && MainMenu_Cache.enabled;
+                        if (_MainMenu is null) 
+                            _MainMenu = UnityEngine.Object.FindObjectOfType<MainMenu>();
+                        return () => _MainMenu != null && _MainMenu.enabled;
                     }
                 }
             }
@@ -133,7 +133,14 @@ namespace Brewchat.Game.Wrappers
         public class Camera
         {
             public static UnityEngine.Camera Get { get; set; } = UnityEngine.Camera.main;
-            public static GameObject CameraObj => GameObject.Find("Camera");
+            public static GameObject CameraObj {
+                get
+                {
+                    if (CameraObj is null)
+                        return GameObject.Find("Camera");
+                    return CameraObj;
+                }
+            }
         }
 
         // =============================================================================
@@ -142,14 +149,14 @@ namespace Brewchat.Game.Wrappers
         
         public class PlayerModel
         {
-            public static VRC.Player GetLocalPlayer() => VRC.Player.prop_Player_0;
+            public static VRC.Player VRC_LocalPlayer() => VRC.Player.prop_Player_0;
             public static VRC.Player Get => VRC.Player.prop_Player_0;
 
             public struct _components
             {
-                public static VRCMotionState _motion = GetLocalPlayer().GetComponent<VRCMotionState>();
-                public static FlatBufferNetworkSerializer _serializer = GetLocalPlayer().GetComponent<FlatBufferNetworkSerializer>();
-                /*public static SyncPhysics _SyncPhysics = GetLocalPlayer().GetComponent<SyncPhysics>();*/
+                public static VRCMotionState _motion = VRC_LocalPlayer().GetComponent<VRCMotionState>();
+                public static FlatBufferNetworkSerializer _serializer = VRC_LocalPlayer().GetComponent<FlatBufferNetworkSerializer>();
+                /*public static SyncPhysics _SyncPhysics = VRC_LocalPlayer().GetComponent<SyncPhysics>();*/
             }
 
             public static class Motion
@@ -158,35 +165,35 @@ namespace Brewchat.Game.Wrappers
                 {
                     public static VRCPlayerApi Run_Speed(float v = 2f)
                     {
-                        VRCPlayerApi? player = GetLocalPlayer().VRCPlayerApi;
+                        VRCPlayerApi? player = VRC_LocalPlayer().VRCPlayerApi;
                         player.SetRunSpeed(v);
                         return player;
                     }
 
                     public static VRCPlayerApi Walk_Speed(float v = 2f)
                     {
-                        VRCPlayerApi? player = GetLocalPlayer().VRCPlayerApi;
+                        VRCPlayerApi? player = VRC_LocalPlayer().VRCPlayerApi;
                         player.SetWalkSpeed(v);
                         return player;
                     }
 
                     public static VRCPlayerApi Jump_Impulse(float v = 3f)
                     {
-                        VRCPlayerApi? player = GetLocalPlayer().VRCPlayerApi;
+                        VRCPlayerApi? player = VRC_LocalPlayer().VRCPlayerApi;
                         player.SetJumpImpulse(v);
                         return player;
                     }
 
                     public static VRCPlayerApi Velocity(Vector3 v)
                     {
-                        VRCPlayerApi? player = GetLocalPlayer().VRCPlayerApi;
+                        VRCPlayerApi? player = VRC_LocalPlayer().VRCPlayerApi;
                         player.SetVelocity(v);
                         return player;
                     }
 
                     public static VRCPlayerApi Gravity(float v = 1f)
                     {
-                        VRCPlayerApi? player = GetLocalPlayer().VRCPlayerApi;
+                        VRCPlayerApi? player = VRC_LocalPlayer().VRCPlayerApi;
                         player.SetGravityStrength(v);
                         return player;
                     }
@@ -217,22 +224,22 @@ namespace Brewchat.Game.Wrappers
                     return avatar;
                 }
 
-                public static ApiAvatar GetAvatar() => GetLocalPlayer().prop_ApiAvatar_0;
+                public static ApiAvatar GetAvatar() => VRC_LocalPlayer().prop_ApiAvatar_0;
 
                 public static void AvatarScale(float v = 4f) =>
-                    GetLocalPlayer().VRCPlayerApi.SetAvatarEyeHeightByMeters(v);
+                    VRC_LocalPlayer().VRCPlayerApi.SetAvatarEyeHeightByMeters(v);
 
                 public static void AllowAvatarScaling(bool v = true) =>
-                    GetLocalPlayer().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
+                    VRC_LocalPlayer().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
 
                 public static void AvatarScaleMax(float v) =>
-                    GetLocalPlayer().VRCPlayerApi.SetAvatarEyeHeightMaximumByMeters(v);
+                    VRC_LocalPlayer().VRCPlayerApi.SetAvatarEyeHeightMaximumByMeters(v);
 
                 public static void AvatarScaleMin(float v) =>
-                    GetLocalPlayer().VRCPlayerApi.SetAvatarEyeHeightMinimumByMeters(v);
+                    VRC_LocalPlayer().VRCPlayerApi.SetAvatarEyeHeightMinimumByMeters(v);
 
                 public static void AllowScaling(bool v) =>
-                    GetLocalPlayer().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
+                    VRC_LocalPlayer().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
             }
 
             public static class Matchmaking
@@ -270,6 +277,7 @@ namespace Brewchat.Game.Wrappers
 
             public class SDK3
             {
+                
                 public static void LoadCustomEvent(string _event)
                 {
                     foreach (UdonBehaviour udon in UnityEngine.Object.FindObjectsOfType<UdonBehaviour>())
@@ -277,6 +285,16 @@ namespace Brewchat.Game.Wrappers
                         if (udon._eventTable.ContainsKey(_event))
                         {
                             udon.SendCustomEvent(_event);
+                        }
+                    }
+                }
+                public static void LoadCustomNetworkEvent(NetworkEventTarget target, string _event)
+                {
+                    foreach (UdonBehaviour udon in UnityEngine.Object.FindObjectsOfType<UdonBehaviour>())
+                    {
+                        if (udon._eventTable.ContainsKey(_event))
+                        {
+                            udon.SendCustomNetworkEvent(target, _event);
                         }
                     }
                 }
@@ -358,28 +376,57 @@ namespace Brewchat.Game.Wrappers
             {
                 #region NOTIFICATION MANAGER V2
 
+                  
+                /*private static Hud_UserEventCarousel? _carousel;
+                private static float _lastCheckTime;
+                private const float CacheTimeout = 30f;
+            
+                private static Hud_UserEventCarousel GetCarousel()
+                {
+                    if (_carousel != null && Time.realtimeSinceStartup - _lastCheckTime < CacheTimeout)
+                        return _carousel;
+
+                    _lastCheckTime = Time.realtimeSinceStartup;
+
+                    foreach (var carousel in Resources.FindObjectsOfTypeAll<Hud_UserEventCarousel>())
+                    {
+                        if (carousel?.field_Private_List_1_MonoBehaviourPublicObteCaSiImSidiCaSiUnique_0.Count != 0)
+                            return _carousel = carousel;
+                    }
+
+                    return _carousel;
+                }
+
                 public static void ToastV1(string content, float duration = 3f, Sprite? sprite = null)
                 {
-                    try
-                    {
-                        HudController.field_Public_Static_HudController_0
-                            .userEventCarousel
-                            .Method_Private_Void_LocalizableString_Sprite_Single_0(content.UnityString(), sprite, duration);
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.LogError($"[NotificationManager] Message error: {ex.Message}");
-                    }
-                }
-
-                public static void ToastV2(string? title, string? content = null, float duration = 2f, Sprite? sprite = default)
+                    GetCarousel().Method_Private_Void_LocalizableString_Sprite_Single_1(content.Localizable(), sprite, duration);
+                }*/
+                public static void ToastV1(string content, float duration = 3f, bool isAudible = true, Sprite? sprite = null)
                 {
-                    HudController
-                        .field_Public_Static_HudController_0
-                        .notification
-                        ?.Method_Public_Void_Sprite_LocalizableString_LocalizableString_Single_Object1PublicTBoTUnique_1_Boolean_0(sprite, title.UnityString(), content.UnityString(), duration);
+                    if (isAudible)  VRCUiSoundPlayer.Method_Public_Static_Void_AudioClip_Single_0(HudController.field_Public_Static_HudController_0.notificationSound, 5f);
+                    
+                    HudController.field_Public_Static_HudController_0
+                        .userEventCarousel
+                        .Method_Private_Void_LocalizableString_Sprite_Single_0(content.Localizable(), sprite, duration);
                 }
 
+                public static void ToastV2(string? title, string? content = null, float duration = 2f, bool isAudible = true, Sprite? sprite = default)
+                {
+                    if (isAudible)  VRCUiSoundPlayer.Method_Public_Static_Void_AudioClip_Single_0(HudController.field_Public_Static_HudController_0.notificationSound, 5f);
+                    
+                    HudController.field_Public_Static_HudController_0
+                     .notification
+                     ?.Method_Public_Void_Sprite_LocalizableString_LocalizableString_Single_Object1PublicTBoTUnique_1_Boolean_0(sprite, title.Localizable(), content.Localizable(), duration);
+                }
+
+                public static void SendLocalNotifcation(string name, string usr_id, string type, string _4 = null)
+                {
+                    MonoBehaviourPublicObDi2StObDi2So1NoUnique.field_Private_Static_MonoBehaviourPublicObDi2StObDi2So1NoUnique_0
+                        .Method_Public_Notification_LocalizableString_LocalizableString_String_String_ArrayOf_Dictionary_2_String_Object_Boolean_Dictionary_2_String_String_0
+                            (name.Localizable(), 
+                                usr_id.Localizable(), 
+                                type, _4);
+                }
                 #endregion
 
                 #region ALERT SYSTEM
@@ -392,7 +439,7 @@ namespace Brewchat.Game.Wrappers
 
                 public static string Alert(string content)
                 {
-                    VRCUIManager.prop_VRCUIManager_0.Method_Public_Virtual_Final_New_Void_LocalizableString_0(content.UnityString());
+                    VRCUIManager.prop_VRCUIManager_0.Method_Public_Virtual_Final_New_Void_LocalizableString_0(content.Localizable());
                     return content;
                 }
 
@@ -404,14 +451,14 @@ namespace Brewchat.Game.Wrappers
                 {
                     VRCUiManager.prop_VRCUiManager_0.prop_VRCUiPopupManager_0
                         .Method_Public_Void_LocalizableString_LocalizableString_Single_0
-                            (title.UnityString(), content.UnityString(), duration);
+                            (title.Localizable(), content.Localizable(), duration);
                 }
 
                 public static void PopUp2(string title = null, string content = null, string? uhz = null, Action func = null)
                 {
                     VRCUiManager.prop_VRCUiManager_0.prop_VRCUiPopupManager_0
                         .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_Action_1_VRCUiPopup_0
-                            (title.UnityString(), content.UnityString(), uhz.UnityString(), func);
+                            (title.Localizable(), content.Localizable(), uhz.Localizable(), func);
                 }
 
                 public static void LoadingPopUp2(string? title, string? content, string? button_text, System.Action func,
@@ -419,7 +466,7 @@ namespace Brewchat.Game.Wrappers
                 {
                     VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
                         .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_LocalizableString_Action_Action_1_VRCUiPopup_0
-                        (title.UnityString(), content.UnityString(), button_text.UnityString(), func, button_text.UnityString(),
+                        (title.Localizable(), content.Localizable(), button_text.Localizable(), func, button_text.Localizable(),
                             null, null);
                 }
 
@@ -428,7 +475,7 @@ namespace Brewchat.Game.Wrappers
                 {
                     VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
                         .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_Action_1_VRCUiPopup_0
-                            (title.UnityString(), content.UnityString(), button_text.UnityString(), func, idk);
+                            (title.Localizable(), content.Localizable(), button_text.Localizable(), func, idk);
                 }
 
                 #endregion

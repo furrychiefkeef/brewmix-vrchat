@@ -41,7 +41,7 @@ internal class VRCAvatarButtonSmall : IMainMenuElements
         
         #region TOOLTIP_COMPONENT
 
-        _1._localizableString = tooltip.UnityString();
+        _1._localizableString = tooltip.Localizable();
         #endregion
         
         #region IMAGE_COMPONENT

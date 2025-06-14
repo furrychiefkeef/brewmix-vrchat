@@ -66,7 +66,7 @@ internal class VRCRadialSelect : IQuickMenuElements
         #endregion
 
         #region TOOLTIP_COMPONENT
-        radialSelector._optionTooltip._localizableString = tooltip.UnityString();
+        radialSelector._optionTooltip._localizableString = tooltip.Localizable();
         radialSelector._childIndicator.SetActive(isChild);
         #endregion
         
@@ -139,7 +139,7 @@ internal class VRCRadialSelect : IQuickMenuElements
         if (choices.Count == 0) return;
         
         var currentChoice = choices[currentIndex];
-        QM().field_Private_ModalAlert_0.Method_Public_Void_LocalizableString_PDM_0(choices[currentIndex].Name.UnityString());
+        QM().field_Private_ModalAlert_0.Method_Public_Void_LocalizableString_PDM_0(choices[currentIndex].Name.Localizable());
         currentChoice.Callback?.Invoke();
     }
 

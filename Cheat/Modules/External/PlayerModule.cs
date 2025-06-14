@@ -2,8 +2,6 @@
 using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
 
-using Brewchat.Wrappers;
-
 using UnityEngine;
 
 using VRC;
@@ -23,12 +21,12 @@ internal class PlayerModule
 
         public static void Fly()
         {
-            Player player = GameUtils.PlayerModel.GetLocalPlayer();
+            Player player = GameUtils.PlayerModel.VRC_LocalPlayer();
             if (!player && !GameUtils.World.IsLoaded()) return;
             else
             {
                 #region REQUIRED_COMPONENTS
-
+            
                 VRCMotionState? motion_state = player.GetComponent<VRC.Animation.VRCMotionState>();
                 FlyManager? fly_component = player.gameObject.GetOrAddComponentSafe<FlyManager>();
                 CharacterController? characterController = player.GetComponent<CharacterController>();
@@ -37,7 +35,7 @@ internal class PlayerModule
 
                 #region LOGIC
 
-                switch (Config.Movement.fly)
+                switch (Config.Movement.Airborn.Fly)
                 {
                     case true:
                        
@@ -70,7 +68,7 @@ internal class PlayerModule
         {
             #region REQUIRED_COMPONENTS
 
-            Player player = GameUtils.PlayerModel.GetLocalPlayer();
+            Player player = GameUtils.PlayerModel.VRC_LocalPlayer();
             var player_motion = GameUtils.PlayerModel.Motion.Networking.Jump_Impulse();
             var cache_player_jump_ = player_motion.GetJumpImpulse();
 
@@ -97,14 +95,14 @@ internal class PlayerModule
 
         public static void ClickTP()
         {
-            Player player = GameUtils.PlayerModel.GetLocalPlayer();
-            if (!player && !GameUtils.World.IsLoaded() || GameUtils.Gameplay.CallbackEvents.IsInMainMenu) return;
+            Player player = GameUtils.PlayerModel.VRC_LocalPlayer();
+            if (!player && !GameUtils.World.IsLoaded() || GameUtils.Gameplay.CallbackEvents.IsInMainMenu()) return;
             if (Physics.Raycast(GameUtils.Camera.Get.transform.position, GameUtils.Camera.Get.transform.forward, out RaycastHit hit)) player.transform.position = hit.point;
         }
 
     }
 
-    public class CCamera
+    public class CameraBuilder
     {
         public enum View
         {
@@ -113,13 +111,13 @@ internal class PlayerModule
             freecam,
         }
 
-        private static UnityEngine.Camera MakeCameras(View view)
+       static Camera MakeCameras(View view)
         {
             GameObject cameraObject = new($"{view}_Camera");
             cameraObject.AddComponent<UniversialTags>().AddTagToObject("V-Cams");
             if (GameUtils.Camera.Get != null)
             {
-                UnityEngine.Camera? referenceCamera = GameUtils.Camera.Get;
+                Camera? referenceCamera = GameUtils.Camera.Get;
 
                 if (referenceCamera != null)
                 {
@@ -147,7 +145,7 @@ internal class PlayerModule
                             cameraObject.transform.position = referenceCamera.transform.position + (-cameraObject.transform.forward * 2f);
                             cameraObject.AddComponent<AudioListener>();
                             cameraObject.AddComponent<FlyManager>().AllowRotation = true;
-                            cameraObject.transform.position = GameUtils.PlayerModel.GetLocalPlayer().VRCPlayerApi.GetBonePosition(HumanBodyBones.Head);
+                            cameraObject.transform.position = GameUtils.PlayerModel.VRC_LocalPlayer().VRCPlayerApi.GetBonePosition(HumanBodyBones.Head);
                             return camera;
                     }
                 }
@@ -155,7 +153,6 @@ internal class PlayerModule
 
             return null;
         }
-
         private static int currentView = -1;
         public static UnityEngine.Camera[] camera = new UnityEngine.Camera[3];
         public static void CameraController()
@@ -173,33 +170,32 @@ internal class PlayerModule
             currentView = (currentView + 1) % 4;
             if (camera[0] != null && camera[1] != null && camera[2] != null)
             {
-                Sprite? video = AstriekLib.Sprites.Video();
-                Sprite? video_slash = AstriekLib.Sprites.Video(false);
+             
                 switch (currentView)
                 {
                     case 0:
                         Widgets.QM.cameramode_widget.SetText($"Third Person");
-                        GameUtils.UI.HUD.ToastV1("Third Person Activated!", sprite: video );
+                        GameUtils.UI.HUD.ToastV1("Third Person Activated!");
                         camera[0].enabled = true;
                         camera[1].enabled = false;
                         camera[2].enabled = false;
                         break;
                     case 1:
                         Widgets.QM.cameramode_widget.SetText($"Second Person");
-                        GameUtils.UI.HUD.ToastV1("Second Person Activated!", sprite: video);
+                        GameUtils.UI.HUD.ToastV1("Second Person Activated!");
                         camera[0].enabled = false;
                         camera[1].enabled = true;
                         camera[2].enabled = false;
                         break;
                     case 2:
                         Widgets.QM.cameramode_widget.SetText($"FreeCam");
-                        GameUtils.UI.HUD.ToastV1("FreeCam Activated! Right Click (To Move Camera)", sprite: video);
+                        GameUtils.UI.HUD.ToastV1("FreeCam Activated! Right Click (To Move Camera)");
                         camera[0].enabled = false;
                         camera[1].enabled = false;
                         camera[2].enabled = true;
                         break;
                     case 3:
-                        GameUtils.UI.HUD.ToastV1("Cameras Destoryed", sprite: video_slash);
+                        GameUtils.UI.HUD.ToastV1("Cameras Destoryed");
                         DestoryCameras(); 
                         Widgets.QM.cameramode_widget.SetState(false);
                         break;

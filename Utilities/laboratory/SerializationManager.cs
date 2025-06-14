@@ -1,5 +1,4 @@
 ﻿
-/*
 namespace Pasted.WTFBlaze.Utils.Managers
 {
     
@@ -21,7 +20,7 @@ namespace Pasted.WTFBlaze.Utils.Managers
             }
             catch (System.Exception e)
             {
-                Entry.Console.LogMessage(e);
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -39,7 +38,7 @@ namespace Pasted.WTFBlaze.Utils.Managers
             }
             catch (System.Exception e)
             {
-                Entry.Console.LogMessage(e);
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -57,7 +56,7 @@ namespace Pasted.WTFBlaze.Utils.Managers
             }
             catch (System.Exception e)
             {
-                Entry.Console.LogMessage(e);
+                Console.WriteLine(e);
                 return default;
             }
         }
@@ -74,7 +73,7 @@ namespace Pasted.WTFBlaze.Utils.Managers
             }
             catch (System.Exception e)
             {
-                 Entry.Console.LogMessage(e);
+                Console.WriteLine(e);
                 return default;
             }
         }
@@ -115,4 +114,3 @@ namespace Pasted.WTFBlaze.Utils.Managers
     }
 
 }
-*/

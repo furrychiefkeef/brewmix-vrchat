@@ -1,10 +1,9 @@
-﻿/*using UnityEngine;
+﻿/*using System.Net.Http;
+using UnityEngine;
 using UnityEngine.UI;
-using UNIXEngine.IL2CPPModding.Utils.Collections;
-
 public class GifLoader : MonoBehaviour
 {
-    
+   
     public class AnimatedGifData
     {
         public Image image;
@@ -22,10 +21,11 @@ public class GifLoader : MonoBehaviour
             timer = 0f;
         }
     }
+    public GifLoader(IntPtr ptr) : base(ptr) {}
     List<AnimatedGifData> gifs = new List<AnimatedGifData>();
 
-
     private static GifLoader? _instance;
+    
     public static GifLoader Instance
     {
         get
@@ -53,7 +53,8 @@ public class GifLoader : MonoBehaviour
     /// <param name="url">The URL OR LOCALPATH </param>
     public void AddAnimatedGif(Image image, Uri? url)
     {
-        /*StartCoroutine(LoadGifCoroutine(image, url).WrapToIl2Cpp());#1#
+        Console.Write("Appears!\n");
+        MelonLoader.MelonCoroutines.Start(LoadGifCoroutine(image, url));
     }
     
     System.Collections.IEnumerator LoadGifCoroutine(Image image, Uri? url)
@@ -67,7 +68,7 @@ public class GifLoader : MonoBehaviour
         if (url.IsFile) data = File.ReadAllBytes(url.LocalPath); 
         else if (url.Scheme == Uri.UriSchemeHttp || url.Scheme == Uri.UriSchemeHttps)
         {
-            using HttpClient http = new();
+            HttpClient http = new();
             data = http.GetByteArrayAsync(url.ToString()).GetAwaiter().GetResult();
         }
         else throw new NotSupportedException($"Unsupported URI scheme: {url.Scheme}");
@@ -140,7 +141,7 @@ public class GifLoader : MonoBehaviour
     /// <returns></returns>
     public static Image CreateIsolatedImage(Image reference)
     {
-        GameObject clone = GameObject.Instantiate(reference.gameObject, reference.transform.parent);
+        GameObject clone = Instantiate(reference.gameObject, reference.transform.parent);
         clone.name = reference.gameObject.name + "_ModClone";
 
         // Optional: move it on top visually

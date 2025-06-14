@@ -39,6 +39,7 @@
     <Folder Include="Assets\Textures\" />
     <Folder Include="Cheat\Modules\Local\" />
     <Folder Include="Utilities\Blanket.SDK\@VRC\MM\Controls\Cell\" />
+    <Folder Include="Utilities\Puller\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -622,6 +623,10 @@
     <Reference Include="WebTransMtn">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\WebTransMtn.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="10.0.0-preview.5.25277.114" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat&quot;" />

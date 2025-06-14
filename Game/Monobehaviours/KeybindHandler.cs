@@ -4,8 +4,6 @@ using Brewchat.Cheat.Modules;
 using Brewchat.Game.Wrappers;
 using UnityEngine;
 
-
-
 namespace Brewchat.Game.Monobehaviours;
 internal class KeybindManager : UnityEngine.MonoBehaviour
 {
@@ -20,7 +18,7 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
 
             #endregion
           
-            if(GameUtils.Gameplay.CallbackEvents.IsInMainMenu || GameUtils.Gameplay.CallbackEvents.IsInQuickMenu) return;
+            if(GameUtils.Gameplay.CallbackEvents.IsInMainMenu() || GameUtils.Gameplay.CallbackEvents.IsInQuickMenu()) return;
             
             #region Keybinds
 
@@ -31,14 +29,13 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F))
             {
                 Config.Movement.fly = !Config.Movement.fly;
-                UIRefs.Fly.SetState(Config.Movement.fly);
             }
             
             #region Camera
 
             if (Input.GetKeyDown(KeyCode.F5))
             {
-                PlayerModule.CCamera.CameraController();
+                PlayerModule.CameraBuilder.CameraController();
             }
 
             #endregion

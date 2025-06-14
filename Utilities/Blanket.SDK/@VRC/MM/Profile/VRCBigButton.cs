@@ -49,7 +49,7 @@ internal class VRCBigButton : IMainMenuElements
         #endregion
         
         #region TOOLTIP COMPONENT
-        _3._localizableString = tooltip.UnityString(); 
+        _3._localizableString = tooltip.Localizable(); 
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT

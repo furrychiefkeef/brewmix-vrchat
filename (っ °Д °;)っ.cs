@@ -13,13 +13,16 @@ public class Entry : MelonMod
 {
     public const string NAME = "Autumn";
     public const string FULLNAME = "Autumn";
-    HarmonyLib.Harmony h = new(Guid.NewGuid().ToString());
-
+    public static HarmonyLib.Harmony h = new(Guid.NewGuid().ToString());
+    public static Brewchat.Config? _Config {get; set;}
     public override void OnInitializeMelon()
     {
+       
+        _Config.FlatLoadingOverlay.Tint = new Color(0, 0, 0, 0.9f);
         #region Components
         try
         {
+           
             foreach (Type monos in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(MonoBehaviour))))
             {
                 MelonLogger.Msg($"Registering Monobehaviours: {monos.Name}");
@@ -33,7 +36,7 @@ public class Entry : MelonMod
         #endregion
         
         #region ASSEMBLY_CORE_STUFF
-        h.PatchAll();
+        /*h.PatchAll();*/
         #endregion
        
     }
