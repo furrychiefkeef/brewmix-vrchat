@@ -40,7 +40,8 @@ namespace brewchat.hybridxcore.bep
         public static void FlatLoadingOverlay_Initialize_HOOK(ref LoadingOverlayController __instance)
         {
             if (__instance is null) return;
-            var Background = __instance.gameObject.transform.Find("FlatLoadingOverlay(Clone)/Container").transform.FindChild("Canvas/Background").GetComponent<Image>();
+            var Background = __instance.gameObject.transform.Find("FlatLoadingOverlay(Clone)/Container")
+            .transform.FindChild("Canvas/Background").GetComponent<Image>();
 
             if (Config.Appearance.inGame.HideLoadingOverlay)
             {

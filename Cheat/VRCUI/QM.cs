@@ -62,9 +62,9 @@ internal class QM
                 Logging.AddMiniButton("Configure Udon Events List", () => Console.Beep());
 
 
-                Logging.AddToggle("RPC", "parse", "parse", (x) => { Config.Logging.RPC = !Config.Logging.RPC; });
-                Logging.AddToggle("Photon", "parse", "parse", (x) => { Config.Logging.Photon = !Config.Logging.Photon; });
-                Logging.AddToggle("Udon", "parse", "parse", (x) => { Config.Logging.Udon = !Config.Logging.Udon; });
+                Logging.AddToggle("RPC", "parse", "parse", (x) => { Config.Logging.VRChat = !Config.Logging.RPC; });
+                Logging.AddToggle("Photon", "parse", "parse", (x) => { Config.Logging.VRChat.LogRPC = !Config.Logging.Photon; });
+                Logging.AddToggle("Udon", "parse", "parse", (x) => { Config.Logging.VRChat.LogRPC = !Config.Logging.Udon; });
 
                 /*VRCModalContainer? Modal_Config_RPCs = new("RPcs");*/
 
@@ -95,8 +95,8 @@ internal class QM
 
                 VRCModalContainer? Renders = new("Renderer");
                 Main_Groupbox.AddButton("Renders", "Render Properties", () => Renders.Open(), true);
-                Renders.AddToggle("ESP", "parse", "parse", (x) => { Config.Render.esp = !Config.Render.esp; });
-                Renders.AddToggle("Wallhacks", "parse", "parse", (x) => { Config.Render.player_wallhack = !Config.Render.player_wallhack; });
+                Renders.AddToggle("ESP", "parse", "parse", (x) => { Config.Render.Overlays.ESP.Enabled = !Config.Render.Overlays.ESP.Enabled; });
+                Renders.AddToggle("Wallhacks", "parse", "parse", (x) => { Config.Render.Overlays.Player_Wallhack = !Config.Render.player_wallhack; });
                 
                 #endregion
             }

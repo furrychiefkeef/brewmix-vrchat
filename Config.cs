@@ -1,39 +1,36 @@
-﻿using Brewchat.Game.Wrappers;
-using UnityEngine;
-
+﻿using UnityEngine;
 namespace Brewchat;
 
 public class Config
 {
     private static Config? _instance;
-    public Config Instance 
+    public Config Instance
     {
         get
         {
             _instance ??= new Config();
             return _instance;
         }
-    }     
+    }
     public class Exploits
     {
         public static bool RPC_ForceGlobal { get; set; } = false;
     }
- 
-    public class Player
+    public struct Player
     {
         public static class Airborn
         {
-            public static class Fly 
+            public static class Fly
             {
                 public static bool Enabled { get; set; }
                 public static float? Speed { get; set; } = 6.5f;
             }
         }
-        public static  class Grounded
+        public static class Grounded
         {
-             public static float? WalkSpeed { get; set; } = 6.5f;
-             public static float? RunSpeed { get; set; } = 6.5f;
-             public static float? JumpHeight { get; set; } = 6.5f;
+            public static float? WalkSpeed { get; set; } = 6.5f;
+            public static float? RunSpeed { get; set; } = 6.5f;
+            public static float? JumpHeight { get; set; } = 6.5f;
         }
 
     }
@@ -43,7 +40,7 @@ public class Config
         {
             public static bool Player_Wallhack { get; set; } = false;
             public static bool Nameplate_Wallhack { get; set; }
-            public class ESP 
+            public class ESP
             {
                 public static bool Enabled { get; set; }
                 public static bool Nameplates { get; set; }
@@ -54,10 +51,7 @@ public class Config
                 public static bool Outlines { get; set; }
             }
         }
-       
-       
     }
-    
     public class Logging
     {
         public static class VRChat
@@ -92,10 +86,10 @@ public class Config
             public static string? Qm_Background { get; set; }
         }
     }
-    
+
     public class Advanced
     {
         public static bool DebugMode { get; set; } = false;
     }
-    
+
 }

@@ -19,7 +19,7 @@ internal class FlyManager : UnityEngine.MonoBehaviour
     void Controller()
     {
         
-        float speed = (float)(Input.GetKey(KeyCode.LeftShift) ? (Config.Movement.Speed * 5f) : Config.Movement.Speed)!;
+        float speed = (float)(Input.GetKey(KeyCode.LeftShift) ? (Config.Player.Airborn.Fly.Speed * 5f) : Config.Movement.Speed)!;
     
         if (transform is null || GameUtils.Gameplay.CallbackEvents.IsInMainMenu()) return;
 

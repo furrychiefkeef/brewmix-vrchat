@@ -1,0 +1,12 @@
+[*.cs]
+
+# CS8601: Possible null reference assignment.
+dotnet_diagnostic.CS8601.severity = none
+[*.cs]
+
+# CS8602: Dereference of a possibly null reference.
+dotnet_diagnostic.CS8602.severity = warning
+[*.cs]
+
+# Default severity for all analyzer diagnostics
+dotnet_analyzer_diagnostic.severity = warning

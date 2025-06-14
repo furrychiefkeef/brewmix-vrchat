@@ -9,7 +9,7 @@ public class Murder_4
     public static void GiveRevolver()
     {
         foreach (UdonBehaviour udonBehaviour in UnityEngine.Object.FindObjectsOfType<UdonBehaviour>().ToList())
-      
+
         {
             
         }
