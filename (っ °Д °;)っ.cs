@@ -18,7 +18,7 @@ public class Entry : MelonMod
     public override void OnInitializeMelon()
     {
        
-        _Config.FlatLoadingOverlay.Tint = new Color(0, 0, 0, 0.9f);
+        _Config.Instance.Tint = new Color(0, 0, 0, 0.9f);
         #region Components
         try
         {

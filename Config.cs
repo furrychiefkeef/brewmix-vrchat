@@ -6,17 +6,14 @@ namespace Brewchat;
 public class Config
 {
     private static Config? _instance;
-    public static Config Instance 
+    public Config Instance 
     {
         get
         {
-            if (_instance == null)
-            {
-                _instance = new Config();
-            }
+            _instance ??= new Config();
             return _instance;
         }
-    }
+    }     
     public class Exploits
     {
         public static bool RPC_ForceGlobal { get; set; } = false;
@@ -24,7 +21,7 @@ public class Config
  
     public class Player
     {
-        public class Airborn
+        public static class Airborn
         {
             public static class Fly 
             {
@@ -32,7 +29,7 @@ public class Config
                 public static float? Speed { get; set; } = 6.5f;
             }
         }
-        public class Grounded
+        public static  class Grounded
         {
              public static float? WalkSpeed { get; set; } = 6.5f;
              public static float? RunSpeed { get; set; } = 6.5f;
@@ -100,5 +97,5 @@ public class Config
     {
         public static bool DebugMode { get; set; } = false;
     }
-    \
+    
 }
