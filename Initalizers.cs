@@ -6,4 +6,8 @@ public class Initalizers
     {
         Entry.config = Config.LoadFromFile("config.json");
     }
+    public static void Save()
+    {
+        Config.SaveToFile(Entry.config, "config.json");
+    }
 }

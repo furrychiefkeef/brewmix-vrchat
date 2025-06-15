@@ -2,50 +2,53 @@
 using System.IO;
 using Newtonsoft.Json;
 using System;
+using VRC.Core;
+using UnityEngine.Experimental.GlobalIllumination;
+using static Config.LoggingModel;
 
 public class Config
 {
    
 
-    public Player _Player { get; set; } = new();
-    public Render _Render { get; set; } = new();
-    public Logging _Logging { get; set; } = new();
-    public Modules _Modules { get; set; } = new();
-    public Protection _Protection { get; set; } = new();
-    public Appearance _Appearance { get; set; } = new();
-    public Advanced _Advanced { get; set; } = new();
+    public PlayerModel Player { get; set; } = new();
+    public RenderModel Render { get; set; } = new();
+    public LoggingModel Logging { get; set; } = new();
+    public ModulesModel Modules { get; set; } = new();
+    public ProtectionModel Protection { get; set; } = new();
+    public AppearanceModel Appearance { get; set; } = new();
+    public AdvancedModel Advanced { get; set; } = new();
     
-    public class Modules
+    public class ModulesModel
     {
-        public RFCTampering _RFCTampering {get;set;} = new();
-        public  class RFCTampering
+        public RFCTamperingModel RFCTampering {get;set;} = new();
+        public class RFCTamperingModel
         {
-             public SDK2 _SDK2 {get;set;} = new();
-                public class SDK2
+                public SDK2Model SDK2 {get; set;} = new();
+                public class SDK2Model
                 {
                      public bool EnforceToAll { get; set; } = false;
                 }
         } 
     }
     
-    public class Player
+    public class PlayerModel
     {
-        public Airborn _Airborn { get; set; } = new();
-        public Grounded _Grounded { get; set; } = new();
+        public AirbornModel Airborn { get; set; } = new();
+        public GroundedModel Grounded { get; set; } = new();
 
-        public class Airborn
+        public class AirbornModel
         {
-            public Flight _Flight { get; set; } = new();
+            public FlightModel Flight { get; set; } = new();
             public float Gravity {get; set;}
 
-            public class Flight
+            public class FlightModel
             {
                 public bool Enabled { get; set; } = false;
                 public float? Speed { get; set; } = 6.5f;
             }
         }
         
-        public class Grounded
+        public class GroundedModel
         {
             public float? WalkSpeed { get; set; } = 6.5f;
             public float? RunSpeed { get; set; } = 6.5f;
@@ -53,18 +56,18 @@ public class Config
         }
     }
     
-    public class Render
+    public class RenderModel
     {
-        public Overlays _Overlays { get; set; } = new();
+        public OverlaysModel Overlays { get; set; } = new();
         
-        public class Overlays
+        public class OverlaysModel
         {
-            public ESP _ESP { get; set; } = new();
-            public Chams _Chams { get; set; } = new();
+            public ESPModel ESP { get; set; } = new();
+            public ChamsModel Chams { get; set; } = new();
             public bool Player_Wallhack { get; set; } = false;
             public bool Nameplate_Wallhack { get; set; } = false;
 
-            public class ESP
+            public class ESPModel
             {
                 public bool Enabled { get; set; }
                 public bool Nameplates { get; set; }
@@ -75,7 +78,7 @@ public class Config
                 public bool Outlines { get; set; }
             }
             
-            public class Chams
+            public class ChamsModel
             {
                 public bool Enabled { get; set; }
                 public bool UseBaseColor { get; set; }
@@ -84,11 +87,11 @@ public class Config
         }
     }
     
-    public class Logging
+    public class LoggingModel
     {
-        public Game _Game { get; set; } = new();
+        public GameModel Game { get; set; } = new();
         
-        public class Game
+        public class GameModel
         {
             public bool PhotonEvents { get; set; } = false;
             public bool RPCs { get; set; } = false;
@@ -96,59 +99,59 @@ public class Config
         }
     }
 
-    public class Protection
+    public class ProtectionModel
     {
         // Empty for now
     }
 
-    public class Appearance
+    public class AppearanceModel
     {
-        public inGame _inGame { get; set; } = new();
-        
-        public class inGame
+        public inGameModel inGame { get; set; } = new();
+
+        public class inGameModel
         {
-            public FlatLoadingOverlay _FlatLoadingOverlay { get; set; } = new();
+            public FlatLoadingOverlayModel FlatLoadingOverlay { get; set; } = new();
             public string? QueueAudio { get; set; }
             public bool HideLoadingOverlay { get; set; }
             public string? Mm_Background { get; set; }
             public string? Qm_Background { get; set; }
-            
-            public class FlatLoadingOverlay 
-            { 
+
+            public class FlatLoadingOverlayModel
+            {
                 public string? Image { get; set; }
                 public string? Gif { get; set; }
-                
+
                 // Convert Unity Color to serializable format
                 [JsonIgnore]
                 public Color Tint { get; set; } = Color.white;
-                
+
                 [JsonProperty("Tint")]
                 public SerializableColor TintSerializable
                 {
-                    get => new SerializableColor(Tint);
+                    get => new(Tint);
                     set => Tint = value.ToColor();
                 }
-                
+
                 [JsonIgnore]
                 public Color Base { get; set; } = Color.white;
-                
+
                 [JsonProperty("Base")]
                 public SerializableColor BaseSerializable
                 {
-                    get => new SerializableColor(Base);
+                    get => new(Base);
                     set => Base = value.ToColor();
                 }
-            } 
+            }
         }
     }
 
-    public class Advanced
+    public class AdvancedModel
     {
         public bool DebugMode { get; set; } = false;
     }
 
     // Serializable Color struct to avoid Unity Color circular references
-    [System.Serializable]
+    [Serializable]
     public struct SerializableColor
     {
         public float r, g, b, a;
@@ -189,20 +192,20 @@ public class Config
     {
         try
         {
-            JsonSerializerSettings options = new JsonSerializerSettings
+            JsonSerializerSettings options = new()
             {
                 Formatting = Formatting.Indented,
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 TypeNameHandling = TypeNameHandling.None
             };
-            
+
             string json = JsonConvert.SerializeObject(config, options);
             File.WriteAllText(path, json);
         }
         catch (Exception ex)
         {
-            // Use MelonLoader logging if available, otherwise Debug.LogError
+            
             try
             {
                 MelonLoader.MelonLogger.Error($"Failed to save config: {ex.Message}");
@@ -218,17 +221,18 @@ public class Config
     {
         try
         {
-            if (!File.Exists(path)) 
+            if (!File.Exists(path))
                 return new Config();
 
+
             string json = File.ReadAllText(path);
-            JsonSerializerSettings options = new JsonSerializerSettings
+            JsonSerializerSettings options = new()
             {
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 TypeNameHandling = TypeNameHandling.None
             };
-            
+
             return JsonConvert.DeserializeObject<Config>(json, options) ?? new Config();
         }
         catch (Exception ex)

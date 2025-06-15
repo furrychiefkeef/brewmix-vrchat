@@ -41,18 +41,18 @@ namespace brewchat.hybridxcore.bep
             var Background = __instance.gameObject.transform.Find("FlatLoadingOverlay(Clone)/Container")
             .transform.FindChild("Canvas/Background").GetComponent<Image>();
 
-            if (Entry.config._Appearance._inGame.HideLoadingOverlay)
+            if (Entry.config.Appearance.inGame.HideLoadingOverlay)
             {
                 UnityEngine.Object.DestroyImmediate(Background, true);
                 return;
             }
-
-            // if (Config.Appearance.inGame.FlatLoadingOverlay.Image != null)
-            // {
-            //     Background.color = Config.Appearance.inGame.FlatLoadingOverlay.Tint;
-            //     /*var iso = GifLoader.CreateIsolatedImage(Background);
-            //     GifLoader.Instance.AddAnimatedGif(iso, new Uri(Config.Appearance.FlatLoadingOverlay));*/
-            // }
+            Background.color = Entry.config.Appearance.inGame.FlatLoadingOverlay.Tint;
+           /* if (Config.Appearance.inGame.FlatLoadingOverlay.Image != null)
+            {
+                
+                var iso = GifLoader.CreateIsolatedImage(Background);
+                GifLoader.Instance.AddAnimatedGif(iso, new Uri(Config.Appearance.FlatLoadingOverlay));
+            }*/
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
@@ -68,17 +68,18 @@ namespace brewchat.hybridxcore.bep
             if (__instance is null) return;
             AudioSource? LoadingScreenAudio = __instance.gameObject.transform.GetChild(1).GetComponent<AudioSource>();
             UnityEngine.Object.DestroyImmediate(LoadingScreenAudio);
-            EngineUtils.Assets.CreateAudio(new(Entry.config._Appearance._inGame.QueueAudio)).transform.parent = __instance.gameObject.transform;
+            EngineUtils.Assets.CreateAudio(new(Entry.config.Appearance.inGame.QueueAudio)).transform.parent = __instance.gameObject.transform;
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
+            QM.Main.NestedQMAppearance.Execute();
             QM.Main.Apply();
+  
             QM.Core.EnableRichText();
-            
-            
+
         } 
         
         [HarmonyPostfix, HarmonyPatch(typeof(SelectedUserMenuQM), nameof(SelectedUserMenuQM.Start))]
@@ -95,7 +96,7 @@ namespace brewchat.hybridxcore.bep
             if (__instance is null) return;
             MM.Main.Apply();
         }
-        
+
         #endregion
 
         #region VRC_API
@@ -176,7 +177,7 @@ namespace brewchat.hybridxcore.bep
         private static bool __RFCPatch_HOOK(ref VRC.Player __0, ref VRC_EventHandler.VrcEvent __1, ref VRC_EventHandler.VrcBroadcastType __2, ref int __3, ref float __4)
         {
 
-            if (!Entry.config._Modules._RFCTampering._SDK2.EnforceToAll)
+            if (!Entry.config.Modules.RFCTampering.SDK2.EnforceToAll)
             {
                 if (__0?.VRCPlayerApi?.displayName == APIUser.CurrentUser?.displayName)
                 {

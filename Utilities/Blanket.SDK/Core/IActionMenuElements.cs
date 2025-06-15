@@ -10,11 +10,34 @@ public class IActionMenuElements
 {
     public static Transform[] ActionMenus()
     {
-        return
-        [
+        try
+        {
+            // Use Resources.FindObjectsOfTypeAll to find inactive objects
+            var allTransforms = Resources.FindObjectsOfTypeAll<Transform>();
+
+            var actionMenuR = allTransforms.FirstOrDefault(t =>
+                t.name == "ActionMenu" &&
+                t.transform.parent?.name == "MenuR" &&
+                t.transform.parent?.parent?.name == "Container" &&
+                t.transform.parent?.parent?.parent?.name == "ActionMenu");
+
+            var actionMenuL = allTransforms.FirstOrDefault(t =>
+                t.name == "ActionMenu" &&
+                t.transform.parent?.name == "MenuL" &&
+                t.transform.parent?.parent?.name == "Container" &&
+                t.transform.parent?.parent?.parent?.name == "ActionMenu");
+
+            return new Transform[] { actionMenuR, actionMenuL }.Where(t => t != null).ToArray();
+        }
+        catch
+        {
+            // Fallback to original method if the above fails
+            return new Transform[]
+            {
             GameObject.Find("ActionMenu/Container/MenuR/ActionMenu")?.transform,
             GameObject.Find("ActionMenu/Container/MenuL/ActionMenu")?.transform
-        ];
+            }.Where(t => t != null).ToArray();
+        }
     }
 
     // Put RootObjects

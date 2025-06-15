@@ -267,7 +267,7 @@ namespace Brewchat.Game.Wrappers
                         if (trigger.gameObject.name.Contains(triggerobj))
                         {
                             trigger.Interact();
-                            if (!Entry.config._Advanced.DebugMode) 
+                            if (!Entry.config.Advanced.DebugMode) 
                                 UI.HUD.ToastV2("Sent Trigger", trigger.gameObject.name);
                             return;
                         }
@@ -514,7 +514,7 @@ namespace Brewchat.Game.Wrappers
                 {
                     if (inputfield == null)
                     {
-                        Object = new GameObject($"[{Entry.NAME}] Keyboard");
+                        Object = new GameObject($"[{Entry.entry.NAME}] Keyboard");
                         Object.transform.parent = IMainMenuElements.MMParent();
                         UnityEngine.Object.DontDestroyOnLoad(Object);
                         inputfield = Object.AddComponent<VRCInputField>();

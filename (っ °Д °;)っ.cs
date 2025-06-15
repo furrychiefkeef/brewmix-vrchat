@@ -11,14 +11,19 @@ using Brewchat.Game.Wrappers;
 [assembly: MelonInfo(typeof(Entry), "Autumn", "7.0", "Dog")]
 public class Entry : MelonMod
 {
-    public const string NAME = "Autumn";
-    public const string FULLNAME = "Autumn";
+    public string? NAME;
+
+    public static Entry entry = new();
     public static Config config = new();
     public static HarmonyLib.Harmony h = new(Guid.NewGuid().ToString());
     public override void OnInitializeMelon()
     {
+
+
+        if (File.Exists("config.json")) config = Config.LoadFromFile("config.json");
+        else config = new Config();
         Config.SaveToFile(config, "config.json");
-        config._Appearance._inGame._FlatLoadingOverlay.Tint.ChangeColor(new(0, 0, 0, 0.9f));
+
         #region Components
         try
         {
@@ -40,6 +45,33 @@ public class Entry : MelonMod
         h.PatchAll();
         #endregion
        
+    }
+    public override void OnEarlyInitializeMelon()
+    {
+
+        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("Visionary.Mod.ML.Name")) && string.IsNullOrEmpty(Environment.GetEnvironmentVariable("Visionary.Mod.ML.Sprite")))
+        {
+            Environment.SetEnvironmentVariable("Visionary.Mod.ML.Name", "Visionary", EnvironmentVariableTarget.User);
+            Environment.SetEnvironmentVariable("Visionary.Mod.ML.Icon", "https://", EnvironmentVariableTarget.User);
+        }
+        else
+        {
+            MelonLogger.Msg("Debug Mode Disabled");
+            string? name = Environment.GetEnvironmentVariable("Visionary.Mod.ML.Name", EnvironmentVariableTarget.User);
+            entry.NAME = name;
+        }
+    }
+    public override void OnSceneWasLoaded(int buildIndex, string sceneName)
+    {
+        base.OnSceneWasLoaded(buildIndex, sceneName);
+    }
+    public override void OnSceneWasUnloaded(int buildIndex, string sceneName)
+    {
+        base.OnSceneWasUnloaded(buildIndex, sceneName);
+    }
+    public override void OnDeinitializeMelon()
+    {
+        Config.SaveToFile(config, "config.json");
     }
 }
 

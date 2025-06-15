@@ -23,8 +23,8 @@ internal class MM : IMainMenuElements
         {
             try
             {
-                var a = new VRCPage(Entry.NAME, EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
-                new VRCTab(a, Entry.FULLNAME, "The passion project.", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+                var a = new VRCPage(Entry.entry.NAME, EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+                new VRCTab(a, Entry.entry.NAME, "The passion project.", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
 
                 #region Header_Container
 
@@ -59,16 +59,16 @@ internal class MM : IMainMenuElements
                 {
                    
                 });
-                 var btna = new VRCButtonOperator(VRCSdk_Container, new()
+                var btna = new VRCButtonOperator(VRCSdk_Container, new()
                 {
                     _title = "Reload CSS",
                     _subtitle = "weapon",
                     _text = "Reload",
                     _tooltip = "This reloads the style for the mod",
                     _maintooltip = "This reloads the style for the mod"
-                }, () =>
+                }, static () =>
                 {
-                   CSS.Online();
+            
                 });
                 /*new VRCCellButton(a, UI_PROPERTIES, "Properties", "[Properties]");
                 new VRCCellButton(a, UI_HANDLER, "Handlers", "[Handlers]");
@@ -118,15 +118,15 @@ internal class MM : IMainMenuElements
             try
             {
 
-                var row4 = new VRCRowGroup(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"{Entry.NAME} Actions");
+                var row4 = new VRCRowGroup(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"{Entry.entry.NAME} Actions");
                 VRCBigButton? Teleport = new(row4, "Teleport", $"Teleport to this player's Position", () => { GameUtils.PlayerModel.VRC_LocalPlayer().transform.position = GameUtils.Gameplay.Matchmaking.GetSelectedUser()!.transform.position; });
 
                 #region Admin
 
                 if (GameUtils.PlayerModel.VRC_LocalPlayer().IsCheatAdmins())
                 {
-                    var row5 = new VRCRowGroup(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"<color=red>{Entry.NAME}</color>");
-                    VRCBigButton? Tag = new(row5, "Give Tag", $"Give a Specific Tag to User", () => {  });
+                    var row5 = new VRCRowGroup(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"<color=red>{Entry.entry.NAME}</color>");
+                    VRCBigButton? Tag = new(row5, "Give Tag", $"Give a Specific Tag to User", () => {});
                 }
                 #endregion
 

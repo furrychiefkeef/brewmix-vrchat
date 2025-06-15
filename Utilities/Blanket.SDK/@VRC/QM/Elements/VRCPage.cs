@@ -62,7 +62,7 @@ internal class VRCPage : IQuickMenuElements
 
             QM().field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0 = List.ToArray();
 
-            if (Entry.config._Advanced.DebugMode)
+            if (Entry.config.Advanced.DebugMode)
             {
                 /*foreach (var VARIABLE in QM().field_Protected_MenuStateController_0
                              .field_Public_Il2CppReferenceArray_1_UIPage_0.ToList())

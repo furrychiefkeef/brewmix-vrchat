@@ -34,7 +34,7 @@ internal class PlayerModule
 
                 #region LOGIC
 
-                switch (Entry.config._Player._Airborn._Flight.Enabled)
+                switch (Entry.config.Player.Airborn.Flight.Enabled)
                 {
                     case true:
                        

@@ -31,7 +31,9 @@
     <EmbeddedResource Include="Assets\Prefabs\*.bundle" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Textures\" />
+    <EmbeddedResource Remove="Assets\Textures\UI\Icons\address-book.astrieksprites" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Cheat\Modules\Local\" />
     <Folder Include="Utilities\Blanket.SDK\@VRC\MM\Controls\Cell\" />
     <Folder Include="Utilities\Puller\" />

@@ -40,7 +40,7 @@ namespace BlanketSDK.Core
             /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
         }
 
-        protected static class MMControls
+        public static class MMControls
         {
             // Put Controls
             public static Transform Tab() { return MainMenu().transform.FindChild("PageButtons/HorizontalLayoutGroup/Launch_Pad_Button_Tab"); }

@@ -1,15 +1,28 @@
 ﻿using BlanketSDK.Utilities;
-using BlanketSDK.Core;    
+using BlanketSDK.Core;
 using Brewchat.Game.Wrappers;
 using MaterialEditing.UI;
-using MelonLoader; 
+using MelonLoader;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
+using VRC.Core;
+using VRC.UI;
 
 namespace Brewchat.Cheat.Modules
 {
+    public class GetCurrentThemeData
+    {
+        public static Color Highlight
+        {
+            get
+            {
+                Color originalColor = IMainMenuElements.MMControls.Buttons.SingleButton().FindChild("Background_SelectedState").GetComponent<ImageEx>().color;
+                return new Color(originalColor.r, originalColor.g, originalColor.b, 1f); // Adjust alpha for highlight effect
+            }
+        }
+    }       
     internal static class ThemeData
     {
        // Primary Theme Colors
@@ -100,7 +113,7 @@ namespace Brewchat.Cheat.Modules
 
     internal class CSS : UnityEngine.MonoBehaviour
     {
-        public CSS(IntPtr ptr) : base(ptr){}
+        public CSS(IntPtr ptr) : base(ptr) {}
         public static CSS? Instance { get; private set; }
         // public static PlayerNameplate _nameplate; // Unused field removed
 
@@ -135,14 +148,7 @@ namespace Brewchat.Cheat.Modules
             #endregion
         }
 
-        public static void Online()
-        {
-            ApplyAdvancedMenuBackgrounds();
-            ApplyActionMenuStyling();
-            ApplyGlobalStyleEngineColors();
-        }
-
-        private static void ApplyAdvancedMenuBackgrounds()
+        public static void ApplyAdvancedMenuBackgrounds()
         {
             #region UI Backgrounds
             foreach (GameObject advancedMenuObject in Templates.AdvancedMenus)
@@ -156,7 +162,7 @@ namespace Brewchat.Cheat.Modules
                     continue;
                 }
 
-                Texture2D? texture = EngineUtils.Assets.Texture(new Uri("https://github.com/riotlu/fake-cdn/blob/master/FurryOrgy_1.png?raw=true"));
+                Texture2D? texture = EngineUtils.Assets.Texture(new Uri(Entry.config.Appearance.inGame.Qm_Background));
                 if (texture == null)
                 {
                     MelonLogger.Msg($"Failed to load texture for AdvancedMenus background from URI.", 2);
@@ -183,92 +189,192 @@ namespace Brewchat.Cheat.Modules
             #endregion
         }
 
-        private static void ApplyActionMenuStyling()
+        public static void ApplyActionMenuStyling()
         {
             #region ActionMenu
-            foreach (var actionMenuInstance in IActionMenuElements.ActionMenus())
+            foreach (Transform actionMenuInstance in IActionMenuElements.ActionMenus())
             {
                 if (actionMenuInstance == null) continue;
 
-                Transform? actionMenuRoot = actionMenuInstance.transform.GetChild(0);
+                // Get action menu root - check if it has enough children
+                if (actionMenuInstance.childCount == 0)
+                {
+                    MelonLogger.Msg("ActionMenu has no children.", 2);
+                    continue;
+                }
+
+                Transform actionMenuRoot = actionMenuInstance.GetChild(0);
                 if (actionMenuRoot == null)
                 {
                     MelonLogger.Msg("ActionMenu root transform (child 0) not found.", 2);
                     continue;
                 }
 
-                // Dividers
-                Transform? dividerContainerParent = actionMenuRoot.GetChild(2);
-                if (dividerContainerParent != null)
-                {
-                    // The original code casts to Il2CppSystem.Collections.IEnumerable.
-                    // This implies dividerContainerParent might not be a simple Transform whose children are dividers,
-                    // but an Il2Cpp object that *is* a collection or wraps one.
-                    Il2CppSystem.Object il2cppDividerContainer = dividerContainerParent.Cast<Il2CppSystem.Object>(); // Assuming GetChild returns a Component/GameObject, then cast to object
-                    Il2CppSystem.Collections.IEnumerable? childrenCollection = il2cppDividerContainer?.Cast<Il2CppSystem.Collections.IEnumerable>();
+                // Apply Dividers Styling
+                ApplyDividerStyling(actionMenuRoot);
 
-                    if (childrenCollection == null)
+                // Apply Background Graphic
+                ApplyBackgroundGraphic(actionMenuRoot);
+
+                // Apply Cursor Graphic  
+                ApplyCursorGraphic(actionMenuRoot);
+
+                // Remove Center Graphic
+                RemoveCenterGraphic(actionMenuRoot);
+            }
+            #endregion
+        }
+
+
+        private static void ApplyDividerStyling(Transform actionMenuRoot)
+        {
+            try
+            {
+                // Dividers are typically at child index 2
+                if (actionMenuRoot.childCount > 2)
+                {
+                    Transform dividerContainer = actionMenuRoot.GetChild(2);
+                    if (dividerContainer != null)
                     {
-                        MelonLogger.Msg("ActionMenu divider container's children collection is null or not IEnumerable.", 2);
-                    }
-                    else
-                    {
-                        foreach (var childIl2CppObj in childrenCollection)
+                        // Iterate through all divider children
+                        for (int i = 0; i < dividerContainer.childCount; i++)
                         {
-                            if (childIl2CppObj == null) continue;
-                            Transform? childTransform = childIl2CppObj.Cast<Transform>(); // Assumes elements are Transforms
+                            Transform childTransform = dividerContainer.GetChild(i);
                             if (childTransform == null) continue;
 
+                            // Find all divider components recursively
                             var dividers = childTransform.GetComponentsInChildren<Transform>(true)
-                                .Where(t => t != null && t.name == "Divider(Clone)");
+                                .Where(t => t != null && t.name.Contains("Divider"));
 
                             foreach (Transform dividerTransform in dividers)
                             {
-                                Image? image = dividerTransform.GetComponentInChildren<Image>(true);
-                                if (image != null)
+                                Image dividerImage = dividerTransform.GetComponentInChildren<Image>(true);
+                                if (dividerImage != null)
                                 {
-                                    image.color = ThemeData.BG; // Using specific config color
-                                    Sprite? dividerSprite = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.action_menu_divider)?.ToSprite();
-                                    if (dividerSprite != null) image.sprite = dividerSprite;
-                                    else MelonLogger.Msg("Failed to load action_menu_divider sprite.", 1);
+                                    dividerImage.color = ThemeData.BG;
+
+                                    // Apply custom divider texture
+                                    try
+                                    {
+                                        Texture2D dividerTexture = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.action_menu_divider);
+                                        if (dividerTexture != null)
+                                        {
+                                            Sprite dividerSprite = dividerTexture.ToSprite();
+                                            if (dividerSprite != null)
+                                                dividerImage.sprite = dividerSprite;
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MelonLogger.Error($"Failed to apply divider texture: {ex.Message}");
+                                    }
                                 }
                             }
                         }
                     }
                 }
-                else MelonLogger.Msg("ActionMenu divider container (child 0 -> child 2) not found.", 2);
-
-
-                // Background Graphic
-                PedalGraphic? backgroundGraphic = actionMenuRoot.GetChild(1)?.GetComponent<PedalGraphic>();
-                if (backgroundGraphic != null)
-                {
-                    backgroundGraphic._texture = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.action_menu_bg);
-                    backgroundGraphic.color =  Color.white;
-                }
-                else MelonLogger.Msg("ActionMenu background PedalGraphic (child 0 -> child 1) not found.", 1);
-
-                // Cursor Graphic
-                Image? cursorImage = actionMenuRoot.GetChild(4)?.GetComponent<Image>();
-                if (cursorImage != null)
-                {
-                    Sprite? cursorSprite = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.action_menu_joystick)?.ToSprite();
-                    if (cursorSprite != null) cursorImage.sprite = cursorSprite;
-                    else MelonLogger.Msg("Failed to load action_menu_joystick sprite.", 1);
-                    cursorImage.color = Color.white;
-                }
-                else MelonLogger.Msg("ActionMenu cursor Image (child 0 -> child 4) not found.", 1);
-
-                // Center Removable Graphic
-                PedalGraphic? centerRemovable = actionMenuRoot.GetChild(0)?.GetComponent<PedalGraphic>();
-                if (centerRemovable != null)
-                {
-                    DestroyImmediate(centerRemovable, true);
-                }
-                // else sconsole.print("ActionMenu center PedalGraphic (child 0 -> child 0) not found for removal.", 0); // Optional log
             }
-            #endregion
+            catch (Exception ex)
+            {
+                MelonLogger.Error($"Error applying divider styling: {ex.Message}");
+            }
         }
+
+        private static void ApplyBackgroundGraphic(Transform actionMenuRoot)
+        {
+            try
+            {
+                // Background is typically at child index 1
+                if (actionMenuRoot.childCount > 1)
+                {
+                    Transform backgroundChild = actionMenuRoot.GetChild(1);
+                    if (backgroundChild != null)
+                    {
+                        PedalGraphic backgroundGraphic = backgroundChild.GetComponent<PedalGraphic>();
+                        if (backgroundGraphic != null)
+                        {
+                            Texture2D bgTexture = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.action_menu_bg);
+                            if (bgTexture != null)
+                            {
+                                backgroundGraphic._texture = bgTexture;
+                                backgroundGraphic.color = GetCurrentThemeData.Highlight; // Use theme color instead of hardcoded
+                            }
+                            else
+                            {
+                                MelonLogger.Msg("Failed to load action_menu_bg texture.", 1);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Error($"Error applying background graphic: {ex.Message}");
+            }
+        }
+
+        private static void ApplyCursorGraphic(Transform actionMenuRoot)
+        {
+            try
+            {
+                // Cursor is typically at child index 4
+                if (actionMenuRoot.childCount > 4)
+                {
+                    Transform cursorChild = actionMenuRoot.GetChild(4);
+                    if (cursorChild != null)
+                    {
+                        Image cursorImage = cursorChild.GetComponent<Image>();
+                        if (cursorImage != null)
+                        {
+                            Texture2D cursorTexture = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.action_menu_joystick);
+                            if (cursorTexture != null)
+                            {
+                                Sprite cursorSprite = cursorTexture.ToSprite();
+                                if (cursorSprite != null)
+                                {
+                                    cursorImage.sprite = cursorSprite;
+                                    cursorImage.color = GetCurrentThemeData.Highlight; // Use consistent theme color
+                                }
+                            }
+                            else
+                            {
+                                MelonLogger.Msg("Failed to load action_menu_joystick texture.", 1);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Error($"Error applying cursor graphic: {ex.Message}");
+            }
+        }
+
+        private static void RemoveCenterGraphic(Transform actionMenuRoot)
+        {
+            try
+            {
+                // Center graphic is typically at child index 0
+                if (actionMenuRoot.childCount > 0)
+                {
+                    Transform centerChild = actionMenuRoot.GetChild(0);
+                    if (centerChild != null)
+                    {
+                        PedalGraphic centerRemovable = centerChild.GetComponent<PedalGraphic>();
+                        if (centerRemovable != null)
+                        {
+                            UnityEngine.Object.DestroyImmediate(centerRemovable, true);
+                            MelonLogger.Msg("Successfully removed center graphic.", 0);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Error($"Error removing center graphic: {ex.Message}");
+            }
+        }
+
 
         private static void ApplyGlobalStyleEngineColors()
         {
