@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using VRC.UI.Elements;
+using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.Core;
 
@@ -13,6 +14,7 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
     protected static QuickMenu? QM() => UnityEngine.Object.FindObjectOfType<QuickMenu>();
     public static Transform QMParent() => QuickMenu().transform.FindChild("Container/Window/QMParent");
     public static Transform QMWidgetParent() => QMParent().parent.transform.FindChild("Panel_QM_Widget");
+    public static Transform QMTooltipPanel() => QMParent().parent.transform.FindChild("ToolTipPanel/Panel/Vertical Layout");
     protected class QMMenus
     {
         public static Transform WingMenu(string position) => QuickMenu().transform.FindChild($"Container/Window/Wing_{position}/Container/InnerContainer");
@@ -102,14 +104,8 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
             DevTools,
         }
     }
-}
-
-
-class W_I_P
-{
-    /*public static Transform Menu_Notifcations() => QMParent().transform.FindChild("Menu_Notifications");
-    public static Transform Menu_Camera() => QMParent().transform.FindChild("Menu_Camera");
-    public static Transform Menu_Here() => QMParent().transform.FindChild("Menu_Here");
-    public static Transform Menu_ReportHere() => QMParent().transform.FindChild("Menu_QM_ReportHere");
-    public static Transform Menu_Settings() => QMParent().transform.FindChild("Menu_QM_GeneralSettings");*/
+    internal class Misc
+    {
+        public static TextMeshProUGUIEx? TooltipText{ get; set;} = QMTooltipPanel().GetComponentInChildren<TextMeshProUGUIEx>();
+    }
 }

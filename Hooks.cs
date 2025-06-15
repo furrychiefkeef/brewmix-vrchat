@@ -1,5 +1,4 @@
-﻿
-using Brewchat;
+﻿using Brewchat;
 using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
@@ -21,15 +20,14 @@ namespace brewchat.hybridxcore.bep
     internal class Hooks
     {
         #region INTERNAL_CORE
-        
         [HarmonyPostfix, HarmonyPatch(typeof(VRCApplication), nameof(VRCApplication.Awake))]
         public static void DomainApp_Initialize_HOOK(ref VRCApplication? __instance)
         {
-            if (__instance is null) return; 
-
-            __instance?.gameObject.GetOrAddComponentSafe<CSS>();
-            __instance?.gameObject.GetOrAddComponentSafe<KeybindManager>();
-            __instance?.gameObject.GetOrAddComponentSafe<Toolbox>();
+            if (__instance is null) return;
+            autumn.ml.Initalizers.SetConfig();
+            _ = __instance?.gameObject.GetOrAddComponentSafe<CSS>();
+            _ = __instance?.gameObject.GetOrAddComponentSafe<KeybindManager>();
+            _ = __instance?.gameObject.GetOrAddComponentSafe<Toolbox>();
         }
 
         #endregion
@@ -37,26 +35,24 @@ namespace brewchat.hybridxcore.bep
         #region INTERNAL_UI
 
         [HarmonyPostfix, HarmonyPatch(typeof(LoadingOverlayController), nameof(LoadingOverlayController.Start))]
-        public static void FlatLoadingOverlay_Initialize_HOOK(ref LoadingOverlayController __instance)
+        public static void FlatLoadingOverlay_Initialize_HOOK(ref LoadingOverlayController? __instance)
         {
             if (__instance is null) return;
             var Background = __instance.gameObject.transform.Find("FlatLoadingOverlay(Clone)/Container")
             .transform.FindChild("Canvas/Background").GetComponent<Image>();
 
-            if (Config.Appearance.inGame.HideLoadingOverlay)
+            if (Entry.config._Appearance._inGame.HideLoadingOverlay)
             {
                 UnityEngine.Object.DestroyImmediate(Background, true);
                 return;
             }
 
-            if (Config.Appearance.inGame.FlatLoadingOverlay != null)
-            {
-
-                Background.color = new Color(0, 0, 0, 0.9f);
-                /*var iso = GifLoader.CreateIsolatedImage(Background);
-                GifLoader.Instance.AddAnimatedGif(iso, new Uri(Config.Appearance.FlatLoadingOverlay));*/
-
-            }
+            // if (Config.Appearance.inGame.FlatLoadingOverlay.Image != null)
+            // {
+            //     Background.color = Config.Appearance.inGame.FlatLoadingOverlay.Tint;
+            //     /*var iso = GifLoader.CreateIsolatedImage(Background);
+            //     GifLoader.Instance.AddAnimatedGif(iso, new Uri(Config.Appearance.FlatLoadingOverlay));*/
+            // }
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
@@ -72,17 +68,17 @@ namespace brewchat.hybridxcore.bep
             if (__instance is null) return;
             AudioSource? LoadingScreenAudio = __instance.gameObject.transform.GetChild(1).GetComponent<AudioSource>();
             UnityEngine.Object.DestroyImmediate(LoadingScreenAudio);
-            EngineUtils.Assets.CreateAudio(new(Config.Appearance.QueueAudio)).transform.parent = __instance.gameObject.transform;
-
+            EngineUtils.Assets.CreateAudio(new(Entry.config._Appearance._inGame.QueueAudio)).transform.parent = __instance.gameObject.transform;
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
-            if (__instance is null) return;
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
-            Widgets.QM.Initalize();
             QM.Main.Apply();
+            QM.Core.EnableRichText();
+            
+            
         } 
         
         [HarmonyPostfix, HarmonyPatch(typeof(SelectedUserMenuQM), nameof(SelectedUserMenuQM.Start))]
@@ -179,7 +175,8 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.Method_Public_Void_Player_VrcEvent_VrcBroadcastType_Int32_Single_0))]
         private static bool __RFCPatch_HOOK(ref VRC.Player __0, ref VRC_EventHandler.VrcEvent __1, ref VRC_EventHandler.VrcBroadcastType __2, ref int __3, ref float __4)
         {
-            if (!Config.Exploits.RPC_ForceGlobal)
+
+            if (!Entry.config._Modules._RFCTampering._SDK2.EnforceToAll)
             {
                 if (__0?.VRCPlayerApi?.displayName == APIUser.CurrentUser?.displayName)
                 {

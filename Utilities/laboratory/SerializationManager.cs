@@ -1,7 +1,6 @@
 ﻿
 namespace Pasted.WTFBlaze.Utils.Managers
 {
-    
     /// <summary>
     /// [pasted utils]
     /// </summary>

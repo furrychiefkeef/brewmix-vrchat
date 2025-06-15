@@ -10,3 +10,9 @@ dotnet_diagnostic.CS8602.severity = warning
 
 # Default severity for all analyzer diagnostics
 dotnet_analyzer_diagnostic.severity = warning
+
+[*.cs]
+dotnet_diagnostic.IDE0005.severity = none  # Unnecessary using
+dotnet_diagnostic.IDE0051.severity = none  # Unused private member
+dotnet_diagnostic.IDE0052.severity = none  # Unread private member
+dotnet_diagnostic.CS0219.severity = none   # Unused variable

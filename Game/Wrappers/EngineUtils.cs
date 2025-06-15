@@ -267,4 +267,10 @@ public static class ObjectExtension
     
 }
 
-
+public static class ComponentExtensions
+{
+    public static Color ChangeColor(this Color x, Color color)
+    {
+        return x = color;
+    }
+}

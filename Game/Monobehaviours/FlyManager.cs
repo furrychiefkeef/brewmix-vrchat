@@ -1,7 +1,5 @@
 ﻿using Brewchat.Game.Wrappers;
 using UnityEngine;
-using VRC.Animation;
-using VRC.SDKBase;
 
 namespace Brewchat.Game.Monobehaviours;
 
@@ -19,7 +17,7 @@ internal class FlyManager : UnityEngine.MonoBehaviour
     void Controller()
     {
         
-        float speed = (float)(Input.GetKey(KeyCode.LeftShift) ? (Config.Player.Airborn.Fly.Speed * 5f) : Config.Movement.Speed)!;
+        float speed = (float)(Input.GetKey(KeyCode.LeftShift) ? (Entry.config._Player._Airborn._Flight.Speed * 5f) : Entry.config._Player._Airborn._Flight.Speed)!;
     
         if (transform is null || GameUtils.Gameplay.CallbackEvents.IsInMainMenu()) return;
 
@@ -38,7 +36,7 @@ internal class FlyManager : UnityEngine.MonoBehaviour
             if (targetDirection != Vector3.zero) velocity = Vector3.Lerp(velocity, targetDirection * speed, acceleration * Time.deltaTime);
             else velocity = Vector3.Lerp(velocity, Vector3.zero, deceleration * Time.deltaTime);
         }*/
-        transform.position += targetDirection * (speed * Time.deltaTime) ;
+        transform.position += targetDirection * (speed * Time.deltaTime);
 
         if (AllowRotation) transform.rotation = GameUtils.Camera.Get.transform.rotation;
     }

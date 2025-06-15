@@ -2,27 +2,27 @@
 using Brewchat.Game.Monobehaviours;
 using HarmonyLib;
 
-
 using MelonLoader;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 using VRC.SDKBase;
+using Brewchat.Game.Wrappers;
 
-[assembly: MelonInfo(typeof(Entry), "Autumn", "88", "as")]
+[assembly: MelonInfo(typeof(Entry), "Autumn", "7.0", "Dog")]
 public class Entry : MelonMod
 {
     public const string NAME = "Autumn";
     public const string FULLNAME = "Autumn";
+    public static Config config = new();
     public static HarmonyLib.Harmony h = new(Guid.NewGuid().ToString());
-    public static Brewchat.Config? _Config {get; set;}
     public override void OnInitializeMelon()
     {
-       
-        _Config.Instance.Tint = new Color(0, 0, 0, 0.9f);
+        Config.SaveToFile(config, "config.json");
+        config._Appearance._inGame._FlatLoadingOverlay.Tint.ChangeColor(new(0, 0, 0, 0.9f));
         #region Components
         try
         {
-           
+            
             foreach (Type monos in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(MonoBehaviour))))
             {
                 MelonLogger.Msg($"Registering Monobehaviours: {monos.Name}");
@@ -36,7 +36,8 @@ public class Entry : MelonMod
         #endregion
         
         #region ASSEMBLY_CORE_STUFF
-        /*h.PatchAll();*/
+        
+        h.PatchAll();
         #endregion
        
     }

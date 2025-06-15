@@ -28,7 +28,7 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
             }
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F))
             {
-                Config.Movement.fly = !Config.Movement.fly;
+                Entry.config._Player._Airborn._Flight.Enabled = !Entry.config._Player._Airborn._Flight.Enabled;
             }
             
             #region Camera

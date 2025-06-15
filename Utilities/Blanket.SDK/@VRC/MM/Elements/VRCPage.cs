@@ -69,12 +69,6 @@ internal class VRCPage : IMainMenuElements
                 .ToList(); List?.Add(page);
 
             MM().field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0 = List.ToArray();
-
-            if (Config.Advanced.DebugMode)
-            {
-                foreach (var VARIABLE in MM().field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0.ToList());
-
-            }
         }
 
         #endregion

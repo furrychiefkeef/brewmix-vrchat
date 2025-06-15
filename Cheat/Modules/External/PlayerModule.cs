@@ -7,8 +7,7 @@ using UnityEngine;
 using VRC;
 using VRC.Animation;
 using VRC.Core;
-
-
+using VRC.SDKBase;
 
 namespace Brewchat.Cheat.Modules;
 
@@ -27,7 +26,7 @@ internal class PlayerModule
             {
                 #region REQUIRED_COMPONENTS
             
-                VRCMotionState? motion_state = player.GetComponent<VRC.Animation.VRCMotionState>();
+                VRCMotionState? motion_state = player.GetComponent<VRCMotionState>();
                 FlyManager? fly_component = player.gameObject.GetOrAddComponentSafe<FlyManager>();
                 CharacterController? characterController = player.GetComponent<CharacterController>();
 
@@ -35,7 +34,7 @@ internal class PlayerModule
 
                 #region LOGIC
 
-                switch (Config.Movement.Airborn.Fly)
+                switch (Entry.config._Player._Airborn._Flight.Enabled)
                 {
                     case true:
                        
@@ -69,8 +68,8 @@ internal class PlayerModule
             #region REQUIRED_COMPONENTS
 
             Player player = GameUtils.PlayerModel.VRC_LocalPlayer();
-            var player_motion = GameUtils.PlayerModel.Motion.Networking.Jump_Impulse();
-            var cache_player_jump_ = player_motion.GetJumpImpulse();
+            VRCPlayerApi player_motion = GameUtils.PlayerModel.Motion.Networking.Jump_Impulse();
+            float cache_player_jump_ = player_motion.GetJumpImpulse();
 
             #endregion
 
@@ -154,11 +153,11 @@ internal class PlayerModule
             return null;
         }
         private static int currentView = -1;
-        public static UnityEngine.Camera[] camera = new UnityEngine.Camera[3];
+        public static Camera[] camera = new Camera[3];
         public static void CameraController()
         {
            
-            if (camera == null) camera = new UnityEngine.Camera[3];
+            if (camera == null) camera = new Camera[3];
             if (camera[0] == null && camera[1] == null && camera[2] == null)
             { 
                 
@@ -166,7 +165,6 @@ internal class PlayerModule
                 camera[1] = MakeCameras(View.second_person);
                 camera[2] = MakeCameras(View.freecam);
             }
-            Widgets.QM.cameramode_widget.SetState(true);
             currentView = (currentView + 1) % 4;
             if (camera[0] != null && camera[1] != null && camera[2] != null)
             {
@@ -174,21 +172,21 @@ internal class PlayerModule
                 switch (currentView)
                 {
                     case 0:
-                        Widgets.QM.cameramode_widget.SetText($"Third Person");
+                        // Widgets.QM.cameramode_widget.SetText($"Third Person");
                         GameUtils.UI.HUD.ToastV1("Third Person Activated!");
                         camera[0].enabled = true;
                         camera[1].enabled = false;
                         camera[2].enabled = false;
                         break;
                     case 1:
-                        Widgets.QM.cameramode_widget.SetText($"Second Person");
+                        // Widgets.QM.cameramode_widget.SetText($"Second Person");
                         GameUtils.UI.HUD.ToastV1("Second Person Activated!");
                         camera[0].enabled = false;
                         camera[1].enabled = true;
                         camera[2].enabled = false;
                         break;
                     case 2:
-                        Widgets.QM.cameramode_widget.SetText($"FreeCam");
+                        // Widgets.QM.cameramode_widget.SetText($"FreeCam");
                         GameUtils.UI.HUD.ToastV1("FreeCam Activated! Right Click (To Move Camera)");
                         camera[0].enabled = false;
                         camera[1].enabled = false;
@@ -197,7 +195,7 @@ internal class PlayerModule
                     case 3:
                         GameUtils.UI.HUD.ToastV1("Cameras Destoryed");
                         DestoryCameras(); 
-                        Widgets.QM.cameramode_widget.SetState(false);
+                        // Widgets.QM.cameramode_widget.SetState(false);
                         break;
                 }
             }

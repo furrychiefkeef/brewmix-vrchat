@@ -63,9 +63,12 @@ class VRCButtonOperator : IMainMenuElements
         Title.richText = true;
 
         __0._subtitle.transform.gameObject.SetActive(true);
-        __0._subtitle.text = parameters._subtitle;
+        TextMeshProUGUIEx Subtitles = __0._subtitle;
+        Subtitles.richText = true; 
+        Subtitles.text = parameters._tooltip;
 
-        _0._button._tooltip._localizableString = parameters._tooltip.Localizable();
+        ToolTip _tooltip = _0._button._tooltip;
+        _tooltip._localizableString = parameters._tooltip.Localizable();
         #endregion
     }
     public VRCButtonOperator(VRCCellContainer panel, VRCParams parameters, System.Action func, bool state = false)

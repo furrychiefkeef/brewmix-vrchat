@@ -19,7 +19,7 @@ namespace BlanketSDK.QM.Elements.Modals
         {
             if (!QuickMenu() | !QMElements.FourButtons_Modal()) throw new($"modal or quickmenu has moved to a different location or been altered: " + $"{autumn.ml.Properties.Resources.D_Contact}");
             _obj = UnityEngine.Object.Instantiate(QMElements.FourButtons_Modal(), QMParent());
-            _obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MODAL_CONTAINER-{header}";
+            _obj.name = $"{Guid.NewGuid()}-<Blanket.SDK.MODAL_CONTAINER-{header}";
             Name = $"Menu_{header}";
            
             
@@ -44,9 +44,9 @@ namespace BlanketSDK.QM.Elements.Modals
             behaviours.Clear();
             
             behaviours.Add(_obj.GetComponent<MonoBehaviourPublicObReBoVeUnique>(), true);
-            behaviours.Add(_obj.GetComponent<UnityEngine.Canvas>(), true);
-            behaviours.Add(_obj.GetComponent<UnityEngine.CanvasGroup>(), true);
-            behaviours.Add(_obj.GetComponent<UnityEngine.UI.GraphicRaycaster>(), true);
+            behaviours.Add(_obj.GetComponent<Canvas>(), true);
+            behaviours.Add(_obj.GetComponent<CanvasGroup>(), true);
+            behaviours.Add(_obj.GetComponent<GraphicRaycaster>(), true);
 
             Il2CppSystem.Collections.Generic.List<RectMask2D>? Rect2D = ModalLogic.field_Private_List_1_RectMask2D_0;
             Rect2D.Clear();
@@ -93,7 +93,7 @@ namespace BlanketSDK.QM.Elements.Modals
 
             #region BUTTONS_MODAL_CONTAINER
             VRCButtonHandle _2_ButtonClose = _obj.GetChild(1).GetChild(3).GetChild(0).GetComponent<VRCButtonHandle>();
-            UnityEngine.UI.Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_NO = _2_ButtonClose.onClick;
+            Button.ButtonClickedEvent? BUTTONCLICKED_EVENT_NO = _2_ButtonClose.onClick;
             #endregion
 
             #region BUTTONS_MODAL_CONTAINER_UNUSED
@@ -104,12 +104,6 @@ namespace BlanketSDK.QM.Elements.Modals
 
         }
 
-        
-
-            
-        public void Open()
-        { 
-            QM()?.field_Protected_MenuStateController_0.Method_Public_Void_UIPage_UIContext_Boolean_TransitionType_0(ModalLogic, null, true, UIPage.TransitionType.InPlace);
-        }
+        public void Open() => QM()?.field_Protected_MenuStateController_0.Method_Public_Void_UIPage_UIContext_Boolean_TransitionType_0(ModalLogic, null, true, UIPage.TransitionType.InPlace);
     }
 }

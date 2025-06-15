@@ -8,6 +8,7 @@ using BlanketSDK.MM.Elements.Controls.AvatarMenu;
 using BlanketSDK.MM.Elements.Controls.V2;
 using Brewchat.Game.Wrappers;
 using brewchat.hybridxcore.bep.Game.Wrappers;
+using Brewchat.Cheat.Modules;
 
 
 
@@ -57,6 +58,17 @@ internal class MM : IMainMenuElements
                 }, () =>
                 {
                    
+                });
+                 var btna = new VRCButtonOperator(VRCSdk_Container, new()
+                {
+                    _title = "Reload CSS",
+                    _subtitle = "weapon",
+                    _text = "Reload",
+                    _tooltip = "This reloads the style for the mod",
+                    _maintooltip = "This reloads the style for the mod"
+                }, () =>
+                {
+                   CSS.Online();
                 });
                 /*new VRCCellButton(a, UI_PROPERTIES, "Properties", "[Properties]");
                 new VRCCellButton(a, UI_HANDLER, "Handlers", "[Handlers]");

@@ -9,7 +9,7 @@ using Resources = autumn.ml.Properties.Resources;
 
 namespace Brewchat.Game.Monobehaviours;
 
-internal class Toolbox : UnityEngine.MonoBehaviour
+internal class Toolbox : MonoBehaviour
 {
     public Toolbox(IntPtr ptr) : base(ptr) {}
     public static Toolbox? Instance { get; private set; }
