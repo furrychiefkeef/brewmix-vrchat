@@ -10,6 +10,7 @@ using Brewchat.Cheat.Modules;
 using Brewchat.Game.Wrappers;
 using MelonLoader;
 using VRC.Networking;
+using static Brewchat.Cheat.QM;
 using Resources = autumn.ml.Properties.Resources;
 
 namespace Brewchat.Cheat;
@@ -25,70 +26,38 @@ internal class QM
                 IQuickMenuElements.Misc.TooltipText.richText = true;
         };
     }
-    public class Main
-    {
-        public static NestedQMAppearance submenu_appearance = new();
+    public class Main 
+    { 
+    
 
         public class NestedQMAppearance
         {
-            public VRCGroupLayout Main_Groupbox { get; set; }
-            public VRCPage Page { get; set; }
+            public static VRCGroupLayout Main_Groupbox { get; set; }
+            public static VRCPage Page { get; set; }
 
             public static void Execute()
             {
-                submenu_appearance.Page = new VRCPage("Appearance", true);
-                submenu_appearance.Main_Groupbox = new(submenu_appearance.Page, "Appearance");
+               Page = new VRCPage("Appearance", true);
+               Main_Groupbox = new(Page, "Appearance");
             }
         }
 
         public static void Apply()
         {
-            try
-            {
+         
                 #region Begin
-                var MainPage = new VRCPage(Entry.entry.NAME, pageOptions: new(){
-                    ShowScrollWheel = false,
-                });
+                var MainPage = new VRCPage(Entry.entry.NAME, pageOptions: new(){ShowScrollWheel = false});
                 new VRCTab(MainPage, "The passion project.", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
                 #endregion
 
                 VRCGroupLayout Main_Groupbox = new(MainPage, "Main");
 
-                // INITIALIZE THE SUBMENU FIRST!
-                NestedQMAppearance.Execute();
+                // INITIALIZE THE SUBMENU FIRST
 
                 #region Groupbox
                 VRCModalContainer? PlayerMovementModal = new("Player+Movement");
                 Main_Groupbox.AddButton("Player", "Modify The Player", PlayerMovementModal.Open, true);
-                 Main_Groupbox.AddButton("Player", "Modify The Player", () =>
-                 {
-                    submenu_appearance.Page.Open();
-                 },true);
-                // Now add buttons to the submenu
-                submenu_appearance.Main_Groupbox.AddButton("Set Background", $"Background is currently set to: {Entry.config.Appearance.inGame.Qm_Background} ", () =>
-                {
-                    GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
-                    {
-                        Entry.config.Appearance.inGame.Qm_Background = x;
-                        Config.SaveToFile(Entry.config, "config.json");
-                        CSS.ApplyAdvancedMenuBackgrounds();
-                    }, Placeholder: "https:// or C://");
-                }, false);
-                submenu_appearance.Main_Groupbox.AddButton("Loading Audio", $"Audio is currently set to: {Entry.config.Appearance.inGame.QueueAudio} ", () =>
-                {
-                    GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
-                    {
-                        Entry.config.Appearance.inGame.QueueAudio = x;
-                        Config.SaveToFile(Entry.config, "config.json");
-                    }, Placeholder: "https:// or C://");
-                }, false);
-
-                #endregion
-            }
-            catch (Exception ex)
-            {
-                MelonLogger.Error($"Error in Apply(): {ex.Message}");
-            }
+            #endregion
         }
     }
     public class SelectedUserMenu : IQuickMenuElements

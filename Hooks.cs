@@ -19,6 +19,10 @@ namespace brewchat.hybridxcore.bep
     [HarmonyPatch]
     internal class Hooks
     {
+
+        static bool _isQuickMenuLoaded = false;
+        static bool _isMainMenuLoaded = false;
+
         #region INTERNAL_CORE
         [HarmonyPostfix, HarmonyPatch(typeof(VRCApplication), nameof(VRCApplication.Awake))]
         public static void DomainApp_Initialize_HOOK(ref VRCApplication? __instance)
@@ -74,9 +78,12 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
+            if (__instance == null && !_isQuickMenuLoaded) return;
+          
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             QM.Main.Apply();
             QM.Core.EnableRichText();
+            _isQuickMenuLoaded = true;
 
         } 
         

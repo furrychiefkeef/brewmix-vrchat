@@ -11,34 +11,37 @@ namespace BlanketSDK.QM.Elements;
 
 internal class VRCPage : IQuickMenuElements
 {
-    private Transform? _obj;
-    UIPage page;
+    public class PageOptions
+    {
+        public bool isScrollable { get; set; } = true;
+        public bool ShowScrollWheel { get; set; } = true;
+    }
+
+    Transform obj;
+    public UIPage page;
     public string Name;
     public Transform? box;
 
-      public class PageOptions
-    {
-        public bool isScrollable {get;set;} = true;
-        public bool ShowScrollWheel {get;set;} = true;
-    }
+   
     public VRCPage(string name, bool isSubMenu = false, PageOptions pageOptions = null)
     {
         if (!QMParent() || !QMMenus.QMSubmenus.Menu_DevTools()) throw new($"element has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
-        _obj = UnityEngine.Object.Instantiate(QMMenus.QMSubmenus.Menu_DevTools(), QMParent());
-        _obj.gameObject.SetActive(false);
-        _obj.SetSiblingIndex(5);
-        
+        obj = UnityEngine.Object.Instantiate(QMMenus.QMSubmenus.Menu_DevTools(), QMParent());
+        obj.gameObject.SetActive(false);
+        obj.SetSiblingIndex(5);
+
         Name = $"Menu_{name}";
-        _obj.name = Name;
+        obj.name = Name;
 
         #region REQUIRED_COMPONENTS
 
-        DevMenu? _0 = _obj.GetComponent<DevMenu>();
-        _obj.GetComponent<Canvas>().enabled = true;
-        _obj.GetComponent<CanvasGroup>().enabled = true;
-        _obj.GetComponent<GraphicRaycaster>().enabled = true;
-        TextMeshProUGUIEx? _1 = _obj.GetChild(0).GetChild(1).GetComponentInChildren<TextMeshProUGUIEx>();
-        VRCScrollRect? _2 = _obj.GetChild(1).GetComponent<VRCScrollRect>();
+        DevMenu _0 = obj.GetComponent<DevMenu>();
+  
+        obj.GetComponent<Canvas>().enabled = true;
+        obj.GetComponent<CanvasGroup>().enabled = true;
+        obj.GetComponent<GraphicRaycaster>().enabled = true;
+        TextMeshProUGUIEx? _1 = obj.GetChild(0).GetChild(1).GetComponentInChildren<TextMeshProUGUIEx>();
+        VRCScrollRect? _2 = obj.GetChild(1).GetComponent<VRCScrollRect>();
 
         #endregion
 
@@ -57,7 +60,7 @@ internal class VRCPage : IQuickMenuElements
         page.field_Private_Boolean_1 = true;
         page.field_Public_String_0 = Name;
         page.field_Private_List_1_UIPage_0 = new();
-        page.field_Private_List_1_UIPage_0.Add(page);   
+        page.field_Private_List_1_UIPage_0.Add(page);
         QM()?.field_Protected_MenuStateController_0.field_Private_Dictionary_2_String_UIPage_0.Add(Name, page);
 
         if (!isSubMenu && QM()?.field_Protected_MenuStateController_0 != null && QM()?.field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0 != null)
@@ -66,9 +69,9 @@ internal class VRCPage : IQuickMenuElements
             List?.Add(page);
             QM().field_Protected_MenuStateController_0.field_Public_ArrayOf_UIPage_0 = List.ToArray();
 
-            if (Entry.config.Advanced.DebugMode)
+            /*if (!Entry.config.Advanced.DebugMode)
             {
-                /*foreach (var VARIABLE in QM().field_Protected_MenuStateController_0
+                *//*foreach (var VARIABLE in QM().field_Protected_MenuStateController_0
                              .field_Public_Il2CppReferenceArray_1_UIPage_0.ToList())
                     sconsole.internal_log($"{VARIABLE.field_Public_String_0}");
                 sconsole.internal_log($"{Name} was created");
@@ -79,7 +82,7 @@ internal class VRCPage : IQuickMenuElements
 
             #region LOGIC_FOR_API
 
-            VerticalLayoutGroup? group = _obj.GetComponentInChildren<VerticalLayoutGroup>();
+            VerticalLayoutGroup? group = obj.GetComponentInChildren<VerticalLayoutGroup>();
             VRCRectMask2D? Rect2DMask = group.transform.parent.GetComponent<VRCRectMask2D>();
 
             Rect2DMask.enabled = true;
@@ -109,13 +112,13 @@ internal class VRCPage : IQuickMenuElements
                 }
             }
         }
-    }
+   
     public void Open()
     {
-        _obj.gameObject.SetActive(true);
-        _obj.GetComponent<Canvas>().enabled = true;
-        _obj.GetComponent<CanvasGroup>().enabled = true;
-        _obj.GetComponent<GraphicRaycaster>().enabled = true;
+        obj.gameObject.SetActive(true);
+        obj.GetComponent<Canvas>().enabled = true;
+        obj.GetComponent<CanvasGroup>().enabled = true;
+        obj.GetComponent<GraphicRaycaster>().enabled = true;
         page.enabled = true;
         QM().field_Protected_MenuStateController_0.Method_Public_Void_String_UIContext_Boolean_TransitionType_0(page.field_Public_String_0,null, false, UIPage.TransitionType.InPlace);
     }
