@@ -38,9 +38,9 @@ internal class VRCPage : IMainMenuElements
         #region REQUIRED_COMPONENTS
 
         SettingsPage? _0 = obj.GetComponent<SettingsPage>();
-        obj.GetComponent<UnityEngine.Canvas>().enabled = true;
-        obj.GetComponent<UnityEngine.CanvasGroup>().enabled = true;
-        obj.GetComponent<UnityEngine.UI.GraphicRaycaster>().enabled = true;
+        obj.GetComponent<Canvas>().enabled = true;
+        obj.GetComponent<CanvasGroup>().enabled = true;
+        obj.GetComponent<GraphicRaycaster>().enabled = true;
         TextMeshProUGUIEx? _1 = header.GetComponentInChildren<TextMeshProUGUIEx>();
         ImageEx? _2 = header.GetComponentInChildren<ImageEx>();
         

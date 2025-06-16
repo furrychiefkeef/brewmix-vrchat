@@ -75,9 +75,7 @@ namespace brewchat.hybridxcore.bep
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
-            QM.Main.NestedQMAppearance.Execute();
             QM.Main.Apply();
-  
             QM.Core.EnableRichText();
 
         } 

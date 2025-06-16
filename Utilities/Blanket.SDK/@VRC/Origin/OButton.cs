@@ -16,7 +16,7 @@ internal class OButton : Templates
     {
         if (!USERINTERFACE() | !ORIGIN_BUTTON()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform? obj = UnityEngine.Object.Instantiate(ORIGIN_BUTTON(), parent);
-        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.ORIGIN_BUTTON-{name}";
+        obj.name = $"{Guid.NewGuid()}-<Blanket.SDK.ORIGIN_BUTTON-{name}";
         
         #region REQUIRED_COMPONENTS
         UnityEngine.UI.Button? _0 = obj.GetComponent<UnityEngine.UI.Button>();

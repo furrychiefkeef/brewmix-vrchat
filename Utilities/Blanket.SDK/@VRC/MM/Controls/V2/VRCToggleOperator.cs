@@ -11,7 +11,7 @@ internal class VRCToggleOperator : IMainMenuElements
     {
         if(!MM() || !MMElements.CellContainer("Debug") || !MMControls.OperatorToggle()) throw new($"element has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform? obj  = UnityEngine.Object.Instantiate(MMControls.OperatorToggle(), panel._verticalLayoutGroup);
-        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_TOGGLE_OPERATOR_{name}";
+        obj.name = $"{Guid.NewGuid()}-<Blanket.SDK.QM_TOGGLE_OPERATOR_{name}";
 
         #region REQUIRED_COMPONENTS
 

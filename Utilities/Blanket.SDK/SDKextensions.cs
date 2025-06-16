@@ -23,7 +23,7 @@ internal static class SDKextensions
     {
         return new VRCButton(group, name, tooltip, func, submenu, sprite);
     }
-    
+       
     [Obsolete("I have no clue what i did.")]
     public static BlanketSDK.QM.Elements.Controls.VRCToggle AddToggle(this Transform? parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null)
     {

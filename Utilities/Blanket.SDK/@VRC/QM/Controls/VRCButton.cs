@@ -25,7 +25,7 @@ internal class VRCButton : IQuickMenuElements
         if (!QuickMenu() | !QMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_Buttons();
         Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.SingleButton(), parent);
-        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_SINGLE_BUTTON-{name}";
+        obj.name = $"{Guid.NewGuid()}-<Blanket.SDK.QM_SINGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS
         VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();
@@ -53,7 +53,7 @@ internal class VRCButton : IQuickMenuElements
         #endregion
         
         #region TOOLTIP COMPONENT
-        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.Localizable(); 
+        if (_3.GetType() == typeof(ToolTip)) _3._localizableString = tooltip.Localizable();
         #endregion
         
         #region IMAGE || IMAGE_EX COMPONENT
@@ -105,7 +105,7 @@ internal class VRCButton : IQuickMenuElements
     {
         if (!QuickMenu() | !QMControls.Buttons.SingleButton()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.SingleButton(), parent);
-        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_SINGLE_BUTTON-{name}";
+        obj.name = $"{Guid.NewGuid()}-<Blanket.SDK.QM_SINGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS
         VRCButtonHandle _0 = obj.GetComponent<VRCButtonHandle>();

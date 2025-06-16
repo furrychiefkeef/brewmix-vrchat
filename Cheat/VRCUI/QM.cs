@@ -36,7 +36,7 @@ internal class QM
 
             public static void Execute()
             {
-                submenu_appearance.Page = new VRCPage("Appearance", ShowScrollWheel: true);
+                submenu_appearance.Page = new VRCPage("Appearance", true);
                 submenu_appearance.Main_Groupbox = new(submenu_appearance.Page, "Appearance");
             }
         }
@@ -46,7 +46,9 @@ internal class QM
             try
             {
                 #region Begin
-                var MainPage = new VRCPage(Entry.entry.NAME, ShowScrollWheel: true);
+                var MainPage = new VRCPage(Entry.entry.NAME, pageOptions: new(){
+                    ShowScrollWheel = false,
+                });
                 new VRCTab(MainPage, "The passion project.", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
                 #endregion
 
@@ -58,9 +60,12 @@ internal class QM
                 #region Groupbox
                 VRCModalContainer? PlayerMovementModal = new("Player+Movement");
                 Main_Groupbox.AddButton("Player", "Modify The Player", PlayerMovementModal.Open, true);
-
+                 Main_Groupbox.AddButton("Player", "Modify The Player", () =>
+                 {
+                    submenu_appearance.Page.Open();
+                 },true);
                 // Now add buttons to the submenu
-                Main_Groupbox.AddButton("Set Background", $"Background is currently set to: {Entry.config.Appearance.inGame.Qm_Background} ", () =>
+                submenu_appearance.Main_Groupbox.AddButton("Set Background", $"Background is currently set to: {Entry.config.Appearance.inGame.Qm_Background} ", () =>
                 {
                     GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
                     {
@@ -69,8 +74,7 @@ internal class QM
                         CSS.ApplyAdvancedMenuBackgrounds();
                     }, Placeholder: "https:// or C://");
                 }, false);
-
-                Main_Groupbox.AddButton("Loading Audio", $"Audio is currently set to: {Entry.config.Appearance.inGame.QueueAudio} ", () =>
+                submenu_appearance.Main_Groupbox.AddButton("Loading Audio", $"Audio is currently set to: {Entry.config.Appearance.inGame.QueueAudio} ", () =>
                 {
                     GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
                     {

@@ -18,12 +18,12 @@ internal class VRCTab : IQuickMenuElements
     /// <param name="tooltip">The tooltip text for the button.</param>
     /// <param name="func">The action to execute when the button is clicked.</param>
     /// <param name="sprite">An optional sprite to display on the button.</param>
-    public VRCTab(VRCPage page, string? tooltip, System.Action func = null, Sprite? sprite = null)
+    public VRCTab(VRCPage page, string? tooltip, Action func = null, Sprite? sprite = null)
     {
         if (!QuickMenu() | !QMControls.Tab()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform parent = QMFallbacks._Fallback_Dashboard_Group_QM_UI_Buttons_TAB();
         Transform? obj = UnityEngine.Object.Instantiate(QMControls.Tab(), parent);
-        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_TAB_BUTTON-{page.Name}";
+        obj.name = $"{Guid.NewGuid()}-<Blanket.SDK.QM_TAB_BUTTON-{page.Name}";
 
         #region REQUIRED_COMPONENTS
 
