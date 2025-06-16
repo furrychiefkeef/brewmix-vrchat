@@ -7,6 +7,8 @@ using UnhollowerRuntimeLib;
 using UnityEngine;
 using VRC.SDKBase;
 using Brewchat.Game.Wrappers;
+using autumn.ml;
+using autumn;
 
 [assembly: MelonInfo(typeof(Entry), "Autumn", "7.0", "Dog")]
 public class Entry : MelonMod
@@ -18,7 +20,6 @@ public class Entry : MelonMod
     public static HarmonyLib.Harmony h = new(Guid.NewGuid().ToString());
     public override void OnInitializeMelon()
     {
-
 
         if (File.Exists("config.json")) config = Config.LoadFromFile("config.json");
         else config = new Config();
@@ -49,7 +50,7 @@ public class Entry : MelonMod
     public override void OnEarlyInitializeMelon()
     {
 
-        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("Visionary.Mod.ML.Name")) && string.IsNullOrEmpty(Environment.GetEnvironmentVariable("Visionary.Mod.ML.Sprite")))
+        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("Visionary.Mod.ML.Name")) && string.IsNullOrEmpty(Environment.GetEnvironmentVariable("Visionary.Mod.ML.Icon")))
         {
             Environment.SetEnvironmentVariable("Visionary.Mod.ML.Name", "Visionary", EnvironmentVariableTarget.User);
             Environment.SetEnvironmentVariable("Visionary.Mod.ML.Icon", "https://", EnvironmentVariableTarget.User);

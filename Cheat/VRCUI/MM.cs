@@ -9,6 +9,7 @@ using BlanketSDK.MM.Elements.Controls.V2;
 using Brewchat.Game.Wrappers;
 using brewchat.hybridxcore.bep.Game.Wrappers;
 using Brewchat.Cheat.Modules;
+using autumn.ml.Cheat.Modules.World;
 
 
 
@@ -57,7 +58,18 @@ internal class MM : IMainMenuElements
                     _maintooltip = "bitch 2s"
                 }, () =>
                 {
-                   
+                    Murder_4.Weapons.SpawnRevolver();
+                });
+                var btn1 = new VRCButtonOperator(VRCSdk_Container, new()
+                {
+                    _title = "Knife",
+                    _subtitle = "weapon",
+                    _text = "Knife",
+                    _tooltip = "bitch",
+                    _maintooltip = "bitch 2s"
+                }, () =>
+                {
+                    Murder_4.Weapons.SpawnKnife();
                 });
                 var btna = new VRCButtonOperator(VRCSdk_Container, new()
                 {

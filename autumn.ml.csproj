@@ -60,6 +60,9 @@
     <Reference Include="Depthkit.Studio.Lite">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\Depthkit.Studio.Lite.dll</HintPath>
     </Reference>
+    <Reference Include="DiscordRPC">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\DiscordRPC.dll</HintPath>
+    </Reference>
     <Reference Include="DOTween">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\DOTween.dll</HintPath>
     </Reference>

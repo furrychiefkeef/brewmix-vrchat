@@ -26,7 +26,7 @@ public class Config
                 public SDK2Model SDK2 {get; set;} = new();
                 public class SDK2Model
                 {
-                     public bool EnforceToAll { get; set; } = false;
+                  public bool EnforceToAll { get; set; } = false;
                 }
         } 
     }

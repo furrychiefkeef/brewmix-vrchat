@@ -8,6 +8,7 @@ using VRC.Core;
 using VRC.DataModel;
 using VRC.Localization;
 using VRC.Networking;
+using VRC.SDK3.Components;
 using VRC.SDKBase;
 
 using VRC.Udon;
@@ -149,6 +150,7 @@ namespace Brewchat.Game.Wrappers
         
         public class PlayerModel
         {
+            public static VRCPlayer VRCPlayerEntity() => VRCPlayer.field_Internal_Static_VRCPlayer_0;
             public static VRC.Player VRC_LocalPlayer() => VRC.Player.prop_Player_0;
             public static VRC.Player Get => VRC.Player.prop_Player_0;
 
@@ -163,6 +165,15 @@ namespace Brewchat.Game.Wrappers
             {
                 public struct Networking
                 {
+                    public static class World
+                    {
+                        public static void SetOwnerAndGivePickupLocalEntity(VRCPickup pickup)
+                        {
+                            var Player = PlayerModel.VRC_LocalPlayer().VRCPlayerApi;
+                            Player.TakeOwnership(pickup.gameObject);
+                            pickup.gameObject.transform.position = Player.gameObject.transform.position + new Vector3(0.0f, 0.1f, 0f);
+                        }
+                    }
                     public static VRCPlayerApi Run_Speed(float v = 2f)
                     {
                         VRCPlayerApi? player = VRC_LocalPlayer().VRCPlayerApi;
@@ -260,24 +271,40 @@ namespace Brewchat.Game.Wrappers
 
             public class SDK2
             {
-                public static void InteractWithTrigger(string triggerobj)
+                public static VRC_Trigger? InteractWithTrigger(string triggerobj)
                 {
                     foreach (VRCSDK2.VRC_Trigger? trigger in UnityEngine.Object.FindObjectsOfType<VRCSDK2.VRC_Trigger>())
                     {
                         if (trigger.gameObject.name.Contains(triggerobj))
                         {
                             trigger.Interact();
-                            if (!Entry.config.Advanced.DebugMode) 
+                            if (!Entry.config.Advanced.DebugMode)
                                 UI.HUD.ToastV2("Sent Trigger", trigger.gameObject.name);
-                            return;
+                            return trigger;
                         }
+                        return null;
                     }
+                    return null;
                 }
             }
 
             public class SDK3
             {
-                
+                public static class Pickups
+                {
+                    public static VRCPickup? GetPickup(string name)
+                    {
+                        foreach (VRCPickup pickup in UnityEngine.Object.FindObjectsOfType<VRCPickup>())
+                        {
+                            if (pickup.gameObject.name.Contains(name))
+                            {
+                                return pickup;
+                            }
+                            return null;
+                        }
+                        return null;
+                    }
+                }
                 public static void LoadCustomEvent(string _event)
                 {
                     foreach (UdonBehaviour udon in UnityEngine.Object.FindObjectsOfType<UdonBehaviour>())

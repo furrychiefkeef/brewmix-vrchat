@@ -9,6 +9,7 @@ using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
 using VRC.Core;
 using VRC.UI;
+using static MelonLoader.MelonLogger;
 
 namespace Brewchat.Cheat.Modules
 {
@@ -113,6 +114,7 @@ namespace Brewchat.Cheat.Modules
 
     internal class CSS : UnityEngine.MonoBehaviour
     {
+        public static GameObject QueueAudio;
         public CSS(IntPtr ptr) : base(ptr) {}
         public static CSS? Instance { get; private set; }
         // public static PlayerNameplate _nameplate; // Unused field removed
@@ -128,6 +130,24 @@ namespace Brewchat.Cheat.Modules
             {
                 Destroy(this);
             }
+        }
+
+        public static void SetLoadingAudio()
+        {
+            if (QueueAudio == null)
+            {
+                AudioSource? LoadingScreenAudio = VRCUiPageLoading.field_Internal_Static_VRCUiPageLoading_0.gameObject.transform.GetChild(1).GetComponent<AudioSource>();
+                UnityEngine.Object.DestroyImmediate(LoadingScreenAudio);
+                QueueAudio = EngineUtils.Assets.CreateAudio(new(Entry.config.Appearance.inGame.QueueAudio));
+                QueueAudio.transform.parent = VRCUiPageLoading.field_Internal_Static_VRCUiPageLoading_0.gameObject.transform;
+            }
+            else return;
+          
+        }
+        public static void RefreshLoadingAudio()
+        {
+            var cli = QueueAudio.GetComponent<AudioSource>();
+            cli.clip = EngineUtils.Assets.AudioClip(new Uri(Entry.config.Appearance.inGame.QueueAudio));
         }
 
         public static void Offline()

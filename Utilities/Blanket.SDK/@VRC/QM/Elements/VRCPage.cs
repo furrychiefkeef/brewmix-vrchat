@@ -35,6 +35,7 @@ internal class VRCPage : IQuickMenuElements
 
         #region REQUIRED_COMPONENTS
 
+        
         DevMenu _0 = obj.GetComponent<DevMenu>();
   
         obj.GetComponent<Canvas>().enabled = true;
@@ -120,7 +121,7 @@ internal class VRCPage : IQuickMenuElements
         obj.GetComponent<CanvasGroup>().enabled = true;
         obj.GetComponent<GraphicRaycaster>().enabled = true;
         page.enabled = true;
-        QM().field_Protected_MenuStateController_0.Method_Public_Void_String_UIContext_Boolean_TransitionType_0(page.field_Public_String_0,null, false, UIPage.TransitionType.InPlace);
+        QM().field_Protected_MenuStateController_0.Method_Public_Void_String_UIContext_Boolean_0(page.field_Public_String_0, null, false);
     }
 
     public void Close()
