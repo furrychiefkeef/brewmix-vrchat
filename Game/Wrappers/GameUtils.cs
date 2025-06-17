@@ -292,17 +292,20 @@ namespace Brewchat.Game.Wrappers
             {
                 public static class Pickups
                 {
+                    static VRCPickup _lastPickup;
                     public static VRCPickup? GetPickup(string name)
                     {
                         foreach (VRCPickup pickup in UnityEngine.Object.FindObjectsOfType<VRCPickup>())
                         {
-                            if (pickup.gameObject.name.Contains(name))
+                            if (pickup.gameObject.name.Contains(name)) 
                             {
+                                _lastPickup = pickup;
+                                UI.HUD.ToastV1($"Found: {_lastPickup.name}");
                                 return pickup;
-                            }
-                            return null;
+                            }                            
                         }
-                        return null;
+                    
+                        return _lastPickup;
                     }
                 }
                 public static void LoadCustomEvent(string _event)
@@ -457,12 +460,6 @@ namespace Brewchat.Game.Wrappers
                 #endregion
 
                 #region ALERT SYSTEM
-
-                public enum AlertType
-                {
-                    QuickMenu,
-                    MainMenu,
-                }
 
                 public static string Alert(string content)
                 {

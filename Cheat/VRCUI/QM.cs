@@ -22,8 +22,8 @@ internal class QM
         public static VRCPage? QMAppearance { get; set; }
         public static Action EnableRichText = () =>
         {
-            if (IQuickMenuElements.Misc.TooltipText != null)
-                IQuickMenuElements.Misc.TooltipText.richText = true;
+            if (IQuickMenuElements.Misc.TooltipText != null)  
+            IQuickMenuElements.Misc.TooltipText.richText = true;
         };
     }
     public class Main
@@ -59,10 +59,11 @@ internal class QM
                 {
                     Entry.config.Appearance.inGame.Qm_Background = x;
                     Config.SaveToFile(Entry.config, "config.json");
+                    GameUtils.UI.HUD.SendLocalNotifcation("Config", "Saved!", null, null);
                     CSS.ApplyAdvancedMenuBackgrounds();
                 }, Placeholder: "https:// or C://");
             }, false);
-            _Nau.AddButton("Loading Audio", $"Audio is currently set to: {Entry.config.Appearance.inGame.QueueAudio} ", () =>
+            _Nau.AddButton("Set Loading Audio", $"Audio is currently set to: {Entry.config.Appearance.inGame.QueueAudio} ", () =>
             {
                 GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
                 {
@@ -72,6 +73,16 @@ internal class QM
                     CSS.RefreshLoadingAudio();
                 }, Placeholder: "https:// or C://");
             }, false);
+             _Nau.AddButton("Set Loading Screen Background", $" is currently set to: {Entry.config.Appearance.inGame.FlatLoadingOverlay} ", () =>
+            {
+                GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
+                {
+                    Entry.config.Appearance.inGame.FlatLoadingOverlay.Image = x;
+                    Config.SaveToFile(Entry.config, "config.json");
+                    GameUtils.UI.HUD.SendLocalNotifcation("Config", "Saved!", null, null);
+                }, Placeholder: "https:// or C://");
+            }, false);
+            
             // INITIALIZE THE SUBMENU FIRST
 
             #region Groupbox

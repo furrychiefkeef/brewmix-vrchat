@@ -10,11 +10,10 @@ using Brewchat.Game.Wrappers;
 using autumn.ml;
 using autumn;
 
-[assembly: MelonInfo(typeof(Entry), "Autumn", "7.0", "Dog")]
+[assembly: MelonInfo(typeof(Entry), "VRUtility", "7.0", "Dog")]
 public class Entry : MelonMod
 {
     public string? NAME;
-
     public static Entry entry = new();
     public static Config config = new();
     public static HarmonyLib.Harmony h = new(Guid.NewGuid().ToString());
@@ -28,20 +27,21 @@ public class Entry : MelonMod
         #region Components
         try
         {
-            
-            foreach (Type monos in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(MonoBehaviour))))
+            foreach (Type monos in Assembly.GetExecutingAssembly().GetTypes()
+            .Where(   x => x.IsClass 
+            && !x.IsAbstract && 
+            x.IsSubclassOf(typeof(MonoBehaviour))))
             {
-                MelonLogger.Msg($"Registering Monobehaviours: {monos.Name}");
-                ClassInjector.RegisterTypeInIl2Cpp(monos,true);
+                MelonLogger.Msg($"Registering MonoBehaviours: {monos.Name}"); 
+                ClassInjector.RegisterTypeInIl2Cpp(monos, true);
             }
         }
-        catch (Exception ex){ MelonLogger.Msg(ex); }
+        catch (Exception ex) { MelonLogger.Msg(ex); }
       
       
-        
         #endregion
         
-        #region ASSEMBLY_CORE_STUFF
+        #region ASSEMBLY_CORE_STUFF 
         
         h.PatchAll();
         #endregion
@@ -49,16 +49,15 @@ public class Entry : MelonMod
     }
     public override void OnEarlyInitializeMelon()
     {
-
-        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("Visionary.Mod.ML.Name")) && string.IsNullOrEmpty(Environment.GetEnvironmentVariable("Visionary.Mod.ML.Icon")))
+        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable($"{NAME}.Mod.ML.Name")) && string.IsNullOrEmpty(Environment.GetEnvironmentVariable("Visionary.Mod.ML.Icon")))
         {
-            Environment.SetEnvironmentVariable("Visionary.Mod.ML.Name", "Visionary", EnvironmentVariableTarget.User);
-            Environment.SetEnvironmentVariable("Visionary.Mod.ML.Icon", "https://", EnvironmentVariableTarget.User);
+            Environment.SetEnvironmentVariable($"{NAME}.Mod.ML.Name", NAME, EnvironmentVariableTarget.User);
+            Environment.SetEnvironmentVariable($"{NAME}.Mod.ML.Icon", "https://", EnvironmentVariableTarget.User);
         }
         else
         {
             MelonLogger.Msg("Debug Mode Disabled");
-            string? name = Environment.GetEnvironmentVariable("Visionary.Mod.ML.Name", EnvironmentVariableTarget.User);
+            string? name = Environment.GetEnvironmentVariable($"{NAME}.Mod.ML.Name", EnvironmentVariableTarget.User);
             entry.NAME = name;
         }
     }

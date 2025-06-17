@@ -1,0 +1,9 @@
+{
+    "C_Cpp.errorSquiggles": "disabled",
+    "cursor.terminal.usePreviewBox": true,
+    "terminal.integrated.gpuAcceleration": "on",
+    "csharp.debug.console": "externalTerminal",
+    "terminal.integrated.fontFamily": "'DepartureMono Nerd Font Propo', monospace",
+    "fonted.font": "'Fira Code', 'Courier New', monospace",
+    "editor.fontFamily": "Consolas, 'Courier New', monospace"
+}

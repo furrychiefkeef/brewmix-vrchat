@@ -103,12 +103,7 @@ internal class PlayerModule
 
     public class CameraBuilder
     {
-        public enum View
-        {
-            second_person,
-            third_person,
-            freecam,
-        }
+        public enum View { second_person, third_person, freecam }
 
        static Camera MakeCameras(View view)
         {
@@ -160,7 +155,7 @@ internal class PlayerModule
             if (camera == null) camera = new Camera[3];
             if (camera[0] == null && camera[1] == null && camera[2] == null)
             { 
-                
+
                 camera[0] = MakeCameras(View.third_person);
                 camera[1] = MakeCameras(View.second_person);
                 camera[2] = MakeCameras(View.freecam);

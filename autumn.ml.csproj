@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -29,9 +29,6 @@
     <EmbeddedResource Include="Assets\Textures\UI\Nameplate\capsule_*.png" />
     <EmbeddedResource Include="Assets\Textures\UI\Icons\*.astrieksprites" />
     <EmbeddedResource Include="Assets\Prefabs\*.bundle" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Remove="Assets\Textures\UI\Icons\address-book.astrieksprites" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Cheat\Modules\Local\" />

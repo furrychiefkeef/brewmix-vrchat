@@ -140,7 +140,6 @@ internal static class EngineUtils
             return texture2D;
         }
 
-        [Obsolete("We used Uri Now.")]
         public static Sprite Sprite(Uri dir)
             => Texture(dir).ToSprite();
 
@@ -164,18 +163,6 @@ internal static class EngineUtils
             return null;
         }
 
-        [Obsolete]
-        public static UnityEngine.Object AssetBundle(string? dir, string? prefab_name, bool? keep)
-        {
-            /*if(String.IsNullOrEmpty(dir)) return null;
-            AssetBundle? bundle = UnityEngine.AssetBundle
-                .LoadFromFileAsync(dir).GetAwaiter().GetResult();
-
-            UnityEngine.Object obj = bundle.LoadAssetAsync<GameObject>(prefab_name).GetResult();
-            if (keep is true)  UnityEngine.Object.DontDestroyOnLoad(obj);
-            return obj;*/
-            return null;
-        }
 
         public static UnityEngine.GameObject AssetBundle(Uri? url, string? prefab_name, bool? keep)
         {
@@ -226,6 +213,18 @@ public static class ObjectExtension
     /// <typeparam name="T">The component type to get or add</typeparam>
     /// <param name="go">The GameObject to operate on</param>
     /// <returns>The existing or newly added component of type T</returns>
+
+    public static UnityEngine.GameObject CreateIsolatedObject(this GameObject x, bool IsOnTop = false)
+    {
+        GameObject clone = UnityEngine.Object.Instantiate(x.gameObject, x.transform.parent);
+        clone.name = x.gameObject.name + "_Isolated";
+
+         if(IsOnTop)
+         {
+            clone.transform.SetAsFirstSibling();
+         }      
+        return clone;
+    }
     public static T GetOrAddComponent<T>(this GameObject go) where T : Component
     {
         // Try to get the existing component

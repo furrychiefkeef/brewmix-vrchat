@@ -139,16 +139,5 @@ public class GifLoader : MonoBehaviour
     /// </summary>
     /// <param name="reference"></param>
     /// <returns></returns>
-    public static Image CreateIsolatedImage(Image reference)
-    {
-        GameObject clone = Instantiate(reference.gameObject, reference.transform.parent);
-        clone.name = reference.gameObject.name + "_ModClone";
-
-        // Optional: move it on top visually
-        clone.transform.SetAsFirstSibling();
-
-        Image newImage = clone.GetComponent<Image>();
-        newImage.color = Color.white;
-        return newImage;
-    }
+    
 }*/

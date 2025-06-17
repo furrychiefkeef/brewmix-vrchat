@@ -1,5 +1,4 @@
-﻿using Brewchat;
-using Brewchat.Cheat;
+﻿using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
@@ -21,6 +20,8 @@ namespace brewchat.hybridxcore.bep
     {
 
         static bool _isQuickMenuLoaded = false;
+        static bool _isFlatOverlayLoaded = false;
+
         static bool _isMainMenuLoaded = false;
 
         #region INTERNAL_CORE
@@ -29,7 +30,9 @@ namespace brewchat.hybridxcore.bep
         {
             if (__instance is null) return;
            
-            autumn.ml.Initalizers.SetConfig();
+            autumn.ml.Initalizers.ConfigSystem.SetConfig();
+            autumn.ml.Initalizers.Cheat.Execute();
+
             _ = __instance?.gameObject.GetOrAddComponentSafe<CSS>();
             _ = __instance?.gameObject.GetOrAddComponentSafe<KeybindManager>();
             _ = __instance?.gameObject.GetOrAddComponentSafe<Toolbox>();
@@ -42,8 +45,8 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(LoadingOverlayController), nameof(LoadingOverlayController.Start))]
         public static void FlatLoadingOverlay_Initialize_HOOK(ref LoadingOverlayController? __instance)
         {
-            if (__instance is null) return;
-            var Background = __instance.gameObject.transform.Find("FlatLoadingOverlay(Clone)/Container")
+            if (__instance is null && !_isFlatOverlayLoaded) return;
+            Image Background = __instance.gameObject.transform.Find("FlatLoadingOverlay(Clone)/Container")
             .transform.FindChild("Canvas/Background").GetComponent<Image>();
 
             if (Entry.config.Appearance.inGame.HideLoadingOverlay)
@@ -51,13 +54,17 @@ namespace brewchat.hybridxcore.bep
                 UnityEngine.Object.DestroyImmediate(Background, true);
                 return;
             }
-            Background.color = Entry.config.Appearance.inGame.FlatLoadingOverlay.Tint;
-           /* if (Config.Appearance.inGame.FlatLoadingOverlay.Image != null)
+
+            Background.color = Entry.config.Appearance.inGame.FlatLoadingOverlay.Base;
+            if (Entry.config.Appearance.inGame.FlatLoadingOverlay.Image != null)
             {
-                
-                var iso = GifLoader.CreateIsolatedImage(Background);
-                GifLoader.Instance.AddAnimatedGif(iso, new Uri(Config.Appearance.FlatLoadingOverlay));
-            }*/
+                GameObject Custom_Background_Overlay_Obj = Background.gameObject.CreateIsolatedObject(true);
+                Image Custom_Background_Overlay = Custom_Background_Overlay_Obj.GetComponent<Image>();
+
+                Custom_Background_Overlay.sprite = EngineUtils.Assets.Sprite(new Uri(Entry.config.Appearance.inGame.FlatLoadingOverlay.Image));
+                Custom_Background_Overlay.color = Entry.config.Appearance.inGame.FlatLoadingOverlay.Tint;
+            }
+            _isFlatOverlayLoaded = true;
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
@@ -77,11 +84,11 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
-            if (__instance == null && !_isQuickMenuLoaded) return;
-            Camera.main.gameObject.GetOrAddComponentSafe<CameraModule>();
+            if (__instance == null && !_isQuickMenuLoaded) return; 
+            QM.Core.EnableRichText();
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             QM.Main.Apply();
-            QM.Core.EnableRichText();
+            
             _isQuickMenuLoaded = true;
         
 
@@ -90,7 +97,7 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(SelectedUserMenuQM), nameof(SelectedUserMenuQM.Start))]
         public static void SelectedUserMenu_Initialize_HOOK(ref SelectedUserMenuQM? __instance)
         {
-            if (__instance is null) return;
+            if (__instance is null && !_isQuickMenuLoaded && !_isMainMenuLoaded) return;
             QM.SelectedUserMenu.Apply();
             MM.SelectedUserMenu.Apply();
         }
@@ -98,8 +105,9 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
         public static void MainMenu_Initialize_HOOK(ref MainMenu? __instance)
         {
-            if (__instance is null) return;
+            if (__instance is null && !_isMainMenuLoaded) return;
             MM.Main.Apply();
+            _isMainMenuLoaded = true;
         }
 
         #endregion
@@ -177,7 +185,7 @@ namespace brewchat.hybridxcore.bep
             }*/
         }
 
-
+        
         [HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.Method_Public_Void_Player_VrcEvent_VrcBroadcastType_Int32_Single_0))]
         private static bool __RFCPatch_HOOK(ref VRC.Player __0, ref VRC_EventHandler.VrcEvent __1, ref VRC_EventHandler.VrcBroadcastType __2, ref int __3, ref float __4)
         {

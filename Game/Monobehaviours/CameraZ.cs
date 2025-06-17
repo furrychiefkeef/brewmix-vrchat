@@ -22,7 +22,6 @@ public class CameraModule : MonoBehaviour
 
     void Update()
     {
-        
         targetFOV = Input.GetKey(KeyCode.LeftAlt) ? zoomedFOV : CacheFOV;
         Cameras.ToList().ForEach(x => x.fieldOfView = Mathf.Lerp(GameUtils.Camera.Get.fieldOfView, targetFOV, Time.deltaTime * zspeed));
     }

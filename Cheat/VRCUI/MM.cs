@@ -82,6 +82,16 @@ internal class MM : IMainMenuElements
                 {
             
                 });
+                 var btnaa = new VRCButtonOperator(VRCSdk_Container, new()
+                {
+                    _title = "RFC Exploit",
+                    _subtitle = "",
+                    _text = "Start",
+                    _maintooltip = InfoAboutCheat.Tooltips.GetTooltipString("RFC-Exploit")
+                }, static () =>
+                {
+            
+                });
                 /*new VRCCellButton(a, UI_PROPERTIES, "Properties", "[Properties]");
                 new VRCCellButton(a, UI_HANDLER, "Handlers", "[Handlers]");
                 new VRCCellButton(a, UI_MUSIC, "Music","[Music]", AstriekLib.Sprites.Music()); */
