@@ -9,7 +9,10 @@ using VRC.UI.Elements.Controls;
 namespace BlanketSDK.QM.Elements.Controls;
 internal class VRCTab : IQuickMenuElements
 {
-  
+    
+    Transform? obj {get;}
+    
+    
     /// <summary>
     ///  VRCButton this is used to create a TAB_QUICKMENU_BUTTON
     /// </summary>
@@ -22,7 +25,7 @@ internal class VRCTab : IQuickMenuElements
     {
         if (!QuickMenu() | !QMControls.Tab()) throw new($"button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform parent = QMFallbacks._Fallback_Dashboard_Group_QM_UI_Buttons_TAB();
-        Transform? obj = UnityEngine.Object.Instantiate(QMControls.Tab(), parent);
+        obj = UnityEngine.Object.Instantiate(QMControls.Tab(), parent);
         obj.name = $"{Guid.NewGuid()}-<Blanket.SDK.QM_TAB_BUTTON-{page.Name}";
 
         #region REQUIRED_COMPONENTS
@@ -59,7 +62,19 @@ internal class VRCTab : IQuickMenuElements
         _1.overrideSprite = sprite;
         #endregion
     }
-}
+   
+    private GameObject GetBadge() => obj.transform.GetChild(0).gameObject;
+    public VRCTab SetBadge(bool Enable) { GetBadge().active = Enable; return this; }
+    public VRCTab SetBadgeColor(Color color) { GetBadge().transform.GetChild(0).GetComponent<CanvasRenderer>().SetColor(color);  return this; }
+    public VRCTab SetText(string text, TextMeshProUGUIEx? properties = null)
+    {
+        TextMeshProUGUIEx textMeshProComp = GetBadge().GetComponentInChildren<TextMeshProUGUIEx>();
+        textMeshProComp.text = text;
+        properties = textMeshProComp;
+        return this;
+    }
+        
+}   
 /*public VRCButton(VRCModalContainer parent, string? name, string? tooltip, System.Action func, Sprite? sprite = null) : this(parent.parent_menu, name, tooltip, func, sprite) { }*/
 
 /*  UnityEngine.UI.Button _0 = obj.GetComponentInChildren<UnityEngine.UI.Button>(); depercated*/

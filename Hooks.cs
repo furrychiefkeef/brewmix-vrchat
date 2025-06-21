@@ -4,11 +4,16 @@ using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
 using ExitGames.Client.Photon;
 using HarmonyLib;
+using MelonLoader;
+using MonoMod.RuntimeDetour;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.Core;
+using VRC.SDK3.Components;
 using VRC.SDKBase;
+using VRC.Udon;
+using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
 using Player = VRC.Player;
@@ -18,24 +23,23 @@ namespace brewchat.hybridxcore.bep
     [HarmonyPatch]
     internal class Hooks
     {
-
-        static bool _isQuickMenuLoaded = false;
+        static bool _isVRCApplicationLoaded = false;
         static bool _isFlatOverlayLoaded = false;
-
-        static bool _isMainMenuLoaded = false;
+        static bool _isSelectedMenusLoaded = false;
+        static bool _isMainMenuLoaded = false;  
+        static bool _isQuickMenuLoaded = false;
 
         #region INTERNAL_CORE
         [HarmonyPostfix, HarmonyPatch(typeof(VRCApplication), nameof(VRCApplication.Awake))]
         public static void DomainApp_Initialize_HOOK(ref VRCApplication? __instance)
         {
-            if (__instance is null) return;
-           
+            if (__instance is null || _isVRCApplicationLoaded) return;
+            _isVRCApplicationLoaded = true;
             autumn.ml.Initalizers.ConfigSystem.SetConfig();
             autumn.ml.Initalizers.Cheat.Execute();
 
-            _ = __instance?.gameObject.GetOrAddComponentSafe<CSS>();
-            _ = __instance?.gameObject.GetOrAddComponentSafe<KeybindManager>();
-            _ = __instance?.gameObject.GetOrAddComponentSafe<Toolbox>();
+            __instance?.gameObject.GetOrAddComponentSafe<CSS>();
+            __instance?.gameObject.GetOrAddComponentSafe<KeybindManager>();
         }
 
         #endregion
@@ -45,10 +49,12 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(LoadingOverlayController), nameof(LoadingOverlayController.Start))]
         public static void FlatLoadingOverlay_Initialize_HOOK(ref LoadingOverlayController? __instance)
         {
-            if (__instance is null && !_isFlatOverlayLoaded) return;
-            Image Background = __instance.gameObject.transform.Find("FlatLoadingOverlay(Clone)/Container")
+            if (__instance is null || _isFlatOverlayLoaded) return;
+             _isFlatOverlayLoaded = true;
+            Image Background = __instance.gameObject
+            .transform.Find("FlatLoadingOverlay(Clone)/Container")
             .transform.FindChild("Canvas/Background").GetComponent<Image>();
-
+           
             if (Entry.config.Appearance.inGame.HideLoadingOverlay)
             {
                 UnityEngine.Object.DestroyImmediate(Background, true);
@@ -64,52 +70,65 @@ namespace brewchat.hybridxcore.bep
                 Custom_Background_Overlay.sprite = EngineUtils.Assets.Sprite(new Uri(Entry.config.Appearance.inGame.FlatLoadingOverlay.Image));
                 Custom_Background_Overlay.color = Entry.config.Appearance.inGame.FlatLoadingOverlay.Tint;
             }
-            _isFlatOverlayLoaded = true;
+            
         }
 
-        [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
-        public static void VRCLoadingSequence_IsEnable_HOOK(ref VRCUiPageLoading? __instance)
-        {
-            if (__instance is null) return;
-            /*CSS.Offline();*/
-        }
+        // [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
+        // public static void VRCLoadingSequence_IsEnable_HOOK(ref VRCUiPageLoading? __instance)
+        // {
+        //     if (__instance is null) return;
+            
+        // }
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.Start))]
         public static void VRCLoadingSequence_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null) return;
             CSS.SetLoadingAudio();
+            // CSS.Offline();
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
-            if (__instance == null && !_isQuickMenuLoaded) return; 
-            QM.Core.EnableRichText();
+            if (__instance is null || _isQuickMenuLoaded) return ; 
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
-            QM.Main.Apply();
-            
             _isQuickMenuLoaded = true;
-        
 
+            QM.Core.EnableRichText();
+            QM.Main.Apply();
+            Widgets.QM.Initalize();
         } 
         
         [HarmonyPostfix, HarmonyPatch(typeof(SelectedUserMenuQM), nameof(SelectedUserMenuQM.Start))]
         public static void SelectedUserMenu_Initialize_HOOK(ref SelectedUserMenuQM? __instance)
         {
-            if (__instance is null && !_isQuickMenuLoaded && !_isMainMenuLoaded) return;
+            if (__instance is null || _isSelectedMenusLoaded) return;
+            _isSelectedMenusLoaded = true;
             QM.SelectedUserMenu.Apply();
             MM.SelectedUserMenu.Apply();
+          
         }
-        
+
+        [HarmonyPrefix, HarmonyPatch(typeof(VRC_Pickup), nameof(VRC_Pickup.Awake))]
+        public static bool __0Pickups(ref VRC_Pickup? __instance)
+        {
+            if ( __instance is null) return false;
+            __instance.DisallowTheft = false;
+            __instance.proximity = float.MaxValue;
+            return true;
+        }
+
         [HarmonyPostfix, HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
         public static void MainMenu_Initialize_HOOK(ref MainMenu? __instance)
         {
-            if (__instance is null && !_isMainMenuLoaded) return;
-            MM.Main.Apply();
+            if (__instance is null || _isMainMenuLoaded) return;
             _isMainMenuLoaded = true;
+            MM.Main.Apply();
+            MM.AvatarAVMMenu.Apply();
+            MM.SelectedWorldMenu.Apply();
+           
         }
-
         #endregion
 
         #region VRC_API
@@ -120,7 +139,16 @@ namespace brewchat.hybridxcore.bep
             if (__result != null && !APIUser.CurrentUser.isSupporter)
                 __result.field_Protected_T_0 = true;
         }
-
+        [HarmonyPrefix, HarmonyPatch(typeof(UdonManager), nameof(UdonManager.Awake))]
+        public static bool __0Udon(ref UdonBehaviour __instance)
+        {
+            if(__instance == null) return false;
+            if(Entry.config.Modules.Udon.isBlocked) {
+                        return false;
+            }
+            
+            return true;
+        }
         #endregion
 
         #region UpdateHook
@@ -197,9 +225,9 @@ namespace brewchat.hybridxcore.bep
                     __2 = VRC_EventHandler.VrcBroadcastType.AlwaysUnbuffered;
                     return true;
                 }
-
                 return true;
             }
+    
 
             return true;
         }

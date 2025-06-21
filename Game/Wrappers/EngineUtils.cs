@@ -15,19 +15,119 @@ namespace Brewchat.Game.Wrappers;
 /// </summary>
 internal static class EngineUtils
 {
-    
-    public static Il2CppSystem.Collections.IEnumerator ConvertToIl2Cpp(this System.Collections.IEnumerator x)
+    public static class iL2CPPWrapper
+{
+    /// <summary>
+    /// [pasted utils]
+    /// </summary>
+    public static class Serialization
     {
-        var arrayList = new Il2CppSystem.Collections.ArrayList();
-        while (x.MoveNext())
+
+        public static byte[] ToByteArray(Il2CppSystem.Object obj)
         {
-            var current = x.Current;
-            Il2CppSystem.Object il2cppCurrent = (Il2CppSystem.Object)(object)current;
-            arrayList.Add(il2cppCurrent);
+            if (obj == null) return null;
+            try
+            {
+                var bf = new Il2CppSystem.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                var ms = new Il2CppSystem.IO.MemoryStream();
+                bf.Serialize(ms, obj);
+                return ms.ToArray();
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
-        return arrayList.GetEnumerator();
+
+        [Obsolete("Obsolete")]
+        public static byte[] ToByteArray(object obj)
+        {
+            if (obj == null) return null;
+            try
+            {
+                var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                var ms = new System.IO.MemoryStream();
+                bf.Serialize(ms, obj);
+                return ms.ToArray();
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        [Obsolete("Obsolete")]
+        public static T FromByteArray<T>(byte[] data)
+        {
+            if (data == null) return default;
+            try
+            {
+                var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                using var ms = new System.IO.MemoryStream(data);
+                var obj = bf.Deserialize(ms);
+                return (T)obj;
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine(e);
+                return default;
+            }
+        }
+
+        public static T IL2CPPFromByteArray<T>(byte[] data)
+        {
+            if (data == null) return default;
+            try
+            {
+                var bf = new Il2CppSystem.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                var ms = new Il2CppSystem.IO.MemoryStream(data);
+                object obj = bf.Deserialize(ms);
+                return (T)obj;
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine(e);
+                return default;
+            }
+        }
+
+        public static T FromIL2CPPToManaged<T>(Il2CppSystem.Object obj)
+        {
+            return FromByteArray<T>(ToByteArray(obj));
+        }
+
+        public static T FromManagedToIL2CPP<T>(object obj)
+        {
+            return IL2CPPFromByteArray<T>(ToByteArray(obj));
+        }
+
+        public static object[] FromIL2CPPArrayToManagedArray(Il2CppSystem.Object[] obj)
+        {
+            var Parameters = new object[obj.Length];
+            for (var i = 0; i < obj.Length; i++)
+                if (obj[i].GetIl2CppType().Attributes == Il2CppSystem.Reflection.TypeAttributes.Serializable)
+                    Parameters[i] = FromIL2CPPToManaged<object>(obj[i]);
+                else
+                    Parameters[i] = obj[i];
+            return Parameters;
+        }
+
+        public static Il2CppSystem.Object[] FromManagedArrayToIL2CPPArray(object[] obj)
+        {
+            Il2CppSystem.Object[] Parameters = new Il2CppSystem.Object[obj.Length];
+            for (var i = 0; i < obj.Length; i++)
+            {
+                if (obj[i].GetType().Attributes == System.Reflection.TypeAttributes.Serializable)
+                    Parameters[i] = FromManagedToIL2CPP<Il2CppSystem.Object>(obj[i]);
+                else
+                    Parameters[i] = (Il2CppSystem.Object)obj[i];
+            }
+            return Parameters;
+        }
     }
-    
+}
     public struct Conversion
     {
         public static Color HexToColor(string hex)
@@ -40,18 +140,13 @@ internal static class EngineUtils
         {
             return ColorUtility.ToHtmlStringRGB(color);
         }
-
-       
     }
 
     public struct Assets
     {
+
         #region Media
 
-       /* public static class AudioDataSet
-        {
-            static GameObject gameObject;
-        }*/
         public static AudioClip? AudioClip(Uri url)
         {
             UnityWebRequest www = UnityWebRequest.Get(url.ToString());
@@ -182,6 +277,9 @@ internal static class EngineUtils
     }
 }
 
+
+
+#region  ClassExt 
 public static class TextureExtensions
 {
     public static Sprite ToSprite(this Texture2D? texture)
@@ -265,10 +363,6 @@ public static class ObjectExtension
 
         return component as T;
     }
-    
-    
-    
-    
 }
 
 public static class ComponentExtensions
@@ -278,3 +372,4 @@ public static class ComponentExtensions
         return x = color;
     }
 }
+#endregion

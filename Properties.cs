@@ -21,7 +21,8 @@ public class Config
     public class ModulesModel
     {
         public RFCTamperingModel RFCTampering {get;set;} = new();
-        public class RFCTamperingModel
+        public UdonModel Udon {get;set;} = new();
+        public class RFCTamperingModel   
         {
                 public SDK2Model SDK2 {get; set;} = new();
                 public class SDK2Model
@@ -29,6 +30,10 @@ public class Config
                   public bool EnforceToAll { get; set; } = false;
                 }
         } 
+        public class UdonModel
+        {
+            public bool isBlocked  { get; set ; } = false;
+        }
     }
     
     public class PlayerModel
@@ -148,6 +153,7 @@ public class Config
     public class AdvancedModel
     {
         public bool DebugMode { get; set; } = false;
+        public bool MurderPlayerNode { get; set; } = false;
     }
 
     // Serializable Color struct to avoid Unity Color circular references

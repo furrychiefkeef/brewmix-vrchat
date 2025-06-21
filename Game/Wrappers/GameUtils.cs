@@ -1,5 +1,6 @@
 ﻿using BlanketSDK.Core;
 using ExitGames.Client.Photon;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using VRC;
@@ -32,8 +33,8 @@ namespace Brewchat.Game.Wrappers
         {
             public static class Matchmaking
             {
-                public static VRC.Player? GetSelectedUser() => 
-                    UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_IUser_0.prop_String_1.getPlayer()?._vrcplayer._player;
+                public static VRC.Player GetSelectedUser =>  UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_IUser_0.prop_String_1.getPlayer()?._vrcplayer._player;
+                   
                 
                 public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers => 
                     PlayerManager.prop_PlayerManager_0.PlayerList;
@@ -117,12 +118,12 @@ namespace Brewchat.Game.Wrappers
 
                 public static void SendRaiseEvent(byte code, object payload, SendOptions sendOptions)
                 {
-                    /*var IL2CPP = Pasted.WTFBlaze.Utils.Managers.SerializationManager.FromManagedToIL2CPP<Il2CppSystem.Object>(payload);
+                    var IL2CPP = EngineUtils.iL2CPPWrapper.Serialization.FromManagedToIL2CPP<Il2CppSystem.Object>(payload);
                     PhotonNetwork.Method_Public_Static_Boolean_Byte_Object_RaiseEventOptions_SendOptions_0(code, IL2CPP, new()
                     {
-                        field_Public_ReceiverGroup_0 = ReceiverGroup.Others,
-                        field_Public_EventCaching_0 = EventCaching.DoNotCache
-                    }, sendOptions);*/
+                        field_Public_ReceiverGroup_0 = Photon.Realtime.ReceiverGroup.Others,
+                        field_Public_EventCaching_0 = Photon.Realtime.EventCaching.DoNotCache
+                    }, sendOptions);
                 }
             }
         }
@@ -151,13 +152,13 @@ namespace Brewchat.Game.Wrappers
         public class PlayerModel
         {
             public static VRCPlayer VRCPlayerEntity() => VRCPlayer.field_Internal_Static_VRCPlayer_0;
-            public static VRC.Player VRC_LocalPlayer() => VRC.Player.prop_Player_0;
+            public static VRC.Player LocalEntity() => VRC.Player.prop_Player_0;
             public static VRC.Player Get => VRC.Player.prop_Player_0;
 
             public struct _components
             {
-                public static VRCMotionState _motion = VRC_LocalPlayer().GetComponent<VRCMotionState>();
-                public static FlatBufferNetworkSerializer _serializer = VRC_LocalPlayer().GetComponent<FlatBufferNetworkSerializer>();
+                public static VRCMotionState _motion = LocalEntity().GetComponent<VRCMotionState>();
+                public static FlatBufferNetworkSerializer _serializer = LocalEntity().GetComponent<FlatBufferNetworkSerializer>();
                 /*public static SyncPhysics _SyncPhysics = VRC_LocalPlayer().GetComponent<SyncPhysics>();*/
             }
 
@@ -169,42 +170,42 @@ namespace Brewchat.Game.Wrappers
                     {
                         public static void SetOwnerAndGivePickupLocalEntity(VRCPickup pickup)
                         {
-                            var Player = PlayerModel.VRC_LocalPlayer().VRCPlayerApi;
+                            var Player = LocalEntity().VRCPlayerApi;
                             Player.TakeOwnership(pickup.gameObject);
                             pickup.gameObject.transform.position = Player.gameObject.transform.position + new Vector3(0.0f, 0.1f, 0f);
                         }
                     }
                     public static VRCPlayerApi Run_Speed(float v = 2f)
                     {
-                        VRCPlayerApi? player = VRC_LocalPlayer().VRCPlayerApi;
+                        VRCPlayerApi? player = LocalEntity().VRCPlayerApi;
                         player.SetRunSpeed(v);
                         return player;
                     }
 
                     public static VRCPlayerApi Walk_Speed(float v = 2f)
                     {
-                        VRCPlayerApi? player = VRC_LocalPlayer().VRCPlayerApi;
+                        VRCPlayerApi? player = LocalEntity().VRCPlayerApi;
                         player.SetWalkSpeed(v);
                         return player;
                     }
 
                     public static VRCPlayerApi Jump_Impulse(float v = 3f)
                     {
-                        VRCPlayerApi? player = VRC_LocalPlayer().VRCPlayerApi;
+                        VRCPlayerApi? player = LocalEntity().VRCPlayerApi;
                         player.SetJumpImpulse(v);
                         return player;
                     }
 
                     public static VRCPlayerApi Velocity(Vector3 v)
                     {
-                        VRCPlayerApi? player = VRC_LocalPlayer().VRCPlayerApi;
+                        VRCPlayerApi? player = LocalEntity().VRCPlayerApi;
                         player.SetVelocity(v);
                         return player;
                     }
 
                     public static VRCPlayerApi Gravity(float v = 1f)
                     {
-                        VRCPlayerApi? player = VRC_LocalPlayer().VRCPlayerApi;
+                        VRCPlayerApi? player = LocalEntity().VRCPlayerApi;
                         player.SetGravityStrength(v);
                         return player;
                     }
@@ -235,22 +236,22 @@ namespace Brewchat.Game.Wrappers
                     return avatar;
                 }
 
-                public static ApiAvatar GetAvatar() => VRC_LocalPlayer().prop_ApiAvatar_0;
+                public static ApiAvatar GetAvatar() => LocalEntity().prop_ApiAvatar_0;
 
                 public static void AvatarScale(float v = 4f) =>
-                    VRC_LocalPlayer().VRCPlayerApi.SetAvatarEyeHeightByMeters(v);
+                    LocalEntity().VRCPlayerApi.SetAvatarEyeHeightByMeters(v);
 
                 public static void AllowAvatarScaling(bool v = true) =>
-                    VRC_LocalPlayer().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
+                    LocalEntity().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
 
                 public static void AvatarScaleMax(float v) =>
-                    VRC_LocalPlayer().VRCPlayerApi.SetAvatarEyeHeightMaximumByMeters(v);
+                    LocalEntity().VRCPlayerApi.SetAvatarEyeHeightMaximumByMeters(v);
 
                 public static void AvatarScaleMin(float v) =>
-                    VRC_LocalPlayer().VRCPlayerApi.SetAvatarEyeHeightMinimumByMeters(v);
+                    LocalEntity().VRCPlayerApi.SetAvatarEyeHeightMinimumByMeters(v);
 
                 public static void AllowScaling(bool v) =>
-                    VRC_LocalPlayer().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
+                    LocalEntity().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
             }
 
             public static class Matchmaking
@@ -290,6 +291,8 @@ namespace Brewchat.Game.Wrappers
 
             public class SDK3
             {
+                public struct Udon
+                {
                 public static class Pickups
                 {
                     static VRCPickup _lastPickup;
@@ -328,6 +331,7 @@ namespace Brewchat.Game.Wrappers
                         }
                     }
                 }
+              }
             }
         }
 
@@ -442,7 +446,7 @@ namespace Brewchat.Game.Wrappers
 
                 public static void ToastV2(string? title, string? content = null, float duration = 2f, bool isAudible = true, Sprite? sprite = default)
                 {
-                    if (isAudible)  VRCUiSoundPlayer.Method_Public_Static_Void_AudioClip_Single_0(HudController.field_Public_Static_HudController_0.notificationSound, 5f);
+                    if (isAudible) VRCUiSoundPlayer.Method_Public_Static_Void_AudioClip_Single_0(HudController.field_Public_Static_HudController_0.notificationSound, 5f);
                     
                     HudController.field_Public_Static_HudController_0
                      .notification
@@ -538,7 +542,7 @@ namespace Brewchat.Game.Wrappers
                 {
                     if (inputfield == null)
                     {
-                        Object = new GameObject($"[{Entry.entry.NAME}] Keyboard");
+                        Object = new GameObject($"[{Entry.GetEntry().modInfo._currentName}] Keyboard");
                         Object.transform.parent = IMainMenuElements.MMParent();
                         UnityEngine.Object.DontDestroyOnLoad(Object);
                         inputfield = Object.AddComponent<VRCInputField>();
@@ -586,8 +590,8 @@ namespace Brewchat.Game.Wrappers
     
     public static class PlayerExtensions
     {
-        /*public static Color GetTrustColor(this VRC.Player player) => player.Method_Public_Static_Void_Object_Color_0();
-        public static string? GetTrustRank(this VRC.Player player) => player.Method_Public_Static_Void_Object_Single_String_0();*/
+        public static Color GetTrustColor(this VRC.Player player) => VRCPlayer.Method_Public_Static_Color_APIUser_0(player.APIUser);
+        public static string? GetTrustRank(this VRC.Player player) => VRCPlayer.Method_Public_Static_LocalizableString_APIUser_0(player.APIUser)._localizationKey;
         
         public static string IsFriend(this VRC.Player player)
         {
@@ -615,7 +619,6 @@ namespace Brewchat.Game.Wrappers
 
             return null;
         }
-
         public static VRC.Player? getPlayer(this int networkId)
         {
             foreach (var player in GameUtils.PlayerModel.Matchmaking.GetPlayers)

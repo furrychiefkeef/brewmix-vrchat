@@ -24,7 +24,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Assets\Textures\Branding\0logo.png" />
     <EmbeddedResource Include="Assets\Textures\UI\ActionMenu\action-menu_*.png" />
     <EmbeddedResource Include="Assets\Textures\UI\Nameplate\capsule_*.png" />
     <EmbeddedResource Include="Assets\Textures\UI\Icons\*.astrieksprites" />
@@ -33,7 +32,6 @@
   <ItemGroup>
     <Folder Include="Cheat\Modules\Local\" />
     <Folder Include="Utilities\Blanket.SDK\@VRC\MM\Controls\Cell\" />
-    <Folder Include="Utilities\Puller\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
@@ -619,8 +617,5 @@
     <Reference Include="WebTransMtn">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\WebTransMtn.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="10.0.0-preview.5.25277.114" />
   </ItemGroup>
 </Project>

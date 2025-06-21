@@ -20,7 +20,7 @@ internal class PlayerModule
 
         public static void Fly()
         {
-            Player player = GameUtils.PlayerModel.VRC_LocalPlayer();
+            Player player = GameUtils.PlayerModel.LocalEntity();
             if (!player && !GameUtils.World.IsLoaded()) return;
             else
             {
@@ -66,24 +66,23 @@ internal class PlayerModule
         public static void ForceJump(bool state)
         {
             #region REQUIRED_COMPONENTS
-
-            Player player = GameUtils.PlayerModel.VRC_LocalPlayer();
-            VRCPlayerApi player_motion = GameUtils.PlayerModel.Motion.Networking.Jump_Impulse();
-            float cache_player_jump_ = player_motion.GetJumpImpulse();
-
+           
             #endregion
 
             #region LOGIC
+            Player player = GameUtils.PlayerModel.LocalEntity();
+             float _cacheJumpData = player.VRCPlayerApi.GetJumpImpulse();
 
             if (!player && !GameUtils.World.IsLoaded()) return;
             {
+                
                 switch (state)
                 {
                     case true:
-                        player_motion.SetJumpImpulse();
+                        GameUtils.PlayerModel.Motion.Networking.Jump_Impulse();
                         break;
                     case false:
-                        player_motion.SetJumpImpulse(cache_player_jump_);
+                        GameUtils.PlayerModel.Motion.Networking.Jump_Impulse(_cacheJumpData);
                         break;
                 }
 
@@ -94,11 +93,15 @@ internal class PlayerModule
 
         public static void ClickTP()
         {
-            Player player = GameUtils.PlayerModel.VRC_LocalPlayer();
+            Player player = GameUtils.PlayerModel.LocalEntity();
             if (!player && !GameUtils.World.IsLoaded() || GameUtils.Gameplay.CallbackEvents.IsInMainMenu()) return;
             if (Physics.Raycast(GameUtils.Camera.Get.transform.position, GameUtils.Camera.Get.transform.forward, out RaycastHit hit)) player.transform.position = hit.point;
         }
+        public static void GrabIntestity(){
+            Player player = GameUtils.PlayerModel.LocalEntity();
+            if (!player && !GameUtils.World.IsLoaded() || GameUtils.Gameplay.CallbackEvents.IsInMainMenu()) return;
 
+        }
     }
 
     public class CameraBuilder
@@ -139,7 +142,7 @@ internal class PlayerModule
                             cameraObject.transform.position = referenceCamera.transform.position + (-cameraObject.transform.forward * 2f);
                             cameraObject.AddComponent<AudioListener>();
                             cameraObject.AddComponent<FlyManager>().AllowRotation = true;
-                            cameraObject.transform.position = GameUtils.PlayerModel.VRC_LocalPlayer().VRCPlayerApi.GetBonePosition(HumanBodyBones.Head);
+                            cameraObject.transform.position = GameUtils.PlayerModel.LocalEntity().VRCPlayerApi.GetBonePosition(HumanBodyBones.Head);
                             return camera;
                     }
                 }
@@ -164,24 +167,25 @@ internal class PlayerModule
             if (camera[0] != null && camera[1] != null && camera[2] != null)
             {
              
+                Widgets.QM.cameramode_widget.SetState(true);
                 switch (currentView)
                 {
                     case 0:
-                        // Widgets.QM.cameramode_widget.SetText($"Third Person");
-                        GameUtils.UI.HUD.ToastV1("Third Person Activated!");
+                        Widgets.QM.cameramode_widget.SetText($"Third Person");
+                        GameUtils.UI.HUD.ToastV1("Third Person <Back> Activated!");
                         camera[0].enabled = true;
                         camera[1].enabled = false;
                         camera[2].enabled = false;
                         break;
                     case 1:
-                        // Widgets.QM.cameramode_widget.SetText($"Second Person");
-                        GameUtils.UI.HUD.ToastV1("Second Person Activated!");
+                         Widgets.QM.cameramode_widget.SetText($"Second Person");
+                        GameUtils.UI.HUD.ToastV1("Third Person <Front> Activated!");
                         camera[0].enabled = false;
                         camera[1].enabled = true;
                         camera[2].enabled = false;
                         break;
                     case 2:
-                        // Widgets.QM.cameramode_widget.SetText($"FreeCam");
+                        Widgets.QM.cameramode_widget.SetText($"FreeCam");
                         GameUtils.UI.HUD.ToastV1("FreeCam Activated! Right Click (To Move Camera)");
                         camera[0].enabled = false;
                         camera[1].enabled = false;
@@ -190,7 +194,7 @@ internal class PlayerModule
                     case 3:
                         GameUtils.UI.HUD.ToastV1("Cameras Destoryed");
                         DestoryCameras(); 
-                        // Widgets.QM.cameramode_widget.SetState(false);
+                        Widgets.QM.cameramode_widget.SetState(false);
                         break;
                 }
             }

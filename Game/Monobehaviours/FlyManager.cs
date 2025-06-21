@@ -11,8 +11,6 @@ internal class FlyManager : UnityEngine.MonoBehaviour
     void Update() => Controller();
 
     Vector3 velocity = Vector3.zero;
-    float acceleration = 10f; // How fast you reach target speed
-    float deceleration = 5f; // How fast you stop
 
     void Controller()
     {

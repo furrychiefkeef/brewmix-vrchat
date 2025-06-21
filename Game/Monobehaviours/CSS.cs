@@ -144,12 +144,13 @@ namespace Brewchat.Cheat.Modules
             else return;
           
         }
-        public static void RefreshLoadingAudio()
+       
+        
+        public static void Online() 
         {
-            var cli = QueueAudio.GetComponent<AudioSource>();
-            cli.clip = EngineUtils.Assets.AudioClip(new Uri(Entry.config.Appearance.inGame.QueueAudio));
+            ApplyActionMenuStyling();
+            ApplyAdvancedMenuBackgrounds();
         }
-
         public static void Offline()
         {
             #region Offline Button Colors
@@ -244,8 +245,6 @@ namespace Brewchat.Cheat.Modules
             }
             #endregion
         }
-
-
         private static void ApplyDividerStyling(Transform actionMenuRoot)
         {
             try
@@ -495,6 +494,46 @@ namespace Brewchat.Cheat.Modules
                 ThemeData.Backgrounds = colors["Backgrounds"];
             }
             #endregion
+        }
+        public struct Refreshers 
+        {
+            public static void RefreshLoadingAudio() 
+            {
+                AudioSource cli = QueueAudio.GetComponent<AudioSource>();
+                cli.clip = EngineUtils.Assets.AudioClip(new Uri(Entry.config.Appearance.inGame.QueueAudio));
+            }
+            public static void RefreshActionMenuColor()
+            { 
+                foreach (Transform actionMenuInstance in IActionMenuElements.ActionMenus())
+                {
+                    if (actionMenuInstance == null) continue;
+
+                    // Get action menu root - check if it has enough children
+                    if (actionMenuInstance.childCount == 0)
+                    {
+                        MelonLogger.Msg("ActionMenu has no children.", 2);
+                        continue;
+                    }
+
+                    Transform actionMenuRoot = actionMenuInstance.GetChild(0);
+                    if (actionMenuRoot == null)
+                    {
+                        MelonLogger.Msg("ActionMenu root transform (child 0) not found.", 2);
+                        continue;
+                    }
+
+                    // Apply Dividers Styling
+                    ApplyDividerStyling(actionMenuRoot);
+
+                    // Apply Background Graphic
+                    ApplyBackgroundGraphic(actionMenuRoot);
+
+                    // Apply Cursor Graphic  
+                    ApplyCursorGraphic(actionMenuRoot);
+
+                    // Remove Center Graphic
+                }
+            }
         }
     }
 }

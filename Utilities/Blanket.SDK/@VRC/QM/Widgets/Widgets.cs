@@ -60,23 +60,19 @@ internal class VRCWidgets : IQuickMenuElements
         #endregion 
         
         
+        var widget = new VRCWidgets(); 
+        widget._obj = obj.gameObject; 
+        widget.header_txt = _0;   
+
         #region IMAGE_COMPONENT
 
-        if (!sprite || !sprite == null) { return null; }
+        if (sprite == null) { return null; }
         _2.sprite = sprite;
         
         
         if (color.r == 0 || color.b == 0  || color.g == 0 || color.a == 0) { _Headerbg.canvasRenderer.SetColor(Color.white); }
         _Headerbg.canvasRenderer.SetColor(color);
-        #endregion
-        /*while (duration > 10)
-        {
-            obj.gameObject.SetActive(false);
-        }*/
-
-        var widget = new VRCWidgets(); 
-        widget._obj = obj.gameObject; 
-        widget.header_txt = _0;        
+        #endregion     
         return widget;         
     }
 

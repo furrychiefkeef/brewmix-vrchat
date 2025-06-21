@@ -48,6 +48,7 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
 
     void CommandHandler()
     {
+        
         if (Input.GetKeyDown(KeyCode.F9))
         {
             GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a Command ", (id) =>

@@ -1,77 +1,74 @@
-﻿using System.Reflection;
-using Brewchat.Game.Monobehaviours;
-using HarmonyLib;
-
+﻿using System;
+using System.Reflection;
+using Harmony;
 using MelonLoader;
+using Mono.CSharp;
+using MonoMod.Utils;
 using UnhollowerRuntimeLib;
 using UnityEngine;
-using VRC.SDKBase;
-using Brewchat.Game.Wrappers;
-using autumn.ml;
-using autumn;
 
-[assembly: MelonInfo(typeof(Entry), "VRUtility", "7.0", "Dog")]
-public class Entry : MelonMod
+[assembly: MelonInfo(typeof(Entry), "Luxury", "Nightly.0.0.0.1.dev", "Vlone")]
+public class Entry: MelonMod
 {
-    public string? NAME;
-    public static Entry entry = new();
-    public static Config config = new();
-    public static HarmonyLib.Harmony h = new(Guid.NewGuid().ToString());
-    public override void OnInitializeMelon()
+    
+     internal static Entry GetEntry() => new();
+     internal ModInfo modInfo {get; } = new();
+     public static Config config = new();
+
+     public HarmonyLib.Harmony Hooks {get;} =  new("[1+++-->]");
+    internal class ModInfo
     {
-
-        if (File.Exists("config.json")) config = Config.LoadFromFile("config.json");
-        else config = new Config();
-        Config.SaveToFile(config, "config.json");
-
-        #region Components
-        try
+        public Prefixes prefixes {get; } = new();
+        public class Prefixes 
         {
-            foreach (Type monos in Assembly.GetExecutingAssembly().GetTypes()
-            .Where(   x => x.IsClass 
-            && !x.IsAbstract && 
-            x.IsSubclassOf(typeof(MonoBehaviour))))
-            {
-                MelonLogger.Msg($"Registering MonoBehaviours: {monos.Name}"); 
-                ClassInjector.RegisterTypeInIl2Cpp(monos, true);
-            }
+            public  static string VariableName = "_VRLone";
         }
-        catch (Exception ex) { MelonLogger.Msg(ex); }
-      
-      
-        #endregion
-        
-        #region ASSEMBLY_CORE_STUFF 
-        
-        h.PatchAll();
-        #endregion
-       
-    }
+        public readonly string? Enviroment = Environment.GetEnvironmentVariable(Prefixes.VariableName, EnvironmentVariableTarget.User);
+        public string? _currentName { get;set;} =  "Luxury888";
+        public string? _currentVersion{ get; set;} = "<2>.<5>.<7>.<7>";
+        public string? _currentHash {get; set;} = System.Reflection.Assembly.GetExecutingAssembly().GetHashCode().ToString();
+        public static Dictionary<string, string>? _custom_properties {get;set;} = new();
+    }   
+
+    #region ML
     public override void OnEarlyInitializeMelon()
     {
-        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable($"{NAME}.Mod.ML.Name")) && string.IsNullOrEmpty(Environment.GetEnvironmentVariable("Visionary.Mod.ML.Icon")))
-        {
-            Environment.SetEnvironmentVariable($"{NAME}.Mod.ML.Name", NAME, EnvironmentVariableTarget.User);
-            Environment.SetEnvironmentVariable($"{NAME}.Mod.ML.Icon", "https://", EnvironmentVariableTarget.User);
+        // if(modInfo.Enviroment == null) Environment.SetEnvironmentVariable(modInfo.VariableName, modInfo._currentName, EnvironmentVariableTarget.User);
+        // else  modInfo._currentName = modInfo.Enviroment;
+
+        if(File.Exists("config.json")) config = Config.LoadFromFile("config.json");
+        else config = new();
+    }
+    public override void OnInitializeMelon()
+    {
+        foreach(Type behaviour in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(MonoBehaviour)))){
+        
+            MelonLogger.Msg($"Adding Components: [+] {behaviour.Assembly}+>{behaviour.AssemblyQualifiedName}::{behaviour.Namespace}");
+            ClassInjector.RegisterTypeInIl2Cpp(behaviour, true);
+            continue;
         }
-        else
-        {
-            MelonLogger.Msg("Debug Mode Disabled");
-            string? name = Environment.GetEnvironmentVariable($"{NAME}.Mod.ML.Name", EnvironmentVariableTarget.User);
-            entry.NAME = name;
-        }
+        
+    }
+    
+    public override void OnLateInitializeMelon() => Hooks.PatchAll();
+    public override void OnDeinitializeMelon() => Config.SaveToFile(config, "config.json");
+    #endregion
+
+
+
+    #region SceneView
+    public override void OnSceneWasInitialized(int buildIndex, string sceneName)
+    {
+        
     }
     public override void OnSceneWasLoaded(int buildIndex, string sceneName)
     {
-        base.OnSceneWasLoaded(buildIndex, sceneName);
+       
     }
     public override void OnSceneWasUnloaded(int buildIndex, string sceneName)
     {
-        base.OnSceneWasUnloaded(buildIndex, sceneName);
+        
     }
-    public override void OnDeinitializeMelon()
-    {
-        Config.SaveToFile(config, "config.json");
-    }
+    #endregion
+ 
 }
-
