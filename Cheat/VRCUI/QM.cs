@@ -73,13 +73,33 @@ internal class QM
                 }, false);
                 }
         }
+        public class NestedQMDebug { public VRCPage Page { get; set; }
 
+            public void Execute()
+            {
+               Page = new VRCPage("Debug", true, pageOptions: new() { ShowScrollWheel = false });
+               VRCGroupLayout Group_UI = new(Page);
+               Group_UI.AddButton("SendUdonEvent", $"Send a Udon Event <color=red>(Custom Only NOT NETWORKING)</color>", () =>      
+                {
+                  GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter Event Name", (x) => 
+                  {
+                     GameUtils.World.SDK3.Udon.LoadCustomEvent(x);
+                  }, Placeholder: "Such as: SyncKill", MultiLine: false);
+                  
+                }, false);
+                }
+            }
+        
         public static void Apply()
         {
+
+            CSS.Online();
+            Core.EnableRichText();
             NestedQMAppearance appearance = new(); appearance.Execute();
+            NestedQMDebug debug = new(); debug.Execute();
             #region Main
             var MainPage = new VRCPage(Entry.GetEntry().modInfo._currentName, pageOptions: new() { ShowScrollWheel = false });
-            VRCTab tab = new VRCTab(MainPage, "it's a luxury to even be owning this project. take care <3", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+            VRCTab tab = new VRCTab(MainPage, "it's a luxury to even be owning this project. becareful what you show. take care <3", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
             tab.SetBadge(true); tab.SetBadgeColor(Color.black); tab.SetText("Nightly");
 
             #region Groupbox
@@ -87,6 +107,7 @@ internal class QM
             VRCModalContainer? PlayerMovementModal = new("Player+Movement");
             mainGroupLayout.AddButton("Player", "Modify The Player", PlayerMovementModal.Open, true);
             mainGroupLayout.AddButton("Appearance", "in Game Appearance", appearance.Page.Open, true);
+            mainGroupLayout.AddButton("Debug", "Debugger", debug.Page.Open, true);
             #endregion
 
             #region Movement_Modal
@@ -119,26 +140,26 @@ internal class QM
             {
                Page = new VRCPage("Murder 4", true, pageOptions: new() { ShowScrollWheel = false });
                VRCGroupLayout Group_UI = new(Page);
-               VRCGroupLayout Group_Roles = new(Page, $"Currently Modifiying (<color=red>{GameUtils.Gameplay.Matchmaking.GetSelectedUser.APIUser.displayName}</color>) Roles");
+               VRCGroupLayout Group_Roles = new(Page, $"Currently Modifiying (<color=red>{GameUtils.Gameplay.Matchmaking.GetSelectedUser().APIUser.displayName}</color>) Roles");
                Group_UI.AddButton("Kill", "", () =>      
                {
 
-                Murder_4.NetworkEvents.GameManager.Logic.PunishmentReceptors.Kill(GameUtils.Gameplay.Matchmaking.GetSelectedUser);
+                Murder_4.NetworkEvents.GameManager.Logic.PunishmentReceptors.Kill(GameUtils.Gameplay.Matchmaking.GetSelectedUser());
 
                }, false);
                Group_Roles.AddButton("Assign Murderer", "", () =>
                {
 
-               Murder_4.NetworkEvents.GameManager.Roles.AssignMurderer(GameUtils.Gameplay.Matchmaking.GetSelectedUser);
+               Murder_4.NetworkEvents.GameManager.Roles.AssignMurderer(GameUtils.Gameplay.Matchmaking.GetSelectedUser());
 
                },false);    
                Group_Roles.AddButton("Assign Detective", "", () => {
-                Murder_4.NetworkEvents.GameManager.Roles.AssignDetective(GameUtils.Gameplay.Matchmaking.GetSelectedUser);
+                Murder_4.NetworkEvents.GameManager.Roles.AssignDetective(GameUtils.Gameplay.Matchmaking.GetSelectedUser());
                }, false);   
                Group_Roles.AddButton("Assign Bystander", "", () =>
                {
         
-               Murder_4.NetworkEvents.GameManager.Roles.AssignBystander(GameUtils.Gameplay.Matchmaking.GetSelectedUser);
+               Murder_4.NetworkEvents.GameManager.Roles.AssignBystander(GameUtils.Gameplay.Matchmaking.GetSelectedUser());
 
                },false);    
 

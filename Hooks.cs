@@ -95,9 +95,15 @@ namespace brewchat.hybridxcore.bep
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             _isQuickMenuLoaded = true;
 
-            QM.Core.EnableRichText();
             QM.Main.Apply();
             Widgets.QM.Initalize();
+          
+        } 
+        [HarmonyPostfix, HarmonyPatch(typeof(Player), nameof(Player.Start))]
+        public static void Player_Initialize_HOOK(ref Player? __instance)
+        {
+            if (__instance is null) return ; 
+            CSS.Online();
         } 
         
         [HarmonyPostfix, HarmonyPatch(typeof(SelectedUserMenuQM), nameof(SelectedUserMenuQM.Start))]
@@ -116,6 +122,7 @@ namespace brewchat.hybridxcore.bep
             if ( __instance is null) return false;
             __instance.DisallowTheft = false;
             __instance.proximity = float.MaxValue;
+            __instance.allowManipulationWhenEquipped = true;
             return true;
         }
 
@@ -139,14 +146,19 @@ namespace brewchat.hybridxcore.bep
             if (__result != null && !APIUser.CurrentUser.isSupporter)
                 __result.field_Protected_T_0 = true;
         }
-        // [HarmonyPrefix, HarmonyPatch(typeof(UdonManager), nameof(UdonManager.Awake))]
-        // public static bool __0Udon(ref UdonBehaviour __instance)
+
+        // [HarmonyPrefix, HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomEvent))]
+        // public static bool __0Udon(ref UdonBehaviour __instance, ref string __0)
         // {
         //     if(__instance == null) return false;
-        //     if(Entry.config.Modules.Udon.isBlocked) {
-        //                 return false;
-        //     }
             
+        //     MelonLogger.Msg($"[Udon]: <{__0}>");
+        //     if(__0 == "SyncKill")
+        //     {
+        //         MelonLogger.Msg($"[Udon]: [BLOCKED]: <{__0}>");
+                    
+        //         return false;
+        //     }
         //     return true;
         // }
         #endregion
@@ -196,41 +208,41 @@ namespace brewchat.hybridxcore.bep
         #region NetworkUtils
 
         [HarmonyPostfix, HarmonyPatch(typeof(LoadBalancingClient), nameof(LoadBalancingClient.OnEvent))]
-        public static void __PhotonLogging_HOOK(EventData __0)
+        public static void __PhotonHook(EventData __0)
         {
-            /*if (__0 is null && __0.CustomData is null) return;
+            if (__0 is null && __0.CustomData is null) return;
 
-            if (Config.Logging.Photon)
+            if (Entry.config.Logging.Game.PhotonEvents)
             {
                 object Data = null;
                 ParameterDictionary? Parameters = __0.Parameters;
                 foreach (var data in Parameters)
                 {
-                    Data = SerializationManager.FromIL2CPPToManaged<object>(data);
-                    string? c = System.Text.Json.JsonSerializer.Serialize(Data, new JsonSerializerOptions { AllowTrailingCommas = true });
-                    /*sconsole.print("hook", "/photon", $" Player: {GameUtils.PlayerModel.GetPlayerFromActor(__0.Sender)?.VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] Event Data: \n {c}", 0);#1#
+                    Data = EngineUtils.iL2CPPWrapper.Serialization.FromIL2CPPToManaged<object>(data);
+                    string? c = Newtonsoft.Json.JsonConvert.SerializeObject(Data, Newtonsoft.Json.Formatting.Indented);
+                    MelonLogger.Msg("hook", "/photon", $" Player: {(__0.Sender).getPlayer().VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] Event Data: \n {c}", 0);
                 }
-            }*/
+            }
         }
 
         
-        [HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.Method_Public_Void_Player_VrcEvent_VrcBroadcastType_Int32_Single_0))]
-        private static bool __RFCPatch_HOOK(ref VRC.Player __0, ref VRC_EventHandler.VrcEvent __1, ref VRC_EventHandler.VrcBroadcastType __2, ref int __3, ref float __4)
-        {
+        // [HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.Method_Public_Void_Player_VrcEvent_VrcBroadcastType_Int32_Single_0))]
+        // private static bool __RFC_HOOK(ref VRC.Player __0, ref VRC_EventHandler.VrcEvent __1, ref VRC_EventHandler.VrcBroadcastType __2, ref int __3, ref float __4)
+        // {
 
-            if (!Entry.config.Modules.RFCTampering.SDK2.EnforceToAll)
-            {
-                if (__0?.VRCPlayerApi?.displayName == APIUser.CurrentUser?.displayName)
-                {
-                    __2 = VRC_EventHandler.VrcBroadcastType.AlwaysUnbuffered;
-                    return true;
-                }
-                return true;
-            }
+        //     if (!Entry.config.Modules.RFCTampering.SDK2.EnforceToAll)
+        //     {
+        //         if (__0?.VRCPlayerApi?.displayName == APIUser.CurrentUser?.displayName)
+        //         {
+        //             __2 = VRC_EventHandler.VrcBroadcastType.AlwaysUnbuffered;
+        //             return true;
+        //         }
+        //         return true;
+        //     }
     
 
-            return true;
-        }
+        //     return true;
+        // }
         
      
         #endregion

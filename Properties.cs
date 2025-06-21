@@ -100,7 +100,7 @@ public class Config
         {
             public bool PhotonEvents { get; set; } = false;
             public bool RPCs { get; set; } = false;
-            public bool UdonObjects { get; set; } = false;
+            public bool UdonObjects { get; set; } = true;
         }
     }
 

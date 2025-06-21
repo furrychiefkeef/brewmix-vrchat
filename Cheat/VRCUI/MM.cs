@@ -152,7 +152,7 @@ internal class MM : IMainMenuElements
             {
 
                 var row4 = new VRCRowGroup(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"{Entry.GetEntry().modInfo._currentName} Actions");
-                VRCBigButton? Teleport = new(row4, "Teleport", $"Teleport to this player's Position", () => { GameUtils.PlayerModel.LocalEntity().transform.position = GameUtils.Gameplay.Matchmaking.GetSelectedUser.transform.position; });
+                VRCBigButton? Teleport = new(row4, "Teleport", $"Teleport to this player's Position", () => { GameUtils.PlayerModel.LocalEntity().transform.position = GameUtils.Gameplay.Matchmaking.GetSelectedUser().transform.position; });
 
                 #region Admin
 

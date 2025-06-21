@@ -33,7 +33,8 @@ namespace Brewchat.Game.Wrappers
         {
             public static class Matchmaking
             {
-                public static VRC.Player GetSelectedUser =>  UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_IUser_0.prop_String_1.getPlayer()?._vrcplayer._player;
+                
+                public static VRC.Player GetSelectedUser() => UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_IUser_0.prop_String_1.getPlayer()?._vrcplayer._player;
                    
                 
                 public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers => 
