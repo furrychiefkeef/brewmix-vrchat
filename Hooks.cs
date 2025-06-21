@@ -139,16 +139,16 @@ namespace brewchat.hybridxcore.bep
             if (__result != null && !APIUser.CurrentUser.isSupporter)
                 __result.field_Protected_T_0 = true;
         }
-        [HarmonyPrefix, HarmonyPatch(typeof(UdonManager), nameof(UdonManager.Awake))]
-        public static bool __0Udon(ref UdonBehaviour __instance)
-        {
-            if(__instance == null) return false;
-            if(Entry.config.Modules.Udon.isBlocked) {
-                        return false;
-            }
+        // [HarmonyPrefix, HarmonyPatch(typeof(UdonManager), nameof(UdonManager.Awake))]
+        // public static bool __0Udon(ref UdonBehaviour __instance)
+        // {
+        //     if(__instance == null) return false;
+        //     if(Entry.config.Modules.Udon.isBlocked) {
+        //                 return false;
+        //     }
             
-            return true;
-        }
+        //     return true;
+        // }
         #endregion
 
         #region UpdateHook

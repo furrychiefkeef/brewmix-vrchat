@@ -12,22 +12,22 @@ public class Entry: MelonMod
 {
     
      internal static Entry GetEntry() => new();
-     internal ModInfo modInfo {get; } = new();
-     public static Config config = new();
+     internal ModInfo modInfo  => new();
+     public static Config config  = new();
 
-     public HarmonyLib.Harmony Hooks {get;} =  new("[1+++-->]");
+     public HarmonyLib.Harmony Hooks =>  new("[1+++-->]");
     internal class ModInfo
     {
-        public Prefixes prefixes {get; } = new();
+        public Prefixes prefixes => new();
         public class Prefixes 
         {
             public  static string VariableName = "_VRLone";
         }
         public readonly string? Enviroment = Environment.GetEnvironmentVariable(Prefixes.VariableName, EnvironmentVariableTarget.User);
         public string? _currentName { get;set;} =  "Luxury888";
-        public string? _currentVersion{ get; set;} = "<2>.<5>.<7>.<7>";
+        public string? _currentVersion { get; set;} = "<2>.<5>.<7>.<7>";
         public string? _currentHash {get; set;} = System.Reflection.Assembly.GetExecutingAssembly().GetHashCode().ToString();
-        public static Dictionary<string, string>? _custom_properties {get;set;} = new();
+        public static Dictionary<string, string>? _custom_properties {get; set;} = new();
     }   
 
     #region ML
@@ -43,7 +43,7 @@ public class Entry: MelonMod
     {
         foreach(Type behaviour in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(MonoBehaviour)))){
         
-            MelonLogger.Msg($"Adding Components: [+] {behaviour.Assembly}+>{behaviour.AssemblyQualifiedName}::{behaviour.Namespace}");
+            MelonLogger.Msg($"Adding Components: [+] {behaviour.Assembly}+>{behaviour.Assembly.CodeBase}::{behaviour.Namespace}");
             ClassInjector.RegisterTypeInIl2Cpp(behaviour, true);
             continue;
         }
