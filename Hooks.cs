@@ -95,7 +95,8 @@ namespace brewchat.hybridxcore.bep
             if (__instance is null || _isQuickMenuLoaded) return ; 
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             _isQuickMenuLoaded = true;
-           __instance?.gameObject.GetOrAddComponentSafe<ESP>(); __instance?.gameObject.GetOrAddComponentSafe<Wallhacks>();
+           __instance?.gameObject.GetOrAddComponentSafe<ESP>(); 
+           __instance?.gameObject.GetOrAddComponentSafe<Wallhacks>();
             
 
 
