@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using VRC.UI.Elements;
+using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.Core
 {
@@ -12,6 +13,7 @@ namespace BlanketSDK.Core
         internal static GameObject MainMenu() { return UnityEngine.Object.FindObjectOfType<MainMenu>().transform.GetChild(0).gameObject; }
         protected static MainMenu MM() { return UnityEngine.Object.FindObjectOfType<MainMenu>(); }
         public static Transform MMParent() { return MainMenu().transform.FindChild("MMParent"); }
+        public static Transform MMTooltipPanel() => MMParent().parent.transform.FindChild("ToolTipPanel/Panel/Vertical Layout/Text_MM_H2"); 
 
         // Put RootObjects
 
@@ -99,6 +101,10 @@ namespace BlanketSDK.Core
                 Debug,
                 DevTools
             }
+        }
+         internal class Misc
+         {
+            public static TextMeshProUGUIEx? TooltipText{ get; set;} = MMTooltipPanel().GetComponentInChildren<TextMeshProUGUIEx>();
         }
     }
 }

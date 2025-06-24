@@ -10,6 +10,7 @@ using Brewchat.Game.Wrappers;
 using brewchat.hybridxcore.bep.Game.Wrappers;
 using Brewchat.Cheat.Modules;
 using autumn.ml.Cheat.Modules.World;
+using UnityEngine;
 
 
 
@@ -24,16 +25,11 @@ internal class MM : IMainMenuElements
         {
             try
             {
-                var a = new VRCPage(Entry.GetEntry().modInfo._currentName, EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
-                new VRCTab(a, Entry.GetEntry().modInfo._currentName, "The passion project.", sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+                var a = new VRCPage(Entry.GetEntry().modInfo._currentName, EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
+                var tab = new VRCTab(a, Entry.GetEntry().modInfo._currentName, InfoAboutCheat.Tooltips.GetTooltipString("Tab"), sprite: EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
+                tab.SetBadge(true); tab.SetBadgeColor(Color.black); tab.SetText("Nightly");
 
-                #region Header_Container
-
-                VRCSmallButton acee2 = new(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ExpandButtons(), "The passion project.", 5, () => GameUtils.UI.HUD.Alert("bitch2"), EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
-
-                #endregion
-
-                #region VRCPage_CodeName:Aware
+                #region VRCPage_CodeName::Aware
 
                 var VRCSdk_Container = new VRCCellContainer(a, "VRChat-SDK");
                 /*var UI_PROPERTIES = new VRCCellContainer(a, "Properties [QOL]");
@@ -91,7 +87,7 @@ internal class MM : IMainMenuElements
                     _maintooltip = "This reloads the style for the mod"
                 }, static () =>
                 {
-                        CSS.ApplyActionMenuStyling();
+                       CSS.Online();
                 });
                  var btnaa = new VRCButtonOperator(VRCSdk_Container, new()
                 {
@@ -101,7 +97,7 @@ internal class MM : IMainMenuElements
                     _maintooltip = InfoAboutCheat.Tooltips.GetTooltipString("RFC-Exploit")
                 }, static () =>
                 {
-            
+                        Entry.config.Modules.RFCTampering.SDK2.EnforceToAll = !Entry.config.Modules.RFCTampering.SDK2.EnforceToAll;
                 });
                 /*new VRCCellButton(a, UI_PROPERTIES, "Properties", "[Properties]");
                 new VRCCellButton(a, UI_HANDLER, "Handlers", "[Handlers]");
@@ -135,12 +131,12 @@ internal class MM : IMainMenuElements
             new VRCAvatarButtonSmall("AvatarSwitchID","Select Avatar Through ID",  () =>
             {
                 GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Change Avatar", (id) => { GameUtils.PlayerModel.Avatar.SetAvatar(id); }, MultiLine: false, Placeholder: "avtr_*");
-            }, sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite());
+            }, sprite: EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
             
             new VRCAvatarButton("GetAvatarID","Get Avatar ID",  () =>
             {
                 
-            }, sprite: EngineUtils.Assets.INTERNAL_Texture(Resources.Logo).ToSprite(),5);
+            }, sprite: EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite(),5);
         }
     }
     

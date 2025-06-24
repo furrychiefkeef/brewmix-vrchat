@@ -1,332 +1,181 @@
-﻿using Brewchat;
+﻿using System.Collections;
+
+namespace Brewchat.Game.Monobehaviours;
+
+using System.Diagnostics;
+using Brewchat.Cheat.Modules;
 using Brewchat.Game.Wrappers;
+using MelonLoader;
+using Photon.Realtime;
 using UnityEngine;
-using VRC;
+using VRC.SDK3.Components;
+using VRC.SDKBase;
 
-internal class wallhacks : MonoBehaviour
+public class ESP : MonoBehaviour
 {
-    public wallhacks(IntPtr ptr) : base(ptr) {}
-    public GameObject canvas_nameplate { get; set; }
-    public PlayerNameplate _nameplate { get; set; }
-    public  Player _player { get; set; }
-    private SkinnedMeshRenderer[] _avatarender;
-    private SkinnedMeshRenderer _meshs;
+    public ESP(IntPtr ptr) : base(ptr) {}
+    public static ESP? Instance { get; private set; }
+        // public static PlayerNameplate _nameplate; // Unused field removed
 
-    void Start()
-    {
-            _player = transform.GetComponent<VRC.Player>();
-            _avatarender = _player.GetComponentsInChildren<SkinnedMeshRenderer>(false);
-            if (_avatarender == null) return;
-            foreach (SkinnedMeshRenderer meshs in _avatarender)
+        private void Awake()
+        {
+            if (Instance == null) // Use == null for Unity objects
             {
-                if(meshs.gameObject.layer == GameUtils.Gameplay.RenderLayers.InternalUI) continue;
-                meshs.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
+                Instance = this;
+                DontDestroyOnLoad(gameObject); // Apply to gameObject, not 'this' directly for MonoBehaviours
             }
-
-            if (_player._vrcplayer.Nameplate == null) return;
-             _nameplate = _player._vrcplayer.Nameplate;    
-             _nameplate.NameplatePositioner.transform.GetChild(0).gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
+            else Destroy(this);
         }
+    public SkinnedMeshRenderer[]? _avatarender;
+    public VRC_Pickup? _pickup;
+    public Dictionary <string, MonoBehaviour2PublicSealedReInreInblreSiInCoblUnique>? _unused;
+    
+    public MonoBehaviour2PublicSealedReInreInblreSiInCoblUnique? FX_Entities;
+     public MonoBehaviour2PublicSealedReInreInblreSiInCoblUnique? FX_Pickups;
+    public static List<VRC.Player> Players {get; set;} = new();
+   
+    void Start() {
+        
     }
-
-/*internal class esp : MonoBehaviour
-{
-
-    public esp(IntPtr ptr) : base(ptr) {}
-    public Player _player { get; set; }
-    private SkinnedMeshRenderer[] _avatarender;
-    private HighlightsFXStandalone FX;
-    public static Dictionary<VRC.Player, esp> _esp = new Dictionary<VRC.Player, esp>();
-    void LateUpdate()
+    void OnEnable() 
     {
-        Config.Render.esp = !Config.Render.esp;
-        _player = transform.GetComponent<VRC.Player>();
-        GetSelectRegion(_player);
-    }
+        if(FX_Entities == null && FX_Pickups == null) 
+        {
+            FX_Entities = GameUtils.Camera.Get.gameObject.AddComponent<MonoBehaviour2PublicSealedReInreInblreSiInCoblUnique>();
+            FX_Pickups = GameUtils.Camera.Get.gameObject.AddComponent<MonoBehaviour2PublicSealedReInreInblreSiInCoblUnique>();
+           
 
-    void GetSelectRegion(VRC.Player player)
+            FX_Entities.blurSize = 0.1f;
+            FX_Entities.field_Protected_Color_0 = GetCurrentThemeData.Highlight;
+
+            FX_Pickups.blurSize = FX_Entities.blurSize;
+            FX_Pickups.field_Protected_Color_0 = EngineUtils.Conversion.HexToColor("#fa590f");
+        }
+
+    }
+   
+
+    public void Add(VRCPickup pickup)  => HighlightPickups(pickup);
+    public void Add(VRC.Player player) 
+    {
+        HighlightPlayerCapsule(player);
+        Players.Add(player);
+    }
+    public void Remove(VRC.Player player) 
+    {
+        HighlightPlayerCapsule(player, false);
+        Players.Remove(player);
+    }
+    public void PlayerESPClear() 
+    {
+        Players.Clear();
+        FX_Entities.field_Protected_HashSet_1_MeshFilter_0.Clear();
+    }
+    public void PickupESPClear() => FX_Pickups.field_Protected_HashSet_1_MeshFilter_0.Clear();
+
+    public void ClearAll()
+    {
+        PlayerESPClear();
+    }
+    void HighlightPlayerCapsule(VRC.Player player, bool enable = true)
     {
         PlayerSelector Capsule = player._laserSelectRegion;
         if (GameUtils.Camera.Get != null)
         {
-            FX = GameUtils.Camera.Get.GetComponent<HighlightsFXStandalone>();
-            FX.Method_Public_Void_MeshFilter_PDM_0(Capsule.GetComponent<MeshFilter>());
-            FX.highlightColor = Config.Appearance.Platte.HighlightFX;
-            FX.blurSize = 0.3f;
+            if(enable) 
+            {
+                
+                FX_Entities?.field_Protected_HashSet_1_MeshFilter_0?.AddIfNotPresent(Capsule.GetComponent<MeshFilter>());
+                return;
+            }
+            else 
+            {
+                FX_Entities?.field_Protected_HashSet_1_MeshFilter_0?.Remove(Capsule.GetComponent<MeshFilter>());
+                return;
+            }
         }
     }
-    
-    
+    void HighlightPickups(VRCPickup pickup, bool enable = true)
+    {
+        if(_pickup == null) _pickup = pickup;
+        if (GameUtils.Camera.Get != null)
+        {
+            if(enable) 
+            {
+                FX_Pickups?.field_Protected_HashSet_1_MeshFilter_0?.AddIfNotPresent(_pickup.GetComponent<Renderer>().GetComponent<MeshFilter>());
+                return;
+            }
+            else 
+            {
+                FX_Pickups?.field_Protected_HashSet_1_MeshFilter_0?.Remove(_pickup.GetComponent<Renderer>().GetComponent<MeshFilter>());
+                return;
+            }
+        }   
+    }
+}
 
-   
-}*/
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-/*class skeletonesp : MonoBehaviour
+internal class Wallhacks : MonoBehaviour
 {
-    private Player _player;
-    public Color Theme = Config.Appearance.Theme;
-    private void Start()
-    {
-        _player = transform.GetComponent<VRC.Player>();
-    }
 
-    void OnGUI()
-    {
-        Camera? cam = GameUtils.Camera.Get;
-        if (cam == null) return;
+    public Wallhacks(IntPtr ptr) : base(ptr) {}
+    public static Wallhacks? Instance { get; private set; }
+      
 
-        Dictionary<HumanBodyBones, Vector3> bonePositions = new Dictionary<HumanBodyBones, Vector3>();
-        Dictionary<HumanBodyBones, Vector2> boneScreenPositions = new Dictionary<HumanBodyBones, Vector2>();
-
-        // Get all bone positions
-        foreach (HumanBodyBones bone in Enum.GetValues(typeof(HumanBodyBones)))
+        private void Awake()
         {
-            // Skip LastBone as it's just an enum marker
-            if (bone == HumanBodyBones.LastBone) continue;
-
-            try
+            if (Instance == null) // Use == null for Unity objects
             {
-                Vector3 pos = _player.VRCPlayerApi.GetBonePosition(bone);
-
-                // Skip invalid positions
-                if (pos == Vector3.zero) continue;
-
-                bonePositions[bone] = pos;
-
-                // Convert to screen space
-                Vector3 screenPos = cam.WorldToScreenPoint(pos);
-
-                // Skip if behind camera
-                if (screenPos.z <= 0) continue;
-
-                // Invert Y for screen coordinates
-                screenPos.y = Screen.height - screenPos.y;
-                boneScreenPositions[bone] = new Vector2(screenPos.x, screenPos.y);
+                Instance = this;
+                DontDestroyOnLoad(gameObject); // Apply to gameObject, not 'this' directly for MonoBehaviours
             }
-            catch
+            else Destroy(this);
+        }
+    
+    
+    private SkinnedMeshRenderer _meshs;
+    public bool Enable {get; set;} = true;
+
+    
+    public void AddNameplateOverlay(VRC.Player player) => Nameplates(player, Enable);
+    public void AddPlayerOverlay(VRC.Player player) => Player(player, Enable);
+
+    void Nameplates(VRC.Player player , bool enable = true) 
+    {
+             if (player != null) 
+             {
+               
+                PlayerNameplate _nameplate = player._vrcplayer.Nameplate;
+                 if(enable) 
+                 {
+                    _nameplate.NameplatePositioner.transform.GetChild(0).gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
+                    return;
+                 }
+                 else
+                 {
+                    _nameplate.NameplatePositioner.transform.GetChild(0).gameObject.layer = 0;
+                    return;
+                 }
+                
+             }   
+    }
+
+    void Player(VRC.Player player , bool enable = true) 
+    {
+        if(player != null) 
+        {
+                
+            SkinnedMeshRenderer[] _avatarender = player.GetComponentsInChildren<SkinnedMeshRenderer>(false);
+            foreach (SkinnedMeshRenderer meshs in _avatarender)
             {
-                // Some bones might not exist on all avatars
-                continue;
+                if(enable) 
+                {
+                    meshs.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
+                }
+                 else 
+                {
+                    meshs.gameObject.layer = 0;
+                }
+              }
             }
-        }
-
-        // Draw head circle if the head bone exists
-        if (boneScreenPositions.ContainsKey(HumanBodyBones.Head))
-        {
-            // Adjust radius based on distance between head and neck if available
-            float headRadius = 3f; // Default radius
-            if (boneScreenPositions.ContainsKey(HumanBodyBones.Neck))
-            {
-                headRadius = Vector2.Distance(boneScreenPositions[HumanBodyBones.Head], 
-                                             boneScreenPositions[HumanBodyBones.Neck]) * 2f;
-            }
-            DrawCircle(boneScreenPositions[HumanBodyBones.Head], headRadius, Color.green, 3f);
-        }
-
-        // Define connections between bones to form a skeleton
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.Head, HumanBodyBones.Neck, Color.green);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.Neck, HumanBodyBones.Chest, Color.green);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.Chest, HumanBodyBones.Spine, Color.green);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.Spine, HumanBodyBones.Hips, Color.green);
-
-        // Arms
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.Chest, HumanBodyBones.LeftShoulder, Color.blue);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.LeftShoulder, HumanBodyBones.LeftUpperArm, Color.blue);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.LeftUpperArm, HumanBodyBones.LeftLowerArm, Color.blue);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.LeftLowerArm, HumanBodyBones.LeftHand, Color.blue);
-
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.Chest, HumanBodyBones.RightShoulder, Color.red);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.RightShoulder, HumanBodyBones.RightUpperArm, Color.red);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.RightUpperArm, HumanBodyBones.RightLowerArm, Color.red);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.RightLowerArm, HumanBodyBones.RightHand, Color.red);
-
-        // Legs
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.Hips, HumanBodyBones.LeftUpperLeg, Color.blue);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.LeftUpperLeg, HumanBodyBones.LeftLowerLeg, Color.blue);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.LeftLowerLeg, HumanBodyBones.LeftFoot, Color.blue);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.LeftFoot, HumanBodyBones.LeftToes, Color.blue);
-
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.Hips, HumanBodyBones.RightUpperLeg, Color.red);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.RightUpperLeg, HumanBodyBones.RightLowerLeg, Color.red);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.RightLowerLeg, HumanBodyBones.RightFoot, Color.red);
-        DrawBoneConnection(boneScreenPositions, HumanBodyBones.RightFoot, HumanBodyBones.RightToes, Color.red);
-
-        // Fingers - Left Hand
-        DrawFingers(boneScreenPositions, true, Color.cyan);
-
-        // Fingers - Right Hand
-        DrawFingers(boneScreenPositions, false, Color.yellow);
-
-        // Draw bone points
-        foreach (var bonePos in boneScreenPositions)
-        {
-            DrawPoint(bonePos.Value, Color.white, 3f);
-        }
+         }
     }
-
-    void DrawBoneConnection(Dictionary<HumanBodyBones, Vector2> positions, HumanBodyBones bone1, HumanBodyBones bone2,
-        Color color)
-    {
-        if (positions.ContainsKey(bone1) && positions.ContainsKey(bone2))
-        {
-            DrawLine(positions[bone1], positions[bone2], color, 3f);
-        }
-    }
-
-    void DrawFingers(Dictionary<HumanBodyBones, Vector2> positions, bool isLeft, Color color)
-    {
-        string side = isLeft ? "Left" : "Right";
-
-        // Thumb
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "Hand"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "ThumbProximal"),
-            color);
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "ThumbProximal"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "ThumbIntermediate"),
-            color);
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "ThumbIntermediate"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "ThumbDistal"),
-            color);
-
-        // Index finger
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "Hand"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "IndexProximal"),
-            color);
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "IndexProximal"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "IndexIntermediate"),
-            color);
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "IndexIntermediate"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "IndexDistal"),
-            color);
-
-        // Middle finger
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "Hand"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "MiddleProximal"),
-            color);
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "MiddleProximal"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "MiddleIntermediate"),
-            color);
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "MiddleIntermediate"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "MiddleDistal"),
-            color);
-
-        // Ring finger
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "Hand"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "RingProximal"),
-            color);
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "RingProximal"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "RingIntermediate"),
-            color);
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "RingIntermediate"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "RingDistal"),
-            color);
-
-        // Little finger
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "Hand"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "LittleProximal"),
-            color);
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "LittleProximal"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "LittleIntermediate"),
-            color);
-        DrawBoneConnection(positions,
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "LittleIntermediate"),
-            (HumanBodyBones)Enum.Parse(typeof(HumanBodyBones), side + "LittleDistal"),
-            color);
-    }
-
-    void DrawPoint(Vector2 position, Color color, float size)
-    {
-        GUI.color = color;
-        GUI.DrawTexture(new Rect(position.x - size / 2, position.y - size / 2, size, size), Texture2D.whiteTexture);
-    }
-
-    void DrawLine(Vector2 start, Vector2 end, Color color, float thickness)
-    {
-        // Save the current GUI color
-        Color originalColor = GUI.color;
-
-        // Set the color for drawing
-        GUI.color = color;
-
-        // Calculate the direction and length of the line
-        Vector2 direction = end - start;
-        float length = direction.magnitude;
-
-        // Calculate the angle in degrees
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // Create a rect for the line
-        GUIUtility.RotateAroundPivot(angle, start);
-        GUI.DrawTexture(new Rect(start.x, start.y - thickness / 2, length, thickness), Texture2D.whiteTexture);
-        GUIUtility.RotateAroundPivot(-angle, start);
-
-        // Restore the original GUI color
-        GUI.color = originalColor;
-    }
-
-    // New method to draw a circle
-    void DrawCircle(Vector2 center, float radius, Color color, float thickness)
-    {
-        // Save the current GUI color
-        Color originalColor = GUI.color;
-        
-        // Set the color for drawing
-        GUI.color = color;
-        
-        // Number of segments to make the circle (more segments = smoother circle)
-        int segments = 32;
-        
-        // Draw the circle as a series of lines
-        float angleStep = 2f * Mathf.PI / segments;
-        
-        for (int i = 0; i < segments; i++)
-        {
-            float angle1 = i * angleStep;
-            float angle2 = (i + 1) * angleStep;
-            
-            Vector2 point1 = new Vector2(
-                center.x + radius * Mathf.Cos(angle1),
-                center.y + radius * Mathf.Sin(angle1)
-            );
-            
-            Vector2 point2 = new Vector2(
-                center.x + radius * Mathf.Cos(angle2),
-                center.y + radius * Mathf.Sin(angle2)
-            );
-            
-            DrawLine(point1, point2, color, thickness);
-        }
-        
-        // Restore the original GUI color
-        GUI.color = originalColor;
-    }
-}*/

@@ -31,7 +31,7 @@ internal class VRCToggle : IQuickMenuElements
         parent ??= QMFallbacks._Fallback_Dashboard_Group_QM_UI_Buttons();
 
         Transform? obj = UnityEngine.Object.Instantiate(QMControls.Buttons.ToggleButton(), parent);
-        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_TOGGLE_BUTTON-{name}";
+        obj.name = $"{Guid.NewGuid()}-<Blanket.SDK.QM_TOGGLE_BUTTON-{name}";
 
         #region REQUIRED_COMPONENTS
         VRCToggleHandle _0 = obj.GetComponent<VRCToggleHandle>();
@@ -69,7 +69,7 @@ internal class VRCToggle : IQuickMenuElements
         #endregion
     }
 
-    public void SetState(bool state)  => Controller.isOn = !state;
+    public void SetState(bool state) => Controller.isOn = !state;
     public VRCToggle(VRCModalContainer parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent._verticalLayoutGroup, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
     public VRCToggle(VRCGroupBox parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.container, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }
     public VRCToggle(VRCGroupLayout parent, string? name, string? tooltip_on, string? tooltip_off, System.Action<bool> func, bool state = false, Sprite? sprite_on = null, Sprite? sprite_off = null) : this(parent.container, name, tooltip_on, tooltip_off, func, state, sprite_on, sprite_off) { }

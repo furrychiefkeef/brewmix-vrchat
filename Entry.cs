@@ -7,7 +7,7 @@ using MonoMod.Utils;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(Entry), "Luxury", "Nightly.0.0.0.1.dev", "Vlone")]
+[assembly: MelonInfo(typeof(Entry), "Naughty", "Nightly.0.0.0.1.dev", "Vlone")]
 public class Entry: MelonMod
 {
     
@@ -24,7 +24,7 @@ public class Entry: MelonMod
             public  static string VariableName = "_VRLone";
         }
         public readonly string? Enviroment = Environment.GetEnvironmentVariable(Prefixes.VariableName, EnvironmentVariableTarget.User);
-        public string? _currentName { get;set;} =  "Luxury888";
+        public string? _currentName { get;set;} =  "Naughtyware";
         public string? _currentVersion { get; set;} = "<2>.<5>.<7>.<7>";
         public string? _currentHash {get; set;} = System.Reflection.Assembly.GetExecutingAssembly().GetHashCode().ToString();
         public static Dictionary<string, string>? _custom_properties {get; set;} = new();
@@ -43,7 +43,7 @@ public class Entry: MelonMod
     {
         foreach(Type behaviour in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(MonoBehaviour)))){
         
-            MelonLogger.Msg($"Adding Components: [+] {behaviour.Assembly}+>{behaviour.Assembly.CodeBase}::{behaviour.Namespace}");
+            MelonLogger.Msg($"Adding Components: [+] {behaviour.Assembly.EntryPoint}+>::{behaviour.Namespace}");
             ClassInjector.RegisterTypeInIl2Cpp(behaviour, true);
             continue;
         }

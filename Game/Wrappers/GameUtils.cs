@@ -281,7 +281,7 @@ namespace Brewchat.Game.Wrappers
                         {
                             trigger.Interact();
                             if (!Entry.config.Advanced.DebugMode)
-                                UI.HUD.ToastV2("Sent Trigger", trigger.gameObject.name);
+                                UI.HUD.ToastV1($"Sent Trigger {trigger.gameObject.name}");
                             return trigger;
                         }
                         return null;

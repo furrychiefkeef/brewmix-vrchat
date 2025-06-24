@@ -37,9 +37,10 @@ namespace brewchat.hybridxcore.bep
             _isVRCApplicationLoaded = true;
             autumn.ml.Initalizers.ConfigSystem.SetConfig();
             autumn.ml.Initalizers.Cheat.Execute();
-
+    
             __instance?.gameObject.GetOrAddComponentSafe<CSS>();
             __instance?.gameObject.GetOrAddComponentSafe<KeybindManager>();
+            
         }
 
         #endregion
@@ -94,17 +95,15 @@ namespace brewchat.hybridxcore.bep
             if (__instance is null || _isQuickMenuLoaded) return ; 
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             _isQuickMenuLoaded = true;
+           __instance?.gameObject.GetOrAddComponentSafe<ESP>(); __instance?.gameObject.GetOrAddComponentSafe<Wallhacks>();
+            
+
 
             QM.Main.Apply();
             Widgets.QM.Initalize();
           
         } 
-        [HarmonyPostfix, HarmonyPatch(typeof(Player), nameof(Player.Start))]
-        public static void Player_Initialize_HOOK(ref Player? __instance)
-        {
-            if (__instance is null) return ; 
-            CSS.Online();
-        } 
+
         
         [HarmonyPostfix, HarmonyPatch(typeof(SelectedUserMenuQM), nameof(SelectedUserMenuQM.Start))]
         public static void SelectedUserMenu_Initialize_HOOK(ref SelectedUserMenuQM? __instance)
@@ -136,6 +135,14 @@ namespace brewchat.hybridxcore.bep
             MM.SelectedWorldMenu.Apply();
            
         }
+
+        // [HarmonyPostfix, HarmonyPatch(typeof(VRC.Player), nameof(VRC.Player.APIUser.allowAvatarCopying), MethodType.Getter)]
+        // public static void _PatchPlayer(ref bool  __result)
+        // {
+        //     if (__result != null) return;
+        //     __result = true;
+           
+        // }
         #endregion
 
         #region VRC_API
@@ -188,18 +195,35 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.Method_Internal_Void_Player_0))]
         public static void PlayerJoined_HOOK(VRC.Player __0)
         {
-            if (__0 != null && !__0.APIUser.IsSelf)
+            if (__0 != null)
             {
                 Player? player = __0;
+                if(player.APIUser.IsSelf) 
+                {
+                    CSS.Online();
+                }
+                else
+                {
+                   ESP.Instance.Add(player);
+                   
+                }
             }
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.Method_Internal_Void_Player_PDM_0))]
         public static void PlayerLeft_HOOK(VRC.Player __0)
         {   
-            if (__0 != null && !__0.APIUser.IsSelf)
+            if (__0 != null)
             {
                 Player? player = __0;
+                if(player.APIUser.IsSelf) 
+                {
+                    ESP.Instance.ClearAll();
+                }
+                else
+                {
+                    ESP.Instance.Remove(player);
+                }
             }
         }
 
@@ -226,23 +250,23 @@ namespace brewchat.hybridxcore.bep
         }
 
         
-        // [HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.Method_Public_Void_Player_VrcEvent_VrcBroadcastType_Int32_Single_0))]
-        // private static bool __RFC_HOOK(ref VRC.Player __0, ref VRC_EventHandler.VrcEvent __1, ref VRC_EventHandler.VrcBroadcastType __2, ref int __3, ref float __4)
-        // {
+        [HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.Method_Public_Void_Player_VrcEvent_VrcBroadcastType_Int32_Single_0))]
+        private static bool __RFC_HOOK(ref VRC.Player __0, ref VRC_EventHandler.VrcEvent __1, ref VRC_EventHandler.VrcBroadcastType __2, ref int __3, ref float __4)
+        {
 
-        //     if (!Entry.config.Modules.RFCTampering.SDK2.EnforceToAll)
-        //     {
-        //         if (__0?.VRCPlayerApi?.displayName == APIUser.CurrentUser?.displayName)
-        //         {
-        //             __2 = VRC_EventHandler.VrcBroadcastType.AlwaysUnbuffered;
-        //             return true;
-        //         }
-        //         return true;
-        //     }
+            if (!Entry.config.Modules.RFCTampering.SDK2.EnforceToAll)
+            {
+                if (__0?.VRCPlayerApi?.displayName == APIUser.CurrentUser?.displayName)
+                {
+                    __2 = VRC_EventHandler.VrcBroadcastType.AlwaysUnbuffered;
+                    return true;
+                }
+                return true;
+            }
     
 
-        //     return true;
-        // }
+            return true;
+        }
         
      
         #endregion

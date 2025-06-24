@@ -15,7 +15,7 @@ internal class VRCAvatarButtonSmall : IMainMenuElements
         if(!MM() || !MMParent() || !MMControls.Buttons.AvatarMenuRelated.AvatarButtonSmall()) throw new($"avatar button element has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         
         UnityEngine.Transform? obj = UnityEngine.Object.Instantiate(MMControls.Buttons.AvatarMenuRelated.AvatarButtonSmall(), MMControls.Buttons.AvatarMenuRelated.AvatarButtonSmall().parent);
-        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.MM_AVATAR_BUTTON";
+        obj.name = $"{Guid.NewGuid()}-<Blanket.SDK.MM_AVATAR_BUTTON";
         if(priority != 0 || priority != null) obj.SetSiblingIndex(priority); 
         
         UnityEngine.Object.DestroyImmediate(obj.GetComponent<MonoBehaviourPublicLoInLoBoInLoInLoLoLoUnique>());

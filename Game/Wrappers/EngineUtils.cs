@@ -255,7 +255,6 @@ internal static class EngineUtils
             if (keep is true)  UnityEngine.Object.DontDestroyOnLoad(instance);
             bundle.Unload(false);
             return instance;
-            return null;
         }
 
 
@@ -270,7 +269,6 @@ internal static class EngineUtils
             if (keep is true) UnityEngine.Object.DontDestroyOnLoad(instance);
             bundle.Unload(false);
             return instance;
-            return null;
         }
 
         #endregion
