@@ -5,7 +5,7 @@
     "csharp.debug.console": "externalTerminal",
     "terminal.integrated.fontFamily": "'DepartureMono Nerd Font Propo', monospace",
     "fonted.font": "'Fira Code', 'Courier New', monospace",
-    "editor.fontFamily": "Consolas, 'Courier New', monospace",
     "csharp.debug.logging.diagnosticsLog.protocolMessages": true,
-    "omnisharp.enableMsBuildLoadProjectsOnDemand": true
+    "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
+    "editor.fontFamily": "JetBrainsMono NFM Regular, 'Courier New', monospace"
 }

@@ -30,7 +30,7 @@ internal class VRCTab : IMainMenuElements
 
         #region REQUIRED_COMPONENTS
 
-        Button1PublicObSt_cBoSt_cStStUnique _0 = obj.GetComponent<Button1PublicObSt_cBoSt_cStStUnique>();
+        MenuTab _0 = obj.GetComponent<MenuTab>();
         TextMeshProUGUIEx _1 = obj.GetComponentInChildren<TextMeshProUGUIEx>();
         ImageEx _2 = obj.GetChild(2).GetComponent<ImageEx>();
         ToolTip _3 = obj.GetComponent<ToolTip>();

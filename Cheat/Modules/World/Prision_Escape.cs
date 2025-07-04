@@ -19,40 +19,51 @@ public class Prision_Escape
 
     public class Weapons
     {
-        public static void SpawnRevolver()
+        public static VRCPickup? SpawnRevolver()
         {
             VRCPickup? pickupObj = GameUtils
             .World
             .SDK3.Udon.Pickups.GetPickup("Revolver");
             GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickupObj);
+            return pickupObj;
         }
-        public static void SpawnKnife()
+        public static VRCPickup? SpawnKnife()
         {
             int i = 0;
             VRCPickup pickupObj = GameUtils
             .World
             .SDK3.Udon.Pickups.GetPickup($"Knife ({i++})");
             GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickupObj);
+             return pickupObj;
         }
-        public static void SpawnShotgun() 
-         {
-            int i = 0;
+        public static VRCPickup? SpawnShotgun()
+        {
             VRCPickup pickupObj = GameUtils
             .World
-            .SDK3.Udon.Pickups.GetPickup($"Shotgun ({i++})");
+            .SDK3.Udon.Pickups.GetPickup($"Shotgun");
             GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickupObj);
+            return pickupObj;
+         }
+        public static VRCPickup? SpawnSniper()
+        {
+            VRCPickup pickupObj = GameUtils
+            .World
+            .SDK3.Udon.Pickups.GetPickup($"Sniper");
+            GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickupObj);
+            pickupObj.gameObject.SetActive(true);
+            return pickupObj;
          }
 
         public struct Special
         {
-        public static void SpawnBaton()
-        {
-            
-            VRCPickup pickupObj = GameUtils
-            .World
-            .SDK3.Udon.Pickups.GetPickup("Baton");
-            GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickupObj);
-        }
+            public static void SpawnBaton()
+            {
+
+                VRCPickup pickupObj = GameUtils
+                .World
+                .SDK3.Udon.Pickups.GetPickup("Baton");
+                GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickupObj);
+            }
         }
       
     }
@@ -154,12 +165,12 @@ public class Prision_Escape
                                 {  
                                     if (playerEntry.GetComponentInChildren<TextMeshProUGUI>()?.text == player?.APIUser.displayName)
                                     {
-                                        if(!isLog) GameUtils.UI.HUD.Alert($"Player: {player.VRCPlayerApi.displayName}, Actor: {player.VRCPlayerApi.playerId}, Node: {playerNode.name}");
+                                        if(isLog) GameUtils.UI.HUD.Alert($"Player: {player.VRCPlayerApi.displayName}, Actor: {player.VRCPlayerApi.playerId}, Node: {playerNode.name}");
                                         return entryIndex;
                                     }
                                 }
                             }
-                            if(!isLog) GameUtils.UI.HUD.Alert($"Player not found in any node.");
+                            if(isLog) GameUtils.UI.HUD.Alert($"Player not found in any node.");
        
                         }
                         return 0;
@@ -185,7 +196,7 @@ public class Prision_Escape
                                 {  
                                     if (playerEntry.GetComponentInChildren<TextMeshProUGUI>()?.text == player?.APIUser.displayName)
                                     {
-                                        if(!isLog) GameUtils.UI.HUD.Alert($"Player: {player.VRCPlayerApi.displayName}, Actor: {player.VRCPlayerApi.playerId}, Node: {playerNode.name}");
+                                        if(isLog) GameUtils.UI.HUD.Alert($"Player: {player.VRCPlayerApi.displayName}, Actor: {player.VRCPlayerApi.playerId}, Node: {playerNode.name}");
                                         return playerNode.gameObject.GetComponent<UdonBehaviour>();
                                     }
                                 }

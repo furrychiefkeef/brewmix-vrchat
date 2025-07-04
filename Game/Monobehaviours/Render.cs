@@ -1,61 +1,76 @@
 ﻿using System.Collections;
 
-namespace Brewchat.Game.Monobehaviours;
-
 using System.Diagnostics;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Wrappers;
 using MelonLoader;
 using Photon.Realtime;
+using Unity.Collections;
 using UnityEngine;
 using VRC.SDK3.Components;
 using VRC.SDKBase;
 
+namespace Brewchat.Game.Monobehaviours;
 public class ESP : MonoBehaviour
 {
-    public ESP(IntPtr ptr) : base(ptr) {}
+    public ESP(IntPtr ptr) : base(ptr) { }
     public static ESP? Instance { get; private set; }
-        // public static PlayerNameplate _nameplate; // Unused field removed
-
         private void Awake()
         {
-            if (Instance == null) // Use == null for Unity objects
+            if (Instance == null) 
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject); // Apply to gameObject, not 'this' directly for MonoBehaviours
+                DontDestroyOnLoad(gameObject); 
             }
             else Destroy(this);
         }
-    public SkinnedMeshRenderer[]? _avatarender;
-    public VRC_Pickup? _pickup;
-    public Dictionary <string, MonoBehaviour2PublicSealedReInreInblreSiInCoblUnique>? _unused;
+    public Dictionary <string, HighlightsFXStandalone>? _unused;
     
-    public MonoBehaviour2PublicSealedReInreInblreSiInCoblUnique? FX_Entities;
-     public MonoBehaviour2PublicSealedReInreInblreSiInCoblUnique? FX_Pickups;
+    public HighlightsFXStandalone? FX_Entities;
+    public HighlightsFXStandalone? FX_Pickups;
     public static List<VRC.Player> Players {get; set;} = new();
+    public static List<VRC_Pickup> Pickups {get; set;} = new();
    
-    void Start() {
+    void Start()
+    {
         
     }
     void OnEnable() 
     {
-        if(FX_Entities == null && FX_Pickups == null) 
+        if (FX_Entities == null && FX_Pickups == null)
         {
-            FX_Entities = GameUtils.Camera.Get.gameObject.AddComponent<MonoBehaviour2PublicSealedReInreInblreSiInCoblUnique>();
-            FX_Pickups = GameUtils.Camera.Get.gameObject.AddComponent<MonoBehaviour2PublicSealedReInreInblreSiInCoblUnique>();
-           
+            FX_Entities = GameUtils.Camera.Get.gameObject.AddComponent<HighlightsFXStandalone>();
+            FX_Pickups = GameUtils.Camera.Get.gameObject.AddComponent<HighlightsFXStandalone>();
 
-            FX_Entities.blurSize = 0.1f;
-            FX_Entities.field_Protected_Color_0 = GetCurrentThemeData.Highlight;
+            FX_Entities.blurDownsampleFactor = Entry.config.Render.Overlays.ESP.Parameters.blurDownsampleFactor;
+            FX_Entities.blurSize = Entry.config.Render.Overlays.ESP.Parameters.blurSize;
+            FX_Entities.blurIterations = Entry.config.Render.Overlays.ESP.Parameters.blurIterations;
 
+            FX_Entities.field_Protected_Color_0 = Entry.config.Appearance.inGame.VRCUI._lastSelectedColor;
+
+            FX_Pickups.blurDownsampleFactor = FX_Entities.blurIterations;
+            FX_Pickups.blurIterations = FX_Entities.blurIterations;
             FX_Pickups.blurSize = FX_Entities.blurSize;
-            FX_Pickups.field_Protected_Color_0 = EngineUtils.Conversion.HexToColor("#fa590f");
+
+
         }
 
     }
-   
+    void Update()
+    {
+        FX_Pickups.field_Protected_Color_0 = EngineUtils.Conversion.HSBColor.ToColor(new EngineUtils.Conversion.HSBColor(Mathf.PingPong(Time.time * 0.5f, 1), 1, 1));
+    }
+    void OnDisable()
+    {
+        FX_Entities.field_Protected_HashSet_1_MeshFilter_0.Clear();
+        FX_Pickups.field_Protected_HashSet_1_MeshFilter_0.Clear();
+    }
 
-    public void Add(VRCPickup pickup)  => HighlightPickups(pickup);
+    public void Add(VRC_Pickup pickup)
+    {
+        HighlightPickups(pickup);
+        Pickups.Add(pickup);
+    }  
     public void Add(VRC.Player player) 
     {
         HighlightPlayerCapsule(player);
@@ -84,7 +99,7 @@ public class ESP : MonoBehaviour
         {
             if(enable) 
             {
-                
+               
                 FX_Entities?.field_Protected_HashSet_1_MeshFilter_0?.AddIfNotPresent(Capsule.GetComponent<MeshFilter>());
                 return;
             }
@@ -95,24 +110,29 @@ public class ESP : MonoBehaviour
             }
         }
     }
-    void HighlightPickups(VRCPickup pickup, bool enable = true)
+    void HighlightPickups(VRC_Pickup pickup, bool enable = true)
     {
-        if(_pickup == null) _pickup = pickup;
         if (GameUtils.Camera.Get != null)
         {
-            if(enable) 
+            if (pickup.name != "MirrorPickup")
             {
-                FX_Pickups?.field_Protected_HashSet_1_MeshFilter_0?.AddIfNotPresent(_pickup.GetComponent<Renderer>().GetComponent<MeshFilter>());
-                return;
-            }
-            else 
+                 pickup.GetComponentsInChildren<MeshFilter>(true).ToList().ForEach((x =>
             {
-                FX_Pickups?.field_Protected_HashSet_1_MeshFilter_0?.Remove(_pickup.GetComponent<Renderer>().GetComponent<MeshFilter>());
-                return;
+                    if (enable)
+                    {
+                        FX_Pickups?.field_Protected_HashSet_1_MeshFilter_0?.AddIfNotPresent(x);
+                    }
+                    else
+                    {
+                        FX_Pickups?.field_Protected_HashSet_1_MeshFilter_0?.Remove(x);
+                    }
+                }));
             }
+           
+        }
         }   
     }
-}
+
 
 internal class Wallhacks : MonoBehaviour
 {
@@ -136,8 +156,8 @@ internal class Wallhacks : MonoBehaviour
     public bool Enable {get; set;} = true;
 
     
-    public void AddNameplateOverlay(VRC.Player player) => Nameplates(player, Enable);
-    public void AddPlayerOverlay(VRC.Player player) => Player(player, Enable);
+    public void AddNameplateOverlay(VRC.Player player) => Nameplates(player, enabled);
+    public void AddPlayerOverlay(VRC.Player player) => Player(player, enabled);
 
     void Nameplates(VRC.Player player , bool enable = true) 
     {

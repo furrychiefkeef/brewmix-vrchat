@@ -21,7 +21,7 @@ public class Config
     public class ModulesModel
     {
         public RFCTamperingModel RFCTampering {get;set;} = new();
-        public UdonModel Udon {get;set;} = new();
+        public ExploitsModel Exploits {get; set; } = new();
         public class RFCTamperingModel   
         {
                 public SDK2Model SDK2 {get; set;} = new();
@@ -30,9 +30,14 @@ public class Config
                   public bool EnforceToAll { get; set; } = false;
                 }
         } 
-        public class UdonModel
+        public class ExploitsModel 
         {
-            public bool isBlocked  { get; set ; } = false;
+
+            public  GlobalExploitsModal Global {get;set;} = new();
+            public class GlobalExploitsModal 
+            {
+                    public bool GodMode { get;set;}
+            }
         }
     }
     
@@ -76,11 +81,25 @@ public class Config
             {
                 public bool Enabled { get; set; }
                 public bool Nameplates { get; set; }
-                public bool Player_Boxes { get; set; }
+                public enum Shapes
+                {
+                    None,
+                    Box,
+                    Skeleton,
+                    Wireframe
+                }
                 public bool Player_Names { get; set; }
                 public bool Player_Speed { get; set; }
-                public bool Lines { get; set; }
-                public bool Outlines { get; set; }
+                public bool Tracers { get; set; }
+                public bool Breadcrumbs { get; set; }
+                public ModelVRHighlight Parameters { get; set; } = new();
+                public class ModelVRHighlight
+                {
+                    public float blurSize { get; set; } = 2;
+                    public int blurDownsampleFactor { get; set; } = 0;
+                    public int blurIterations { get; set; } = 0;
+                }
+             
             }
             
             public class ChamsModel
@@ -106,7 +125,12 @@ public class Config
 
     public class ProtectionModel
     {
-        // Empty for now
+            public  UdonProtectionModel? Udon { get; set; }
+            public class UdonProtectionModel 
+            {
+                    public  bool isBlocked {get; set;}
+                    public  List<VRC.Player> Offenders {get; set;}
+            }
     }
 
     public class AppearanceModel
@@ -116,6 +140,8 @@ public class Config
         public class inGameModel
         {
             public FlatLoadingOverlayModel FlatLoadingOverlay { get; set; } = new();
+            public MenuDynamicColoring VRCUI { get; set; } = new();
+
             public string? QueueAudio { get; set; }
             public bool HideLoadingOverlay { get; set; }
             public string? Mm_Background { get; set; }
@@ -145,6 +171,18 @@ public class Config
                 {
                     get => new(Base);
                     set => Base = value.ToColor();
+                }
+            }
+            public class MenuDynamicColoring 
+            {
+                [JsonIgnore]
+                public  UnityEngine.Color _lastSelectedColor {get; set;}
+                [JsonProperty("lastSelectedColor_Data")]
+
+                public SerializableColor LastSelectedColorSerializeable
+                {
+                    get => new(_lastSelectedColor);
+                    set => _lastSelectedColor = value.ToColor();
                 }
             }
         }

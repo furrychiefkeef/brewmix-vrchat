@@ -9,7 +9,19 @@ namespace Brewchat.Game.Monobehaviours;
 internal class KeybindManager : UnityEngine.MonoBehaviour
 {
     public KeybindManager(IntPtr ptr) : base(ptr) {}
-    void LateUpdate()
+
+    
+    public KeybindManager Instance { get; set; }
+    private void Awake()
+    {
+        if (Instance == null) 
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); 
+        }
+        else Destroy(this);
+    }
+    void Update()
     {
         if (!GameUtils.World.IsLoaded()) return;
         {
@@ -27,10 +39,7 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
             {
                 PlayerModule.Movement.ClickTP();
             }
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F))
-            {
-                
-            }
+            
             
             #region Camera
 
@@ -49,7 +58,7 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
     void CommandHandler()
     {
         
-        if (Input.GetKeyDown(KeyCode.F9))
+        if (Input.GetKeyDown(KeyCode.Insert))
         {
             GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a Command ", (id) =>
             {
@@ -57,9 +66,4 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
             }, MultiLine: false, Placeholder: "type *help");
         }
     }
-
-    /*void Fly()
-    {
-       
-    }*/
 }

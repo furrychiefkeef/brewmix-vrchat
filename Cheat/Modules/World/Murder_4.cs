@@ -67,6 +67,7 @@ public class Murder_4
                                 if(Entry.config.Advanced.MurderPlayerNode)
                                 {
                                     GameUtils.UI.HUD.ToastV1($"You Sent Unfair UdonEvent [SyncKill]: {player.VRCPlayerApi.playerId}!");
+                                    
                                 }
                             }      
                         }

@@ -25,83 +25,27 @@ internal class MM : IMainMenuElements
         {
             try
             {
-                var a = new VRCPage(Entry.GetEntry().modInfo._currentName, EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
-                var tab = new VRCTab(a, Entry.GetEntry().modInfo._currentName, InfoAboutCheat.Tooltips.GetTooltipString("Tab"), sprite: EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
+                var Main_Page = new VRCPage(Entry.GetEntry().modInfo._currentName, EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
+                var tab = new VRCTab(Main_Page, Entry.GetEntry().modInfo._currentName, InfoAboutCheat.Tooltips.GetTooltipString("Tab"), sprite: EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
                 tab.SetBadge(true); tab.SetBadgeColor(Color.black); tab.SetText("Nightly");
 
                 #region VRCPage_CodeName::Aware
 
-                var VRCSdk_Container = new VRCCellContainer(a, "VRChat-SDK");
-                /*var UI_PROPERTIES = new VRCCellContainer(a, "Properties [QOL]");
-                var UI_HANDLER = new VRCCellContainer(a, "HANDLERS [PERFORMANCE]");
-                var UI_MUSIC = new VRCCellContainer(a, "Music"); */
+                var VRCTweaks_Container = new VRCCellContainer(Main_Page, "Tweaks");
+                var Interface_Container = new VRCCellContainer(Main_Page, "Interface");
+                /*var UI_PROPERTIES = new VRCCellContainer(Main_Page, "Properties [QOL]");
+                var UI_HANDLER = new VRCCellContainer(Main_Page, "HANDLERS [PERFORMANCE]");
+                var UI_MUSIC = new VRCCellContainer(Main_Page, "Music"); */
 
 
                 #region VRCPage_CodeName:Aware_NavContainer
 
-                var VRCsdk = new VRCCellButton(a, VRCSdk_Container, "VRChat-SDK", "Change Properties (DEBUG) FOR VRCSDKs (3-2)");
+                var VRCTweaks = new VRCCellButton(Main_Page, VRCTweaks_Container, "Tweaks", "Change Properties (DEBUG) FOR VRCSDKs (3-2)");
+                var Interface = new VRCCellButton(Main_Page, Interface_Container, "Interface", "Tweak the Interface of The Cheat");
 
-                var radial = new VRCRadialSelect(VRCSdk_Container, "Auto Role Assign", "wow");
-                radial.AddChoice("Murder","Changes u to Murderer", () => { });
-                radial.AddChoice("Detective","Changes u to Detective",() => { });
-
-                var btn = new VRCButtonOperator(VRCSdk_Container, new()
-                {
-                    _title = "Revolver",
-                    _subtitle = "weapon",
-                    _text = "Revolver",
-                    _tooltip = "bitch",
-                    _maintooltip = "bitch 2s"
-                }, () =>
-                {
-                    Murder_4.Weapons.SpawnRevolver();
-                });
-                var btn1 = new VRCButtonOperator(VRCSdk_Container, new()
-                {
-                    _title = "Knife",
-                    _subtitle = "weapon",
-                    _text = "Knife",
-                    _tooltip = "bitch",
-                    _maintooltip = "bitch 2s"
-                }, () =>
-                {
-                    Murder_4.Weapons.SpawnKnife();
-                });
-                var btn3 = new VRCButtonOperator(VRCSdk_Container, new()
-                {
-                    _title = "Luger",
-                    _subtitle = "weapon",
-                    _text = "Luger",
-                    _tooltip = "bitch",
-                    _maintooltip = "bitch 2s"
-                }, () =>
-                {
-                    Murder_4.Weapons.Special.SpawnLuger();
-                });
-                var btna = new VRCButtonOperator(VRCSdk_Container, new()
-                {
-                    _title = "Reload CSS",
-                    _subtitle = "weapon",
-                    _text = "Reload",
-                    _tooltip = "This reloads the style for the mod",
-                    _maintooltip = "This reloads the style for the mod"
-                }, static () =>
-                {
-                       CSS.Online();
-                });
-                 var btnaa = new VRCButtonOperator(VRCSdk_Container, new()
-                {
-                    _title = "RFC Exploit",
-                    _subtitle = "",
-                    _text = "Start",
-                    _maintooltip = InfoAboutCheat.Tooltips.GetTooltipString("RFC-Exploit")
-                }, static () =>
-                {
-                        Entry.config.Modules.RFCTampering.SDK2.EnforceToAll = !Entry.config.Modules.RFCTampering.SDK2.EnforceToAll;
-                });
-                /*new VRCCellButton(a, UI_PROPERTIES, "Properties", "[Properties]");
-                new VRCCellButton(a, UI_HANDLER, "Handlers", "[Handlers]");
-                new VRCCellButton(a, UI_MUSIC, "Music","[Music]", AstriekLib.Sprites.Music()); */
+                /*new VRCCellButton(Main_Page, UI_PROPERTIES, "Properties", "[Properties]");
+                new VRCCellButton(Main_Page, UI_HANDLER, "Handlers", "[Handlers]");
+                new VRCCellButton(Main_Page, UI_MUSIC, "Music","[Music]", AstriekLib.Sprites.Music()); */
 
                 #endregion
 
@@ -109,15 +53,32 @@ internal class MM : IMainMenuElements
 
                 #endregion
 
+                #region Menu::Tweaks
+
+                new VRCToggleOperator(VRCTweaks_Container, "Debug Mode", "ON", "OFF", (x) =>
+                {
+                    Entry.config.Advanced.DebugMode = !Entry.config.Advanced.DebugMode;
+                    Config.SaveToFile(Entry.config, "config.json");
+                });
+                
+                new VRCToggleOperator(VRCTweaks_Container, "Udon Logging", "ON", "OFF", (x) =>
+                {
+                    Entry.config.Logging.Game.UdonObjects = !Entry.config.Logging.Game.UdonObjects;
+                    Config.SaveToFile(Entry.config, "config.json");
+                });
+                    
+
+
+                #endregion
 
             }
             catch (Exception e)
             {
-                
+
             }
             finally
             {
-              
+
             }
         }
     }
@@ -148,14 +109,17 @@ internal class MM : IMainMenuElements
             {
 
                 var row4 = new VRCRowGroup(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"{Entry.GetEntry().modInfo._currentName} Actions");
-                VRCBigButton? Teleport = new(row4, "Teleport", $"Teleport to this player's Position", () => { GameUtils.PlayerModel.LocalEntity().transform.position = GameUtils.Gameplay.Matchmaking.GetSelectedUser().transform.position; });
+                VRCBigButton? Teleport = new(row4, "Teleport", $"Teleport to this player's Position", () =>
+                {
+                    GameUtils.PlayerModel.LocalEntity().transform.position = GameUtils.Gameplay.Matchmaking.GetSelectedUser().transform.position;
+                });
 
                 #region Admin
 
                 if (GameUtils.PlayerModel.LocalEntity().IsCheatAdmins())
                 {
                     var row5 = new VRCRowGroup(MMFallbacks._Fallback_Dashboard_Group_MM_UI_ProfileRows(), $"<color=red>{Entry.GetEntry().modInfo._currentName}</color>");
-                    VRCBigButton? Tag = new(row5, "Give Tag", $"Give a Specific Tag to User", () => {});
+                    VRCBigButton? Tag = new(row5, "Give Tag", $"Give Main_Page Specific Tag to User", () => {});
                 }
                 #endregion
 

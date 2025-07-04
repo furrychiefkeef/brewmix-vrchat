@@ -30,8 +30,7 @@ internal class VRCSmallButton : IMainMenuElements
         obj.SetSiblingIndex(priority - 1) ;
         #region REQUIRED_COMPONENTS
         
-        Button1PublicObSt_cBoSt_cStStUnique
-            _0 = obj.GetComponent<Button1PublicObSt_cBoSt_cStStUnique>();
+        MenuTab _0 = obj.GetComponent<MenuTab>();
         ImageEx  _1 = obj.GetChild(1).GetComponent<ImageEx>();
         ToolTip  _2 = obj.GetComponent<ToolTip>();
         #endregion

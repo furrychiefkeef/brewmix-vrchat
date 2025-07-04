@@ -2,6 +2,7 @@
 using BlanketSDK.QM.Elements.V2;
 using UnityEngine;
 using UnityEngine.UI;
+using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.QM.Elements.Controls.V2;
@@ -16,21 +17,21 @@ internal class VRCToggleOperator : IQuickMenuElements
 
         #region REQUIRED_COMPONENTS
 
-        MonoBehaviour2PublicSiObSi_tCaOb_t_cBoObUnique? __0  = obj.GetComponent<MonoBehaviour2PublicSiObSi_tCaOb_t_cBoObUnique>();
+        ToggleSelector? __0  = obj.GetComponent<ToggleSelector>();
         #endregion
 
         #region LOGIC_REQUIRED_API
 
         VRCToggleHandle? _0 = __0._toggle;
         RadioButton? __1 = __0._toggleSwitch;
-        __1.field_Private_Single_0 = 27.4f; // Fix it going off element
+        __1.field_Private_Single_0 = 27.54f; // Fix it going off element
         __1.field_Private_Single_1 = 95.4124f; // Fix it going off element
         Toggle.ToggleEvent? LISTENER = _0.onValueChanged;
         
         _0.isOn = state;
         LISTENER.AddListener(new System.Action<bool>(x =>
         {
-            __1.Method_Public_Void_Boolean_PDM_0(x);
+            __1.Method_Public_Void_Boolean_PDM_1(x);
             func(x);
         }));
         _0._controlName = name;

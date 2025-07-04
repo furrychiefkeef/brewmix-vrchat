@@ -35,9 +35,9 @@ namespace brewchat.hybridxcore.bep
         {
             if (__instance is null || _isVRCApplicationLoaded) return;
             _isVRCApplicationLoaded = true;
+        
             autumn.ml.Initalizers.ConfigSystem.SetConfig();
             autumn.ml.Initalizers.Cheat.Execute();
-    
             __instance?.gameObject.GetOrAddComponentSafe<CSS>();
             __instance?.gameObject.GetOrAddComponentSafe<KeybindManager>();
             
@@ -62,7 +62,7 @@ namespace brewchat.hybridxcore.bep
                 return;
             }
 
-            Background.color = Entry.config.Appearance.inGame.FlatLoadingOverlay.Base;
+            Background.color = Entry.config.Appearance.inGame.FlatLoadingOverlay.Base   ;
             if (Entry.config.Appearance.inGame.FlatLoadingOverlay.Image != null)
             {
                 GameObject Custom_Background_Overlay_Obj = Background.gameObject.CreateIsolatedObject(true);
@@ -120,9 +120,16 @@ namespace brewchat.hybridxcore.bep
         public static bool __0Pickups(ref VRC_Pickup? __instance)
         {
             if ( __instance is null) return false;
-            __instance.DisallowTheft = false;
-            __instance.proximity = float.MaxValue;
-            __instance.allowManipulationWhenEquipped = true;
+            
+            if (__instance != null)
+            {
+                __instance.DisallowTheft = false;
+                __instance.proximity = float.MaxValue;
+                __instance.allowManipulationWhenEquipped = true;
+                ESP.Instance.Add(__instance);
+                return true;
+            }
+            
             return true;
         }
 
@@ -137,11 +144,10 @@ namespace brewchat.hybridxcore.bep
            
         }
 
-        // [HarmonyPostfix, HarmonyPatch(typeof(VRC.Player), nameof(VRC.Player.APIUser.allowAvatarCopying), MethodType.Getter)]
+        // [HarmonyPostfix, HarmonyPatch(typeof(APIUser), nameof(APIUser.allowAvatarCopying), MethodType.Getter)]
         // public static void _PatchPlayer(ref bool  __result)
         // {
-        //     if (__result != null) return;
-        //     __result = true;
+        //     if (__result != null) return; __result = true;
            
         // }
         #endregion
@@ -155,20 +161,18 @@ namespace brewchat.hybridxcore.bep
                 __result.field_Protected_T_0 = true;
         }
 
-        // [HarmonyPrefix, HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomEvent))]
-        // public static bool __0Udon(ref UdonBehaviour __instance, ref string __0)
-        // {
-        //     if(__instance == null) return false;
+        [HarmonyPrefix, HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomEvent))]
+        public static bool __0Udon(ref UdonBehaviour __instance, ref string __0)
+        {
+            if(__instance == null) return false;
             
-        //     MelonLogger.Msg($"[Udon]: <{__0}>");
-        //     if(__0 == "SyncKill")
-        //     {
-        //         MelonLogger.Msg($"[Udon]: [BLOCKED]: <{__0}>");
-                    
-        //         return false;
-        //     }
-        //     return true;
-        // }
+            if(Entry.config.Logging.Game.UdonObjects) 
+            {
+                MelonLogger.Msg($"[Udon]: [{__instance.name}] -> <{__0}>");
+            }
+            
+            return true;
+        }
         #endregion
 
         #region UpdateHook
@@ -206,7 +210,8 @@ namespace brewchat.hybridxcore.bep
                 else
                 {
                    ESP.Instance.Add(player);
-                   
+                //    Wallhacks.Instance.AddPlayerOverlay(player);
+                //    Wallhacks.Instance.AddNameplateOverlay(player);
                 }
             }
         }
@@ -241,7 +246,7 @@ namespace brewchat.hybridxcore.bep
             {
                 object Data = null;
                 ParameterDictionary? Parameters = __0.Parameters;
-                foreach (var data in Parameters)
+                foreach (Il2CppSystem.Collections.Generic.KeyValuePair<byte, Il2CppSystem.Object>? data in Parameters)
                 {
                     Data = EngineUtils.iL2CPPWrapper.Serialization.FromIL2CPPToManaged<object>(data);
                     string? c = Newtonsoft.Json.JsonConvert.SerializeObject(Data, Newtonsoft.Json.Formatting.Indented);

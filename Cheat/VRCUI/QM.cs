@@ -51,8 +51,7 @@ internal class QM
                   GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
                   {
                       Entry.config.Appearance.inGame.Qm_Background = x;
-                      Config.SaveToFile(Entry.config, "config.json");
-                      GameUtils.UI.HUD.SendLocalNotifcation("Config", "Saved!", null, null);
+                      Config.SaveToFile(Entry.config, "config.json");  
                       CSS.ApplyAdvancedMenuBackgrounds();
                   }, Placeholder: "https:// or C://", MultiLine: false);
                 }, false);
@@ -61,8 +60,7 @@ internal class QM
                    GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
                    {
                        Entry.config.Appearance.inGame.QueueAudio = x;
-                       Config.SaveToFile(Entry.config, "config.json");
-                       GameUtils.UI.HUD.SendLocalNotifcation("Config", "Saved!", null, null);
+                       Config.SaveToFile(Entry.config, "config.json");  
                        CSS.Refreshers.RefreshLoadingAudio();
                    }, Placeholder: "https:// or C://", MultiLine: false);
                 }, false);
@@ -71,8 +69,7 @@ internal class QM
                    GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
                    {
                        Entry.config.Appearance.inGame.FlatLoadingOverlay.Image = x;
-                       Config.SaveToFile(Entry.config, "config.json");
-                       GameUtils.UI.HUD.SendLocalNotifcation("Config", "Saved!", null, null);
+                       
                    }, Placeholder: "https:// or C://", MultiLine: false);
                 }, false);
                 }
@@ -80,34 +77,63 @@ internal class QM
         public class NestedQMDebug 
         { 
             public VRCPage Page { get; set; }
-          
+
             public void Execute()
             {
-               Page = new VRCPage("Debug", true, pageOptions: new() { ShowScrollWheel = false });
-               VRCGroupLayout Group_UI = new(Page);
-               Group_UI.AddButton("SendUdonEvent", $"Send a Udon Event <color=red>(Custom Only NOT NETWORKING)</color>", () =>      
+                Page = new VRCPage("Debug", true, pageOptions: new() { ShowScrollWheel = false });
+                VRCGroupLayout Group_UI = new(Page);
+                Group_UI.AddButton("SendUdonEvent", $"Send a Udon Event <color=red>(Custom Only NOT NETWORKING)</color>", () =>
                 {
-                  GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter Event Name", (x) => 
-                  {
-                     GameUtils.World.SDK3.Udon.LoadCustomEvent(x);
-                  }, Placeholder: "Such as: SyncKill", MultiLine: false);
-                  
+                    GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter Event Name", (x) =>
+                    {
+                        GameUtils.World.SDK3.Udon.LoadCustomEvent(x);
+                    }, Placeholder: "Such as: SyncKill", MultiLine: false);
+
                 }, false);
+
+                Group_UI.AddButton("Give Pickup", $"Send a Udon Event <color=red>(Custom Only NOT NETWORKING)</color>", () =>
+                {
+                    GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a Pickup Name", (x) =>
+                    {
+                        GameUtils.World.SDK3.Udon.Pickups.GetPickup(x);
+                    }, Placeholder: "Such as: Revolver", MultiLine: false);
+
+                }, false);
+
+                Group_UI.AddToggle("Block Udon", "<green>ON</color>", "<red>OFF</color>", (x) =>
+                {
+                    Entry.config.Protection.Udon.isBlocked = !Entry.config.Protection.Udon.isBlocked;
+                    Config.SaveToFile(Entry.config, "config.json");
+                });
+            
              }
          }
-         public class NestedQMVisuals 
-         { 
+        public class NestedQMVisuals 
+        { 
             public VRCPage Page { get; set; }
         
             public void Execute()
             {
                Page = new VRCPage("Visuals", true, pageOptions: new() { ShowScrollWheel = false });
                VRCGroupLayout Group_UI = new(Page, isCollapsible: false);
-               VRCModalContainer? Visuals_RenderModal = new("Visuals+Render");
+               VRCModalContainer? Visuals_RenderModal = new("Visuals+Render"); 
+
+               VRCModalContainer? VisualsEspPropertiesModal = new("ESP+Properties");
+               VRCModalContainer? VisualsWallhacksPropertiesModal = new("Wallhacks+Properties");
+               VRCModalContainer? VisualsChamsPropertiesModal = new("Chams+Properties");
                Group_UI.AddButton("Renderer", "", Visuals_RenderModal.Open, true);
 
                #region ModalRenderer
-               Visuals_RenderModal.AddToggle("<color=#C278A7>[</color><color=#B23E7B>W</color><color=#A30550>I</color><color=#C23E6D>P</color><color=#E1778A>]</color> ESP Player","","", (x) => 
+               
+
+               Visuals_RenderModal.AddMiniButton("ESP Properties", VisualsEspPropertiesModal.Open);
+               Visuals_RenderModal.AddMiniButton("Wallhacks Properties", VisualsWallhacksPropertiesModal.Open);
+               Visuals_RenderModal.AddMiniButton("Chams Properties", VisualsChamsPropertiesModal.Open);
+
+
+
+               #region Modal_Main
+               Visuals_RenderModal.AddToggle("<color=#C278A7>[</color><color=#B23E7B>W</color><color=#A30550>I</color><color=#C23E6D>P</color><color=#E1778A>]</color> ESP","","", (x) => 
                {
                   ESP.Instance.FX_Entities.enabled = !ESP.Instance.FX_Entities.enabled;
                });
@@ -119,8 +145,13 @@ internal class QM
 
                Visuals_RenderModal.AddToggle("<b><color=#843E6B>[</color><color=#91346A>U</color><color=#9F2B6A>n</color><color=#AD216A>f</color><color=#BB1869>i</color><color=#C90F69>n</color><color=#D70569>i</color><color=#BE0F62>s</color><color=#A5195B>h</color><color=#8C2355>e</color><color=#732D4E>d</color><color=#5A3747>]</color></b> Wallhacks","","", (x) => 
                {
-                // wallhacks.Instance.FX.enabled = !ESP.Instance.FX.enabled;
+                Wallhacks.Instance.enabled = !Wallhacks.Instance.enabled;
                });
+               #endregion
+
+               #endregion
+
+               #region Modal_Properties-ESP
                #endregion
             }
         }
@@ -145,10 +176,10 @@ internal class QM
             #region Groupbox
 
             VRCGroupLayout mainGroupLayout = new(MainPage, isCollapsible: false);
-          
+
             VRCModalContainer? PlayerMovementModal = new("Player+Movement");
             mainGroupLayout.AddButton("Player", "Modify The Player", PlayerMovementModal.Open, true);
-            
+
             mainGroupLayout.AddButton("Appearance", "in Game Appearance", appearance.Page.Open, true);
             mainGroupLayout.AddButton("Debug", "Debugger", debug.Page.Open, true);
             mainGroupLayout.AddButton("World", "Debugger", world.Page.Open, true);
@@ -170,7 +201,7 @@ internal class QM
             });
             #endregion
 
-            
+
         }
     } 
 
@@ -186,7 +217,7 @@ internal class QM
                Page = new VRCPage("Murder 4", true, pageOptions: new() { ShowScrollWheel = false });
                VRCGroupLayout Group_UI = new(Page);
                var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
-               VRCGroupLayout Group_Roles = new(Page, $"Currently Modifiying (<color=red>{selectedPlayer.APIUser.displayName}</color>) Roles");
+               VRCGroupLayout Group_Roles = new(Page, $"Currently Modifying this Player)");
                Group_UI.AddButton("Kill", "", () =>      
                {
                     var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
@@ -220,7 +251,7 @@ internal class QM
             {
                Page = new VRCPage("World", true, pageOptions: new() { ShowScrollWheel = false });
                VRCGroupLayout Group_UI = new(Page, isCollapsible: false);
-               Group_UI.AddToggle("Udon Nuker", $"Rapes Udon Games  <color=grey>(Sometimes)</color> <color=red>On</color>", "Rapes Udon Games  <color=red>(Sometimes)</color> <color=green>Off</color>", (x) =>      
+               Group_UI.AddToggle("Udon Nuker", $"<color=#grey>(Sometimes)</color> Rapes Udon Games... <color=green>On</color>", "  <color=grey>(Sometimes)</color> <color=red>Off</color>", (x) =>      
                 {
                     switch(x) 
                     {

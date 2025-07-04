@@ -268,8 +268,14 @@ namespace Brewchat.Game.Wrappers
         
         public class World
         {
-            public static string GetID() => RoomManager.field_Private_Static_ApiWorldInstance_1.id;
-            public static bool IsLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.currentApiWorld != null;
+            public static bool IsLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.prop_ApiWorldInstance_1 != null || RoomManager.currentApiWorld != null;
+            public static class WorldData
+            {
+                public static string current_worldID  => RoomManager.field_Private_Static_ApiWorldInstance_1.id;
+                public static string current_worldName => RoomManager.field_Private_Static_ApiWorldInstance_1.name;
+                public static string current_intanceID => RoomManager.field_Private_Static_ApiWorldInstance_1.instanceId;
+            }
+           
 
             public class SDK2
             {
@@ -299,14 +305,24 @@ namespace Brewchat.Game.Wrappers
                     static VRCPickup _lastPickup;
                     public static VRCPickup? GetPickup(string name)
                     {
-                        foreach (VRCPickup pickup in UnityEngine.Object.FindObjectsOfType<VRCPickup>())
-                        {
-                            if (pickup.gameObject.name.Contains(name)) 
+                            foreach (VRCPickup pickup in UnityEngine.Object.FindObjectsOfType<VRCPickup>())
                             {
-                                _lastPickup = pickup;
-                                UI.HUD.ToastV1($"Found: {_lastPickup.name}");
-                                return pickup;
-                            }                            
+                                if (pickup.name == name)
+                                {
+                                    _lastPickup = pickup;
+                                    if (Entry.config.Advanced.DebugMode) UI.HUD.ToastV1($"Found: {_lastPickup.name}");
+                                    return pickup;
+                                }
+                                else if (pickup.name.Contains(name))
+                                {
+                                    _lastPickup = pickup;
+                                    if (Entry.config.Advanced.DebugMode) UI.HUD.ToastV1($"Found: {_lastPickup.name}");
+                                    return pickup;
+                                }
+                                else
+                                {
+                                    return null;
+                                }
                         }
                     
                         return _lastPickup;

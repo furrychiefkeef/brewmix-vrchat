@@ -19,10 +19,10 @@ class VRCButtonOperator : IMainMenuElements
         public string? _tooltip = String.Empty;
         public string? _maintooltip = String.Empty;
     }
-    public VRCButtonOperator(Transform panel, VRCParams parameters, System.Action func, bool state = false)
+    public VRCButtonOperator(Transform parent, VRCParams parameters, System.Action func, bool state = false)
     {
         if(!MM() || !MMControls.OperatorButton()) throw new($"element has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
-        Transform? obj = UnityEngine.Object.Instantiate(MMControls.OperatorButton(),panel);
+        Transform? obj = UnityEngine.Object.Instantiate(MMControls.OperatorButton(),parent);
         obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_TOGGLE_OPERATOR_{parameters._title}";
 
         #region REQUIRED_COMPONENTS
