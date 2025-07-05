@@ -256,9 +256,6 @@ namespace Brewchat.Game.Wrappers
 
                 public static void AvatarScaleMin(float v) =>
                     LocalEntity().VRCPlayerApi.SetAvatarEyeHeightMinimumByMeters(v);
-
-                public static void AllowScaling(bool v) =>
-                    LocalEntity().VRCPlayerApi.SetManualAvatarScalingAllowed(v);
             }
 
             public static class Matchmaking
