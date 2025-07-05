@@ -33,6 +33,7 @@ internal class MM : IMainMenuElements
 
                 var VRCTweaks_Container = new VRCCellContainer(Main_Page, "Tweaks");
                 var Interface_Container = new VRCCellContainer(Main_Page, "Interface");
+                var tempPlayerWeaks_Container = new VRCCellContainer(Main_Page, "Player Tweaks (Temp)");
                 /*var UI_PROPERTIES = new VRCCellContainer(Main_Page, "Properties [QOL]");
                 var UI_HANDLER = new VRCCellContainer(Main_Page, "HANDLERS [PERFORMANCE]");
                 var UI_MUSIC = new VRCCellContainer(Main_Page, "Music"); */
@@ -42,7 +43,7 @@ internal class MM : IMainMenuElements
 
                 var VRCTweaks = new VRCCellButton(Main_Page, VRCTweaks_Container, "Tweaks", "Change Properties (DEBUG) FOR VRCSDKs (3-2)");
                 var Interface = new VRCCellButton(Main_Page, Interface_Container, "Interface", "Tweak the Interface of The Cheat");
-
+                var VRCPlayerTweaksTemperary = new VRCCellButton(Main_Page, tempPlayerWeaks_Container, "Player Tweaks (Temp)", "Tweak Player (Temporary)");
                 /*new VRCCellButton(Main_Page, UI_PROPERTIES, "Properties", "[Properties]");
                 new VRCCellButton(Main_Page, UI_HANDLER, "Handlers", "[Handlers]");
                 new VRCCellButton(Main_Page, UI_MUSIC, "Music","[Music]", AstriekLib.Sprites.Music()); */
@@ -60,12 +61,39 @@ internal class MM : IMainMenuElements
                     Entry.config.Advanced.DebugMode = !Entry.config.Advanced.DebugMode;
                     Config.SaveToFile(Entry.config, "config.json");
                 });
-                
+
                 new VRCToggleOperator(VRCTweaks_Container, "Udon Logging", "ON", "OFF", (x) =>
                 {
                     Entry.config.Logging.Game.UdonObjects = !Entry.config.Logging.Game.UdonObjects;
                     Config.SaveToFile(Entry.config, "config.json");
                 });
+
+                new VRCToggleOperator(VRCTweaks_Container, "Photon Logging", "ON", "OFF", (x) =>
+                {
+                    Entry.config.Logging.Game.PhotonEvents = !Entry.config.Logging.Game.PhotonEvents;
+                    Config.SaveToFile(Entry.config, "config.json");
+                });
+
+
+                #endregion
+
+                #region Menu::Tweaks::Player
+
+                new VRCToggleOperator(tempPlayerWeaks_Container, "Speed Hack", "ON", "OFF", (x) =>
+                {
+                    PlayerModule.Movement.SpeedHack(x);
+                    Config.SaveToFile(Entry.config, "config.json");
+                });
+                new VRCToggleOperator(tempPlayerWeaks_Container, "Serialization Hack", "ON", "OFF", (x) =>
+                {
+                    Entry.config.Player.Network.Serialized = !Entry.config.Player.Network.Serialized;
+                });
+                
+                // new VRCToggleOperator(VRCTweaks_Container, "Udon Logging", "ON", "OFF", (x) =>
+                // {
+                //     Entry.config.Logging.Game.UdonObjects = !Entry.config.Logging.Game.UdonObjects;
+                //     Config.SaveToFile(Entry.config, "config.json");
+                // });
                     
 
 

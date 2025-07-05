@@ -17,6 +17,7 @@ internal class PlayerModule
     {
 
         static readonly List<string> _disabledColliders = new();
+        static float _cacheJumpData;
 
         public static void Fly()
         {
@@ -25,7 +26,7 @@ internal class PlayerModule
             else
             {
                 #region REQUIRED_COMPONENTS
-            
+
                 VRCMotionState? motion_state = player.GetComponent<VRCMotionState>();
                 FlyManager? fly_component = player.gameObject.GetOrAddComponentSafe<FlyManager>();
                 CharacterController? characterController = player.GetComponent<CharacterController>();
@@ -37,7 +38,7 @@ internal class PlayerModule
                 switch (Entry.config.Player.Airborn.Flight.Enabled)
                 {
                     case true:
-                       
+
                         fly_component.enabled = true;
                         characterController.enabled = false;
                         List<Collider> body_colliders = player.GetComponents<Collider>().ToList();
@@ -65,13 +66,9 @@ internal class PlayerModule
 
         public static void ForceJump(bool state)
         {
-            #region REQUIRED_COMPONENTS
-           
-            #endregion
-
             #region LOGIC
             Player player = GameUtils.PlayerModel.LocalEntity();
-             float _cacheJumpData = player.VRCPlayerApi.GetJumpImpulse();
+            _cacheJumpData = player.VRCPlayerApi.GetJumpImpulse();
 
             if (!player && !GameUtils.World.IsLoaded()) return;
             {
@@ -89,6 +86,26 @@ internal class PlayerModule
                 #endregion
 
             }
+        }
+        public static void SpeedHack(bool state)
+        {
+            #region LOGIC
+            Player player = GameUtils.PlayerModel.LocalEntity();
+            if (!player && !GameUtils.World.IsLoaded()) return;
+            
+            switch (state)
+            {
+                case true:
+                    GameUtils.PlayerModel.Motion.Networking.Run_Speed(35f);
+                    GameUtils.PlayerModel.Motion.Networking.Strafe_Speed(35f);
+                    break;
+
+                case false:
+                    GameUtils.PlayerModel.Motion.Networking.Run_Speed();
+                    GameUtils.PlayerModel.Motion.Networking.Strafe_Speed(0);
+                    break;
+            }
+            #endregion
         }
 
         public static void ClickTP()
@@ -171,14 +188,14 @@ internal class PlayerModule
                 switch (currentView)
                 {
                     case 0:
-                        Widgets.QM.cameramode_widget.SetText($"Third Person");
+                        Widgets.QM.cameramode_widget.SetText($"Third Person (Back)");
                         GameUtils.UI.HUD.ToastV1("Third Person <Back> Activated!");
                         camera[0].enabled = true;
                         camera[1].enabled = false;
                         camera[2].enabled = false;
                         break;
                     case 1:
-                         Widgets.QM.cameramode_widget.SetText($"Second Person");
+                         Widgets.QM.cameramode_widget.SetText($"Third Person (Front)");
                         GameUtils.UI.HUD.ToastV1("Third Person <Front> Activated!");
                         camera[0].enabled = false;
                         camera[1].enabled = true;
@@ -190,6 +207,7 @@ internal class PlayerModule
                         camera[0].enabled = false;
                         camera[1].enabled = false;
                         camera[2].enabled = true;
+ 
                         break;
                     case 3:
                         GameUtils.UI.HUD.ToastV1("Cameras Destoryed");

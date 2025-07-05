@@ -116,7 +116,7 @@ public class ESP : MonoBehaviour
         {
             if (pickup.name != "MirrorPickup")
             {
-                 pickup.GetComponentsInChildren<MeshFilter>(true).ToList().ForEach((x =>
+                 pickup.GetComponentsInChildren<MeshFilter>(false).ToList().ForEach((x =>
             {
                     if (enable)
                     {

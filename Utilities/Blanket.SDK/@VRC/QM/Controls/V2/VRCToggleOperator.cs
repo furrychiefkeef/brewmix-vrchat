@@ -24,7 +24,7 @@ internal class VRCToggleOperator : IQuickMenuElements
 
         VRCToggleHandle? _0 = __0._toggle;
         RadioButton? __1 = __0._toggleSwitch;
-        __1.field_Private_Single_0 = 27.54f; // Fix it going off element
+        __1.field_Private_Single_0 = 27.5f; // Fix it going off element
         __1.field_Private_Single_1 = 95.4124f; // Fix it going off element
         Toggle.ToggleEvent? LISTENER = _0.onValueChanged;
         

@@ -9,7 +9,6 @@ using static Config.LoggingModel;
 public class Config
 {
    
-
     public PlayerModel Player { get; set; } = new();
     public RenderModel Render { get; set; } = new();
     public LoggingModel Logging { get; set; } = new();
@@ -24,11 +23,11 @@ public class Config
         public ExploitsModel Exploits {get; set; } = new();
         public class RFCTamperingModel   
         {
-                public SDK2Model SDK2 {get; set;} = new();
-                public class SDK2Model
-                {
-                  public bool EnforceToAll { get; set; } = false;
-                }
+            public SDK2Model SDK2 {get; set;} = new();
+            public class SDK2Model
+            {
+                public bool EnforceToAll { get; set; } = false;
+            }
         } 
         public class ExploitsModel 
         {
@@ -43,13 +42,19 @@ public class Config
     
     public class PlayerModel
     {
+        
         public AirbornModel Airborn { get; set; } = new();
         public GroundedModel Grounded { get; set; } = new();
+        public NetworkModel Network { get; set; } = new();
 
+        public class NetworkModel
+        {
+            public bool Serialized { get; set; } = false;
+        }
         public class AirbornModel
         {
             public FlightModel Flight { get; set; } = new();
-            public float Gravity {get; set;}
+            public float Gravity { get; set; }
 
             public class FlightModel
             {
@@ -60,9 +65,9 @@ public class Config
         
         public class GroundedModel
         {
-            public float? WalkSpeed { get; set; } = 6.5f;
-            public float? RunSpeed { get; set; } = 6.5f;
-            public float? JumpHeight { get; set; } = 6.5f;
+            public float WalkSpeed { get; set; } = 6.5f;
+            public float RunSpeed { get; set; } = 6.5f;
+            public float JumpHeight { get; set; } = 6.5f;
         }
     }
     
@@ -119,7 +124,7 @@ public class Config
         {
             public bool PhotonEvents { get; set; } = false;
             public bool RPCs { get; set; } = false;
-            public bool UdonObjects { get; set; } = true;
+            public bool UdonObjects { get; set; } = false;
         }
     }
 

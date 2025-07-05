@@ -189,7 +189,12 @@ namespace Brewchat.Game.Wrappers
                         player.SetWalkSpeed(v);
                         return player;
                     }
-
+                    public static VRCPlayerApi Strafe_Speed(float v)
+                    {
+                        VRCPlayerApi? player = LocalEntity().VRCPlayerApi;
+                        player.SetStrafeSpeed(v);
+                        return player;
+                    }
                     public static VRCPlayerApi Jump_Impulse(float v = 3f)
                     {
                         VRCPlayerApi? player = LocalEntity().VRCPlayerApi;
@@ -203,6 +208,7 @@ namespace Brewchat.Game.Wrappers
                         player.SetVelocity(v);
                         return player;
                     }
+                   
 
                     public static VRCPlayerApi Gravity(float v = 1f)
                     {

@@ -69,7 +69,7 @@ internal class QM
                    GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
                    {
                        Entry.config.Appearance.inGame.FlatLoadingOverlay.Image = x;
-                       
+                       Config.SaveToFile(Entry.config, "config.json");  
                    }, Placeholder: "https:// or C://", MultiLine: false);
                 }, false);
                 }
@@ -160,6 +160,7 @@ internal class QM
             Core.EnableRichText();
 
             #region Submenus
+            
             NestedQMAppearance appearance = new(); appearance.Execute();
             NestedQMDebug debug = new(); debug.Execute();
             WorldCheats.NestedQMWorld world = new(); world.Execute();

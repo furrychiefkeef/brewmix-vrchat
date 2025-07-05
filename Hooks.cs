@@ -99,27 +99,16 @@ namespace brewchat.hybridxcore.bep
            __instance?.gameObject.GetOrAddComponentSafe<Wallhacks>();
             
 
-
+            
             QM.Main.Apply();
             Widgets.QM.Initalize();
-          
-        } 
-
-        
-        [HarmonyPostfix, HarmonyPatch(typeof(SelectedUserMenuQM), nameof(SelectedUserMenuQM.Start))]
-        public static void SelectedUserMenu_Initialize_HOOK(ref SelectedUserMenuQM? __instance)
-        {
-            if (__instance is null || _isSelectedMenusLoaded) return;
-            _isSelectedMenusLoaded = true;
             QM.SelectedUserMenu.Apply();
-            MM.SelectedUserMenu.Apply();
-          
-        }
+        } 
 
         [HarmonyPrefix, HarmonyPatch(typeof(VRC_Pickup), nameof(VRC_Pickup.Awake))]
         public static bool __0Pickups(ref VRC_Pickup? __instance)
         {
-            if ( __instance is null) return false;
+            if ( __instance is null) return true;
             
             if (__instance != null)
             {
@@ -141,6 +130,7 @@ namespace brewchat.hybridxcore.bep
             MM.Main.Apply();
             MM.AvatarAVMMenu.Apply();
             MM.SelectedWorldMenu.Apply();
+            MM.SelectedUserMenu.Apply();
            
         }
 
@@ -164,11 +154,11 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPrefix, HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomEvent))]
         public static bool __0Udon(ref UdonBehaviour __instance, ref string __0)
         {
-            if(__instance == null) return false;
+            if(__instance is null) return true;
             
             if(Entry.config.Logging.Game.UdonObjects) 
             {
-                MelonLogger.Msg($"[Udon]: [{__instance.name}] -> <{__0}>");
+                MelonLogger.Msg($"[Udon]: [{__instance.name}] -> {__0}");
             }
             
             return true;
@@ -237,20 +227,47 @@ namespace brewchat.hybridxcore.bep
 
         #region NetworkUtils
 
-        [HarmonyPostfix, HarmonyPatch(typeof(LoadBalancingClient), nameof(LoadBalancingClient.OnEvent))]
-        public static void __PhotonHook(EventData __0)
+        [HarmonyPrefix, HarmonyPatch(typeof(LoadBalancingClient), nameof(LoadBalancingClient.OnEvent))]
+        public static bool prefixHOOK_Photon(EventData __0)
         {
-            if (__0 is null && __0.CustomData is null) return;
+            if (__0 is null) return true;
+            
+            // Only handle blocking in prefix
+           
+                // BLOCKING LOGIC - Must be in prefix to work
+                if (__0.Code == 12 && Entry.config.Player.Network.Serialized)
+                {
+                    if(__0.Sender == GameUtils.PlayerModel.LocalEntity().VRCPlayerApi.playerId) return true;
+                    MelonLogger.Msg($"[BLOCKED] Event {__0.Code} from {(__0.Sender).getPlayer().VRCPlayerApi.displayName}");
+                    return false; // This blocks the event from being processed
+                }
+                
+                // Add other blocking conditions here as needed
+                // if (someOtherCondition)
+                // {
+                //     MelonLogger.Msg($"[BLOCKED] Event {__0.Code} for other reason");
+                //     return false;
+                // }
+            
+            return true; // Continue to original method and postfix
+        }
 
+        [HarmonyPostfix, HarmonyPatch(typeof(LoadBalancingClient), nameof(LoadBalancingClient.OnEvent))]
+        public static void postfixHOOK_Photon(EventData __0)
+        {
+            if (__0 is null) return;
+            
+            // Only handle logging in postfix (for events that weren't blocked)
             if (Entry.config.Logging.Game.PhotonEvents)
             {
                 object Data = null;
                 ParameterDictionary? Parameters = __0.Parameters;
+                
                 foreach (Il2CppSystem.Collections.Generic.KeyValuePair<byte, Il2CppSystem.Object>? data in Parameters)
                 {
                     Data = EngineUtils.iL2CPPWrapper.Serialization.FromIL2CPPToManaged<object>(data);
-                    string? c = Newtonsoft.Json.JsonConvert.SerializeObject(Data, Newtonsoft.Json.Formatting.Indented);
-                    MelonLogger.Msg("hook", "/photon", $" Player: {(__0.Sender).getPlayer().VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] Event Data: \n {c}", 0);
+                    string? c = Newtonsoft.Json.JsonConvert.SerializeObject(Data, Newtonsoft.Json.Formatting.Indented, new Newtonsoft.Json.JsonSerializerSettings() { ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore });
+                    MelonLogger.Msg($"[PROCESSED] hook/photon Player: {(__0.Sender).getPlayer().VRCPlayerApi.displayName} Sent! | EV {__0.Code} [Key:{__0.CustomDataKey}] Event Data: \n {c}");
                 }
             }
         }
