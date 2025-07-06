@@ -17,8 +17,10 @@ internal class PlayerModule
     {
 
         static readonly List<string> _disabledColliders = new();
-        static float _cacheJumpData;
-
+        static float _cacheJumpData { get; set; }
+        static float _cacheWalkData { get; set; }
+        static float _cacheRunData { get; set; }
+        static float _cacheStrafeData  { get; set; }
         public static void Fly()
         {
             Player player = GameUtils.PlayerModel.LocalEntity();
@@ -68,8 +70,12 @@ internal class PlayerModule
         {
             #region LOGIC
             Player player = GameUtils.PlayerModel.LocalEntity();
-            _cacheJumpData = player.VRCPlayerApi.GetJumpImpulse();
-
+            if (_cacheJumpData == null)
+            {
+                _cacheJumpData = player.VRCPlayerApi.GetJumpImpulse();
+                return;
+            }
+        
             if (!player && !GameUtils.World.IsLoaded()) return;
             {
                 
@@ -91,6 +97,13 @@ internal class PlayerModule
         {
             #region LOGIC
             Player player = GameUtils.PlayerModel.LocalEntity();
+            if (_cacheStrafeData == null && _cacheRunData == null)
+            {
+
+                _cacheStrafeData = player.VRCPlayerApi.GetStrafeSpeed();
+                _cacheRunData = player.VRCPlayerApi.GetRunSpeed();
+                return;
+            }
             if (!player && !GameUtils.World.IsLoaded()) return;
             
             switch (state)
@@ -101,8 +114,8 @@ internal class PlayerModule
                     break;
 
                 case false:
-                    GameUtils.PlayerModel.Motion.Networking.Run_Speed();
-                    GameUtils.PlayerModel.Motion.Networking.Strafe_Speed(0);
+                    GameUtils.PlayerModel.Motion.Networking.Run_Speed(_cacheRunData);
+                    GameUtils.PlayerModel.Motion.Networking.Strafe_Speed(_cacheStrafeData);
                     break;
             }
             #endregion

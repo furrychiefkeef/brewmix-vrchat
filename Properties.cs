@@ -59,7 +59,7 @@ public class Config
             public class FlightModel
             {
                 public bool Enabled { get; set; } = false;
-                public float? Speed { get; set; } = 6.5f;
+                public float Speed { get; set; } = 6.5f;
             }
         }
         
@@ -67,6 +67,7 @@ public class Config
         {
             public float WalkSpeed { get; set; } = 6.5f;
             public float RunSpeed { get; set; } = 6.5f;
+            public float StrafeSpeed { get; set; } = 6.5f;
             public float JumpHeight { get; set; } = 6.5f;
         }
     }
@@ -195,7 +196,7 @@ public class Config
 
     public class AdvancedModel
     {
-        public bool DebugMode { get; set; } = false;
+        public bool DebugMode { get; set; } = true;
         public bool MurderPlayerNode { get; set; } = false;
     }
 

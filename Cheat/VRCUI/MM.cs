@@ -88,13 +88,34 @@ internal class MM : IMainMenuElements
                 {
                     Entry.config.Player.Network.Serialized = !Entry.config.Player.Network.Serialized;
                 });
+                new VRCSliderOperator(tempPlayerWeaks_Container, "Fly Speed", VRCSliderOperator.SliderType.PercentageNoRestrict, Entry.config.Player.Airborn.Flight.Speed, 0, 100, (x) =>
+                {
+                    Entry.config.Player.Airborn.Flight.Speed = x;
+                    Config.SaveToFile(Entry.config, "config.json");
+                });
+                new VRCSliderOperator(tempPlayerWeaks_Container, "Run Speed", VRCSliderOperator.SliderType.PercentageNoRestrict, Entry.config.Player.Grounded.RunSpeed, 0, 100, (x) =>
+                {
+                    Entry.config.Player.Grounded.RunSpeed = x;
+                    Config.SaveToFile(Entry.config, "config.json");
+                });
+
+                new VRCSliderOperator(tempPlayerWeaks_Container, "Strafe Speed",VRCSliderOperator.SliderType.PercentageNoRestrict, Entry.config.Player.Grounded.StrafeSpeed, 0, 100, (x) =>
+                {
+                    Entry.config.Player.Grounded.StrafeSpeed = x;
+                    Config.SaveToFile(Entry.config, "config.json");
+                });
                 
+                new VRCSliderOperator(tempPlayerWeaks_Container, "Walk Speed", VRCSliderOperator.SliderType.PercentageNoRestrict, Entry.config.Player.Grounded.WalkSpeed, 0, 100, (x) =>
+                {
+                    Entry.config.Player.Grounded.WalkSpeed = x;
+                    Config.SaveToFile(Entry.config, "config.json");
+                });
                 // new VRCToggleOperator(VRCTweaks_Container, "Udon Logging", "ON", "OFF", (x) =>
                 // {
                 //     Entry.config.Logging.Game.UdonObjects = !Entry.config.Logging.Game.UdonObjects;
                 //     Config.SaveToFile(Entry.config, "config.json");
                 // });
-                    
+
 
 
                 #endregion

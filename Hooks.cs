@@ -92,17 +92,16 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
         public static void QuickMenu_Initialize_HOOK(ref QuickMenu? __instance)
         {
-            if (__instance is null || _isQuickMenuLoaded) return ; 
+            if (__instance is null || _isQuickMenuLoaded) return;
             UnityEngine.Object.DestroyImmediate(UnityEngine.Object.FindObjectOfType<MainMenuContent>()._bannerCarousel, true);
             _isQuickMenuLoaded = true;
-           __instance?.gameObject.GetOrAddComponentSafe<ESP>(); 
-           __instance?.gameObject.GetOrAddComponentSafe<Wallhacks>();
-            
+            __instance?.gameObject.GetOrAddComponentSafe<ESP>();
+            __instance?.gameObject.GetOrAddComponentSafe<Wallhacks>();
 
-            
+
+
             QM.Main.Apply();
             Widgets.QM.Initalize();
-            QM.SelectedUserMenu.Apply();
         } 
 
         [HarmonyPrefix, HarmonyPatch(typeof(VRC_Pickup), nameof(VRC_Pickup.Awake))]
@@ -122,6 +121,14 @@ namespace brewchat.hybridxcore.bep
             return true;
         }
 
+        [HarmonyPostfix, HarmonyPatch(typeof(SelectedUserMenuQM), nameof(SelectedUserMenuQM.Start))]
+        public static void SelectedUserMenu_Initialize_HOOK(ref SelectedUserMenuQM? __instance)
+        {
+            if (__instance is null || _isSelectedMenusLoaded) return;
+            _isSelectedMenusLoaded = true;
+            QM.SelectedUserMenu.Apply();
+        }
+        
         [HarmonyPostfix, HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
         public static void MainMenu_Initialize_HOOK(ref MainMenu? __instance)
         {
@@ -131,7 +138,7 @@ namespace brewchat.hybridxcore.bep
             MM.AvatarAVMMenu.Apply();
             MM.SelectedWorldMenu.Apply();
             MM.SelectedUserMenu.Apply();
-           
+         
         }
 
         // [HarmonyPostfix, HarmonyPatch(typeof(APIUser), nameof(APIUser.allowAvatarCopying), MethodType.Getter)]

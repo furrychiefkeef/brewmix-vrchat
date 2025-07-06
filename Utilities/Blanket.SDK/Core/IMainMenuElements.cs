@@ -49,12 +49,13 @@ namespace BlanketSDK.Core
             public static Transform OperatorRadialSelection() { return MMElements.CellContainer("ComfortAndSafety").transform.FindChild("Sharing/Settings_Panel_1/VerticalLayoutGroup/DirectSharingVisibility"); }
             public static Transform OperatorToggle() { return MMElements.CellContainer("Debug").transform.FindChild("AvatarDebugging/Settings_Panel_1/VerticalLayoutGroup/AvatarDebug"); }
             public static Transform OperatorButton() { return MMElements.CellContainer("Debug").transform.FindChild("Debug/Settings_Panel_1/VerticalLayoutGroup/ReportBugsButtons"); }
+            public static Transform OperatorSlider() { return MMElements.CellContainer("Accessibility").transform.FindChild("Chatbox/Settings_Panel_1/VerticalLayoutGroup/ChatboxNotificationVolume"); }
             
             public static class Buttons
             {
                 //Put Buttons       
                 public static class AvatarMenuRelated
-                {   
+                {
                     public static Transform AvatarButtonSmall() { return MMMenus.MMSubmenus.MenuAvatar_AVM().transform.FindChild("Dynamic_Content_Container/Viewport/Panel_SelectedAvatar/Avatar_Marketplace_Panel/Avatar_Functions_Container/Favorite_Avatar_Button"); }
                     public static Transform AvatarButton() { return MMMenus.MMSubmenus.MenuAvatar_AVM().transform.FindChild("Dynamic_Content_Container/Viewport/Panel_SelectedAvatar/Avatar_Marketplace_Panel/Avatar_Details_Button"); }
                 }
@@ -63,7 +64,7 @@ namespace BlanketSDK.Core
                 {
                     public static Transform CellButton() { return MMMenus.MMSubmenus.Menu_Worlds().transform.Find("Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Content/Viewport/Header_MM_H2/RightItemContainer/Button_CellSize"); }
                 }
-               
+
                 public static Transform SingleButton() { return MMMenus.MMSubmenus.Menu_Setting().transform.FindChild("Menu_MM_DynamicSidePanel/Panel_SectionList/ScrollRect_Navigation_Container/ScrollRect_Navigation/Viewport/VerticalLayoutGroup/Cell_MM_Debug"); }
 
                 public static Transform WingButton(string position) { return MMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Explore"); }

@@ -190,7 +190,7 @@ namespace Brewchat.Game.Wrappers
                         player.SetWalkSpeed(v);
                         return player;
                     }
-                    public static VRCPlayerApi Strafe_Speed(float v)
+                    public static VRCPlayerApi Strafe_Speed(float v = 3f)
                     {
                         VRCPlayerApi? player = LocalEntity().VRCPlayerApi;
                         player.SetStrafeSpeed(v);
@@ -325,30 +325,34 @@ namespace Brewchat.Game.Wrappers
                 {
                 public static class Pickups
                 {
-                    static VRCPickup _lastPickup;
-                    public static VRCPickup? GetPickup(string name)
+                    static VRCPickup _lastPickup;public static VRCPickup? GetPickup(string name)
                     {
-                            foreach (VRCPickup pickup in UnityEngine.Object.FindObjectsOfType<VRCPickup>())
+                        var pickups = UnityEngine.Object.FindObjectsOfType<VRCPickup>();
+                        
+                        // First pass - exact match
+                        foreach (VRCPickup pickup in pickups)
+                        {
+                            if (string.Equals(pickup.name, name, StringComparison.OrdinalIgnoreCase))
                             {
-                                if (pickup.name == name)
-                                {
-                                    _lastPickup = pickup;
-                                    if (Entry.config.Advanced.DebugMode) UI.HUD.ToastV1($"Found: {_lastPickup.name}");
-                                    return pickup;
-                                }
-                                else if (pickup.name.Contains(name))
-                                {
-                                    _lastPickup = pickup;
-                                    if (Entry.config.Advanced.DebugMode) UI.HUD.ToastV1($"Found: {_lastPickup.name}");
-                                    return pickup;
-                                }
-                                else
-                                {
-                                    return null;
-                                }
+                                _lastPickup = pickup;
+                                UI.HUD.ToastV1($"Found: {_lastPickup.name}");
+                                return pickup;
+                            }
                         }
-                    
-                        return _lastPickup;
+                        
+                        // Second pass - contains match
+                        foreach (VRCPickup pickup in pickups)
+                        {
+                            if (pickup.name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0)
+                            {
+                                _lastPickup = pickup;
+                                UI.HUD.ToastV1($"Found: {_lastPickup.name}");
+                                return pickup;
+                            }
+                        }
+                        
+                        UI.HUD.ToastV1($"Pickup Not Found");
+                        return null;
                     }
                 }
                 public static void LoadCustomEvent(string _event)

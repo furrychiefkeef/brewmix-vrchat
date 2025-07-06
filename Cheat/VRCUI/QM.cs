@@ -95,7 +95,8 @@ internal class QM
                 {
                     GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a Pickup Name", (x) =>
                     {
-                        GameUtils.World.SDK3.Udon.Pickups.GetPickup(x);
+                        var pickup = GameUtils.World.SDK3.Udon.Pickups.GetPickup(x);
+                        GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickup);
                     }, Placeholder: "Such as: Revolver", MultiLine: false);
 
                 }, false);
