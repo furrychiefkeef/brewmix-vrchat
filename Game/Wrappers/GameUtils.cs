@@ -9,6 +9,7 @@ using VRC.Core;
 using VRC.DataModel;
 using VRC.Localization;
 using VRC.Networking;
+using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Components;
 using VRC.SDKBase;
 
@@ -221,19 +222,38 @@ namespace Brewchat.Game.Wrappers
 
             public static class Avatar
             {
-                public static GameObject? CloneAvatar(VRC.Player player, bool keepParameters)
+                public static void CloneAvatar(VRC.Player player, bool keepParameters)
                 {
-                    GameObject? obj;
+        
                     Transform? head = player._vrcplayer.VRCPlayerApi.GetBoneTransform(HumanBodyBones.Head);
                     head.localScale = new Vector3(1f, 1f, 1f);
                     
                     if (player == null)
                     {
-                        obj = UnityEngine.Object.Instantiate(player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0);
+                        var obj = UnityEngine.Object.Instantiate(player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0);
+                        if (keepParameters)
+                        {
+                            var sourceDescriptor = player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0.GetComponent<VRCAvatarDescriptor>();
+                            var targetDescriptor = obj.GetComponent<VRCAvatarDescriptor>();
+                            
+                            if (sourceDescriptor != null && targetDescriptor != null)
+                            {
+                                // Copy all the avatar descriptor properties
+                                targetDescriptor.expressionParameters = sourceDescriptor.expressionParameters;
+                                targetDescriptor.expressionsMenu = sourceDescriptor.expressionsMenu;
+                                targetDescriptor.customExpressions = sourceDescriptor.customExpressions;
+                                targetDescriptor.ScaleIPD = sourceDescriptor.ScaleIPD;
+                                targetDescriptor.lipSync = sourceDescriptor.lipSync;
+                                targetDescriptor.lipSyncJawBone = sourceDescriptor.lipSyncJawBone;
+                                targetDescriptor.VisemeSkinnedMesh = sourceDescriptor.VisemeSkinnedMesh;
+                                targetDescriptor.VisemeBlendShapes = sourceDescriptor.VisemeBlendShapes;
+                                targetDescriptor.portraitCameraPositionOffset = sourceDescriptor.portraitCameraPositionOffset;
+                                targetDescriptor.portraitCameraRotationOffset = sourceDescriptor.portraitCameraRotationOffset;
+                                // Add any other properties you need to copy
+                            }
+                        }
                         obj.transform.position = player.transform.position;
-                        return obj;
                     }
-                    return null;
                 }
 
                 public static ApiAvatar SetAvatar(string id)
