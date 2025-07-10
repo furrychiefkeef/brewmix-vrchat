@@ -14,6 +14,7 @@ using VRC.SDK3.Components;
 using VRC.SDKBase;
 
 using VRC.Udon;
+using VRC.Udon.Common;
 using VRC.Udon.Common.Interfaces;
 using VRC.UI;
 using VRC.UI.Client;
@@ -29,17 +30,15 @@ namespace Brewchat.Game.Wrappers
         // =============================================================================
         // GAMEPLAY UTILITIES
         // =============================================================================
-        
+
         public class Gameplay
         {
             public static class Matchmaking
             {
-                
+
                 public static VRC.Player GetSelectedUser() => UnityEngine.Object.FindObjectOfType<QuickMenu>().field_Private_IUser_0.prop_String_1.getPlayer()?._vrcplayer._player;
-                   
                 
-                public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers => 
-                    PlayerManager.prop_PlayerManager_0.PlayerList;
+                public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers => PlayerManager.prop_PlayerManager_0.PlayerList;
             }
 
             public struct RenderLayers
@@ -57,7 +56,7 @@ namespace Brewchat.Game.Wrappers
                 {
                     get
                     {
-                        if (_QuickMenu is null) 
+                        if (_QuickMenu is null)
                             _QuickMenu = UnityEngine.Object.FindObjectOfType<QuickMenu>();
                         return () => _QuickMenu != null && _QuickMenu.enabled;
                     }
@@ -67,7 +66,7 @@ namespace Brewchat.Game.Wrappers
                 {
                     get
                     {
-                        if (_MainMenu is null) 
+                        if (_MainMenu is null)
                             _MainMenu = UnityEngine.Object.FindObjectOfType<MainMenu>();
                         return () => _MainMenu != null && _MainMenu.enabled;
                     }
@@ -133,11 +132,12 @@ namespace Brewchat.Game.Wrappers
         // =============================================================================
         // CAMERA UTILITIES
         // =============================================================================
-        
+
         public class Camera
         {
             public static UnityEngine.Camera Get { get; set; } = UnityEngine.Camera.main;
-            public static GameObject CameraObj {
+            public static GameObject CameraObj
+            {
                 get
                 {
                     if (CameraObj is null)
@@ -150,7 +150,7 @@ namespace Brewchat.Game.Wrappers
         // =============================================================================
         // PLAYER MODEL UTILITIES
         // =============================================================================
-        
+
         public class PlayerModel
         {
             public static VRCPlayer VRCPlayerEntity() => VRCPlayer.field_Internal_Static_VRCPlayer_0;
@@ -170,11 +170,16 @@ namespace Brewchat.Game.Wrappers
                 {
                     public static class World
                     {
-                        public static void SetOwnerAndGivePickupLocalEntity(VRCPickup pickup)
+                        public static void InternalSetOwnerAndGivePickupLocalEntity(VRCPickup pickup, bool put2Hand = false)
                         {
+
                             var Player = LocalEntity().VRCPlayerApi;
                             Player.TakeOwnership(pickup.gameObject);
                             pickup.gameObject.transform.position = Player.gameObject.transform.position + new Vector3(0.0f, 0.1f, 0f);
+                            if (put2Hand)
+                            {
+                                Player.SetPickupInHand(pickup, VRC_Pickup.PickupHand.Right);
+                            }
                         }
                     }
                     public static VRCPlayerApi Run_Speed(float v = 2f)
@@ -209,7 +214,7 @@ namespace Brewchat.Game.Wrappers
                         player.SetVelocity(v);
                         return player;
                     }
-                   
+
 
                     public static VRCPlayerApi Gravity(float v = 1f)
                     {
@@ -224,10 +229,10 @@ namespace Brewchat.Game.Wrappers
             {
                 public static void CloneAvatar(VRC.Player player, bool keepParameters)
                 {
-        
+
                     Transform? head = player._vrcplayer.VRCPlayerApi.GetBoneTransform(HumanBodyBones.Head);
                     head.localScale = new Vector3(1f, 1f, 1f);
-                    
+
                     if (player == null)
                     {
                         var obj = UnityEngine.Object.Instantiate(player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0);
@@ -235,7 +240,7 @@ namespace Brewchat.Game.Wrappers
                         {
                             var sourceDescriptor = player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0.GetComponent<VRCAvatarDescriptor>();
                             var targetDescriptor = obj.GetComponent<VRCAvatarDescriptor>();
-                            
+
                             if (sourceDescriptor != null && targetDescriptor != null)
                             {
                                 // Copy all the avatar descriptor properties
@@ -280,7 +285,7 @@ namespace Brewchat.Game.Wrappers
 
             public static class Matchmaking
             {
-                public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers => 
+                public static Il2CppSystem.Collections.Generic.List<VRC.Player> GetPlayers =>
                     PlayerManager.prop_PlayerManager_0.PlayerList;
             }
         }
@@ -288,17 +293,17 @@ namespace Brewchat.Game.Wrappers
         // =============================================================================
         // WORLD UTILITIES
         // =============================================================================
-        
+
         public class World
         {
             public static bool IsLoaded() => RoomManager.prop_ApiWorldInstance_0 != null || RoomManager.prop_ApiWorldInstance_1 != null || RoomManager.currentApiWorld != null;
             public static class WorldData
             {
-                public static string current_worldID  => RoomManager.field_Private_Static_ApiWorldInstance_1.id;
+                public static string current_worldID => RoomManager.field_Private_Static_ApiWorldInstance_1.id;
                 public static string current_worldName => RoomManager.field_Private_Static_ApiWorldInstance_1.name;
                 public static string current_intanceID => RoomManager.field_Private_Static_ApiWorldInstance_1.instanceId;
             }
-           
+
 
             public class SDK2
             {
@@ -323,66 +328,72 @@ namespace Brewchat.Game.Wrappers
             {
                 public struct Udon
                 {
-                public static class Pickups
-                {
-                    static VRCPickup _lastPickup;public static VRCPickup? GetPickup(string name)
+                    public static void InternalSetVariable<T>(UdonBehaviour udon, string symbolName, T value)
                     {
-                        var pickups = UnityEngine.Object.FindObjectsOfType<VRCPickup>();
-                        
-                        // First pass - exact match
-                        foreach (VRCPickup pickup in pickups)
+                        UdonProgram? udonProgram = udon._program.TryCast<UdonProgram>();
+                        uint address = udonProgram.SymbolTable.TryCast<UdonSymbolTable>().GetAddressFromSymbol(symbolName);
+                        udonProgram?.Heap.TryCast<UdonHeap>().SetHeapVariable<T>(address, value);
+                    }
+                    public static class Pickups
+                    {
+                        static VRCPickup _lastPickup; public static VRCPickup? GetPickup(string name)
                         {
-                            if (string.Equals(pickup.name, name, StringComparison.OrdinalIgnoreCase))
+                            var pickups = UnityEngine.Object.FindObjectsOfType<VRCPickup>();
+
+                            // First pass - exact match
+                            foreach (VRCPickup pickup in pickups)
                             {
-                                _lastPickup = pickup;
-                                UI.HUD.ToastV1($"Found: {_lastPickup.name}");
-                                return pickup;
+                                if (string.Equals(pickup.name, name, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    _lastPickup = pickup;
+                                    UI.HUD.ToastV1($"Found: {_lastPickup.name}");
+                                    return pickup;
+                                }
+                            }
+
+                            // Second pass - contains match
+                            foreach (VRCPickup pickup in pickups)
+                            {
+                                if (pickup.name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0)
+                                {
+                                    _lastPickup = pickup;
+                                    UI.HUD.ToastV1($"Found: {_lastPickup.name}");
+                                    return pickup;
+                                }
+                            }
+
+                            UI.HUD.ToastV1($"Pickup Not Found");
+                            return null;
+                        }
+                    }
+                    public static void LoadCustomEvent(string _event)
+                    {
+                        foreach (UdonBehaviour udon in UnityEngine.Object.FindObjectsOfType<UdonBehaviour>())
+                        {
+                            if (udon._eventTable.ContainsKey(_event))
+                            {
+                                udon.SendCustomEvent(_event);
                             }
                         }
-                        
-                        // Second pass - contains match
-                        foreach (VRCPickup pickup in pickups)
+                    }
+                    public static void LoadCustomNetworkEvent(NetworkEventTarget target, string _event)
+                    {
+                        foreach (UdonBehaviour udon in UnityEngine.Object.FindObjectsOfType<UdonBehaviour>())
                         {
-                            if (pickup.name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0)
+                            if (udon._eventTable.ContainsKey(_event))
                             {
-                                _lastPickup = pickup;
-                                UI.HUD.ToastV1($"Found: {_lastPickup.name}");
-                                return pickup;
+                                udon.SendCustomNetworkEvent(target, _event);
                             }
                         }
-                        
-                        UI.HUD.ToastV1($"Pickup Not Found");
-                        return null;
                     }
                 }
-                public static void LoadCustomEvent(string _event)
-                {
-                    foreach (UdonBehaviour udon in UnityEngine.Object.FindObjectsOfType<UdonBehaviour>())
-                    {
-                        if (udon._eventTable.ContainsKey(_event))
-                        {
-                            udon.SendCustomEvent(_event);
-                        }
-                    }
-                }
-                public static void LoadCustomNetworkEvent(NetworkEventTarget target, string _event)
-                {
-                    foreach (UdonBehaviour udon in UnityEngine.Object.FindObjectsOfType<UdonBehaviour>())
-                    {
-                        if (udon._eventTable.ContainsKey(_event))
-                        {
-                            udon.SendCustomNetworkEvent(target, _event);
-                        }
-                    }
-                }
-              }
             }
         }
 
         // =============================================================================
         // GAME SERVER UTILITIES
         // =============================================================================
-        
+
         public class GameServer
         {
             public static VRC.Player? getPlayer_displayName(string name)
@@ -402,7 +413,7 @@ namespace Brewchat.Game.Wrappers
             }
             public static VRC.Player? getPlayer_networkId(int id)
             {
-                if (id < 0 ) return null;
+                if (id < 0) return null;
 
                 foreach (var player in PlayerModel.Matchmaking.GetPlayers)
                 {
@@ -447,14 +458,14 @@ namespace Brewchat.Game.Wrappers
         // =============================================================================
         // UI UTILITIES
         // =============================================================================
-        
+
         public static class UI
         {
             public class HUD
             {
                 #region NOTIFICATION MANAGER V2
 
-                  
+
                 /*private static Hud_UserEventCarousel? _carousel;
                 private static float _lastCheckTime;
                 private const float CacheTimeout = 30f;
@@ -481,8 +492,8 @@ namespace Brewchat.Game.Wrappers
                 }*/
                 public static void ToastV1(string content, float duration = 3f, bool isAudible = true, Sprite? sprite = null)
                 {
-                    if (isAudible)  VRCUiSoundPlayer.Method_Public_Static_Void_AudioClip_Single_0(HudController.field_Public_Static_HudController_0.notificationSound, 5f);
-                    
+                    if (isAudible) VRCUiSoundPlayer.Method_Public_Static_Void_AudioClip_Single_0(HudController.field_Public_Static_HudController_0.notificationSound, 5f);
+
                     HudController.field_Public_Static_HudController_0
                         .userEventCarousel
                         .Method_Private_Void_LocalizableString_Sprite_Single_0(content.Localizable(), sprite, duration);
@@ -491,7 +502,7 @@ namespace Brewchat.Game.Wrappers
                 public static void ToastV2(string? title, string? content = null, float duration = 2f, bool isAudible = true, Sprite? sprite = default)
                 {
                     if (isAudible) VRCUiSoundPlayer.Method_Public_Static_Void_AudioClip_Single_0(HudController.field_Public_Static_HudController_0.notificationSound, 5f);
-                    
+
                     HudController.field_Public_Static_HudController_0
                      .notification
                      ?.Method_Public_Void_Sprite_LocalizableString_LocalizableString_Single_Object1PublicTBoTUnique_1_Boolean_0(sprite, title.Localizable(), content.Localizable(), duration);
@@ -501,8 +512,8 @@ namespace Brewchat.Game.Wrappers
                 {
                     MonoBehaviourPublicObDi2StObDi2So1NoUnique.field_Private_Static_MonoBehaviourPublicObDi2StObDi2So1NoUnique_0
                         .Method_Public_Notification_LocalizableString_LocalizableString_String_String_ArrayOf_Dictionary_2_String_Object_Boolean_Dictionary_2_String_String_0
-                            (name.Localizable(), 
-                                usr_id.Localizable(), 
+                            (name.Localizable(),
+                                usr_id.Localizable(),
                                 type, _4);
                 }
                 #endregion
@@ -557,12 +568,12 @@ namespace Brewchat.Game.Wrappers
         // =============================================================================
         // VRCHAT UTILITIES
         // =============================================================================
-        
+
         public class VRChatUtils
         {
             public static class InputManager
             {
-                public static VRCInput GetInput(string name) => 
+                public static VRCInput GetInput(string name) =>
                     VRCInputManager.field_Private_Static_Dictionary_2_String_VRCInput_0[name];
             }
 
@@ -631,12 +642,12 @@ namespace Brewchat.Game.Wrappers
     // =============================================================================
     // EXTENSION METHODS
     // =============================================================================
-    
+
     public static class PlayerExtensions
     {
         public static Color GetTrustColor(this VRC.Player player) => VRCPlayer.Method_Public_Static_Color_APIUser_0(player.APIUser);
         public static string? GetTrustRank(this VRC.Player player) => VRCPlayer.Method_Public_Static_LocalizableString_APIUser_0(player.APIUser)._localizationKey;
-        
+
         public static string IsFriend(this VRC.Player player)
         {
             return player.APIUser.isFriend ? "Friend" : null;
@@ -667,10 +678,44 @@ namespace Brewchat.Game.Wrappers
         {
             foreach (var player in GameUtils.PlayerModel.Matchmaking.GetPlayers)
             {
-                if (player.VRCPlayerApi.playerId == networkId) 
+                if (player.VRCPlayerApi.playerId == networkId)
                     return player;
             }
             return null;
         }
     }
+    public static class UdonObjectExtensions
+    {
+        public static void SetVariable<T>(this UdonBehaviour udon, string symbolName, T value)
+        {
+            UdonProgram? udonProgram = udon._program.TryCast<UdonProgram>();
+            uint address = udonProgram.SymbolTable.TryCast<UdonSymbolTable>().GetAddressFromSymbol(symbolName);
+            udonProgram?.Heap.TryCast<UdonHeap>().SetHeapVariable<T>(address, value);
+        }
+           public static void SetOwnerAndGivePickupToEntity(this Player? target, VRCPickup pickup,  bool put2Hand = false)
+           {
+                VRCPlayerApi? Player = target.VRCPlayerApi;
+                Player.TakeOwnership(pickup.gameObject);
+                pickup.gameObject.transform.position = Player.gameObject.transform.position + new Vector3(0.0f, 0.1f, 0f);
+                if(put2Hand)
+                {
+                Player.SetPickupInHand(pickup, VRC_Pickup.PickupHand.Right);
+                }
+           }
+           public static void SetOwnerAndGivePickupToLocalEntity(this VRCPickup pickup,  bool put2Hand = false)
+           {
+                VRCPlayerApi? Player = GameUtils.PlayerModel.LocalEntity().VRCPlayerApi;
+                Player.TakeOwnership(pickup.gameObject);
+                pickup.gameObject.transform.position = Player.gameObject.transform.position + new Vector3(0.0f, 0.1f, 0f);
+                if(put2Hand)
+                {
+                    Player.SetPickupInHand(pickup, VRC_Pickup.PickupHand.Right);
+                }
+           }
+    }
+    
+
+
 }
+  
+       

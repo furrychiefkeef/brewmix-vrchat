@@ -489,6 +489,145 @@ internal static class EngineUtils
 
 
 
+#region Classes
+
+public static class UnityFileExplorer
+{
+    /// <summary>
+    /// Find GameObject by path, including hidden ones with HideAndDontSave
+    /// Works like GameObject.Find() but finds hidden objects too
+    /// </summary>
+    public static GameObject FindObject(string path)
+    {
+        if (string.IsNullOrEmpty(path))
+            return null;
+        
+        // Get all GameObjects including hidden ones
+        GameObject[] allObjects = UnityEngine.Resources.FindObjectsOfTypeAll<GameObject>();
+        
+        // Split the path into parts
+        string[] pathParts = path.Split('/');
+        
+        // Find objects that match the path
+        return allObjects.FirstOrDefault(obj =>
+            obj != null &&
+            obj.scene.isLoaded &&
+            DoesPathMatch(obj, pathParts)
+        );
+    }
+    
+    /// <summary>
+    /// Find all GameObjects by path, including hidden ones
+    /// </summary>
+    public static GameObject[] FindObjects(string path)
+    {
+        if (string.IsNullOrEmpty(path))
+            return new GameObject[0];
+        
+        GameObject[] allObjects = UnityEngine.Resources.FindObjectsOfTypeAll<GameObject>();
+        string[] pathParts = path.Split('/');
+        
+        return allObjects.Where(obj =>
+            obj != null &&
+            obj.scene.isLoaded &&
+            DoesPathMatch(obj, pathParts)
+        ).ToArray();
+    }
+    
+    /// <summary>
+    /// Find GameObject by partial path match
+    /// </summary>
+    public static GameObject FindObjectContaining(string partialPath)
+    {
+        if (string.IsNullOrEmpty(partialPath))
+            return null;
+        
+        GameObject[] allObjects = UnityEngine.Resources.FindObjectsOfTypeAll<GameObject>();
+        
+        return allObjects.FirstOrDefault(obj =>
+            obj != null &&
+            obj.scene.isLoaded &&
+            GetFullPath(obj).Contains(partialPath)
+        );
+    }
+    
+    /// <summary>
+    /// Check if GameObject matches the given path parts
+    /// </summary>
+    private static bool DoesPathMatch(GameObject obj, string[] pathParts)
+    {
+        if (pathParts.Length == 0)
+            return false;
+        
+        // Start from the target object and work backwards through parents
+        Transform current = obj.transform;
+        
+        // Check if the last part matches the object name
+        if (current.name != pathParts[pathParts.Length - 1])
+            return false;
+        
+        // Work backwards through the path
+        for (int i = pathParts.Length - 2; i >= 0; i--)
+        {
+            current = current.parent;
+            if (current == null || current.name != pathParts[i])
+                return false;
+        }
+        
+        return true;
+    }
+    
+    /// <summary>
+    /// Get the full hierarchy path of a GameObject
+    /// </summary>
+    private static string GetFullPath(GameObject obj)
+    {
+        string path = obj.name;
+        Transform parent = obj.transform.parent;
+        
+        while (parent != null)
+        {
+            path = parent.name + "/" + path;
+            parent = parent.parent;
+        }
+        
+        return path;
+    }
+}
+
+// Extension methods for even cleaner usage
+public static class GameObjectExtensions
+{
+    /// <summary>
+    /// Find hidden GameObject and get or add component safely
+    /// </summary>
+    public static T FindAndGetComponent<T>(string path) where T : Component
+    {
+        GameObject obj = UnityFileExplorer.FindObject(path);
+        return obj?.GetComponent<T>();
+    }
+    
+    /// <summary>
+    /// Find hidden GameObject and get or add component safely
+    /// </summary>
+    public static T FindAndGetOrAddComponent<T>(string path) where T : Component
+    {
+        GameObject obj = UnityFileExplorer.FindObject(path);
+        if (obj == null) return null;
+        
+        T component = obj.GetComponent<T>();
+        if (component == null)
+        {
+            component = obj.AddComponent<T>();
+        }
+        
+        component.hideFlags = HideFlags.HideAndDontSave;
+        return component;
+    }
+}
+
+#endregion
+
 #region  ClassExt 
 public static class TextureExtensions
 {

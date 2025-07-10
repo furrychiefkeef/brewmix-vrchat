@@ -67,7 +67,7 @@ internal class MM : IMainMenuElements
                     Entry.config.Logging.Game.UdonObjects = !Entry.config.Logging.Game.UdonObjects;
                     Config.SaveToFile(Entry.config, "config.json");
                 });
-
+                
                 new VRCToggleOperator(VRCTweaks_Container, "Photon Logging", "ON", "OFF", (x) =>
                 {
                     Entry.config.Logging.Game.PhotonEvents = !Entry.config.Logging.Game.PhotonEvents;
@@ -81,7 +81,7 @@ internal class MM : IMainMenuElements
 
                 new VRCToggleOperator(tempPlayerWeaks_Container, "Speed Hack", "ON", "OFF", (x) =>
                 {
-                    PlayerModule.Movement.SpeedHack(x);
+                    PlayerModule.Movement.SpeedHack(Entry.config.Modules.SpeedHack);
                     Config.SaveToFile(Entry.config, "config.json");
                 });
                 new VRCToggleOperator(tempPlayerWeaks_Container, "Serialization Hack", "ON", "OFF", (x) =>

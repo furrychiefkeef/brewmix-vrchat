@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-
+using autumn.ml.Cheat.Modules.Global;
 using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Wrappers;
@@ -47,7 +47,6 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
             {
                 PlayerModule.CameraBuilder.CameraController();
             }
-
             #endregion
 
         

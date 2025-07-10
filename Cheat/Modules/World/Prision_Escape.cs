@@ -24,7 +24,7 @@ public class Prision_Escape
             VRCPickup? pickupObj = GameUtils
             .World
             .SDK3.Udon.Pickups.GetPickup("Revolver");
-            GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickupObj);
+           pickupObj.SetOwnerAndGivePickupToLocalEntity();
             return pickupObj;
         }
         public static VRCPickup? SpawnKnife()
@@ -33,7 +33,7 @@ public class Prision_Escape
             VRCPickup pickupObj = GameUtils
             .World
             .SDK3.Udon.Pickups.GetPickup($"Knife ({i++})");
-            GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickupObj);
+           pickupObj.SetOwnerAndGivePickupToLocalEntity();
              return pickupObj;
         }
         public static VRCPickup? SpawnShotgun()
@@ -41,7 +41,7 @@ public class Prision_Escape
             VRCPickup pickupObj = GameUtils
             .World
             .SDK3.Udon.Pickups.GetPickup($"Shotgun");
-            GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickupObj);
+           pickupObj.SetOwnerAndGivePickupToLocalEntity();
             return pickupObj;
          }
         public static VRCPickup? SpawnSniper()
@@ -49,7 +49,7 @@ public class Prision_Escape
             VRCPickup pickupObj = GameUtils
             .World
             .SDK3.Udon.Pickups.GetPickup($"Sniper");
-            GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickupObj);
+            pickupObj.SetOwnerAndGivePickupToLocalEntity();
             pickupObj.gameObject.SetActive(true);
             return pickupObj;
          }
@@ -62,7 +62,7 @@ public class Prision_Escape
                 VRCPickup pickupObj = GameUtils
                 .World
                 .SDK3.Udon.Pickups.GetPickup("Baton");
-                GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickupObj);
+               pickupObj.SetOwnerAndGivePickupToLocalEntity();
             }
         }
       

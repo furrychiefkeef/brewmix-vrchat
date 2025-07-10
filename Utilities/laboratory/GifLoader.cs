@@ -1,9 +1,9 @@
-﻿/*using System.Net.Http;
+﻿using System.Net.Http;
 using UnityEngine;
 using UnityEngine.UI;
 public class GifLoader : MonoBehaviour
 {
-   
+    public GifLoader(IntPtr ptr) : base(ptr) {}
     public class AnimatedGifData
     {
         public Image image;
@@ -21,7 +21,7 @@ public class GifLoader : MonoBehaviour
             timer = 0f;
         }
     }
-    public GifLoader(IntPtr ptr) : base(ptr) {}
+   
     List<AnimatedGifData> gifs = new List<AnimatedGifData>();
 
     private static GifLoader? _instance;
@@ -140,4 +140,4 @@ public class GifLoader : MonoBehaviour
     /// <param name="reference"></param>
     /// <returns></returns>
     
-}*/
+}

@@ -19,7 +19,8 @@ public class Config
     
     public class ModulesModel
     {
-        public RFCTamperingModel RFCTampering {get;set;} = new();
+        public bool SpeedHack { get; set; }
+        public RFCTamperingModel RFCTampering { get; set; } = new();
         public ExploitsModel Exploits {get; set; } = new();
         public class RFCTamperingModel   
         {
@@ -33,9 +34,10 @@ public class Config
         {
 
             public  GlobalExploitsModal Global {get;set;} = new();
-            public class GlobalExploitsModal 
+            public class GlobalExploitsModal
             {
-                    public bool GodMode { get;set;}
+                public bool GodMode { get; set; }
+                 public string? currentPayload { get;set;}
             }
         }
     }
@@ -134,8 +136,8 @@ public class Config
             public  UdonProtectionModel? Udon { get; set; }
             public class UdonProtectionModel 
             {
-                    public  bool isBlocked {get; set;}
-                    public  List<VRC.Player> Offenders {get; set;}
+                    public bool isBlocked { get; set; } = false;
+                    public List<VRC.Player> Offenders {get; set;}
             }
     }
 

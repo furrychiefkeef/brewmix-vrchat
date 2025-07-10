@@ -44,7 +44,9 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         public static Transform QMPanel(string name) => QMPanelGroup(name).transform.FindChild("QM_Settings_Panel");
         public struct QMPanelElements
         {
-            public static Transform QMSeparator() => QMPanel("Sharing").transform.FindChild("VerticalLayoutGroup/Separator");
+            public static Transform? QMSeparator() => QMPanel("Sharing").transform.FindChild("VerticalLayoutGroup/Separator");
+            public static Transform? QMFoldout() => QMPanel("Chatbox").transform.FindChild("VerticalLayoutGroup/QM_Settings_BottomFoldout");
+            public static Transform? QMPanelTitle() => QMPanel("Chatbox").transform.FindChild("VerticalLayoutGroup/ChatboxFunctionTitle");
         }
         /*public static Transform WingButtonContainer(string position) => WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup");*/
 
@@ -59,21 +61,22 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         public static Transform OperatorRadialSelection() => QMElements.QMPanel("Sharing").transform.FindChild("VerticalLayoutGroup/DirectSharingVisibility");
         public static Transform OperatorToggle() => QMElements.QMPanel("Debug").transform.FindChild("VerticalLayoutGroup/PinFPS&Ping");
         public static Transform OperatorButton() =>  QMElements.QMPanel("Debug").transform.FindChild("VerticalLayoutGroup/DebugButtons");
+        public static Transform OperatorSlider() => QMElements.QMPanelElements.QMFoldout().FindChild("VerticalLayoutGroup/NotificationVolume");
         public class Buttons
         {
-            
-            public static Transform SingleButton() =>  QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions/Button_Respawn");
+
+            public static Transform SingleButton() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_QuickActions/Button_Respawn");
 
             public static Transform ExpandButton() => QMMenus.QMSubmenus.Menu_Dashboard().transform.FindChild("Header_H1/RightItemContainer/Button_QM_Expand");
-  
-            public static Transform ToggleButton() =>  QMMenus.QMSubmenus.Menu_DevTools().transform.FindChild("Scrollrect/Viewport/VerticalLayoutGroup/Buttons/Button_Tag");
-    
-            public static Transform CarouselButton() => QMMenus.QMSubmenus.SelectedUser_Local().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_AvatarActions");
-         
-            public static Transform WingButton(string position) => QMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Explore");
-             
 
-                
+            public static Transform ToggleButton() => QMMenus.QMSubmenus.Menu_DevTools().transform.FindChild("Scrollrect/Viewport/VerticalLayoutGroup/Buttons/Button_Tag");
+
+            public static Transform CarouselButton() => QMMenus.QMSubmenus.SelectedUser_Local().transform.FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_AvatarActions");
+
+            public static Transform WingButton(string position) => QMMenus.WingMenu(position).transform.FindChild("WingMenu/ScrollRect/Viewport/VerticalLayoutGroup/Button_Explore");
+
+
+
         }
     }
     internal class QMFallbacks

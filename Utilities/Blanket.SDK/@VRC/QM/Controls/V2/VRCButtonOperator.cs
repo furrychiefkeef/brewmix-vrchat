@@ -1,47 +1,78 @@
-﻿/*using BlanketSDK.Core;
+﻿using BlanketSDK.Core;
+using BlanketSDK.MM.Elements;
 using BlanketSDK.QM.Elements.V2;
+using Brewchat.Game.Wrappers;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Element;
 using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.QM.Elements.Controls.V2;
+
 class VRCButtonOperator : IQuickMenuElements
 {
-    public VRCButtonOperator(VRCPanel panel, string name, System.Action func, bool state = false)
+
+    public class VRCParams
     {
-        if(!QM() || !QMElements.QMPanelGroup($"{QUICKMENU_FLAGS.Panels.Sharing}") || !QMControls.OperatorToggle()) throw new($"element has moved to a different location or index contact: {brewchat.hybridxcore.bep.Properties.Resources.D_Contact}");
-        Transform? obj  = UnityEngine.Object.Instantiate(QMControls.OperatorToggle(), panel.container);
-        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_TOGGLE_OPERATOR_{name}";
+        public string? _title = String.Empty;
+        public string? _subtitle = String.Empty;
+        public string? _text = String.Empty;
+        public string? _tooltip = String.Empty;
+        public string? _maintooltip = String.Empty;
+    }
+    public VRCButtonOperator(Transform parent, VRCParams parameters, System.Action func, bool state = false)
+    {
+        if (!QM() || !QMControls.OperatorButton() || !QMElements.QMPanel("Debug")) throw new($"element has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
+        Transform? obj = UnityEngine.Object.Instantiate(QMControls.OperatorButton(), parent);
+
+        obj.name = $"{Guid.NewGuid().ToString()}-<Blanket.SDK.QM_TOGGLE_OPERATOR_{parameters._title}";
 
         #region REQUIRED_COMPONENTS
 
-        ButtonsSetting? __0  = obj.GetComponent<ButtonsSetting>();
+        /*Transform _rightItemContainer = obj.GetChild(0);
+        Transform _leftItemContainer = obj.GetChild(1);
+        Transform _TitleMainContainer = obj.GetChild(2);*/
+
+
+        ButtonsSetting? __0 = obj.GetComponent<ButtonsSetting>();
         #endregion
 
         #region LOGIC_REQUIRED_API
 
-        /*VRCButtonHandle? _0 = __0.;
-        RadioButton? __1 = __0._toggleSwitch;
-        __1.field_Private_Single_0 = 27.4f; // Fix it going off element
-        __1.field_Private_Single_1 = 95.4124f; // Fix it going off element
-        Toggle.ToggleEvent? LISTENER = _0.onValueChanged;#1#
+        AudioDeviceButton _0 = __0._rightButtons[0];
+        _0.transform.gameObject.SetActive(true);
+        _0._label.text = parameters._text;
+        Button.ButtonClickedEvent? LISTENER = _0._button.onClick;
 
-        _0.isOn = state;
-        /*QM().field_Protected_MenuStateController_0.inte);
+        /*MM().field_Protected_MenuStateController_0.int);*/
         LISTENER.AddListener(func);
-    
-        _0._controlName = name;
-        _0.field_Private_Boolean_0 = true;
-        _0._sendAnalytics = false;
-        #endregion#1#
-       
-        #region TEXT_COMPONENT
-        
+
+        // #region VRC_BUTTON_HANDLE
+
+        _0._button._controlName = $"{parameters._text}.btn_handle";
+        _0._button.prop_Boolean_0 = true;
+        _0._button._sendAnalytics = false;
+
+        // #endregion
+
+        // #endregion
+
+        // #region TEXT_COMPONENT
+
         TextMeshProUGUIEx? Title = __0._title;
-        Title.text = name;
+        Title.text = parameters._title;
         Title.richText = true;
 
-        #endregion
+        __0._subtitle.transform.gameObject.SetActive(true);
+        TextMeshProUGUIEx Subtitles = __0._subtitle;
+        Subtitles.richText = true;
+        Subtitles.text = parameters._tooltip;
+
+        ToolTip _tooltip = _0._tooltips[0];
+        _tooltip._localizableString = parameters._tooltip.Localizable();
+         #endregion
     }
-}*/
+    public VRCButtonOperator(VRCPanelGroupLayout panel, VRCParams parameters, System.Action func, bool state = false) : this(panel._verticalLayoutGroup, parameters, func, state) { }
+    public VRCButtonOperator(VRCPanelFoldout panel, VRCParams parameters, System.Action func, bool state = false) : this(panel._verticalLayoutGroup, parameters, func, state) { }
+    
+}

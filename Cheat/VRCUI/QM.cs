@@ -1,9 +1,12 @@
-﻿using autumn.ml.Cheat.Modules.World;
+﻿using autumn.ml.Cheat.Modules.Global;
+using autumn.ml.Cheat.Modules.World;
 using BlanketSDK.Core;
 using BlanketSDK.QM.Elements;
 
 using BlanketSDK.QM.Elements.Controls;
+using BlanketSDK.QM.Elements.Controls.V2;
 using BlanketSDK.QM.Elements.Modals;
+using BlanketSDK.QM.Elements.V2;
 using BlanketSDK.Utilities;
 
 using Brewchat.Cheat.Modules;
@@ -16,6 +19,7 @@ using Valve.VR.InteractionSystem;
 using VRC.Core;
 using VRC.Networking;
 using VRC.SDKBase;
+using VRC.Udon.Common;
 using static Brewchat.Cheat.QM;
 using Resources = autumn.ml.Properties.Resources;
 
@@ -96,7 +100,7 @@ internal class QM
                     GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a Pickup Name", (x) =>
                     {
                         var pickup = GameUtils.World.SDK3.Udon.Pickups.GetPickup(x);
-                        GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickup);
+                        pickup.SetOwnerAndGivePickupToLocalEntity();
                     }, Placeholder: "Such as: Revolver", MultiLine: false);
 
                 }, false);
@@ -109,51 +113,77 @@ internal class QM
             
              }
          }
-        public class NestedQMVisuals 
+        public class NestedQMExploits
         { 
             public VRCPage Page { get; set; }
-        
+
             public void Execute()
             {
-               Page = new VRCPage("Visuals", true, pageOptions: new() { ShowScrollWheel = false });
-               VRCGroupLayout Group_UI = new(Page, isCollapsible: false);
-               VRCModalContainer? Visuals_RenderModal = new("Visuals+Render"); 
-
-               VRCModalContainer? VisualsEspPropertiesModal = new("ESP+Properties");
-               VRCModalContainer? VisualsWallhacksPropertiesModal = new("Wallhacks+Properties");
-               VRCModalContainer? VisualsChamsPropertiesModal = new("Chams+Properties");
-               Group_UI.AddButton("Renderer", "", Visuals_RenderModal.Open, true);
-
-               #region ModalRenderer
-               
-
-               Visuals_RenderModal.AddMiniButton("ESP Properties", VisualsEspPropertiesModal.Open);
-               Visuals_RenderModal.AddMiniButton("Wallhacks Properties", VisualsWallhacksPropertiesModal.Open);
-               Visuals_RenderModal.AddMiniButton("Chams Properties", VisualsChamsPropertiesModal.Open);
-
-
-
-               #region Modal_Main
-               Visuals_RenderModal.AddToggle("<color=#C278A7>[</color><color=#B23E7B>W</color><color=#A30550>I</color><color=#C23E6D>P</color><color=#E1778A>]</color> ESP","","", (x) => 
+                Page = new VRCPage("Exploits", true, pageOptions: new() { ShowScrollWheel = false });
+                VRCGroupLayout Group_UI = new(Page, "Crash");
+                Group_UI.AddToggle("Susie", "On", "Off", (x) =>
+                {
+                    Sploits.playerQuestCrashInternalFunction(x);
+                });
+                Group_UI.AddToggle("Kris", "On", "Off", (x) =>
                {
-                  ESP.Instance.FX_Entities.enabled = !ESP.Instance.FX_Entities.enabled;
+                   Sploits.playerEarrape(x);
+               });
+               Group_UI.AddButton("Change Payload","Test",() =>
+                {
+                    GameUtils.VRChatUtils.VRCKeyboard.InputPopup("enter yur packet yo", (x) =>
+                    {
+                        Entry.config.Modules.Exploits.Global.currentPayload = x;
+                        Config.SaveToFile(Entry.config, "config.json");
+                    });
+                }, false);
+            }
+         }
+        public class NestedQMVisuals
+        {
+            public VRCPage Page { get; set; }
+
+            public void Execute()
+            {
+                Page = new VRCPage("Visuals", true, pageOptions: new() { ShowScrollWheel = false });
+                VRCGroupLayout Group_UI = new(Page, isCollapsible: false);
+                VRCModalContainer? Visuals_RenderModal = new("Visuals+Render");
+
+                VRCModalContainer? VisualsEspPropertiesModal = new("ESP+Properties");
+                VRCModalContainer? VisualsWallhacksPropertiesModal = new("Wallhacks+Properties");
+                VRCModalContainer? VisualsChamsPropertiesModal = new("Chams+Properties");
+                Group_UI.AddButton("Renderer", "", Visuals_RenderModal.Open, true);
+
+                #region ModalRenderer
+
+
+                Visuals_RenderModal.AddMiniButton("ESP Properties", VisualsEspPropertiesModal.Open);
+                Visuals_RenderModal.AddMiniButton("Wallhacks Properties", VisualsWallhacksPropertiesModal.Open);
+                Visuals_RenderModal.AddMiniButton("Chams Properties", VisualsChamsPropertiesModal.Open);
+
+
+
+                #region Modal_Main
+                Visuals_RenderModal.AddToggle("<color=#C278A7>[</color><color=#B23E7B>W</color><color=#A30550>I</color><color=#C23E6D>P</color><color=#E1778A>]</color> ESP", "", "", (x) =>
+                {
+                    ESP.Instance.FX_Entities.enabled = !ESP.Instance.FX_Entities.enabled;
+                });
+
+                Visuals_RenderModal.AddToggle("<color=#C278A7>[</color><color=#B23E7B>W</color><color=#A30550>I</color><color=#C23E6D>P</color><color=#E1778A>]</color> ESP Pickups", "", "", (x) =>
+               {
+                   ESP.Instance.FX_Pickups.enabled = !ESP.Instance.FX_Pickups.enabled;
                });
 
-                Visuals_RenderModal.AddToggle("<color=#C278A7>[</color><color=#B23E7B>W</color><color=#A30550>I</color><color=#C23E6D>P</color><color=#E1778A>]</color> ESP Pickups","","", (x) => 
-               {
-                  ESP.Instance.FX_Pickups.enabled = !ESP.Instance.FX_Pickups.enabled;
-               });
+                Visuals_RenderModal.AddToggle("<b><color=#843E6B>[</color><color=#91346A>U</color><color=#9F2B6A>n</color><color=#AD216A>f</color><color=#BB1869>i</color><color=#C90F69>n</color><color=#D70569>i</color><color=#BE0F62>s</color><color=#A5195B>h</color><color=#8C2355>e</color><color=#732D4E>d</color><color=#5A3747>]</color></b> Wallhacks", "", "", (x) =>
+                {
+                    Wallhacks.Instance.enabled = !Wallhacks.Instance.enabled;
+                });
+                #endregion
 
-               Visuals_RenderModal.AddToggle("<b><color=#843E6B>[</color><color=#91346A>U</color><color=#9F2B6A>n</color><color=#AD216A>f</color><color=#BB1869>i</color><color=#C90F69>n</color><color=#D70569>i</color><color=#BE0F62>s</color><color=#A5195B>h</color><color=#8C2355>e</color><color=#732D4E>d</color><color=#5A3747>]</color></b> Wallhacks","","", (x) => 
-               {
-                Wallhacks.Instance.enabled = !Wallhacks.Instance.enabled;
-               });
-               #endregion
+                #endregion
 
-               #endregion
-
-               #region Modal_Properties-ESP
-               #endregion
+                #region Modal_Properties-ESP
+                #endregion
             }
         }
         public static void Apply()
@@ -161,11 +191,14 @@ internal class QM
             Core.EnableRichText();
 
             #region Submenus
-            
+
+
             NestedQMAppearance appearance = new(); appearance.Execute();
             NestedQMDebug debug = new(); debug.Execute();
             WorldCheats.NestedQMWorld world = new(); world.Execute();
             NestedQMVisuals visuals = new(); visuals.Execute();
+            NestedQMExploits exploits = new(); exploits.Execute();
+
             #endregion
 
 
@@ -186,6 +219,12 @@ internal class QM
             mainGroupLayout.AddButton("Debug", "Debugger", debug.Page.Open, true);
             mainGroupLayout.AddButton("World", "Debugger", world.Page.Open, true);
             mainGroupLayout.AddButton("Visuals", "Visuals", visuals.Page.Open, true);
+            mainGroupLayout.AddButton("Exploits", "Visuals", exploits.Page.Open, true);
+            mainGroupLayout.AddToggle("RapidFire", "Enable Force Jump", "Disable Force Jump", (x) =>
+            {
+                Murder_4.Weapons.Special.RapidFire();
+                Config.SaveToFile(Entry.config, "config.json");
+            });
             #endregion  
 
             #region Movement_Modal
@@ -201,9 +240,36 @@ internal class QM
                 PlayerModule.Movement.ForceJump(x);
                 Config.SaveToFile(Entry.config, "config.json");
             });
+
             #endregion
 
 
+            VRCPanelGroupLayout vRCPanelGroupLayout = new(MainPage, 0, "Overhaul");
+            vRCPanelGroupLayout.AddTitle("Test Title");
+            VRCButtonOperator vRCButtonOperator = new(vRCPanelGroupLayout, new()
+            {
+                _title = "Title",
+                _maintooltip = "Main_Tooltip",
+                _text = "Text",
+                _subtitle = "Subtitle",
+                _tooltip = "tooltip"
+
+            }, null);
+           
+            var radial = new BlanketSDK.QM.Elements.Controls.V2.VRCRadialSelect(vRCPanelGroupLayout, "Test");
+
+            radial.AddChoice("Example 1","This does jack 1", null);    
+            radial.AddChoice("Example 2","This does jack 2", null);
+            radial.AddChoice("Example 3","This does jack 3", null);
+            vRCPanelGroupLayout.AddSeperator();
+          
+            new BlanketSDK.QM.Elements.Controls.V2.VRCToggleOperator(vRCPanelGroupLayout._verticalLayoutGroup, "elements", "on", "off", (x) => MelonLogger.Msg($"Bool Set: {x} "));
+            VRCPanelFoldout vRCPanelFoldout = new(vRCPanelGroupLayout._verticalLayoutGroup, "Earth Elements", "Earth Elements");
+            
+            new BlanketSDK.QM.Elements.Controls.V2.VRCToggleOperator(vRCPanelFoldout._verticalLayoutGroup, "water","on","off", (x) => MelonLogger.Msg($"Bool Set: {x} "));
+            vRCPanelFoldout.AddSeperator();
+            new BlanketSDK.QM.Elements.Controls.V2.VRCToggleOperator(vRCPanelFoldout._verticalLayoutGroup, "fire","on","off", (x) => MelonLogger.Msg($"Bool Set: {x} "));
+            
         }
     } 
 
@@ -251,12 +317,14 @@ internal class QM
 
             public void Execute()
             {
+                
                Page = new VRCPage("World", true, pageOptions: new() { ShowScrollWheel = false });
                VRCGroupLayout Group_UI = new(Page, isCollapsible: false);
-               Group_UI.AddToggle("Udon Nuker", $"<color=#grey>(Sometimes)</color> Rapes Udon Games... <color=green>On</color>", "  <color=grey>(Sometimes)</color> <color=red>Off</color>", (x) =>      
+               Group_UI.AddToggle("Udon Nuker", $"<color=#grey>(Sometimes)</color> Rapes Udon Games... <color=green>On</color>", "  <color=grey>(Sometimes) Rapes Udon Games...</color> <color=red>Off</color>", (x) =>      
                 {
                     switch(x) 
                     {
+                        
                         case true:
                         Global.Start();
                         break;
@@ -275,7 +343,7 @@ internal class QM
         public static void Apply()
         {
              WorldCheats.NestedQMSelectedMurder4 m4 = new(); m4.Execute();
-             QMElements.SelectedUser.SelectedUser_ButtonContainer().AddButton("<color=red>M4</color>", "", m4.Page.Open);
+             QMElements.SelectedUser.SelectedUser_ButtonContainer().AddButton("<color=#B80000>M4</color>", "", m4.Page.Open);
         }
     }
 }

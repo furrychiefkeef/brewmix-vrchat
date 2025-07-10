@@ -10,6 +10,7 @@ using VRC.Networking.Tween;
 using VRC.SDK3.Components;
 using VRC.SDKBase;
 using VRC.Udon;
+using VRC.Udon.Common;
 
 namespace autumn.ml.Cheat.Modules.World;
 
@@ -24,7 +25,7 @@ public class Murder_4
             VRCPickup? pickupObj = GameUtils
             .World
             .SDK3.Udon.Pickups.GetPickup("Revolver");
-            GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickupObj);
+            pickupObj.SetOwnerAndGivePickupToLocalEntity();
         }
         public static void SpawnKnife()
         {
@@ -32,18 +33,32 @@ public class Murder_4
             VRCPickup pickupObj = GameUtils
             .World
             .SDK3.Udon.Pickups.GetPickup($"Knife ({i++})");
-            GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickupObj);
+            pickupObj.SetOwnerAndGivePickupToLocalEntity();
         }
         public struct Special
         {
-        public static void SpawnLuger()
-        {
-            VRCPickup pickupObj = GameUtils
-            .World
-            .SDK3.Udon.Pickups.GetPickup("Luger");
-            GameUtils.PlayerModel.Motion.Networking.World.SetOwnerAndGivePickupLocalEntity(pickupObj);
+            public static void SpawnLuger()
+            {
+                VRCPickup pickupObj = GameUtils
+                .World
+                .SDK3.Udon.Pickups.GetPickup("Luger");
+                pickupObj.SetOwnerAndGivePickupToLocalEntity();
+               
+            }
+            public static void RapidFire()
+            {
+                VRCPickup luger = GameUtils.World.SDK3.Udon.Pickups.GetPickup("Luger");
+                VRCPickup revolver = GameUtils.World.SDK3.Udon.Pickups.GetPickup("Revolver");
+                VRCPickup shotgun = GameUtils.World.SDK3.Udon.Pickups.GetPickup("Shotgun");
+            
+                luger.GetComponent<UdonBehaviour>().SetVariable<float>("fireInterval", 0.0f);
+                shotgun.GetComponent<UdonBehaviour>().SetVariable<float>("fireInterval", 0.0f);
+                revolver.GetComponent<UdonBehaviour>().SetVariable<float>("fireInterval", 0.0f);
+
+            }
+            
         }
-        }
+        
       
     }
     public class NetworkEvents
@@ -92,7 +107,7 @@ public class Murder_4
                            if(player != null)
                            {
                                 PlayerNode.Wrapper.GetPlayerNode(player).SendCustomNetworkEvent(0, "SyncAssignM");
-                                if(Entry.config.Advanced.MurderPlayerNode)
+                                if(Entry.config.Advanced.DebugMode)
                                 {
                                     GameUtils.UI.HUD.ToastV1($"You Enforced Murderer onto: {player.VRCPlayerApi.playerId}");
                                 }
@@ -104,7 +119,7 @@ public class Murder_4
                            if(player != null)
                            {
                                 PlayerNode.Wrapper.GetPlayerNode(player).SendCustomNetworkEvent(0, "SyncAssignD");
-                                if(Entry.config.Advanced.MurderPlayerNode)
+                                if(Entry.config.Advanced.DebugMode)
                                 {
                                     GameUtils.UI.HUD.ToastV1($"You Enforced Detective onto: {player.VRCPlayerApi.playerId}");
                                 }
@@ -116,7 +131,7 @@ public class Murder_4
                            if(player != null)
                            {
                                 PlayerNode.Wrapper.GetPlayerNode(player).SendCustomNetworkEvent(0, "SyncAssignB");
-                                if(Entry.config.Advanced.MurderPlayerNode)
+                                if(Entry.config.Advanced.DebugMode)
                                 {
                                     GameUtils.UI.HUD.ToastV1($"You Enforced Bystander onto: {player.VRCPlayerApi.playerId}");
                                 }
@@ -155,12 +170,12 @@ public class Murder_4
                                 {  
                                     if (playerEntry.GetComponentInChildren<TextMeshProUGUI>()?.text == player?.APIUser.displayName)
                                     {
-                                        if(!isLog) GameUtils.UI.HUD.Alert($"Player: {player.VRCPlayerApi.displayName}, Actor: {player.VRCPlayerApi.playerId}, Node: {playerNode.name}");
+                                        if(isLog) GameUtils.UI.HUD.Alert($"Player: {player.VRCPlayerApi.displayName}, Actor: {player.VRCPlayerApi.playerId}, Node: {playerNode.name}");
                                         return entryIndex;
                                     }
                                 }
                             }
-                            if(!isLog) GameUtils.UI.HUD.Alert($"Player not found in any node.");
+                            if(isLog) GameUtils.UI.HUD.Alert($"Player not found in any node.");
        
                         }
                         return 0;

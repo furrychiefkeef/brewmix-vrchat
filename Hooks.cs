@@ -1,10 +1,12 @@
-﻿using Brewchat.Cheat;
+﻿using brewchat.hybridxcore.bep.Game.Monobehaviours;
+using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
 using ExitGames.Client.Photon;
 using HarmonyLib;
 using MelonLoader;
+// using ModSupport.AnimatedTextures;
 using MonoMod.RuntimeDetour;
 using Photon.Realtime;
 using UnityEngine;
@@ -35,11 +37,12 @@ namespace brewchat.hybridxcore.bep
         {
             if (__instance is null || _isVRCApplicationLoaded) return;
             _isVRCApplicationLoaded = true;
-        
+
             autumn.ml.Initalizers.ConfigSystem.SetConfig();
             autumn.ml.Initalizers.Cheat.Execute();
             __instance?.gameObject.GetOrAddComponentSafe<CSS>();
             __instance?.gameObject.GetOrAddComponentSafe<KeybindManager>();
+            // __instance?.gameObject.GetOrAddComponentSafe<AnimatedTextureLoader>();
             
         }
 
@@ -85,6 +88,7 @@ namespace brewchat.hybridxcore.bep
         public static void VRCLoadingSequence_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null) return;
+           
             CSS.SetLoadingAudio();
             // CSS.Offline();
         }
@@ -99,13 +103,13 @@ namespace brewchat.hybridxcore.bep
             __instance?.gameObject.GetOrAddComponentSafe<Wallhacks>();
 
 
-
+            
             QM.Main.Apply();
             Widgets.QM.Initalize();
         } 
 
         [HarmonyPrefix, HarmonyPatch(typeof(VRC_Pickup), nameof(VRC_Pickup.Awake))]
-        public static bool __0Pickups(ref VRC_Pickup? __instance)
+        public static bool _Pickups(ref VRC_Pickup? __instance)
         {
             if ( __instance is null) return true;
             
@@ -117,7 +121,6 @@ namespace brewchat.hybridxcore.bep
                 ESP.Instance.Add(__instance);
                 return true;
             }
-            
             return true;
         }
 
@@ -128,7 +131,13 @@ namespace brewchat.hybridxcore.bep
             _isSelectedMenusLoaded = true;
             QM.SelectedUserMenu.Apply();
         }
-        
+
+        [HarmonyPrefix, HarmonyPatch(typeof(VRC.Udon.Wrapper.Modules.ExternVRCSDK3ComponentsVRCPickup), nameof(VRC.Udon.Wrapper.Modules.ExternVRCSDK3ComponentsVRCPickup.__Drop__SystemVoid))]
+        public static bool ExternDropVRCPickup(ref VRC.Udon.Wrapper.Modules.ExternVRCSDK3ComponentsVRCPickup? __instance)
+        {
+            return false;
+        }
+
         [HarmonyPostfix, HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
         public static void MainMenu_Initialize_HOOK(ref MainMenu? __instance)
         {
@@ -136,17 +145,19 @@ namespace brewchat.hybridxcore.bep
             _isMainMenuLoaded = true;
             MM.Main.Apply();
             MM.AvatarAVMMenu.Apply();
+            
             MM.SelectedWorldMenu.Apply();
             MM.SelectedUserMenu.Apply();
          
         }
 
-        // [HarmonyPostfix, HarmonyPatch(typeof(APIUser), nameof(APIUser.allowAvatarCopying), MethodType.Getter)]
-        // public static void _PatchPlayer(ref bool  __result)
-        // {
-        //     if (__result != null) return; __result = true;
-           
-        // }
+
+        [HarmonyPostfix, HarmonyPatch(typeof(APIUser), nameof(APIUser.allowAvatarCopying), MethodType.Getter)]
+        public static void AllowAvatarCopying_HOOK_ForceClone(APIUser __instance, ref bool __result)
+        {
+            __result = true;
+ 
+        }
         #endregion
 
         #region VRC_API
@@ -239,15 +250,7 @@ namespace brewchat.hybridxcore.bep
         {
             if (__0 is null) return true;
             
-            // Only handle blocking in prefix
-           
-                // BLOCKING LOGIC - Must be in prefix to work
-                if (__0.Code == 12 && Entry.config.Player.Network.Serialized)
-                {
-                    if(__0.Sender == GameUtils.PlayerModel.LocalEntity().VRCPlayerApi.playerId) return true;
-                    MelonLogger.Msg($"[BLOCKED] Event {__0.Code} from {(__0.Sender).getPlayer().VRCPlayerApi.displayName}");
-                    return false; // This blocks the event from being processed
-                }
+            // Only handle blocking i
                 
                 // Add other blocking conditions here as needed
                 // if (someOtherCondition)

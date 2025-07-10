@@ -9,6 +9,8 @@ namespace Brewchat.Cheats.World;
 
 public class Global
 {
+
+
     public static object udonNuke; 
     private static System.Collections.IEnumerator UdonNuke() 
     {
