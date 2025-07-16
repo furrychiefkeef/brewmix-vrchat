@@ -23,8 +23,8 @@ internal class FlyManager : UnityEngine.MonoBehaviour
 
         Vector3 targetDirection = Vector3.zero;
         
-        if (Input.GetKey(KeyCode.Q) || Input.GetButton("Button.PrimaryThumbstick")) targetDirection += Vector3.down;
-        if (Input.GetKey(KeyCode.E) || Input.GetButton("Button.SecondaryThumbstick")) targetDirection += Vector3.up;
+        if (Input.GetKey(KeyCode.Q)) targetDirection += Vector3.down;
+        if (Input.GetKey(KeyCode.E)) targetDirection += Vector3.up;
 
         
         targetDirection += GameUtils.Camera.Get.transform.forward * GameUtils.VRChatUtils.InputManager.GetInput("Vertical").prop_Single_2;

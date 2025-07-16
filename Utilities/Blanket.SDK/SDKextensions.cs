@@ -102,3 +102,19 @@ internal static class VRCPanelExtensions
         return parent;
     }
 }
+
+internal static class VRCRadialSelectExtensions
+{
+    public static BlanketSDK.QM.Elements.Controls.V2.VRCRadialSelect AddRadialSelection(this Transform? parent, string name, string tooltip, bool isChild = false, Action callback = null)
+    {
+        return new(parent, name, tooltip, isChild, callback);
+    }
+    public static BlanketSDK.QM.Elements.Controls.V2.VRCRadialSelect AddRadialSelection(this VRCPanelGroupLayout? parent, string name, string tooltip, bool isChild = false, Action callback = null)
+    {
+        return new(parent, name, tooltip, isChild, callback);
+    }
+    // public static BlanketSDK.MM.Elements.Controls.V2.VRCRadialSelect AddRadialSelection(this VRCPanelGroupLayout? parent, string name, string tooltip, bool isChild = false, Action callback = null)
+    // {
+    //     return new(parent, name, tooltip, isChild, callback);
+    // }
+}

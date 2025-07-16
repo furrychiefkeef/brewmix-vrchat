@@ -1,4 +1,4 @@
-﻿
+﻿using UnityEngine;
 using System.Runtime.InteropServices;
 using BlanketSDK.Core;
 using Brewchat.Game.Wrappers;
@@ -35,13 +35,12 @@ internal class VRCRadialSelect :  IMainMenuElements
     /// <param name="callback"> ??? < /param>
     /// <exception cref="Exception"></exception>
     /// 
-    public VRCRadialSelect(VRCCellContainer parent, string name, [Optional] string? tooltip, [Optional] bool isChild,  System.Action callback = null)
+    public VRCRadialSelect(Transform? parent, string name, string? tooltip, bool isChild = false,  System.Action callback = null)
     {
         // Your existing instantiation code
-        if(!MM() || !MMParent() || !MMMenus.MMSubmenus.Menu_Setting()) 
-            throw new Exception($"{name} element has moved to a different location or index contact: {Resources.D_Contact}");
+        if(!MM() || !MMParent() || !MMMenus.MMSubmenus.Menu_Setting()) throw new Exception($"{name} element has moved to a different location or index contact: {Resources.D_Contact}");
         /*parent ??= MMFallbacks._Fallback_Dashboard_Group_QM_UI_ChoiceSelection_Element();*/
-        var obj = UnityEngine.Object.Instantiate(MMControls.OperatorRadialSelection(), parent._verticalLayoutGroup);
+        var obj = UnityEngine.Object.Instantiate(MMControls.OperatorRadialSelection(), parent);
         obj.name = $"{Guid.NewGuid()}-<Blanket.SDK.QM_CHOICE_SELECTION>";
         #region CONTAINERS
 
@@ -55,7 +54,6 @@ internal class VRCRadialSelect :  IMainMenuElements
         
         radialSelector = obj.GetComponent<RadialSelector>();
 
-        
         #endregion
 
         #region TEXT_COMPONENT

@@ -147,6 +147,7 @@ public class Config
 
         public class inGameModel
         {
+            public LoadingScreenModel LoadingScreen { get; set; } = new();
             public FlatLoadingOverlayModel FlatLoadingOverlay { get; set; } = new();
             public MenuDynamicColoring VRCUI { get; set; } = new();
 
@@ -184,8 +185,8 @@ public class Config
             public class MenuDynamicColoring 
             {
                 [JsonIgnore]
-                public  UnityEngine.Color _lastSelectedColor {get; set;}
-                [JsonProperty("lastSelectedColor_Data")]
+                public UnityEngine.Color _lastSelectedColor {get; set;}
+                [JsonProperty("_lastSelectedColor")]
 
                 public SerializableColor LastSelectedColorSerializeable
                 {
@@ -193,12 +194,21 @@ public class Config
                     set => _lastSelectedColor = value.ToColor();
                 }
             }
+            public class LoadingScreenModel
+            {
+                public LoadingAssetBundleModel Bundle { get; set; } = new();
+                 public class LoadingAssetBundleModel
+                 {
+                    public string? URL { get; set; } = "https://2silly4u.chat/storageunit/wicky";
+                        
+                 }   
+            }
         }
     }
 
     public class AdvancedModel
     {
-        public bool DebugMode { get; set; } = true;
+        public bool DebugMode { get; set; } = false;
         public bool MurderPlayerNode { get; set; } = false;
     }
 

@@ -17,7 +17,7 @@ internal class VRCPanelFoldout : IQuickMenuElements
     public TextMeshProUGUIEx _textMeshPro;
     public bool isOpen;
     private bool SetActive;
-    public VRCPanelFoldout(Transform parent, string name, string tooltip = null, bool isOpen = false)
+    public VRCPanelFoldout(Transform? parent, string name, string tooltip = null, bool isOpen = false)
     {
         if (!QuickMenu() && !QMElements.QMPanel("Chatbox")) throw new("button has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform? obj = UnityEngine.Object.Instantiate(QMElements.QMPanelElements.QMFoldout(), parent);

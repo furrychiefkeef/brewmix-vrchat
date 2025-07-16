@@ -33,9 +33,9 @@ internal class QM
         {
             if (IQuickMenuElements.Misc.TooltipText != null && IMainMenuElements.Misc.TooltipText != null)
             {
-                 IQuickMenuElements.Misc.TooltipText.richText = true;
-                 IMainMenuElements.Misc.TooltipText.richText = true;
-                 return true;
+                IQuickMenuElements.Misc.TooltipText.richText = true;
+                IMainMenuElements.Misc.TooltipText.richText = true;
+                return true;
             }
             return false;
         }
@@ -48,38 +48,38 @@ internal class QM
 
             public void Execute()
             {
-               Page = new VRCPage("Appearance", true, pageOptions: new() { ShowScrollWheel = false });
-               VRCGroupLayout Group_UI = new(Page);
-               Group_UI.AddButton("Set Background", $"Background is currently set to: {Entry.config.Appearance.inGame.Qm_Background} ", () =>      
-                {
-                  GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
-                  {
-                      Entry.config.Appearance.inGame.Qm_Background = x;
-                      Config.SaveToFile(Entry.config, "config.json");  
-                      CSS.ApplyAdvancedMenuBackgrounds();
-                  }, Placeholder: "https:// or C://", MultiLine: false);
-                }, false);
-               Group_UI.AddButton("Set Loading Audio", $"Audio is currently set to: {Entry.config.Appearance.inGame.QueueAudio} ", () =>
-                {
-                   GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
-                   {
-                       Entry.config.Appearance.inGame.QueueAudio = x;
-                       Config.SaveToFile(Entry.config, "config.json");  
-                       CSS.Refreshers.RefreshLoadingAudio();
-                   }, Placeholder: "https:// or C://", MultiLine: false);
-                }, false);
-               Group_UI.AddButton("Set Loading Screen Background", $" is currently set to: {Entry.config.Appearance.inGame.FlatLoadingOverlay} ", () =>
-                {
-                   GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
-                   {
-                       Entry.config.Appearance.inGame.FlatLoadingOverlay.Image = x;
-                       Config.SaveToFile(Entry.config, "config.json");  
-                   }, Placeholder: "https:// or C://", MultiLine: false);
-                }, false);
-                }
+                Page = new VRCPage("Appearance", true, pageOptions: new() { ShowScrollWheel = false });
+                VRCGroupLayout Group_UI = new(Page);
+                Group_UI.AddButton("Set Background", $"Background is currently set to: {Entry.config.Appearance.inGame.Qm_Background} ", () =>
+                 {
+                     GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
+                    {
+                        Entry.config.Appearance.inGame.Qm_Background = x;
+                        Config.SaveToFile(Entry.config, "config.json");
+                        CSS.ApplyAdvancedMenuBackgrounds();
+                    }, Placeholder: "https:// or C://", MultiLine: false);
+                 }, false);
+                Group_UI.AddButton("Set Loading Audio", $"Audio is currently set to: {Entry.config.Appearance.inGame.QueueAudio} ", () =>
+                 {
+                     GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
+                    {
+                        Entry.config.Appearance.inGame.QueueAudio = x;
+                        Config.SaveToFile(Entry.config, "config.json");
+                        CSS.Refreshers.RefreshLoadingAudio();
+                    }, Placeholder: "https:// or C://", MultiLine: false);
+                 }, false);
+                Group_UI.AddButton("Set Loading Screen Background", $" is currently set to: {Entry.config.Appearance.inGame.FlatLoadingOverlay} ", () =>
+                 {
+                     GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a URL", (x) =>
+                    {
+                        Entry.config.Appearance.inGame.FlatLoadingOverlay.Image = x;
+                        Config.SaveToFile(Entry.config, "config.json");
+                    }, Placeholder: "https:// or C://", MultiLine: false);
+                 }, false);
+            }
         }
-        public class NestedQMDebug 
-        { 
+        public class NestedQMDebug
+        {
             public VRCPage Page { get; set; }
 
             public void Execute()
@@ -110,11 +110,11 @@ internal class QM
                     Entry.config.Protection.Udon.isBlocked = !Entry.config.Protection.Udon.isBlocked;
                     Config.SaveToFile(Entry.config, "config.json");
                 });
-            
-             }
-         }
+
+            }
+        }
         public class NestedQMExploits
-        { 
+        {
             public VRCPage Page { get; set; }
 
             public void Execute()
@@ -125,20 +125,8 @@ internal class QM
                 {
                     Sploits.playerQuestCrashInternalFunction(x);
                 });
-                Group_UI.AddToggle("Kris", "On", "Off", (x) =>
-               {
-                   Sploits.playerEarrape(x);
-               });
-               Group_UI.AddButton("Change Payload","Test",() =>
-                {
-                    GameUtils.VRChatUtils.VRCKeyboard.InputPopup("enter yur packet yo", (x) =>
-                    {
-                        Entry.config.Modules.Exploits.Global.currentPayload = x;
-                        Config.SaveToFile(Entry.config, "config.json");
-                    });
-                }, false);
             }
-         }
+        }
         public class NestedQMVisuals
         {
             public VRCPage Page { get; set; }
@@ -166,13 +154,13 @@ internal class QM
                 #region Modal_Main
                 Visuals_RenderModal.AddToggle("<color=#C278A7>[</color><color=#B23E7B>W</color><color=#A30550>I</color><color=#C23E6D>P</color><color=#E1778A>]</color> ESP", "", "", (x) =>
                 {
-                    ESP.Instance.FX_Entities.enabled = !ESP.Instance.FX_Entities.enabled;
+                    Entry.config.Render.Overlays.ESP.Enabled = !Entry.config.Render.Overlays.ESP.Enabled;
                 });
 
-                Visuals_RenderModal.AddToggle("<color=#C278A7>[</color><color=#B23E7B>W</color><color=#A30550>I</color><color=#C23E6D>P</color><color=#E1778A>]</color> ESP Pickups", "", "", (x) =>
-               {
-                   ESP.Instance.FX_Pickups.enabled = !ESP.Instance.FX_Pickups.enabled;
-               });
+                //     Visuals_RenderModal.AddToggle("<color=#C278A7>[</color><color=#B23E7B>W</color><color=#A30550>I</color><color=#C23E6D>P</color><color=#E1778A>]</color> ESP Pickups", "", "", (x) =>
+                //    {
+                //        ESP.Instance.FX_Pickups.enabled = !Entry.config.Render.Overlays.ESP.Enabled;
+                //    });
 
                 Visuals_RenderModal.AddToggle("<b><color=#843E6B>[</color><color=#91346A>U</color><color=#9F2B6A>n</color><color=#AD216A>f</color><color=#BB1869>i</color><color=#C90F69>n</color><color=#D70569>i</color><color=#BE0F62>s</color><color=#A5195B>h</color><color=#8C2355>e</color><color=#732D4E>d</color><color=#5A3747>]</color></b> Wallhacks", "", "", (x) =>
                 {
@@ -220,12 +208,8 @@ internal class QM
             mainGroupLayout.AddButton("World", "Debugger", world.Page.Open, true);
             mainGroupLayout.AddButton("Visuals", "Visuals", visuals.Page.Open, true);
             mainGroupLayout.AddButton("Exploits", "Visuals", exploits.Page.Open, true);
-            mainGroupLayout.AddToggle("RapidFire", "Enable Force Jump", "Disable Force Jump", (x) =>
-            {
-                Murder_4.Weapons.Special.RapidFire();
-                Config.SaveToFile(Entry.config, "config.json");
-            });
-            #endregion  
+
+            #endregion
 
             #region Movement_Modal
             PlayerMovementModal.AddToggle("Flight", "Enable Flight", "Disable Flight", (x) =>
@@ -255,95 +239,103 @@ internal class QM
                 _tooltip = "tooltip"
 
             }, null);
-           
+
             var radial = new BlanketSDK.QM.Elements.Controls.V2.VRCRadialSelect(vRCPanelGroupLayout, "Test");
 
-            radial.AddChoice("Example 1","This does jack 1", null);    
-            radial.AddChoice("Example 2","This does jack 2", null);
-            radial.AddChoice("Example 3","This does jack 3", null);
+            radial.AddChoice("Example 1", "This does jack 1", null);
+            radial.AddChoice("Example 2", "This does jack 2", null);
+            radial.AddChoice("Example 3", "This does jack 3", null);
             vRCPanelGroupLayout.AddSeperator();
-          
+
             new BlanketSDK.QM.Elements.Controls.V2.VRCToggleOperator(vRCPanelGroupLayout._verticalLayoutGroup, "elements", "on", "off", (x) => MelonLogger.Msg($"Bool Set: {x} "));
             VRCPanelFoldout vRCPanelFoldout = new(vRCPanelGroupLayout._verticalLayoutGroup, "Earth Elements", "Earth Elements");
-            
-            new BlanketSDK.QM.Elements.Controls.V2.VRCToggleOperator(vRCPanelFoldout._verticalLayoutGroup, "water","on","off", (x) => MelonLogger.Msg($"Bool Set: {x} "));
+
+            new BlanketSDK.QM.Elements.Controls.V2.VRCToggleOperator(vRCPanelFoldout._verticalLayoutGroup, "water", "on", "off", (x) => MelonLogger.Msg($"Bool Set: {x} "));
             vRCPanelFoldout.AddSeperator();
-            new BlanketSDK.QM.Elements.Controls.V2.VRCToggleOperator(vRCPanelFoldout._verticalLayoutGroup, "fire","on","off", (x) => MelonLogger.Msg($"Bool Set: {x} "));
-            
+            new BlanketSDK.QM.Elements.Controls.V2.VRCToggleOperator(vRCPanelFoldout._verticalLayoutGroup, "fire", "on", "off", (x) => MelonLogger.Msg($"Bool Set: {x} "));
+
         }
-    } 
+    }
 
 
     public class WorldCheats
     {
-         public class NestedQMSelectedMurder4
+        public class NestedQMSelectedMurder4
         {
             public VRCPage Page { get; set; }
 
             public void Execute()
             {
-               Page = new VRCPage("Murder 4", true, pageOptions: new() { ShowScrollWheel = false });
-               VRCGroupLayout Group_UI = new(Page);
-               var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
-               VRCGroupLayout Group_Roles = new(Page, $"Currently Modifying this Player)");
-               Group_UI.AddButton("Kill", "", () =>      
-               {
-                    var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
-                Murder_4.NetworkEvents.GameManager.Logic.PunishmentReceptors.Kill(selectedPlayer);
+                Page = new VRCPage("M4", true, pageOptions: new() { ShowScrollWheel = false });
+                //VRCGroupLayout Group_UI = new(Page);
+                //VRCGroupLayout Group_Roles = new(Page, $"Roles");
+                // Group_UI.AddButton("Kill", "", () =>
+                // {
+                //     var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
+                //     Murder_4.NetworkEvents.GameManager.Logic.PunishmentReceptors.Kill(selectedPlayer);
 
-               }, false);
-               Group_Roles.AddButton("Assign Murderer", "", () =>
-               {
-                var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
-               Murder_4.NetworkEvents.GameManager.Roles.AssignMurderer(selectedPlayer);
+                // }, false);
+                // Group_Roles.AddButton("Assign Murderer", "", () =>
+                // {
+                //     var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
+                //     Murder_4.NetworkEvents.GameManager.Roles.AssignMurderer(selectedPlayer);
 
-               },false);    
-               Group_Roles.AddButton("Assign Detective", "", () => {
-                var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
-                Murder_4.NetworkEvents.GameManager.Roles.AssignDetective(selectedPlayer);
-               }, false);   
-               Group_Roles.AddButton("Assign Bystander", "", () =>
-               {
-                var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
-               Murder_4.NetworkEvents.GameManager.Roles.AssignBystander(selectedPlayer);
+                // }, false);
+                // Group_Roles.AddButton("Assign Detective", "", () =>
+                // {
+                //     var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
+                //     Murder_4.NetworkEvents.GameManager.Roles.AssignDetective(selectedPlayer);
+                // }, false);
+                // Group_Roles.AddButton("Assign Bystander", "", () =>
+                // {
+                //     var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
+                //     Murder_4.NetworkEvents.GameManager.Roles.AssignBystander(selectedPlayer);
 
-               },false);    
+                // }, false);
 
             }
         }
-         public class NestedQMWorld 
-         { 
-            public VRCPage Page { get; set;   }
+        public class NestedQMWorld
+        {
+            public VRCPage Page { get; set; }
 
             public void Execute()
             {
-                
-               Page = new VRCPage("World", true, pageOptions: new() { ShowScrollWheel = false });
-               VRCGroupLayout Group_UI = new(Page, isCollapsible: false);
-               Group_UI.AddToggle("Udon Nuker", $"<color=#grey>(Sometimes)</color> Rapes Udon Games... <color=green>On</color>", "  <color=grey>(Sometimes) Rapes Udon Games...</color> <color=red>Off</color>", (x) =>      
+                var Murder4_Page = new VRCPage("Murder 4", true, pageOptions: new() { ShowScrollWheel = false });
+                Page = new VRCPage("World", true, pageOptions: new() { ShowScrollWheel = false });
+
+                VRCGroupLayout Group_UI = new(Page, isCollapsible: false);
+                Group_UI.AddToggle("Udon Nuker", $"<color=#grey>(Sometimes)</color> Rapes Udon Games... <color=green>On</color>", "  <color=grey>(Sometimes) Rapes Udon Games...</color> <color=red>Off</color>", (x) =>
+                     {
+                         switch (x)
+                         {
+
+                             case true:
+                                 Global.Start();
+                                 break;
+                             case false:
+                                 Global.Stop();
+                                 break;
+                         }
+
+                     });
+                Group_UI.AddButton("Murder 4", "<color=red>Murder 4 Utilties</color>", Murder4_Page.Open, true);
+
+                VRCGroupLayout Group_UI_Murder4 = new(Murder4_Page, isCollapsible: false);
+                Group_UI_Murder4.AddToggle("RapidFire", "Enable Force Jump", "Disable Force Jump", (x) =>
                 {
-                    switch(x) 
-                    {
-                        
-                        case true:
-                        Global.Start();
-                        break;
-                        case false:
-                        Global.Stop();
-                        break;
-                    }
-                  
+                    Murder_4.Weapons.Special.RapidFire();
+
                 });
-                }
             }
+        } 
     }
-    
     public class SelectedUserMenu : IQuickMenuElements
     {
-        public static void Apply()
-        {
-             WorldCheats.NestedQMSelectedMurder4 m4 = new(); m4.Execute();
-             QMElements.SelectedUser.SelectedUser_ButtonContainer().AddButton("<color=#B80000>M4</color>", "", m4.Page.Open);
+            public static void Apply()
+            {
+                WorldCheats.NestedQMSelectedMurder4 m4 = new(); m4.Execute();
+                QMElements.SelectedUser.SelectedUser_ButtonContainer().AddButton("<color=#B80000>Murder 4</color>", "000", m4.Page.Open);
+            }
         }
     }
-}

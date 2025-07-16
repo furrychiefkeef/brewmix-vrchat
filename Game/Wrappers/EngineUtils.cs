@@ -8,6 +8,7 @@ using VRC.Localization;
 using System.Linq;
 using WebSocketSharp;
 using Object = Il2CppSystem.Object;
+using MelonLoader;
 namespace Brewchat.Game.Wrappers;
 
 /// <summary>
@@ -23,7 +24,7 @@ internal static class EngineUtils
     public static class Serialization
     {
 
-        public static byte[] ToByteArray(Il2CppSystem.Object obj)
+        public static byte[]? ToByteArray(Il2CppSystem.Object? obj)
         {
             if (obj == null) return null;
             try
@@ -41,7 +42,7 @@ internal static class EngineUtils
         }
 
         [Obsolete("Obsolete")]
-        public static byte[] ToByteArray(object obj)
+        public static byte[]? ToByteArray(object obj)
         {
             if (obj == null) return null;
             try
@@ -59,7 +60,7 @@ internal static class EngineUtils
         }
 
         [Obsolete("Obsolete")]
-        public static T FromByteArray<T>(byte[] data)
+        public static T? FromByteArray<T>(byte[] data)
         {
             if (data == null) return default;
             try
@@ -76,7 +77,7 @@ internal static class EngineUtils
             }
         }
 
-        public static T IL2CPPFromByteArray<T>(byte[] data)
+        public static T? IL2CPPFromByteArray<T>(byte[] data)
         {
             if (data == null) return default;
             try
@@ -93,12 +94,14 @@ internal static class EngineUtils
             }
         }
 
-        public static T FromIL2CPPToManaged<T>(Il2CppSystem.Object obj)
+            [Obsolete]
+            public static T? FromIL2CPPToManaged<T>(Il2CppSystem.Object? obj)
         {
             return FromByteArray<T>(ToByteArray(obj));
         }
 
-        public static T FromManagedToIL2CPP<T>(object obj)
+            [Obsolete]
+            public static T? FromManagedToIL2CPP<T>(object obj)
         {
             return IL2CPPFromByteArray<T>(ToByteArray(obj));
         }
@@ -316,31 +319,6 @@ internal static class EngineUtils
                 }
                 return new HSBColor(h, s, Mathf.Lerp(a.b, b.b, t), Mathf.Lerp(a.a, b.a, t));
             }
-        
-            public static void Test()
-            {
-                HSBColor color;
-        
-                color = new HSBColor(Color.red);
-                Debug.Log("red: " + color);
-        
-                color = new HSBColor(Color.green);
-                Debug.Log("green: " + color);
-        
-                color = new HSBColor(Color.blue);
-                Debug.Log("blue: " + color);
-        
-                color = new HSBColor(Color.grey);
-                Debug.Log("grey: " + color);
-        
-                color = new HSBColor(Color.white);
-                Debug.Log("white: " + color);
-        
-                color = new HSBColor(new Color(0.4f, 1f, 0.84f, 1f));
-                Debug.Log("0.4, 1f, 0.84: " + color);
-        
-                Debug.Log("164,82,84   .... 0.643137f, 0.321568f, 0.329411f  :" + ToColor(new HSBColor(new Color(0.643137f, 0.321568f, 0.329411f))));
-            }
         }
         public static Color HexToColor(string hex)
         {
@@ -358,7 +336,23 @@ internal static class EngineUtils
     {
 
         #region Media
-
+        // public static T LoadAsset<T>(Uri path)
+        // {
+        //     switch (typeof(T))
+        //     {
+        //         case Type t when t == typeof(AudioClip):
+        //             return (T)(object)AudioClip(path);
+                    
+        //         case Type t when t == typeof(Texture2D):
+        //             return (T)(object)LoadTexture2D(path);
+                    
+        //         case Type t when t == typeof(GameObject):
+        //             return (T)(object)LoadGameObject(path);
+                    
+        //         default:
+        //             throw new ArgumentException($"Unsupported asset type: {typeof(T)}");
+        //     }
+        // }
         public static AudioClip? AudioClip(Uri url)
         {
             UnityWebRequest www = UnityWebRequest.Get(url.ToString());
@@ -425,7 +419,7 @@ internal static class EngineUtils
         {
             Texture2D texture = new(0, 0);
             ImageConversion.LoadImage(texture, data);
-            if (texture != null) texture.name = "resources.dev";
+            if (texture != null) texture.name += ".dotNET.EmbeddedResource";
             return texture;
         }
 
@@ -457,12 +451,12 @@ internal static class EngineUtils
 
         #region Source
 
-        public static UnityEngine.GameObject INTERNAL_AssetBundle(byte[]? data, string? name, bool? keep)
+        public static UnityEngine.GameObject? INTERNAL_AssetBundle(byte[]? data, bool keep = false)
         {
             if(data?.Length == 0) return null;
             AssetBundle? bundle = UnityEngine.AssetBundle.LoadFromMemory(data);
 
-            GameObject? obj = bundle.LoadAsset<GameObject>(name);
+            GameObject? obj = bundle.LoadAsset<GameObject>(bundle.GetAllAssetNames()[0]);
             GameObject? instance = UnityEngine.Object.Instantiate(obj);
             if (keep is true)  UnityEngine.Object.DontDestroyOnLoad(instance);
             bundle.Unload(false);
@@ -470,15 +464,22 @@ internal static class EngineUtils
         }
 
 
-        public static UnityEngine.GameObject AssetBundle(Uri? url, string? prefab_name, bool? keep)
+        public static UnityEngine.GameObject AssetBundle(Uri? url, bool keep = false)
         {
-            HttpClient client = new ();
-            byte[] data = client.GetByteArrayAsync(url).Result;
-            AssetBundle? bundle = UnityEngine.AssetBundle.LoadFromMemory(data);
+            if (url == null) throw new ArgumentNullException(nameof(url));
+            byte[]? data = null;
+            if (url.IsFile) data = File.ReadAllBytes(url.LocalPath); // Works with file:// or plain path
+            else if (url.Scheme == Uri.UriSchemeHttp || url.Scheme == Uri.UriSchemeHttps)
+            {
+                HttpClient http = new();
+                data = http.GetByteArrayAsync(url.ToString()).GetAwaiter().GetResult();
 
-            GameObject? obj = bundle.LoadAsset<GameObject>(prefab_name);
+            }
+          
+            AssetBundle? bundle = UnityEngine.AssetBundle.LoadFromMemory(data);
+            GameObject? obj = bundle.LoadAsset<GameObject>(bundle.GetAllAssetNames()[0]);
             GameObject? instance = UnityEngine.Object.Instantiate(obj);
-            if (keep is true) UnityEngine.Object.DontDestroyOnLoad(instance);
+            if (keep) UnityEngine.Object.DontDestroyOnLoad(instance);
             bundle.Unload(false);
             return instance;
         }
@@ -497,7 +498,7 @@ public static class UnityFileExplorer
     /// Find GameObject by path, including hidden ones with HideAndDontSave
     /// Works like GameObject.Find() but finds hidden objects too
     /// </summary>
-    public static GameObject FindObject(string path)
+    public static GameObject? FindObject(string path)
     {
         if (string.IsNullOrEmpty(path))
             return null;
@@ -537,7 +538,7 @@ public static class UnityFileExplorer
     /// <summary>
     /// Find GameObject by partial path match
     /// </summary>
-    public static GameObject FindObjectContaining(string partialPath)
+    public static GameObject? FindObjectContaining(string partialPath)
     {
         if (string.IsNullOrEmpty(partialPath))
             return null;
@@ -601,28 +602,32 @@ public static class GameObjectExtensions
     /// <summary>
     /// Find hidden GameObject and get or add component safely
     /// </summary>
-    public static T FindAndGetComponent<T>(string path) where T : Component
+    public static T? FindAndGetComponent<T>(string path) where T : Component
     {
-        GameObject obj = UnityFileExplorer.FindObject(path);
+        GameObject? obj = UnityFileExplorer.FindObject(path);
         return obj?.GetComponent<T>();
     }
-    
+
     /// <summary>
     /// Find hidden GameObject and get or add component safely
     /// </summary>
-    public static T FindAndGetOrAddComponent<T>(string path) where T : Component
+    public static T? FindAndGetOrAddComponent<T>(string path) where T : Component
     {
-        GameObject obj = UnityFileExplorer.FindObject(path);
+        GameObject? obj = UnityFileExplorer.FindObject(path);
         if (obj == null) return null;
-        
+
         T component = obj.GetComponent<T>();
         if (component == null)
         {
             component = obj.AddComponent<T>();
         }
-        
+
         component.hideFlags = HideFlags.HideAndDontSave;
         return component;
+    }
+   public static T? Instantiate<T>(this T x, Transform? parent = null) where T : UnityEngine.Object
+    {
+        return UnityEngine.Object.Instantiate<T>(x, parent);
     }
 }
 
@@ -699,7 +704,7 @@ public static class ObjectExtension
     }
 
     // Version that works with interface types (if needed)
-    public static T GetOrAddComponent<T>(this GameObject go, Il2CppSystem.Type componentType) where T : Component
+    public static T? GetOrAddComponent<T>(this GameObject go, Il2CppSystem.Type componentType) where T : Component
     {
         if (go == null || componentType == null)
             return null;

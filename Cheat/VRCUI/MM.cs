@@ -27,7 +27,7 @@ internal class MM : IMainMenuElements
             {
                 var Main_Page = new VRCPage(Entry.GetEntry().modInfo._currentName, EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
                 var tab = new VRCTab(Main_Page, Entry.GetEntry().modInfo._currentName, InfoAboutCheat.Tooltips.GetTooltipString("Tab"), sprite: EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
-                tab.SetBadge(true); tab.SetBadgeColor(Color.black); tab.SetText("Nightly");
+                tab.SetBadge(true); tab.SetBadgeColor(Color.red); tab.SetText("Reconstruction!");
 
                 #region VRCPage_CodeName::Aware
 

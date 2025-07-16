@@ -144,8 +144,11 @@ namespace Brewchat.Cheat.Modules
             else return;
           
         }
-       
-        
+
+        public static void Update()
+        {
+            
+        }
         public static void Online() 
         {
             Entry.config.Appearance.inGame.VRCUI._lastSelectedColor = GetCurrentThemeData.Highlight;
@@ -156,7 +159,7 @@ namespace Brewchat.Cheat.Modules
         public static void Offline()
         {
             #region Offline Button Colors
-            var buttons = FindObjectsOfType<UnityEngine.UI.Button>();
+            var buttons = Resources.FindObjectsOfTypeAll<UnityEngine.UI.Button>();
             foreach (var button in buttons)
             {
                 if (button == null) continue; // Should not happen, but good practice
@@ -195,7 +198,7 @@ namespace Brewchat.Cheat.Modules
                 Image? imageComponent = backgroundRenderer.field_Private_Image_0;
                 if (imageComponent == null)
                 {
-                    MelonLogger.Msg($"Image (field_Private_Image_0) not found in VRCUIBackground for {advancedMenuObject.name}", 1);
+                    MelonLogger.Msg($"Image ({backgroundRenderer.field_Private_Image_0} not found in VRCUIBackground for {advancedMenuObject.name}", 1);
                     continue;
                 }
 

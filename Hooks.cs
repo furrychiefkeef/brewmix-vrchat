@@ -1,4 +1,5 @@
-﻿using brewchat.hybridxcore.bep.Game.Monobehaviours;
+﻿using autumn.ml.Cheat.Modules.Local;
+using brewchat.hybridxcore.bep.Game.Monobehaviours;
 using Brewchat.Cheat;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
@@ -88,7 +89,7 @@ namespace brewchat.hybridxcore.bep
         public static void VRCLoadingSequence_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null) return;
-           
+            AppearanceManager.Custom.LoadingScreen();
             CSS.SetLoadingAudio();
             // CSS.Offline();
         }
@@ -124,13 +125,13 @@ namespace brewchat.hybridxcore.bep
             return true;
         }
 
-        [HarmonyPostfix, HarmonyPatch(typeof(SelectedUserMenuQM), nameof(SelectedUserMenuQM.Start))]
-        public static void SelectedUserMenu_Initialize_HOOK(ref SelectedUserMenuQM? __instance)
-        {
-            if (__instance is null || _isSelectedMenusLoaded) return;
-            _isSelectedMenusLoaded = true;
-            QM.SelectedUserMenu.Apply();
-        }
+        //[HarmonyPostfix, HarmonyPatch(typeof(SelectedUserMenuQM), nameof(SelectedUserMenuQM.Start))]
+        //public static void SelectedUserMenu_Initialize_HOOK(ref SelectedUserMenuQM? __instance)
+        //{
+        //    if (__instance is null || _isSelectedMenusLoaded) return;
+        //    _isSelectedMenusLoaded = true;
+            
+        //}
 
         [HarmonyPrefix, HarmonyPatch(typeof(VRC.Udon.Wrapper.Modules.ExternVRCSDK3ComponentsVRCPickup), nameof(VRC.Udon.Wrapper.Modules.ExternVRCSDK3ComponentsVRCPickup.__Drop__SystemVoid))]
         public static bool ExternDropVRCPickup(ref VRC.Udon.Wrapper.Modules.ExternVRCSDK3ComponentsVRCPickup? __instance)
@@ -145,7 +146,7 @@ namespace brewchat.hybridxcore.bep
             _isMainMenuLoaded = true;
             MM.Main.Apply();
             MM.AvatarAVMMenu.Apply();
-            
+            QM.SelectedUserMenu.Apply();
             MM.SelectedWorldMenu.Apply();
             MM.SelectedUserMenu.Apply();
          

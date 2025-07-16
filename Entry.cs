@@ -7,7 +7,7 @@ using MonoMod.Utils;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(Entry), "Raith", "Launchbox", "Vlone")]
+[assembly: MelonInfo(typeof(Entry), "SwiftVRC", "Nightly", "Vlone")]
 public class Entry: MelonMod
 {
     
@@ -24,7 +24,7 @@ public class Entry: MelonMod
             public  static string VariableName = "_VRLone";
         }
         public readonly string? Enviroment = Environment.GetEnvironmentVariable(Prefixes.VariableName, EnvironmentVariableTarget.User);
-        public string? _currentName { get;set;} =  "Raith";
+        public string? _currentName { get;set;} = "Swift";
         public string? _currentVersion { get; set;} = "<2>.<5>.<7>.<7>";
         public string? _currentHash {get; set;} = System.Reflection.Assembly.GetExecutingAssembly().GetHashCode().ToString();
         public static Dictionary<string, string>? _custom_properties {get; set;} = new();

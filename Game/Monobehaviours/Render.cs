@@ -24,41 +24,34 @@ public class ESP : MonoBehaviour
             }
             else Destroy(this);
         }
-    public Dictionary <string, HighlightsFXStandalone>? _unused;
-    
-    public HighlightsFXStandalone? FX_Entities;
-    public HighlightsFXStandalone? FX_Pickups;
+    public Dictionary <string, HighlightsFXStandalone>? FXs;
+    public Color CurrentColor;
+    private HighlightsFXStandalone? FX_Entities;
+    private HighlightsFXStandalone? FX_Pickups;
     public static List<VRC.Player> Players {get; set;} = new();
     public static List<VRC_Pickup> Pickups {get; set;} = new();
    
-    void Start()
-    {
-        
-    }
     void OnEnable() 
     {
         if (FX_Entities == null && FX_Pickups == null)
         {
+
             FX_Entities = GameUtils.Camera.Get.gameObject.AddComponent<HighlightsFXStandalone>();
             FX_Pickups = GameUtils.Camera.Get.gameObject.AddComponent<HighlightsFXStandalone>();
-
+            
             FX_Entities.blurDownsampleFactor = Entry.config.Render.Overlays.ESP.Parameters.blurDownsampleFactor;
             FX_Entities.blurSize = Entry.config.Render.Overlays.ESP.Parameters.blurSize;
             FX_Entities.blurIterations = Entry.config.Render.Overlays.ESP.Parameters.blurIterations;
 
+
             FX_Entities.field_Protected_Color_0 = Entry.config.Appearance.inGame.VRCUI._lastSelectedColor;
+            FX_Pickups.field_Protected_Color_0 = Entry.config.Appearance.inGame.VRCUI._lastSelectedColor;
 
-            FX_Pickups.blurDownsampleFactor = FX_Entities.blurIterations;
-            FX_Pickups.blurIterations = FX_Entities.blurIterations;
-            FX_Pickups.blurSize = FX_Entities.blurSize;
-
-
+            FX_Pickups.blurDownsampleFactor = Entry.config.Render.Overlays.ESP.Parameters.blurDownsampleFactor;
+            FX_Pickups.blurIterations = Entry.config.Render.Overlays.ESP.Parameters.blurIterations;
+            FX_Pickups.blurSize = Entry.config.Render.Overlays.ESP.Parameters.blurSize;
         }
 
-    }
-    void Update()
-    {
-        FX_Pickups.field_Protected_Color_0 = EngineUtils.Conversion.HSBColor.ToColor(new EngineUtils.Conversion.HSBColor(Mathf.PingPong(Time.time * 0.5f, 1), 1, 1));
     }
     void OnDisable()
     {
@@ -97,35 +90,19 @@ public class ESP : MonoBehaviour
         PlayerSelector Capsule = player._laserSelectRegion;
         if (GameUtils.Camera.Get != null)
         {
-            if(enable) 
-            {
-               
-                FX_Entities?.field_Protected_HashSet_1_MeshFilter_0?.AddIfNotPresent(Capsule.GetComponent<MeshFilter>());
-                return;
-            }
-            else 
-            {
-                FX_Entities?.field_Protected_HashSet_1_MeshFilter_0?.Remove(Capsule.GetComponent<MeshFilter>());
-                return;
-            }
+            FX_Entities?.field_Protected_HashSet_1_MeshFilter_0?.AddIfNotPresent(Capsule.GetComponent<MeshFilter>());
+            return;
         }
     }
-    void HighlightPickups(VRC_Pickup pickup, bool enable = true)
+    void HighlightPickups(VRC_Pickup pickup)
     {
         if (GameUtils.Camera.Get != null)
         {
             if (pickup.name != "MirrorPickup")
             {
-                 pickup.GetComponentsInChildren<MeshFilter>(false).ToList().ForEach((x =>
-            {
-                    if (enable)
-                    {
-                        FX_Pickups?.field_Protected_HashSet_1_MeshFilter_0?.AddIfNotPresent(x);
-                    }
-                    else
-                    {
-                        FX_Pickups?.field_Protected_HashSet_1_MeshFilter_0?.Remove(x);
-                    }
+                pickup.GetComponentsInChildren<MeshFilter>(false).ToList().ForEach((x =>
+                {
+                   FX_Pickups?.field_Protected_HashSet_1_MeshFilter_0?.AddIfNotPresent(x);
                 }));
             }
            

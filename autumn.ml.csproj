@@ -28,9 +28,9 @@
     <EmbeddedResource Include="Assets\Textures\UI\Nameplate\capsule_*.png" />
     <EmbeddedResource Include="Assets\Textures\UI\Icons\*.astrieksprites" />
     <EmbeddedResource Include="Assets\Prefabs\*.bundle" />
+  
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Cheat\Modules\Local\" />
     <Folder Include="Utilities\Blanket.SDK\@VRC\ActionMenu\" />
     <Folder Include="Utilities\Blanket.SDK\@VRC\MM\Controls\Cell\" />
   </ItemGroup>
@@ -619,4 +619,8 @@
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\Managed\WebTransMtn.dll</HintPath>
     </Reference>
   </ItemGroup>
+
+ <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat\Mods&quot;&#xA;start steam://rungameid/438100" />
+  </Target>
 </Project>

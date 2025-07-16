@@ -70,7 +70,7 @@ internal class VRCWidgets : IQuickMenuElements
         _2.sprite = sprite;
         
         
-        if (color.r == 0 || color.b == 0  || color.g == 0 || color.a == 0) { _Headerbg.canvasRenderer.SetColor(Color.white); }
+        if (color == null) { _Headerbg.canvasRenderer.SetColor(Color.white); }
         _Headerbg.canvasRenderer.SetColor(color);
         #endregion     
         return widget;         
@@ -83,7 +83,7 @@ internal class VRCWidgets : IQuickMenuElements
     }
     public void SetText(string text, [Optional] TextMeshProUGUIEx? properties)
     {
-        header_txt.text = text;
+        header_txt.SetText(text);
         properties = header_txt;
 
     }
