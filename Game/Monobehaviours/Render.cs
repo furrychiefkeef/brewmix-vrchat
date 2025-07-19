@@ -15,19 +15,19 @@ public class ESP : MonoBehaviour
 {
     public ESP(IntPtr ptr) : base(ptr) { }
     public static ESP? Instance { get; private set; }
-        private void Awake()
+    private void Awake()
+    {
+        if (Instance == null) 
         {
-            if (Instance == null) 
-            {
-                Instance = this;
-                DontDestroyOnLoad(gameObject); 
-            }
-            else Destroy(this);
+            Instance = this;
+            DontDestroyOnLoad(gameObject); 
         }
+        else Destroy(this);
+    }
     public Dictionary <string, HighlightsFXStandalone>? FXs;
     public Color CurrentColor;
-    private HighlightsFXStandalone? FX_Entities;
-    private HighlightsFXStandalone? FX_Pickups;
+    public HighlightsFXStandalone? FX_Entities;
+    public HighlightsFXStandalone? FX_Pickups;
     public static List<VRC.Player> Players {get; set;} = new();
     public static List<VRC_Pickup> Pickups {get; set;} = new();
    
@@ -39,6 +39,15 @@ public class ESP : MonoBehaviour
             FX_Entities = GameUtils.Camera.Get.gameObject.AddComponent<HighlightsFXStandalone>();
             FX_Pickups = GameUtils.Camera.Get.gameObject.AddComponent<HighlightsFXStandalone>();
             
+        }
+
+    }
+    void Update()
+    {
+            FX_Pickups.enabled = enabled;
+            FX_Entities.enabled = enabled;
+
+
             FX_Entities.blurDownsampleFactor = Entry.config.Render.Overlays.ESP.Parameters.blurDownsampleFactor;
             FX_Entities.blurSize = Entry.config.Render.Overlays.ESP.Parameters.blurSize;
             FX_Entities.blurIterations = Entry.config.Render.Overlays.ESP.Parameters.blurIterations;
@@ -50,13 +59,11 @@ public class ESP : MonoBehaviour
             FX_Pickups.blurDownsampleFactor = Entry.config.Render.Overlays.ESP.Parameters.blurDownsampleFactor;
             FX_Pickups.blurIterations = Entry.config.Render.Overlays.ESP.Parameters.blurIterations;
             FX_Pickups.blurSize = Entry.config.Render.Overlays.ESP.Parameters.blurSize;
-        }
-
     }
     void OnDisable()
     {
-        FX_Entities.field_Protected_HashSet_1_MeshFilter_0.Clear();
-        FX_Pickups.field_Protected_HashSet_1_MeshFilter_0.Clear();
+        FX_Entities.enabled = false;
+        FX_Pickups.enabled = false;
     }
 
     public void Add(VRC_Pickup pickup)

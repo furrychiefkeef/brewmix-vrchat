@@ -25,42 +25,39 @@ public class Murder_4
             VRCPickup? pickupObj = GameUtils
             .World
             .SDK3.Udon.Pickups.GetPickup("Revolver");
-            pickupObj.SetOwnerAndGivePickupToLocalEntity();
+            pickupObj?.SetOwnerAndGivePickupToLocalEntity();
         }
         public static void SpawnKnife()
         {
             int i = 0;
-            VRCPickup pickupObj = GameUtils
+            VRCPickup? pickupObj = GameUtils
             .World
             .SDK3.Udon.Pickups.GetPickup($"Knife ({i++})");
-            pickupObj.SetOwnerAndGivePickupToLocalEntity();
+            pickupObj?.SetOwnerAndGivePickupToLocalEntity();
         }
         public struct Special
         {
             public static void SpawnLuger()
             {
-                VRCPickup pickupObj = GameUtils
+                VRCPickup? pickupObj = GameUtils
                 .World
                 .SDK3.Udon.Pickups.GetPickup("Luger");
-                pickupObj.SetOwnerAndGivePickupToLocalEntity();
+                 pickupObj?.SetOwnerAndGivePickupToLocalEntity();
                
             }
-            public static void RapidFire()
+            public static void SpawnShotgun()
             {
-                VRCPickup luger = GameUtils.World.SDK3.Udon.Pickups.GetPickup("Luger");
-                VRCPickup revolver = GameUtils.World.SDK3.Udon.Pickups.GetPickup("Revolver");
-                VRCPickup shotgun = GameUtils.World.SDK3.Udon.Pickups.GetPickup("Shotgun");
-            
-                luger.GetComponent<UdonBehaviour>().SetVariable<float>("fireInterval", 0.0f);
-                shotgun.GetComponent<UdonBehaviour>().SetVariable<float>("fireInterval", 0.0f);
-                revolver.GetComponent<UdonBehaviour>().SetVariable<float>("fireInterval", 0.0f);
+                VRCPickup? pickupObj = GameUtils
+                .World
+                .SDK3.Udon.Pickups.GetPickup("Shotgun");
+                pickupObj?.SetOwnerAndGivePickupToLocalEntity();
+
+            }  
 
             }
             
         }
         
-      
-    }
     public class NetworkEvents
     {
             public struct GameManager
@@ -201,12 +198,12 @@ public class Murder_4
                                 {  
                                     if (playerEntry.GetComponentInChildren<TextMeshProUGUI>()?.text == player?.APIUser.displayName)
                                     {
-                                        if(!isLog) GameUtils.UI.HUD.Alert($"Player: {player.VRCPlayerApi.displayName}, Actor: {player.VRCPlayerApi.playerId}, Node: {playerNode.name}");
+                                        if(isLog) GameUtils.UI.HUD.Alert($"Player: {player.VRCPlayerApi.displayName}, Actor: {player.VRCPlayerApi.playerId}, Node: {playerNode.name}");
                                         return playerNode.gameObject.GetComponent<UdonBehaviour>();
                                     }
                                 }
                             }
-                            if(!isLog) GameUtils.UI.HUD.Alert($"Player not found in any node.");     
+                            if(isLog) GameUtils.UI.HUD.Alert($"Player not found in any node.");     
                         }
                         return null;
                     
@@ -220,15 +217,29 @@ public class Murder_4
 
                 }
             }     
-        }
-
-
-
-
-
+        
     }
-
-    
+    public class Modules
+    {
+        public static void RapidFire(bool state)
+        {
+            UdonBehaviour? luger = GameUtils.World.SDK3.Udon.Pickups.GetPickup("Luger")?.GetComponent<UdonBehaviour>();
+            UdonBehaviour? revolver = GameUtils.World.SDK3.Udon.Pickups.GetPickup("Revolver")?.GetComponent<UdonBehaviour>();
+            UdonBehaviour? shotgun = GameUtils.World.SDK3.Udon.Pickups.GetPickup("Shotgun")?.GetComponent<UdonBehaviour>();
+            switch (state)
+            {
+                case true:
+                    luger?.SetVariable<float>("fireInterval", 0.0f);
+                    revolver?.SetVariable<float>("fireInterval", 0.0f);
+                    shotgun?.SetVariable<float>("fireInterval", 0.0f);
+                    break;
+                case false:
+                    break;
+            }
+            GameUtils.UI.HUD.ToastV1($"Rapid Fire: {(state ? "enabled" : "disabled")}!");
+        }
+    }
+}
  
 
 

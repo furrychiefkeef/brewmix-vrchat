@@ -11,7 +11,6 @@ namespace BlanketSDK.QM.Elements;
 internal class VRCGroupLayout : IQuickMenuElements
 {
     public Transform? container;
-    public List<GameObject> gameobjects = new ();
     public VRCGroupLayout(VRCPage page, string name = null, bool isCollapsible  = true, bool alwaysVisable = true)
     {
         if (!QMMenus.QMSubmenus.Menu_Here() || !QMElements.QMLayoutGroup()) throw new($"element has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
@@ -66,7 +65,7 @@ internal class VRCGroupLayout : IQuickMenuElements
         
         #region LOGIC_REQUIRED
         if (name == null) UnityEngine.Object.DestroyImmediate(_1.gameObject);
-        if(!isCollapsible) UnityEngine.Object.DestroyImmediate(_header,true);
+        if(!isCollapsible) UnityEngine.Object.Destroy(_header.gameObject);
         container = _container;
         
         #endregion

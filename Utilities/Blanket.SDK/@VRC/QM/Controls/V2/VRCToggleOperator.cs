@@ -7,10 +7,13 @@ using VRC.UI.Elements;
 using VRC.UI.Elements.Controls;
 
 namespace BlanketSDK.QM.Elements.Controls.V2;
+
 internal class VRCToggleOperator : IQuickMenuElements
 {
+    VRCToggleHandle Controller;
     public VRCToggleOperator(Transform parent, string name, string tooltip_on, string tooltip_off, Action<bool> func, bool state = false)
     {
+
         if (!QM() || !QMElements.QMPanel("Debug") || !QMControls.OperatorToggle()) throw new($"element has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform? obj = UnityEngine.Object.Instantiate(QMControls.OperatorToggle(), parent);
         obj.name = $"{Guid.NewGuid()}-<Blanket.SDK.QM_TOGGLE_OPERATOR_{name}";
@@ -23,6 +26,7 @@ internal class VRCToggleOperator : IQuickMenuElements
         #region LOGIC_REQUIRED_API
 
         VRCToggleHandle? _0 = __0._toggle;
+        Controller = _0;
         RadioButton? __1 = __0._toggleSwitch;
         __1.field_Private_Single_0 = 27.5f; // Fix it going off element
         __1.field_Private_Single_1 = 95.4124f; // Fix it going off element
@@ -52,7 +56,8 @@ internal class VRCToggleOperator : IQuickMenuElements
 
         __0._tooltips[0]._localizableString = tooltip_on.Localizable();
         __0._tooltips[0]._alternateLocalizableString = tooltip_off.Localizable();
-        
+
         #endregion
     }
+     public void SetState(bool state) => Controller.isOn = !state;
 }

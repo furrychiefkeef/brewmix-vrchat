@@ -58,7 +58,7 @@ internal class PlayerModule
                         UnityEngine.Object.DestroyImmediate(fly_component);
                         break;
                 }
-
+                GameUtils.UI.HUD.ToastV1($"Fly {(Entry.config.Player.Airborn.Flight.Enabled ? "enabled" : "disabled")}.");
 
                 #endregion
 
@@ -78,7 +78,7 @@ internal class PlayerModule
         
             if (!player && !GameUtils.World.IsLoaded()) return;
             {
-                
+
                 switch (state)
                 {
                     case true:
@@ -88,6 +88,7 @@ internal class PlayerModule
                         GameUtils.PlayerModel.Motion.Networking.Jump_Impulse(_cacheJumpData);
                         break;
                 }
+               GameUtils.UI.HUD.ToastV1($"ForceJump {(state ? "enabled" : "disabled")}.");
 
                 #endregion
 
@@ -127,16 +128,11 @@ internal class PlayerModule
             if (!player && !GameUtils.World.IsLoaded() || GameUtils.Gameplay.CallbackEvents.IsInMainMenu()) return;
             if (Physics.Raycast(GameUtils.Camera.Get.transform.position, GameUtils.Camera.Get.transform.forward, out RaycastHit hit)) player.transform.position = hit.point;
         }
-        public static void GrabIntestity(){
-            Player player = GameUtils.PlayerModel.LocalEntity();
-            if (!player && !GameUtils.World.IsLoaded() || GameUtils.Gameplay.CallbackEvents.IsInMainMenu()) return;
-
-        }
     }
 
     public class CameraBuilder
     {
-        public enum View { second_person, third_person, freecam }
+        public enum View { Front, Back, FreeCam }
 
        static Camera MakeCameras(View view)
         {
@@ -159,15 +155,15 @@ internal class PlayerModule
 
                     switch (view)
                     {
-                        case View.second_person:
+                        case View.Front:
                             cameraObject.transform.Rotate(new Vector3(0f, 180f, 0f));
                             cameraObject.transform.position = referenceCamera.transform.position + (referenceCamera.transform.forward * 2f);
                             return camera;
-                        case View.third_person:
+                        case View.Back:
                             cameraObject.transform.Rotate(Vector3.zero);
                             cameraObject.transform.position = referenceCamera.transform.position + (-referenceCamera.transform.forward * 2f);
                             return camera;
-                        case View.freecam:
+                        case View.FreeCam:
                             cameraObject.transform.parent = null;
                             cameraObject.transform.position = referenceCamera.transform.position + (-cameraObject.transform.forward * 2f);
                             cameraObject.AddComponent<AudioListener>();
@@ -189,9 +185,9 @@ internal class PlayerModule
             if (camera[0] == null && camera[1] == null && camera[2] == null)
             { 
 
-                camera[0] = MakeCameras(View.third_person);
-                camera[1] = MakeCameras(View.second_person);
-                camera[2] = MakeCameras(View.freecam);
+                camera[0] = MakeCameras(View.Back);
+                camera[1] = MakeCameras(View.Front);
+                camera[2] = MakeCameras(View.FreeCam);
             }
             currentView = (currentView + 1) % 4;
             if (camera[0] != null && camera[1] != null && camera[2] != null)
@@ -202,28 +198,28 @@ internal class PlayerModule
                 {
                     case 0:
                         Widgets.QM.cameramode_widget.SetText($"Third Person (Back)");
-                        GameUtils.UI.HUD.ToastV1("Third Person <Back> Activated!");
+                        GameUtils.UI.HUD.ToastV1("Camera Position Set To: <color=#00FF00>(Back)</color>.");
                         camera[0].enabled = true;
                         camera[1].enabled = false;
                         camera[2].enabled = false;
                         break;
                     case 1:
                          Widgets.QM.cameramode_widget.SetText($"Third Person (Front)");
-                        GameUtils.UI.HUD.ToastV1("Third Person <Front> Activated!");
+                        GameUtils.UI.HUD.ToastV1("Camera Position Set To:  <color=#00FF00>(Front)</color>.");
                         camera[0].enabled = false;
                         camera[1].enabled = true;
                         camera[2].enabled = false;
                         break;
                     case 2:
                         Widgets.QM.cameramode_widget.SetText($"FreeCam");
-                        GameUtils.UI.HUD.ToastV1("FreeCam Activated! Right Click (To Move Camera)");
+                        GameUtils.UI.HUD.ToastV1("Camera Mode Set To:  <color=#00FF00>(FreeCam)</color>  | Note: Right Click (To Move Camera).");
                         camera[0].enabled = false;
                         camera[1].enabled = false;
                         camera[2].enabled = true;
  
                         break;
                     case 3:
-                        GameUtils.UI.HUD.ToastV1("Cameras Destoryed");
+                        GameUtils.UI.HUD.ToastV1("Reset Back to Main Camera.");
                         DestoryCameras(); 
                         Widgets.QM.cameramode_widget.SetState(false);
                         break;

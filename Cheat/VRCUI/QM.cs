@@ -20,13 +20,14 @@ using VRC.Core;
 using VRC.Networking;
 using VRC.SDKBase;
 using VRC.Udon.Common;
-using static Brewchat.Cheat.QM;
+using static Brewchat.VRCUI.QM;
 using Resources = autumn.ml.Properties.Resources;
 
-namespace Brewchat.Cheat;
+namespace Brewchat.VRCUI;
 
 internal class QM
 {
+ 
     public class Core
     {
         public static bool EnableRichText()
@@ -39,12 +40,24 @@ internal class QM
             }
             return false;
         }
+        public static void CurrentStates()
+        {
+            Main.Toggles.Player.Fly.SetState(Entry.config.Player.Airborn.Flight.Enabled);
+        }
     }
     public class Main
     {
+        public class Toggles
+        {
+            public struct Player
+            {
+                public static VRCToggle? Fly;    
+            }
+            
+        }
         public class NestedQMAppearance
         {
-            public VRCPage Page { get; set; }
+            public VRCPage? Page { get; set; }
 
             public void Execute()
             {
@@ -80,7 +93,7 @@ internal class QM
         }
         public class NestedQMDebug
         {
-            public VRCPage Page { get; set; }
+            public VRCPage? Page { get; set; }
 
             public void Execute()
             {
@@ -115,13 +128,13 @@ internal class QM
         }
         public class NestedQMExploits
         {
-            public VRCPage Page { get; set; }
+            public VRCPage? Page { get; set; }
 
             public void Execute()
             {
                 Page = new VRCPage("Exploits", true, pageOptions: new() { ShowScrollWheel = false });
                 VRCGroupLayout Group_UI = new(Page, "Crash");
-                Group_UI.AddToggle("Susie", "On", "Off", (x) =>
+                Group_UI.AddToggle("Questie (Crash) <color=red>(Mediocre)</color>", "On", "Off", (x) =>
                 {
                     Sploits.playerQuestCrashInternalFunction(x);
                 });
@@ -129,7 +142,7 @@ internal class QM
         }
         public class NestedQMVisuals
         {
-            public VRCPage Page { get; set; }
+            public VRCPage? Page { get; set; }
 
             public void Execute()
             {
@@ -152,7 +165,7 @@ internal class QM
 
 
                 #region Modal_Main
-                Visuals_RenderModal.AddToggle("<color=#C278A7>[</color><color=#B23E7B>W</color><color=#A30550>I</color><color=#C23E6D>P</color><color=#E1778A>]</color> ESP", "", "", (x) =>
+                Visuals_RenderModal.AddToggle("ESP", "", "", (x) =>
                 {
                     Entry.config.Render.Overlays.ESP.Enabled = !Entry.config.Render.Overlays.ESP.Enabled;
                 });
@@ -162,10 +175,6 @@ internal class QM
                 //        ESP.Instance.FX_Pickups.enabled = !Entry.config.Render.Overlays.ESP.Enabled;
                 //    });
 
-                Visuals_RenderModal.AddToggle("<b><color=#843E6B>[</color><color=#91346A>U</color><color=#9F2B6A>n</color><color=#AD216A>f</color><color=#BB1869>i</color><color=#C90F69>n</color><color=#D70569>i</color><color=#BE0F62>s</color><color=#A5195B>h</color><color=#8C2355>e</color><color=#732D4E>d</color><color=#5A3747>]</color></b> Wallhacks", "", "", (x) =>
-                {
-                    Wallhacks.Instance.enabled = !Wallhacks.Instance.enabled;
-                });
                 #endregion
 
                 #endregion
@@ -212,7 +221,7 @@ internal class QM
             #endregion
 
             #region Movement_Modal
-            PlayerMovementModal.AddToggle("Flight", "Enable Flight", "Disable Flight", (x) =>
+            Toggles.Player.Fly = PlayerMovementModal.AddToggle("Flight", "Enable Flight", "Disable Flight", (x) =>
             {
                 Entry.config.Player.Airborn.Flight.Enabled = x;
                 PlayerModule.Movement.Fly();
@@ -262,36 +271,36 @@ internal class QM
     {
         public class NestedQMSelectedMurder4
         {
-            public VRCPage Page { get; set; }
+            public VRCPage? Page { get; set; }
 
             public void Execute()
             {
                 Page = new VRCPage("M4", true, pageOptions: new() { ShowScrollWheel = false });
-                //VRCGroupLayout Group_UI = new(Page);
-                //VRCGroupLayout Group_Roles = new(Page, $"Roles");
-                // Group_UI.AddButton("Kill", "", () =>
-                // {
-                //     var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
-                //     Murder_4.NetworkEvents.GameManager.Logic.PunishmentReceptors.Kill(selectedPlayer);
+                VRCGroupLayout Group_UI = new(Page);
+                VRCGroupLayout Group_Roles = new(Page, $"Events");
+                Group_UI.AddButton("Kill", "", () =>
+                {
+                    var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
+                    Murder_4.NetworkEvents.GameManager.Logic.PunishmentReceptors.Kill(selectedPlayer);
 
-                // }, false);
-                // Group_Roles.AddButton("Assign Murderer", "", () =>
-                // {
-                //     var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
-                //     Murder_4.NetworkEvents.GameManager.Roles.AssignMurderer(selectedPlayer);
+                }, false);
+                Group_Roles.AddButton("Assign Murderer", "", () =>
+                {
+                    var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
+                    Murder_4.NetworkEvents.GameManager.Roles.AssignMurderer(selectedPlayer);
 
-                // }, false);
-                // Group_Roles.AddButton("Assign Detective", "", () =>
-                // {
-                //     var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
-                //     Murder_4.NetworkEvents.GameManager.Roles.AssignDetective(selectedPlayer);
-                // }, false);
-                // Group_Roles.AddButton("Assign Bystander", "", () =>
-                // {
-                //     var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
-                //     Murder_4.NetworkEvents.GameManager.Roles.AssignBystander(selectedPlayer);
+                }, false);
+                Group_Roles.AddButton("Assign Detective", "", () =>
+                {
+                    var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
+                    Murder_4.NetworkEvents.GameManager.Roles.AssignDetective(selectedPlayer);
+                }, false);
+                Group_Roles.AddButton("Assign Bystander", "", () =>
+                {
+                    var selectedPlayer = GameUtils.Gameplay.Matchmaking.GetSelectedUser();
+                    Murder_4.NetworkEvents.GameManager.Roles.AssignBystander(selectedPlayer);
 
-                // }, false);
+                }, false);
 
             }
         }
@@ -322,13 +331,33 @@ internal class QM
                 Group_UI.AddButton("Murder 4", "<color=red>Murder 4 Utilties</color>", Murder4_Page.Open, true);
 
                 VRCGroupLayout Group_UI_Murder4 = new(Murder4_Page, isCollapsible: false);
-                Group_UI_Murder4.AddToggle("RapidFire", "Enable Force Jump", "Disable Force Jump", (x) =>
+                Group_UI_Murder4.AddToggle("RapidFire", "Enable RapidFire", "Disable RapidFire", (x) =>
                 {
-                    Murder_4.Weapons.Special.RapidFire();
+                    Murder_4.Modules.RapidFire(x);
 
                 });
+                Group_UI_Murder4.AddButton("Spawn Revolver", "Spawns Revolver", () =>
+                {
+                    Murder_4.Weapons.SpawnRevolver();
+
+                },false);
+                Group_UI_Murder4.AddButton("Spawn Knife", "Spawns Knife", () =>
+                {
+                    Murder_4.Weapons.SpawnKnife();
+
+                }, false);
+                Group_UI_Murder4.AddButton("Spawn Luger", "Spawns Luger", () =>
+                {
+                    Murder_4.Weapons.Special.SpawnLuger();
+
+                }, false);
+                Group_UI_Murder4.AddButton("Spawn Shotgun", "Spawns Shotgun", () =>
+                {
+                    Murder_4.Weapons.Special.SpawnShotgun();
+
+                }, false);
             }
-        } 
+        }
     }
     public class SelectedUserMenu : IQuickMenuElements
     {

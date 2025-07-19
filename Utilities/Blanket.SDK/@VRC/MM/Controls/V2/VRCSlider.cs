@@ -8,6 +8,7 @@ using VRC.UI.Elements.Controls;
 namespace BlanketSDK.MM.Elements.Controls.V2;
 internal class VRCSliderOperator : IMainMenuElements
 {
+    public static SnapSliderExtendedCallbacks? Slider;
     public enum SliderType
     {
         None,
@@ -33,7 +34,7 @@ internal class VRCSliderOperator : IMainMenuElements
         MetersPerTrillion,
 
     }
-    public VRCSliderOperator(VRCCellContainer panel, string name, SliderType type, float defaultval, float min, float max, Action<float> val, Action<bool> func = null, bool wholeNumbers = false, bool state = false)
+    public VRCSliderOperator(VRCCellContainer panel, string name, SliderType type, float defaultval, float min, float max, Action<float> val, Action<bool> func = null, bool state = false)
     {
         if (!MM() || !MMParent() || !MMMenus.MMSubmenus.Menu_Setting()) throw new($"element has moved to a different location or index contact: {autumn.ml.Properties.Resources.D_Contact}");
         Transform? obj = UnityEngine.Object.Instantiate(MMControls.OperatorSlider(), panel._verticalLayoutGroup);
@@ -67,11 +68,11 @@ internal class VRCSliderOperator : IMainMenuElements
 
         #region Slider
         __0._numberText.prop_String_0 = OnSelectedType(type, defaultval);
-        var Slider = __0._slider;
+        Slider = __0._slider;
         Slider.value = defaultval;
         Slider.minValue = min;
         Slider.maxValue = max;
-        Slider.wholeNumbers = wholeNumbers;
+        
         Slider.onValueChanged.AddListener(new System.Action<float>(x =>
         {
             __0._numberText.prop_String_0 = OnSelectedType(type, x);
@@ -98,11 +99,13 @@ internal class VRCSliderOperator : IMainMenuElements
             case SliderType.None:
                 return $"{x}";
             case SliderType.Int:
+                Slider.wholeNumbers = true;
                 return $"{(int)x}";
             case SliderType.Float:
                 return $"{x}f";
             case SliderType.Percentage:
-                return $"{x * 100}%";
+                Slider.wholeNumbers = true;
+                return $"{x * 10}%";
             case SliderType.PercentageNoRestrict:
                 return  $"{x}%";
             case SliderType.Meters:

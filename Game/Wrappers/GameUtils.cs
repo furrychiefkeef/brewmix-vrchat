@@ -235,11 +235,11 @@ namespace Brewchat.Game.Wrappers
 
                     if (player == null)
                     {
-                        var obj = UnityEngine.Object.Instantiate(player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0);
+                        GameObject? obj = UnityEngine.Object.Instantiate(player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0);
                         if (keepParameters)
                         {
-                            var sourceDescriptor = player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0.GetComponent<VRCAvatarDescriptor>();
-                            var targetDescriptor = obj.GetComponent<VRCAvatarDescriptor>();
+                            VRCAvatarDescriptor? sourceDescriptor = player._vrcplayer.field_Private_VRCAvatarManager_0.field_Private_GameObject_0.GetComponent<VRCAvatarDescriptor>();
+                            VRCAvatarDescriptor? targetDescriptor = obj.GetComponent<VRCAvatarDescriptor>();
 
                             if (sourceDescriptor != null && targetDescriptor != null)
                             {
@@ -314,7 +314,7 @@ namespace Brewchat.Game.Wrappers
                         if (trigger.gameObject.name.Contains(triggerobj))
                         {
                             trigger.Interact();
-                            if (!Entry.config.Advanced.DebugMode)
+                            if (Entry.config.Advanced.DebugMode)
                                 UI.HUD.ToastV1($"Sent Trigger {trigger.gameObject.name}");
                             return trigger;
                         }
@@ -336,9 +336,10 @@ namespace Brewchat.Game.Wrappers
                     }
                     public static class Pickups
                     {
-                        static VRCPickup _lastPickup; public static VRCPickup? GetPickup(string name)
+                        static VRCPickup? _lastPickup; 
+                        public static VRCPickup? GetPickup(string name)
                         {
-                            var pickups = UnityEngine.Object.FindObjectsOfType<VRCPickup>();
+                            UnhollowerBaseLib.Il2CppArrayBase<VRCPickup>? pickups = UnityEngine.Object.FindObjectsOfType<VRCPickup>();
 
                             // First pass - exact match
                             foreach (VRCPickup pickup in pickups)
@@ -346,7 +347,7 @@ namespace Brewchat.Game.Wrappers
                                 if (string.Equals(pickup.name, name, StringComparison.OrdinalIgnoreCase))
                                 {
                                     _lastPickup = pickup;
-                                    UI.HUD.ToastV1($"Found: {_lastPickup.name}");
+                                    if(Entry.config.Advanced.DebugMode) UI.HUD.ToastV1($"Found: {_lastPickup.name}");               
                                     return pickup;
                                 }
                             }
@@ -357,7 +358,7 @@ namespace Brewchat.Game.Wrappers
                                 if (pickup.name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0)
                                 {
                                     _lastPickup = pickup;
-                                    UI.HUD.ToastV1($"Found: {_lastPickup.name}");
+                                    if (Entry.config.Advanced.DebugMode) UI.HUD.ToastV1($"Found: {_lastPickup.name}");
                                     return pickup;
                                 }
                             }
@@ -494,9 +495,10 @@ namespace Brewchat.Game.Wrappers
                 {
                     if (isAudible) VRCUiSoundPlayer.Method_Public_Static_Void_AudioClip_Single_0(HudController.field_Public_Static_HudController_0.notificationSound, 5f);
 
-                    HudController.field_Public_Static_HudController_0
-                        .userEventCarousel
-                        .Method_Private_Void_LocalizableString_Sprite_Single_0(content.Localizable(), sprite, duration);
+                    var Send = HudController.field_Public_Static_HudController_0.userEventCarousel;
+                    Send.userEventPrefab.text.richText = true;
+                    Send.Method_Private_Void_LocalizableString_Sprite_Single_0(content.Localizable(), sprite, duration);
+
                 }
 
                 public static void ToastV2(string? title, string? content = null, float duration = 2f, bool isAudible = true, Sprite? sprite = default)

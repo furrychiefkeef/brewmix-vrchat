@@ -37,7 +37,7 @@ public class Config
             public class GlobalExploitsModal
             {
                 public bool GodMode { get; set; }
-                 public string? currentPayload { get;set;}
+                public string? currentPayload { get;set;}
             }
         }
     }
@@ -67,10 +67,10 @@ public class Config
         
         public class GroundedModel
         {
-            public float WalkSpeed { get; set; } = 6.5f;
-            public float RunSpeed { get; set; } = 6.5f;
-            public float StrafeSpeed { get; set; } = 6.5f;
-            public float JumpHeight { get; set; } = 6.5f;
+            public float WalkSpeed { get; set; } = 3f;
+            public float RunSpeed { get; set; } = 4f;
+            public float StrafeSpeed { get; set; } = 3f;
+            public float JumpHeight { get; set; } = 3f;
         }
     }
     
@@ -199,7 +199,7 @@ public class Config
                 public LoadingAssetBundleModel Bundle { get; set; } = new();
                  public class LoadingAssetBundleModel
                  {
-                    public string? URL { get; set; } = "https://2silly4u.chat/storageunit/wicky";
+                    public string? URL { get; set; } = "https://2silly4u.chat/storageunit/loading.assetbundle";
                         
                  }   
             }

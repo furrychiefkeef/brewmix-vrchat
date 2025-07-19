@@ -1,6 +1,7 @@
 ﻿using autumn.ml.Cheat.Modules.Local;
 using brewchat.hybridxcore.bep.Game.Monobehaviours;
 using Brewchat.Cheat;
+using Brewchat.VRCUI;
 using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
@@ -66,7 +67,7 @@ namespace brewchat.hybridxcore.bep
                 return;
             }
 
-            Background.color = Entry.config.Appearance.inGame.FlatLoadingOverlay.Base   ;
+            // Background.color = Entry.config.Appearance.inGame.FlatLoadingOverlay.Base;
             if (Entry.config.Appearance.inGame.FlatLoadingOverlay.Image != null)
             {
                 GameObject Custom_Background_Overlay_Obj = Background.gameObject.CreateIsolatedObject(true);
@@ -89,7 +90,6 @@ namespace brewchat.hybridxcore.bep
         public static void VRCLoadingSequence_Initialize_HOOK(ref VRCUiPageLoading? __instance)
         {
             if (__instance is null) return;
-            AppearanceManager.Custom.LoadingScreen();
             CSS.SetLoadingAudio();
             // CSS.Offline();
         }
@@ -157,7 +157,6 @@ namespace brewchat.hybridxcore.bep
         public static void AllowAvatarCopying_HOOK_ForceClone(APIUser __instance, ref bool __result)
         {
             __result = true;
- 
         }
         #endregion
 
@@ -186,12 +185,21 @@ namespace brewchat.hybridxcore.bep
 
         #region UpdateHook
 
-        /*[HarmonyPostfix, HarmonyPatch(typeof(VRCUiManager), nameof(VRCUiManager.LateUpdate), MethodType.Getter)]
-        public static void _0UpdateManager(ref VRCUiManager _instance)
+        [HarmonyPostfix, HarmonyPatch(typeof(VRCUiManager), nameof(VRCUiManager.LateUpdate))]
+        public static void _0UpdateManager(ref VRCUiManager __instance)
         {
-            if (_instance != null && !APIUser.CurrentUser.isSupporter) return;
+            if (__instance != null)
+            {
+                if (!GameUtils.World.IsLoaded()) return;
+                ESP.Instance.enabled = Entry.config.Render.Overlays.ESP.Enabled;
+
+                QM.Main.Toggles.Player.Fly.SetState(Entry.config.Player.Airborn.Flight.Enabled);
+                GameUtils.PlayerModel.Motion.Networking.Run_Speed(Entry.config.Player.Grounded.RunSpeed);
+                GameUtils.PlayerModel.Motion.Networking.Walk_Speed(Entry.config.Player.Grounded.WalkSpeed);
+                GameUtils.PlayerModel.Motion.Networking.Strafe_Speed(Entry.config.Player.Grounded.StrafeSpeed);
+            }
         }
-        [HarmonyPostfix, HarmonyPatch(typeof(VRCUiManager), nameof(VRCUiManager.Update), MethodType.Getter)]
+        /*[HarmonyPostfix, HarmonyPatch(typeof(VRCUiManager), nameof(VRCUiManager.Update), MethodType.Getter)]
         public static void _1UpdateManager(ref VRCUiManager _instance)
         {
             if (_instance != null && !APIUser.CurrentUser.isSupporter) return;
@@ -200,8 +208,8 @@ namespace brewchat.hybridxcore.bep
         public static void _2UpdateManager(ref VRCUiManager _instance)
         {
             if (_instance != null && !APIUser.CurrentUser.isSupporter) return;
-        }*/
-
+        }
+        */
         #endregion
 
         #region NetworkManager

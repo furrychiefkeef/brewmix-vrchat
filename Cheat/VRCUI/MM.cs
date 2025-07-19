@@ -15,7 +15,7 @@ using UnityEngine;
 
 
 
-namespace Brewchat.Cheat;
+namespace Brewchat.VRCUI;
 
 internal class MM : IMainMenuElements
 {
@@ -25,14 +25,15 @@ internal class MM : IMainMenuElements
         {
             try
             {
-                var Main_Page = new VRCPage(Entry.GetEntry().modInfo._currentName, EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
-                var tab = new VRCTab(Main_Page, Entry.GetEntry().modInfo._currentName, InfoAboutCheat.Tooltips.GetTooltipString("Tab"), sprite: EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
-                tab.SetBadge(true); tab.SetBadgeColor(Color.red); tab.SetText("Reconstruction!");
+                VRCPage? Main_Page = new VRCPage(Entry.GetEntry().modInfo._currentName, EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
+                VRCTab? tab = new VRCTab(Main_Page, Entry.GetEntry().modInfo._currentName, InfoAboutCheat.Tooltips.GetTooltipString("Tab"), sprite: EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
+                tab.SetBadge(true); tab.SetBadgeColor(Color.black); tab.SetText("Nighty");
 
                 #region VRCPage_CodeName::Aware
 
                 var VRCTweaks_Container = new VRCCellContainer(Main_Page, "Tweaks");
                 var Interface_Container = new VRCCellContainer(Main_Page, "Interface");
+                var Visuals_Container = new VRCCellContainer(Main_Page, "Visuals");
                 var tempPlayerWeaks_Container = new VRCCellContainer(Main_Page, "Player Tweaks (Temp)");
                 /*var UI_PROPERTIES = new VRCCellContainer(Main_Page, "Properties [QOL]");
                 var UI_HANDLER = new VRCCellContainer(Main_Page, "HANDLERS [PERFORMANCE]");
@@ -44,6 +45,7 @@ internal class MM : IMainMenuElements
                 var VRCTweaks = new VRCCellButton(Main_Page, VRCTweaks_Container, "Tweaks", "Change Properties (DEBUG) FOR VRCSDKs (3-2)");
                 var Interface = new VRCCellButton(Main_Page, Interface_Container, "Interface", "Tweak the Interface of The Cheat");
                 var VRCPlayerTweaksTemperary = new VRCCellButton(Main_Page, tempPlayerWeaks_Container, "Player Tweaks (Temp)", "Tweak Player (Temporary)");
+                var Visuals = new VRCCellButton(Main_Page, Visuals_Container, "Visuals Tweaks (Temp)", "Tweak Visuals (Temporary)");
                 /*new VRCCellButton(Main_Page, UI_PROPERTIES, "Properties", "[Properties]");
                 new VRCCellButton(Main_Page, UI_HANDLER, "Handlers", "[Handlers]");
                 new VRCCellButton(Main_Page, UI_MUSIC, "Music","[Music]", AstriekLib.Sprites.Music()); */
@@ -58,19 +60,19 @@ internal class MM : IMainMenuElements
 
                 new VRCToggleOperator(VRCTweaks_Container, "Debug Mode", "ON", "OFF", (x) =>
                 {
-                    Entry.config.Advanced.DebugMode = !Entry.config.Advanced.DebugMode;
+                    Entry.config.Advanced.DebugMode = x;
                     Config.SaveToFile(Entry.config, "config.json");
                 });
 
                 new VRCToggleOperator(VRCTweaks_Container, "Udon Logging", "ON", "OFF", (x) =>
                 {
-                    Entry.config.Logging.Game.UdonObjects = !Entry.config.Logging.Game.UdonObjects;
+                    Entry.config.Logging.Game.UdonObjects = x;
                     Config.SaveToFile(Entry.config, "config.json");
                 });
-                
+
                 new VRCToggleOperator(VRCTweaks_Container, "Photon Logging", "ON", "OFF", (x) =>
                 {
-                    Entry.config.Logging.Game.PhotonEvents = !Entry.config.Logging.Game.PhotonEvents;
+                    Entry.config.Logging.Game.PhotonEvents = x;
                     Config.SaveToFile(Entry.config, "config.json");
                 });
 
@@ -88,24 +90,24 @@ internal class MM : IMainMenuElements
                 {
                     Entry.config.Player.Network.Serialized = !Entry.config.Player.Network.Serialized;
                 });
-                new VRCSliderOperator(tempPlayerWeaks_Container, "Fly Speed", VRCSliderOperator.SliderType.PercentageNoRestrict, Entry.config.Player.Airborn.Flight.Speed, 0, 100, (x) =>
+                new VRCSliderOperator(tempPlayerWeaks_Container, "Fly Speed", VRCSliderOperator.SliderType.PercentageNoRestrict, Entry.config.Player.Airborn.Flight.Speed, 6.5f, 100, (x) =>
                 {
                     Entry.config.Player.Airborn.Flight.Speed = x;
                     Config.SaveToFile(Entry.config, "config.json");
                 });
-                new VRCSliderOperator(tempPlayerWeaks_Container, "Run Speed", VRCSliderOperator.SliderType.PercentageNoRestrict, Entry.config.Player.Grounded.RunSpeed, 0, 100, (x) =>
+                new VRCSliderOperator(tempPlayerWeaks_Container, "Run Speed", VRCSliderOperator.SliderType.None, Entry.config.Player.Grounded.RunSpeed, 4, 100, (x) =>
                 {
                     Entry.config.Player.Grounded.RunSpeed = x;
                     Config.SaveToFile(Entry.config, "config.json");
                 });
 
-                new VRCSliderOperator(tempPlayerWeaks_Container, "Strafe Speed",VRCSliderOperator.SliderType.PercentageNoRestrict, Entry.config.Player.Grounded.StrafeSpeed, 0, 100, (x) =>
+                new VRCSliderOperator(tempPlayerWeaks_Container, "Strafe Speed", VRCSliderOperator.SliderType.None, Entry.config.Player.Grounded.StrafeSpeed, 3, 100, (x) =>
                 {
                     Entry.config.Player.Grounded.StrafeSpeed = x;
                     Config.SaveToFile(Entry.config, "config.json");
                 });
-                
-                new VRCSliderOperator(tempPlayerWeaks_Container, "Walk Speed", VRCSliderOperator.SliderType.PercentageNoRestrict, Entry.config.Player.Grounded.WalkSpeed, 0, 100, (x) =>
+
+                new VRCSliderOperator(tempPlayerWeaks_Container, "Walk Speed", VRCSliderOperator.SliderType.None, Entry.config.Player.Grounded.WalkSpeed, 3, 100, (x) =>
                 {
                     Entry.config.Player.Grounded.WalkSpeed = x;
                     Config.SaveToFile(Entry.config, "config.json");
@@ -119,7 +121,25 @@ internal class MM : IMainMenuElements
 
 
                 #endregion
+                #region  Menu::Tweaks::Visuals
 
+                new VRCSliderOperator(Visuals_Container, "ESP (BlurSize)", VRCSliderOperator.SliderType.Int, Entry.config.Render.Overlays.ESP.Parameters.blurSize, 2, 15, (x) =>
+               {
+                   Entry.config.Render.Overlays.ESP.Parameters.blurSize = x;
+                   Config.SaveToFile(Entry.config, "config.json");
+               });
+                new VRCSliderOperator(Visuals_Container, "ESP (BlurIterations)", VRCSliderOperator.SliderType.Int, Entry.config.Render.Overlays.ESP.Parameters.blurIterations, 0, 15, (x) =>
+                {
+                    Entry.config.Render.Overlays.ESP.Parameters.blurIterations = (int)x;
+                    Config.SaveToFile(Entry.config, "config.json");
+                });
+                new VRCSliderOperator(Visuals_Container, "ESP (BlurDownsampleFactor)", VRCSliderOperator.SliderType.Int, Entry.config.Render.Overlays.ESP.Parameters.blurDownsampleFactor, 0, 15, (x) =>
+                {
+                    Entry.config.Render.Overlays.ESP.Parameters.blurDownsampleFactor = (int)x;
+                    Config.SaveToFile(Entry.config, "config.json");
+                });
+
+                #endregion
             }
             catch (Exception e)
             {

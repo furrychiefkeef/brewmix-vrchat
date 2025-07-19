@@ -29,7 +29,7 @@ public class Sploits
     {
         var plr = GameUtils.PlayerModel.LocalEntity().gameObject.transform;
         SavedPosition = plr.position;
-        plr.transform.position = new UnityEngine.Vector3(0, 100000000000, 0);
+        plr.transform.position = new UnityEngine.Vector3(0, -100000000000, 0);
         yield return new WaitForSeconds(5);
         plr.transform.position = SavedPosition;
     }

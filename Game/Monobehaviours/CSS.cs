@@ -166,7 +166,7 @@ namespace Brewchat.Cheat.Modules
 
                 ColorBlock colors = button.colors;
                 colors.normalColor = ThemeData.ButtonBg;
-                colors.highlightedColor = ThemeData.Highlight;
+                colors.highlightedColor =  Entry.config.Appearance.inGame.VRCUI._lastSelectedColor;
                 colors.selectedColor = ThemeData.ButtonQMSelected;
                 colors.disabledColor = ThemeData.UnityWhite; // Or a specific disabled color from your theme
                 button.colors = colors;
@@ -317,7 +317,7 @@ namespace Brewchat.Cheat.Modules
                         PedalGraphic backgroundGraphic = backgroundChild.GetComponent<PedalGraphic>();
                         if (backgroundGraphic != null)
                         {
-                            Texture2D bgTexture = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.action_menu_bg);
+                            Texture2D? bgTexture = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.action_menu_bg);
                             if (bgTexture != null)
                             {
                                 backgroundGraphic._texture = bgTexture;
@@ -350,7 +350,7 @@ namespace Brewchat.Cheat.Modules
                         Image cursorImage = cursorChild.GetComponent<Image>();
                         if (cursorImage != null)
                         {
-                            Texture2D cursorTexture = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.action_menu_joystick);
+                            Texture2D? cursorTexture = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.action_menu_joystick);
                             if (cursorTexture != null)
                             {
                                 Sprite cursorSprite = cursorTexture.ToSprite();

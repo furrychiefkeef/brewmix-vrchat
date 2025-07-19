@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using BlanketSDK.Utilities;
 using Brewchat.Game.Wrappers;
 using UnityEngine;
 
@@ -22,10 +23,13 @@ public class AppearanceManager
             {
                 loadingScreenObj = EngineUtils.Assets.AssetBundle(new(Entry.config.Appearance.inGame.LoadingScreen.Bundle.URL), true);
                 loadingScreenObj.transform.parent = VRCUiPageLoading.field_Internal_Static_VRCUiPageLoading_0.transform;
-                GameObject? Skybox = VRCUiPageLoading.field_Internal_Static_VRCUiPageLoading_0.transform.FindChild("3DElements").GetComponentInChildren<VRCGlobalRoot>().gameObject;
-                Skybox.GetComponent<MeshRenderer>().material.color = Color.red;
-                Skybox.layer = 0;
+                List<GameObject> _3DElements = VRCUiPageLoading.field_Internal_Static_VRCUiPageLoading_0.transform.FindChild("3DElements").transform.GetChildren();
+                _3DElements.ToList().ForEach(x => {  x.gameObject.layer = 0; }); // Overrender (Default Preventing Ur Meshes from being  covered)
+                
+                  
 
+             
+        
                 // loadingScreenObj.GetComponentsInChildren<Transform>().ToList().ForEach(x =>
                 // {
                 //    x.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;

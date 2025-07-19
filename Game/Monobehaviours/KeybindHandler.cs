@@ -6,41 +6,50 @@ using Brewchat.Game.Wrappers;
 using UnityEngine;
 
 namespace Brewchat.Game.Monobehaviours;
+
 internal class KeybindManager : UnityEngine.MonoBehaviour
 {
-    public KeybindManager(IntPtr ptr) : base(ptr) {}
+    public KeybindManager(IntPtr ptr) : base(ptr) { }
 
-    
     public KeybindManager Instance { get; set; }
     private void Awake()
     {
-        if (Instance == null) 
+        if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); 
+            DontDestroyOnLoad(gameObject);
         }
         else Destroy(this);
     }
     void Update()
     {
+
         if (!GameUtils.World.IsLoaded()) return;
-        {
+        
             #region Advanced
 
-            CommandHandler();
 
-            #endregion
-          
-            if(GameUtils.Gameplay.CallbackEvents.IsInMainMenu() || GameUtils.Gameplay.CallbackEvents.IsInQuickMenu()) return;
+            if (Input.GetKeyDown(KeyCode.Insert))
+            {
+                TempCommandHandler();
+            }
             
+            #endregion
+
+            if (GameUtils.Gameplay.CallbackEvents.IsInMainMenu() || GameUtils.Gameplay.CallbackEvents.IsInQuickMenu()) return;
+
             #region Keybinds
 
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Mouse2))
             {
                 PlayerModule.Movement.ClickTP();
             }
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F))
+            {
+                Entry.config.Player.Airborn.Flight.Enabled = !Entry.config.Player.Airborn.Flight.Enabled;
+            }
             
-            
+
             #region Camera
 
             if (Input.GetKeyDown(KeyCode.F5))
@@ -49,20 +58,17 @@ internal class KeybindManager : UnityEngine.MonoBehaviour
             }
             #endregion
 
-        
-            #endregion
-        }
-    }
 
-    void CommandHandler()
+            #endregion
+       
+    }
+    void TempCommandHandler()
     {
-        
-        if (Input.GetKeyDown(KeyCode.Insert))
+
+        GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a Command ", (id) =>
         {
-            GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a Command ", (id) =>
-            {
-                
-            }, MultiLine: false, Placeholder: "type *help");
-        }
+          
+        }, MultiLine: false, Placeholder: "type /help");
+        
     }
 }
