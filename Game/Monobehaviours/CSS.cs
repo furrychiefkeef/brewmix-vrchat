@@ -165,9 +165,9 @@ namespace Brewchat.Cheat.Modules
                 if (button == null) continue; // Should not happen, but good practice
 
                 ColorBlock colors = button.colors;
-                colors.normalColor = ThemeData.ButtonBg;
+                colors.normalColor = Entry.config.Appearance.inGame.VRCUI._lastSelectedColor;
                 colors.highlightedColor =  Entry.config.Appearance.inGame.VRCUI._lastSelectedColor;
-                colors.selectedColor = ThemeData.ButtonQMSelected;
+                colors.selectedColor = Entry.config.Appearance.inGame.VRCUI._lastSelectedColor;
                 colors.disabledColor = ThemeData.UnityWhite; // Or a specific disabled color from your theme
                 button.colors = colors;
             }
@@ -275,7 +275,7 @@ namespace Brewchat.Cheat.Modules
                                 Image dividerImage = dividerTransform.GetComponentInChildren<Image>(true);
                                 if (dividerImage != null)
                                 {
-                                    dividerImage.color = ThemeData.BG;
+                                    dividerImage.color = Entry.config.Appearance.inGame.VRCUI._lastSelectedColor;
 
                                     // Apply custom divider texture
                                     try
@@ -357,7 +357,7 @@ namespace Brewchat.Cheat.Modules
                                 if (cursorSprite != null)
                                 {
                                     cursorImage.sprite = cursorSprite;
-                                    cursorImage.color = GetCurrentThemeData.Highlight; // Use consistent theme color
+                                    cursorImage.color = Entry.config.Appearance.inGame.VRCUI._lastSelectedColor; // Use consistent theme color
                                 }
                             }
                             else

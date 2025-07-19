@@ -91,7 +91,7 @@ namespace brewchat.hybridxcore.bep
         {
             if (__instance is null) return;
             CSS.SetLoadingAudio();
-            // CSS.Offline();
+            CSS.Offline();
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
@@ -220,16 +220,17 @@ namespace brewchat.hybridxcore.bep
             if (__0 != null)
             {
                 Player? player = __0;
-                if(player.APIUser.IsSelf) 
+                if (player.APIUser.IsSelf)
                 {
                     CSS.Online();
                 }
                 else
                 {
-                   ESP.Instance.Add(player);
-                //    Wallhacks.Instance.AddPlayerOverlay(player);
-                //    Wallhacks.Instance.AddNameplateOverlay(player);
+                    ESP.Instance.Add(player);
+                    //    Wallhacks.Instance.AddPlayerOverlay(player);
+                    //    Wallhacks.Instance.AddNameplateOverlay(player);
                 }
+                player.gameObject.GetOrAddComponentSafe<Nameplates>();
             }
         }
 
