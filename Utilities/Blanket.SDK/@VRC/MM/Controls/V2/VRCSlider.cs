@@ -56,9 +56,10 @@ internal class VRCSliderOperator : IMainMenuElements
         Toggle.ToggleEvent? LISTENER = _0.onValueChanged;
 
         _0.isOn = state;
+        __1.Method_Public_Void_Boolean_PDM_2(false);
         LISTENER.AddListener(new System.Action<bool>(x =>
         {
-            __1.Method_Public_Void_Boolean_PDM_1(x);
+            __1.Method_Public_Void_Boolean_PDM_2(x);
             func(x);
         }));
         _0._controlName = name;
@@ -72,7 +73,7 @@ internal class VRCSliderOperator : IMainMenuElements
         Slider.value = defaultval;
         Slider.minValue = min;
         Slider.maxValue = max;
-        
+
         Slider.onValueChanged.AddListener(new System.Action<float>(x =>
         {
             __0._numberText.prop_String_0 = OnSelectedType(type, x);

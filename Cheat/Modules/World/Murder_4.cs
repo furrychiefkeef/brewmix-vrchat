@@ -212,9 +212,22 @@ public class Murder_4
             }
             public struct Commerence
             {
-                public static void PateronPerks()
+                public static void PateronPerks(bool state)
                 {
-
+                    UdonBehaviour? luger = GameUtils.World.SDK3.Udon.Pickups.GetPickup("Luger")?.GetComponent<UdonBehaviour>();
+                    UdonBehaviour? revolver = GameUtils.World.SDK3.Udon.Pickups.GetPickup("Revolver")?.GetComponent<UdonBehaviour>();
+                    UdonBehaviour? shotgun = GameUtils.World.SDK3.Udon.Pickups.GetPickup("Shotgun")?.GetComponent<UdonBehaviour>();
+                    switch (state)
+                    {
+                        case true:
+                            luger?.SetVariable<bool>("isPatreon", true);
+                            revolver?.SetVariable<bool>("isPatreon", true);
+                            shotgun?.SetVariable<bool>("isPatreon", true);
+                            break;
+                        case false:
+                            break;
+                    }
+                    GameUtils.UI.HUD.ToastV1($"RPateron is Set: {(state ? "enabled" : "disabled")}!");
                 }
             }     
         

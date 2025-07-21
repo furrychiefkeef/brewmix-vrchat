@@ -108,7 +108,7 @@ internal class VRCPage : IQuickMenuElements
 
                 if (!pageOptions.ShowScrollWheel)
                 {
-                    UnityEngine.Object.Destroy(Scrollbar.gameObject.transform.FindChild("Sliding Area").gameObject);
+                    UnityEngine.Object.Destroy(Scrollbar.gameObject.transform.FindChild("Sliding Area"));
                     UnityEngine.Object.DestroyImmediate(Scrollbar.GetComponent<VRC.UI.ImageEx>());
                 }
             }

@@ -155,7 +155,7 @@ namespace Brewchat.Game.Wrappers
         {
             public static VRCPlayer VRCPlayerEntity() => VRCPlayer.field_Internal_Static_VRCPlayer_0;
             public static VRC.Player LocalEntity() => VRC.Player.prop_Player_0;
-            public static VRC.Player Get => VRC.Player.prop_Player_0;
+            public static VRC.Player? Get => VRC.Player.prop_Player_0;
 
             public struct _components
             {
@@ -496,7 +496,6 @@ namespace Brewchat.Game.Wrappers
                     if (isAudible) VRCUiSoundPlayer.Method_Public_Static_Void_AudioClip_Single_0(HudController.field_Public_Static_HudController_0.notificationSound, 5f);
 
                     var Send = HudController.field_Public_Static_HudController_0.userEventCarousel;
-                    Send.userEventPrefab.text.richText = true;
                     Send.Method_Private_Void_LocalizableString_Sprite_Single_0(content.Localizable(), sprite, duration);
 
                 }

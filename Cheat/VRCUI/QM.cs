@@ -8,7 +8,7 @@ using BlanketSDK.QM.Elements.Controls.V2;
 using BlanketSDK.QM.Elements.Modals;
 using BlanketSDK.QM.Elements.V2;
 using BlanketSDK.Utilities;
-
+using brewchat.hybridxcore.bep.Game.Monobehaviours;
 using Brewchat.Cheat.Modules;
 using Brewchat.Cheats.World;
 using Brewchat.Game.Monobehaviours;
@@ -108,6 +108,24 @@ internal class QM
 
                 }, false);
 
+                Group_UI.AddButton("Fake Player Name (Local) [Phase 1]", "Phase 1", () =>
+                {
+                    GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter A Name", (x) =>
+                    {
+                        GameUtils.PlayerModel.LocalEntity().GetComponent<Nameplates>().SetNameText(x);
+                    }, Placeholder: "Player", MultiLine: false);
+
+                }, false);
+                Group_UI.AddButton("Fake Player Name (Local) [Phase 2]", "Phase 1", () =>
+                {
+                    GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter A Name", (x) =>
+                    {
+                        GameUtils.PlayerModel.LocalEntity().APIUser.displayName = x;
+                        GameUtils.PlayerModel.LocalEntity().APIUser.username = x;
+                        GameUtils.PlayerModel.LocalEntity().VRCPlayerApi.displayName = x;
+                    }, Placeholder: "Player", MultiLine: false);
+
+                }, false);
                 Group_UI.AddButton("Give Pickup", $"Send a Udon Event <color=red>(Custom Only NOT NETWORKING)</color>", () =>
                 {
                     GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a Pickup Name", (x) =>

@@ -54,12 +54,12 @@ internal class VRCSliderOperator : IQuickMenuElements
         __1.field_Private_Single_1 = 95.4124f; // Fix it going off element
         Toggle.ToggleEvent? LISTENER = _0.onValueChanged;
 
-        __1.Method_Public_Void_Boolean_PDM_1(false);
+        __1.Method_Public_Void_Boolean_PDM_2(false);
         _0.isOn = state;
         
         LISTENER.AddListener(new System.Action<bool>(x =>
         {
-            __1.Method_Public_Void_Boolean_PDM_1(x);
+            __1.Method_Public_Void_Boolean_PDM_2(x);
             func(x);
         }));
         _0._controlName = name;

@@ -133,6 +133,75 @@ internal static class EngineUtils
 }
     public struct Conversion
     {
+        public static Texture2D MakeTextureGrayscale(Texture2D originalTexture)
+        {
+            // Create a new texture with the same dimensions
+            Texture2D grayscaleTexture = new Texture2D(originalTexture.width, originalTexture.height);
+            
+            // Get all the pixels
+            Color[] pixels = originalTexture.GetPixels();
+            
+            // Convert each pixel to grayscale
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                float gray = pixels[i].r * 0.299f + pixels[i].g * 0.587f + pixels[i].b * 0.114f;
+                pixels[i] = new Color(gray, gray, gray, pixels[i].a); // Keep original alpha
+            }
+            
+            // Apply the grayscale pixels to the new texture
+            grayscaleTexture.SetPixels(pixels);
+            grayscaleTexture.Apply();
+            
+            return grayscaleTexture;
+        }
+        public static Sprite MakeSpriteGrayscale(Sprite originalSprite)
+        {
+            Texture2D originalTexture = originalSprite.texture;
+            // Make the texture readable if it isn't already
+            if (!originalTexture.isReadable)
+            {
+                MelonLogger.Msg("Texture not readable, creating readable copy...");
+                
+                // Create a readable copy using RenderTexture
+                RenderTexture renderTex = RenderTexture.GetTemporary(originalTexture.width, originalTexture.height, 0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
+                Graphics.Blit(originalTexture, renderTex);
+                
+                RenderTexture previous = RenderTexture.active;
+                RenderTexture.active = renderTex;
+                
+                Texture2D readableTexture = new Texture2D(originalTexture.width, originalTexture.height);
+                readableTexture.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
+                readableTexture.Apply();
+                
+                RenderTexture.active = previous;
+                RenderTexture.ReleaseTemporary(renderTex);
+                
+                originalTexture = readableTexture;
+            }
+            
+            // Now get pixels and convert to grayscale
+            Color[] pixels = originalTexture.GetPixels();
+            
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                float gray = pixels[i].r * 0.299f + pixels[i].g * 0.587f + pixels[i].b * 0.114f;
+                pixels[i] = new Color(gray, gray, gray, pixels[i].a);
+            }
+            
+            Texture2D grayscaleTexture = new Texture2D(originalTexture.width, originalTexture.height);
+            grayscaleTexture.SetPixels(pixels);
+            grayscaleTexture.Apply();
+            
+            Sprite grayscaleSprite = Sprite.Create(
+                grayscaleTexture,
+                originalSprite.rect,
+                originalSprite.pivot,
+                originalSprite.pixelsPerUnit
+            );
+            
+            grayscaleSprite.name = originalSprite.name;
+            return grayscaleSprite;
+        }
         [System.Serializable]
         public struct HSBColor
         {
@@ -638,11 +707,11 @@ public static class TextureExtensions
 {
     public static Sprite ToSprite(this Texture2D? texture)
     {
-        // Create a sprite from the texture using default game settings
+      
         return Sprite.Create(
             texture,
             new Rect(0, 0, texture.width, texture.height),
-            Vector2.zero // Using game's default settings
+            Vector2.zero 
         );
     }
 

@@ -30,7 +30,7 @@ namespace brewchat.hybridxcore.bep
         static bool _isVRCApplicationLoaded = false;
         static bool _isFlatOverlayLoaded = false;
         static bool _isSelectedMenusLoaded = false;
-        static bool _isMainMenuLoaded = false;  
+        static bool _isMainMenuLoaded = false;
         static bool _isQuickMenuLoaded = false;
 
         #region INTERNAL_CORE
@@ -45,7 +45,7 @@ namespace brewchat.hybridxcore.bep
             __instance?.gameObject.GetOrAddComponentSafe<CSS>();
             __instance?.gameObject.GetOrAddComponentSafe<KeybindManager>();
             // __instance?.gameObject.GetOrAddComponentSafe<AnimatedTextureLoader>();
-            
+
         }
 
         #endregion
@@ -56,11 +56,11 @@ namespace brewchat.hybridxcore.bep
         public static void FlatLoadingOverlay_Initialize_HOOK(ref LoadingOverlayController? __instance)
         {
             if (__instance is null || _isFlatOverlayLoaded) return;
-             _isFlatOverlayLoaded = true;
+            _isFlatOverlayLoaded = true;
             Image Background = __instance.gameObject
             .transform.Find("FlatLoadingOverlay(Clone)/Container")
             .transform.FindChild("Canvas/Background").GetComponent<Image>();
-           
+
             if (Entry.config.Appearance.inGame.HideLoadingOverlay)
             {
                 UnityEngine.Object.DestroyImmediate(Background, true);
@@ -72,18 +72,18 @@ namespace brewchat.hybridxcore.bep
             {
                 GameObject Custom_Background_Overlay_Obj = Background.gameObject.CreateIsolatedObject(true);
                 Image Custom_Background_Overlay = Custom_Background_Overlay_Obj.GetComponent<Image>();
-
+                
                 Custom_Background_Overlay.sprite = EngineUtils.Assets.Sprite(new Uri(Entry.config.Appearance.inGame.FlatLoadingOverlay.Image));
                 Custom_Background_Overlay.color = Entry.config.Appearance.inGame.FlatLoadingOverlay.Tint;
             }
-            
+
         }
 
         // [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.OnEnable))]
         // public static void VRCLoadingSequence_IsEnable_HOOK(ref VRCUiPageLoading? __instance)
         // {
         //     if (__instance is null) return;
-            
+
         // }
 
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiPageLoading), nameof(VRCUiPageLoading.Start))]
@@ -104,16 +104,16 @@ namespace brewchat.hybridxcore.bep
             __instance?.gameObject.GetOrAddComponentSafe<Wallhacks>();
 
 
-            
+
             QM.Main.Apply();
             Widgets.QM.Initalize();
-        } 
+        }
 
         [HarmonyPrefix, HarmonyPatch(typeof(VRC_Pickup), nameof(VRC_Pickup.Awake))]
         public static bool _Pickups(ref VRC_Pickup? __instance)
         {
-            if ( __instance is null) return true;
-            
+            if (__instance is null) return true;
+
             if (__instance != null)
             {
                 __instance.DisallowTheft = false;
@@ -130,7 +130,7 @@ namespace brewchat.hybridxcore.bep
         //{
         //    if (__instance is null || _isSelectedMenusLoaded) return;
         //    _isSelectedMenusLoaded = true;
-            
+
         //}
 
         [HarmonyPrefix, HarmonyPatch(typeof(VRC.Udon.Wrapper.Modules.ExternVRCSDK3ComponentsVRCPickup), nameof(VRC.Udon.Wrapper.Modules.ExternVRCSDK3ComponentsVRCPickup.__Drop__SystemVoid))]
@@ -149,7 +149,7 @@ namespace brewchat.hybridxcore.bep
             QM.SelectedUserMenu.Apply();
             MM.SelectedWorldMenu.Apply();
             MM.SelectedUserMenu.Apply();
-         
+
         }
 
 
@@ -172,13 +172,13 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPrefix, HarmonyPatch(typeof(UdonBehaviour), nameof(UdonBehaviour.SendCustomEvent))]
         public static bool __0Udon(ref UdonBehaviour __instance, ref string __0)
         {
-            if(__instance is null) return true;
-            
-            if(Entry.config.Logging.Game.UdonObjects) 
+            if (__instance is null) return true;
+
+            if (Entry.config.Logging.Game.UdonObjects)
             {
                 MelonLogger.Msg($"[Udon]: [{__instance.name}] -> {__0}");
             }
-            
+
             return true;
         }
         #endregion
@@ -188,16 +188,15 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiManager), nameof(VRCUiManager.LateUpdate))]
         public static void _0UpdateManager(ref VRCUiManager __instance)
         {
-            if (__instance != null)
-            {
-                if (!GameUtils.World.IsLoaded()) return;
-                ESP.Instance.enabled = Entry.config.Render.Overlays.ESP.Enabled;
-
-                QM.Main.Toggles.Player.Fly.SetState(Entry.config.Player.Airborn.Flight.Enabled);
-                GameUtils.PlayerModel.Motion.Networking.Run_Speed(Entry.config.Player.Grounded.RunSpeed);
-                GameUtils.PlayerModel.Motion.Networking.Walk_Speed(Entry.config.Player.Grounded.WalkSpeed);
-                GameUtils.PlayerModel.Motion.Networking.Strafe_Speed(Entry.config.Player.Grounded.StrafeSpeed);
-            }
+                if (GameUtils.World.IsLoaded())
+                {
+                    ESP.Instance.enabled = Entry.config.Render.Overlays.ESP.Enabled;
+                    QM.Main.Toggles.Player.Fly.SetState(Entry.config.Player.Airborn.Flight.Enabled);
+                    GameUtils.PlayerModel.Motion.Networking.Run_Speed(Entry.config.Player.Grounded.RunSpeed);
+                    GameUtils.PlayerModel.Motion.Networking.Walk_Speed(Entry.config.Player.Grounded.WalkSpeed);
+                    GameUtils.PlayerModel.Motion.Networking.Strafe_Speed(Entry.config.Player.Grounded.StrafeSpeed);
+                }
+          
         }
         /*[HarmonyPostfix, HarmonyPatch(typeof(VRCUiManager), nameof(VRCUiManager.Update), MethodType.Getter)]
         public static void _1UpdateManager(ref VRCUiManager _instance)
@@ -219,7 +218,8 @@ namespace brewchat.hybridxcore.bep
         {
             if (__0 != null)
             {
-                Player? player = __0;
+                Player? player = __0;   
+                player.gameObject.GetOrAddComponentSafe<Nameplates>();
                 if (player.APIUser.IsSelf)
                 {
                     CSS.Online();
@@ -227,20 +227,21 @@ namespace brewchat.hybridxcore.bep
                 else
                 {
                     ESP.Instance.Add(player);
+
                     //    Wallhacks.Instance.AddPlayerOverlay(player);
                     //    Wallhacks.Instance.AddNameplateOverlay(player);
                 }
-                player.gameObject.GetOrAddComponentSafe<Nameplates>();
+                
             }
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(NetworkManager), nameof(NetworkManager.Method_Internal_Void_Player_PDM_0))]
         public static void PlayerLeft_HOOK(VRC.Player __0)
-        {   
+        {
             if (__0 != null)
             {
                 Player? player = __0;
-                if(player.APIUser.IsSelf) 
+                if (player.APIUser.IsSelf)
                 {
                     ESP.Instance.ClearAll();
                 }
@@ -259,16 +260,16 @@ namespace brewchat.hybridxcore.bep
         public static bool prefixHOOK_Photon(EventData __0)
         {
             if (__0 is null) return true;
-            
+
             // Only handle blocking i
-                
-                // Add other blocking conditions here as needed
-                // if (someOtherCondition)
-                // {
-                //     MelonLogger.Msg($"[BLOCKED] Event {__0.Code} for other reason");
-                //     return false;
-                // }
-            
+
+            // Add other blocking conditions here as needed
+            // if (someOtherCondition)
+            // {
+            //     MelonLogger.Msg($"[BLOCKED] Event {__0.Code} for other reason");
+            //     return false;
+            // }
+
             return true; // Continue to original method and postfix
         }
 
@@ -276,13 +277,13 @@ namespace brewchat.hybridxcore.bep
         public static void postfixHOOK_Photon(EventData __0)
         {
             if (__0 is null) return;
-            
+
             // Only handle logging in postfix (for events that weren't blocked)
             if (Entry.config.Logging.Game.PhotonEvents)
             {
                 object Data = null;
                 ParameterDictionary? Parameters = __0.Parameters;
-                
+
                 foreach (Il2CppSystem.Collections.Generic.KeyValuePair<byte, Il2CppSystem.Object>? data in Parameters)
                 {
                     Data = EngineUtils.iL2CPPWrapper.Serialization.FromIL2CPPToManaged<object>(data);
@@ -292,7 +293,7 @@ namespace brewchat.hybridxcore.bep
             }
         }
 
-        
+
         [HarmonyPrefix, HarmonyPatch(typeof(VRC_EventDispatcherRFC), nameof(VRC_EventDispatcherRFC.Method_Public_Void_Player_VrcEvent_VrcBroadcastType_Int32_Single_0))]
         private static bool __RFC_HOOK(ref VRC.Player __0, ref VRC_EventHandler.VrcEvent __1, ref VRC_EventHandler.VrcBroadcastType __2, ref int __3, ref float __4)
         {
@@ -306,16 +307,18 @@ namespace brewchat.hybridxcore.bep
                 }
                 return true;
             }
-    
+
 
             return true;
         }
         
+    }
+}
      
         #endregion
-    }  
     
-}
+    
+
 
       
 

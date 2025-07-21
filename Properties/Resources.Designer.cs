@@ -149,11 +149,37 @@
             }
         }
         
+         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] sprite_tool
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("sprite_tool", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] capsule_voice_pulse {
-            get {
+        internal static byte[] capsule_voice_glow_full_groups
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("capsule_voice_glow_full_groups", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] capsule_voice_pulse
+        {
+            get
+            {
                 object obj = ResourceManager.GetObject("capsule_voice_pulse", resourceCulture);
                 return ((byte[])(obj));
             }

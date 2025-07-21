@@ -139,6 +139,9 @@
   <data name="capsule_voice_glow_half_groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Textures\UI\Nameplate\capsule_voice_glow_half_groups.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="capsule_voice_glow_full_groups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Textures\UI\Nameplate\capsule_voice_glow_full_groups.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="capsule_voice_pulse" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Textures\UI\Nameplate\capsule_voice_pulse.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -161,7 +164,9 @@
   <data name="sprite_music" type="System.Resources.ResXFileRef, System.Windows.Forms">
   <value>..\Assets\Textures\UI\Icons\music.astrieksprites;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  
+  <data name="sprite_tool" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <value>..\Assets\Textures\UI\Icons\screwdriver-wrench.astrieksprites;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="assetbundle-console" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Prefabs\canvas.bundle;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
