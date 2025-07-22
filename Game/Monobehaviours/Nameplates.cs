@@ -242,7 +242,7 @@ public class Nameplates : MonoBehaviour
     public void SetNameText(string txt) => Nameplate.field_Public_TextMeshProUGUIEx_0.text = txt;
     public void Dev()
     {
-        Nameplate.field_Public_TextMeshProUGUIEx_0.text = $"<color=#FF7F50>DEV</color> {Player.APIUser.displayName}";
+        Nameplate.field_Public_TextMeshProUGUIEx_0.text = $"<color=#FF7F50>DEVE</color> {Player.APIUser.displayName}";
     }
     public string GetPlayerName(string txt) => Nameplate.field_Public_TextMeshProUGUIEx_0.text;
     public class NameplateUtils
