@@ -176,7 +176,8 @@ namespace Brewchat.Cheat.Modules
         }
         public static void ApplyHighlight()
         {
-            GameUtils.Camera.Get.GetComponent<HighlightsFXStandalone>().field_Protected_Color_0 = Entry.config.Appearance.inGame.VRCUI._lastSelectedColor;
+            var fx = GameUtils.Camera.Get.transform.GetComponents<HighlightsFXStandalone>().ToList();
+            fx[2].field_Protected_Color_0 = Entry.config.Appearance.inGame.VRCUI._lastSelectedColor;
         }
         public static void ApplyAdvancedMenuBackgrounds()
         {
