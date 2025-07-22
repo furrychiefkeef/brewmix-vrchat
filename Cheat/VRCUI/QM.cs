@@ -235,6 +235,7 @@ internal class QM
             mainGroupLayout.AddButton("World", "Debugger", world.Page.Open, true);
             mainGroupLayout.AddButton("Visuals", "Visuals", visuals.Page.Open, true);
             mainGroupLayout.AddButton("Exploits", "Visuals", exploits.Page.Open, true);
+            VRCCarouselButton vcb = new(mainGroupLayout, "Fly", "ice", null);
 
             #endregion
 

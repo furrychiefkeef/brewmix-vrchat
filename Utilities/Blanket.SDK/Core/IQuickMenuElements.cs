@@ -53,6 +53,7 @@ internal class IQuickMenuElements // WHY DID I MAKE THIS: CAUSE MY IDE WAS GIVIN
         public class SelectedUser
         {
             public static Transform SelectedUser_ButtonContainer() => QMMenus.QMSubmenus.SelectedUser_Local().FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_UserActions");
+            public static Transform SelectedUser_ThreeSwitchButton() => QMMenus.QMSubmenus.SelectedUser_Local().FindChild("ScrollRect/Viewport/VerticalLayoutGroup/Buttons_AvatarActions");
         }
     }
     internal class QMControls

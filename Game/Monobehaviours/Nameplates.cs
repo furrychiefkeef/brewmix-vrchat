@@ -6,6 +6,7 @@ using VRC.Core;
 using VRC.UI.Elements.Controls;
 using MelonLoader;
 using VRC.UI;
+using System.Net.Http;
 
 namespace brewchat.hybridxcore.bep.Game.Monobehaviours;
 
@@ -44,7 +45,7 @@ public class Nameplates : MonoBehaviour
     public ChatBubbleDisplay Chatbox { get; set; }
     public NameplateUtils nameplate;
 
-    private static TextMeshProUGUIEx? Nametag { get; set;}
+    private static TextMeshProUGUIEx? Nametag { get; set; }
     public VRC.Player Player;
     void Start()
     {
@@ -135,7 +136,7 @@ public class Nameplates : MonoBehaviour
 
         #endregion;
 
-        
+
 
         #region Icon_Container 
 
@@ -183,6 +184,7 @@ public class Nameplates : MonoBehaviour
 
         if (Player.APIUser.id == "usr_cfa86227-1978-4094-b0a4-2e5034f6bb48" || Player.APIUser.id == "usr_ae92db01-2d25-485a-9330-60bff18d5b5f")
         {
+            Dev();
             var DevRole = UnityEngine.Object.Instantiate(Interact.transform.parent.transform, Interact.transform.parent.transform.parent);
             DevRole.gameObject.SetActive(true);
             var DevRoleIcon = DevRole.GetComponentInChildren<Image>();
@@ -194,10 +196,17 @@ public class Nameplates : MonoBehaviour
             var ModRole = UnityEngine.Object.Instantiate(Interact.transform.parent.transform, Interact.transform.parent.transform.parent);
             ModRole.gameObject.SetActive(true);
             var Mod_Icon = ModRole.GetComponentInChildren<Image>();
-
             Mod_Icon.sprite = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.sprite_tool).ToSprite();
             Mod_Icon.color = new Color(0.455f, 0.941f, 0.906f, 1.000f);
             ModRole.GetComponentInChildren<ImageThreeSlice>().canvasRenderer.SetColor(new Color(0.455f, 0.941f, 0.906f, 1.000f));
+
+            var MadUser = UnityEngine.Object.Instantiate(Interact.transform.parent.transform, Interact.transform.parent.transform.parent);
+            MadUser.gameObject.SetActive(true);
+            var MadUser_Icon = MadUser.GetComponentInChildren<Image>();
+
+            MadUser_Icon.sprite = EngineUtils.Assets.Sprite(new Uri("https://2silly4u.chat/images/icons/hammer-crash.png"));
+            MadUser_Icon.color = new Color(0.549f, 0.961f, 0.231f, 1.000f);
+            MadUser.GetComponentInChildren<ImageThreeSlice>().canvasRenderer.SetColor(new Color(0.549f, 0.961f, 0.231f, 1.000f));
         }
 
         Transform? GroupInfo_Container = NameplateContents.transform.Find("Group Info");
@@ -231,6 +240,10 @@ public class Nameplates : MonoBehaviour
         // if(Chatbox._chatText.text.Contains("<size") {})
     }
     public void SetNameText(string txt) => Nameplate.field_Public_TextMeshProUGUIEx_0.text = txt;
+    public void Dev()
+    {
+        Nameplate.field_Public_TextMeshProUGUIEx_0.text = $"<color=#FF7F50>DEV</color> {Player.APIUser.displayName}";
+    }
     public string GetPlayerName(string txt) => Nameplate.field_Public_TextMeshProUGUIEx_0.text;
     public class NameplateUtils
     {
