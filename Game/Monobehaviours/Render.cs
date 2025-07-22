@@ -139,29 +139,10 @@ internal class Wallhacks : MonoBehaviour
     private SkinnedMeshRenderer _meshs;
     public bool Enable {get; set;} = true;
 
-    
-    public void AddNameplateOverlay(VRC.Player player) => Nameplates(player, enabled);
+
     public void AddPlayerOverlay(VRC.Player player) => Player(player, enabled);
 
-    void Nameplates(VRC.Player player , bool enable = true) 
-    {
-             if (player != null) 
-             {
-               
-                PlayerNameplate _nameplate = player._vrcplayer.Nameplate;
-                 if(enable) 
-                 {
-                    _nameplate.NameplatePositioner.transform.GetChild(0).gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
-                    return;
-                 }
-                 else
-                 {
-                    _nameplate.NameplatePositioner.transform.GetChild(0).gameObject.layer = 0;
-                    return;
-                 }
-                
-             }   
-    }
+   
 
     void Player(VRC.Player player , bool enable = true) 
     {

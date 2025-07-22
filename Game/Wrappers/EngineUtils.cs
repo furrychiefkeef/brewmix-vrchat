@@ -397,7 +397,7 @@ internal static class EngineUtils
 
         public static string ColorToHex(Color color)
         {
-            return ColorUtility.ToHtmlStringRGB(color);
+            return $"#{ColorUtility.ToHtmlStringRGB(color)}";
         }
     }
 

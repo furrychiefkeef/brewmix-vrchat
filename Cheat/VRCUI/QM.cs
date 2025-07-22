@@ -187,6 +187,10 @@ internal class QM
                 {
                     Entry.config.Render.Overlays.ESP.Enabled = !Entry.config.Render.Overlays.ESP.Enabled;
                 });
+                Visuals_RenderModal.AddToggle("Nameplate Overrender", "", "", (x) =>
+                {
+                    Nameplates.seriously = !Nameplates.seriously;
+                });
 
                 //     Visuals_RenderModal.AddToggle("<color=#C278A7>[</color><color=#B23E7B>W</color><color=#A30550>I</color><color=#C23E6D>P</color><color=#E1778A>]</color> ESP Pickups", "", "", (x) =>
                 //    {

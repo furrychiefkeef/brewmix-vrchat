@@ -7,6 +7,7 @@ using VRC.UI.Elements.Controls;
 using MelonLoader;
 using VRC.UI;
 using System.Net.Http;
+using Photon.Realtime;
 
 namespace brewchat.hybridxcore.bep.Game.Monobehaviours;
 
@@ -37,13 +38,14 @@ public class Nameplates : MonoBehaviour
     public Nameplates(IntPtr ptr) : base(ptr) { }
     public UnityEngine.Color Main { get; set; }
     public Sprite? Test { get; set; }
+    public static bool seriously {get; set;}
     public Transform Background { get; set; }
     public PlayerNameplate? Nameplate { get; set; }
     public ImageThreeSlice Main_Glow { get; set; }
     public ImageThreeSlice Icon_Glow { get; set; }
+    public ImageThreeSlice InteractStatus { get; set; }
 
     public ChatBubbleDisplay Chatbox { get; set; }
-    public NameplateUtils nameplate;
 
     private static TextMeshProUGUIEx? Nametag { get; set; }
     public VRC.Player Player;
@@ -54,10 +56,13 @@ public class Nameplates : MonoBehaviour
 
         Nameplate = Player._vrcplayer.Nameplate;
         Chatbox = Player._vrcplayer.field_Public_ChatBubbleDisplay_0;
-        Prettify();
+        ApplyColoring();
+        ApplyTitleSystem();
+        ApplyBadgeSystem();
     }
     void Update()
     {
+        canSeeThroughWalls(seriously);
         if (Main_Glow._sprite.name == "capsule_voice_glow_half_groups")
         {
             MelonLogger.Msg("Groups");
@@ -83,14 +88,23 @@ public class Nameplates : MonoBehaviour
             Main_Glow._sprite = Sprite.Create(A, Main_Glow._sprite.rect, Main_Glow._sprite.pivot, Main_Glow._sprite.pixelsPerUnit, 0, SpriteMeshType.FullRect, Main_Glow._sprite.border);
         }
     }
-    public void Prettify()
+
+    public void ApplyColoring()
     {
         NameplateApplyColoring();
         ChatboxApplyColoring();
     }
+    public void ApplyBadgeSystem()
+    {
+        SpecialBadges();
+    }
+    public void ApplyTitleSystem()
+    {
+        SpecialTitles();
+    }
+
     void NameplateApplyColoring()
     {
-        nameplate = new NameplateUtils();
         Transform NameplateContents = Nameplate.contents.transform;
 
         #region Main_Container
@@ -180,34 +194,9 @@ public class Nameplates : MonoBehaviour
 
         ImageThreeSlice? Interact = StatusLine_Container.transform.Find("InteractionStatus/InteractBackground").GetComponent<ImageThreeSlice>();
         Interact.canvasRenderer.SetColor(Main);
+        InteractStatus = Interact;
 
 
-        if (Player.APIUser.id == "usr_cfa86227-1978-4094-b0a4-2e5034f6bb48" || Player.APIUser.id == "usr_ae92db01-2d25-485a-9330-60bff18d5b5f")
-        {
-            Dev();
-            var DevRole = UnityEngine.Object.Instantiate(Interact.transform.parent.transform, Interact.transform.parent.transform.parent);
-            DevRole.gameObject.SetActive(true);
-            var DevRoleIcon = DevRole.GetComponentInChildren<Image>();
-
-            DevRoleIcon.sprite = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite();
-            DevRoleIcon.color = new Color(0.965f, 0.180f, 0.584f, 1.000f);
-            DevRole.GetComponentInChildren<ImageThreeSlice>().canvasRenderer.SetColor(new Color(0.965f, 0.180f, 0.584f, 1.000f));
-
-            var ModRole = UnityEngine.Object.Instantiate(Interact.transform.parent.transform, Interact.transform.parent.transform.parent);
-            ModRole.gameObject.SetActive(true);
-            var Mod_Icon = ModRole.GetComponentInChildren<Image>();
-            Mod_Icon.sprite = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.sprite_tool).ToSprite();
-            Mod_Icon.color = new Color(0.455f, 0.941f, 0.906f, 1.000f);
-            ModRole.GetComponentInChildren<ImageThreeSlice>().canvasRenderer.SetColor(new Color(0.455f, 0.941f, 0.906f, 1.000f));
-
-            var MadUser = UnityEngine.Object.Instantiate(Interact.transform.parent.transform, Interact.transform.parent.transform.parent);
-            MadUser.gameObject.SetActive(true);
-            var MadUser_Icon = MadUser.GetComponentInChildren<Image>();
-
-            MadUser_Icon.sprite = EngineUtils.Assets.Sprite(new Uri("https://2silly4u.chat/images/icons/hammer-crash.png"));
-            MadUser_Icon.color = new Color(0.549f, 0.961f, 0.231f, 1.000f);
-            MadUser.GetComponentInChildren<ImageThreeSlice>().canvasRenderer.SetColor(new Color(0.549f, 0.961f, 0.231f, 1.000f));
-        }
 
         Transform? GroupInfo_Container = NameplateContents.transform.Find("Group Info");
         ImageThreeSlice? GroupInfo_Background = GroupInfo_Container.GetComponent<ImageThreeSlice>();
@@ -240,31 +229,52 @@ public class Nameplates : MonoBehaviour
         // if(Chatbox._chatText.text.Contains("<size") {})
     }
     public void SetNameText(string txt) => Nameplate.field_Public_TextMeshProUGUIEx_0.text = txt;
-    public void Dev()
+    public void SpecialBadges()
     {
-        Nameplate.field_Public_TextMeshProUGUIEx_0.text = $"<color=#FF7F50>DEVE</color> {Player.APIUser.displayName}";
-    }
-    public string GetPlayerName(string txt) => Nameplate.field_Public_TextMeshProUGUIEx_0.text;
-    public class NameplateUtils
-    {
-        
-       
-        public void AddStatusIcon(Sprite sprite)
+        if (Player.APIUser.id == "usr_cfa86227-1978-4094-b0a4-2e5034f6bb48" || Player.APIUser.id == "usr_ae92db01-2d25-485a-9330-60bff18d5b5f")
         {
-
+            CreateBadge("User", EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite(), new Color(0.922f, 0.235f, 0.576f, 1.000f));
+            CreateBadge("Staff", EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.sprite_tool).ToSprite(), new Color(0.376f, 0.937f, 0.816f, 1.000f));
+            CreateBadge("Moderator", EngineUtils.Assets.Sprite(new Uri("https://2silly4u.chat/images/icons/hammer-crash.png")), new Color(0.549f, 0.961f, 0.231f, 1.000f));
+        }
+        
+    }
+    public void SpecialTitles()
+    {
+        if (Player.APIUser.id == "usr_cfa86227-1978-4094-b0a4-2e5034f6bb48" || Player.APIUser.id == "usr_ae92db01-2d25-485a-9330-60bff18d5b5f")
+        {
+            SetTitle("[Moderator]", EngineUtils.Conversion.HexToColor("#99F846"));
         }
     }
-    public struct Renderer
+    public void SetTitle(string title, Color color)
     {
-        public bool canSeeThroughWalls(bool enable)
+        Nameplate.field_Public_TextMeshProUGUIEx_0.text = $"<color={EngineUtils.Conversion.ColorToHex(color)}>{title}</color> {Player.APIUser.displayName}";
+    }
+    public void CreateBadge(string Name, Sprite Sprite, Color Color)
+    {
+        Transform Badge = UnityEngine.Object.Instantiate(InteractStatus.transform.parent.transform, InteractStatus.transform.parent.transform.parent);
+        Badge.gameObject.SetActive(true);
+        Badge.name = $"[Badge) (Name)";
+        var Icon = Badge.GetComponentInChildren<Image>();
+        Icon.sprite = Sprite;
+        Icon.color = Color;
+        Badge.GetComponentInChildren<ImageThreeSlice>().canvasRenderer.SetColor(Color);
+    }
+    public string GetPlayerName(string txt) => Nameplate.field_Public_TextMeshProUGUIEx_0.text;
+   
+      public bool canSeeThroughWalls(bool enable)
         {
             switch (enable)
             {
                 case true:
-                    break;
-                    
-            }
-            return false;
+                Nameplate.NameplatePositioner.rootCanvas.gameObject.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
+                return true;
+                
+                case false:
+                Nameplate.NameplatePositioner.rootCanvas.gameObject.layer = 12;
+                return false;
+            };
         }
-    }
+
+
 }
