@@ -521,23 +521,25 @@ namespace Brewchat.Game.Wrappers
 
                 #region ALERT SYSTEM
 
-                public static string Alert(string content)
+                public static void Alert(string content)
                 {
                     VRCUIManager.prop_VRCUIManager_0.Method_Public_Virtual_Final_New_Void_LocalizableString_0(content.Localizable());
-                    return content;
                 }
 
                 #endregion
 
                 #region POPUP SYSTEM V1
 
-                public static void PopUp(string title = null, string content = null, float duration = 10f)
+                public static VRCUiPopupManager PopUp(string title = null, string content = null, float duration = 10f)
                 {
-                    VRCUiManager.prop_VRCUiManager_0.prop_VRCUiPopupManager_0
-                        .Method_Public_Void_LocalizableString_LocalizableString_Single_0
-                            (title.Localizable(), content.Localizable(), duration);
-                }
+                    VRCUiPopupManager PopUpManager = VRCUiManager.prop_VRCUiManager_0.prop_VRCUiPopupManager_0;
+                    PopUpManager.Method_Public_Void_LocalizableString_LocalizableString_Single_0(title.Localizable(), content.Localizable(), duration);
+                    VRCPopupBase PopUpBase = PopUpManager.field_Public_VRCPopupBase_0;
 
+                    PopUpBase.field_Public_TextMeshProUGUIEx_0.richText = true;
+                    PopUpBase.field_Public_TextMeshProUGUIEx_1.richText = true;
+                    return PopUpManager;
+                }
                 public static void PopUp2(string title = null, string content = null, string? uhz = null, Action func = null)
                 {
                     VRCUiManager.prop_VRCUiManager_0.prop_VRCUiPopupManager_0
@@ -545,13 +547,11 @@ namespace Brewchat.Game.Wrappers
                             (title.Localizable(), content.Localizable(), uhz.Localizable(), func);
                 }
 
-                public static void LoadingPopUp2(string? title, string? content, string? button_text, System.Action func,
-                    System.Action<VRCUiPopup> idk, float duration = 10f)
+                public static void LoadingPopUp2(string? title, string? content, string? button_text, System.Action func, System.Action func2, System.Action<VRCUiPopup> callback)
                 {
                     VRCUiManager.field_Private_Static_VRCUiManager_0.prop_VRCUiPopupManager_0
                         .Method_Public_Void_LocalizableString_LocalizableString_LocalizableString_Action_LocalizableString_Action_Action_1_VRCUiPopup_0
-                        (title.Localizable(), content.Localizable(), button_text.Localizable(), func, button_text.Localizable(),
-                            null, null);
+                        (title.Localizable(), content.Localizable(), button_text.Localizable(), func, button_text.Localizable(), func2, callback); 
                 }
 
                 public static void LoadingPopUp(string? title, string? content, string? button_text, System.Action func,

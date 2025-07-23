@@ -742,7 +742,7 @@ public static class ObjectExtension
 
          if(IsOnTop)
          {
-            clone.transform.SetAsFirstSibling();
+            clone.transform.SetSiblingIndex(x.transform.GetSiblingIndex());
          }      
         return clone;
     }

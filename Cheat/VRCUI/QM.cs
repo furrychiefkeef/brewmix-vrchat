@@ -43,6 +43,8 @@ internal class QM
         public static void CurrentStates()
         {
             Main.Toggles.Player.Fly.SetState(Entry.config.Player.Airborn.Flight.Enabled);
+            Main.NestedQMVisuals.ESP.SetState(Entry.config.Render.Overlays.ESP.Enabled);
+            Main.NestedQMVisuals.ESP.SetState(Entry.config.Render.Overlays.Nameplate_Wallhack);
         }
     }
     public class Main
@@ -94,7 +96,7 @@ internal class QM
         public class NestedQMDebug
         {
             public VRCPage? Page { get; set; }
-
+           
             public void Execute()
             {
                 Page = new VRCPage("Debug", true, pageOptions: new() { ShowScrollWheel = false });
@@ -160,7 +162,11 @@ internal class QM
         }
         public class NestedQMVisuals
         {
+            
             public VRCPage? Page { get; set; }
+            public static VRCToggle? ESP { get; set; }
+            public static VRCToggle? Wallhacks { get; set; }
+
 
             public void Execute()
             {
@@ -183,13 +189,15 @@ internal class QM
 
 
                 #region Modal_Main
-                Visuals_RenderModal.AddToggle("ESP", "", "", (x) =>
+                ESP = Visuals_RenderModal.AddToggle("ESP", "", "", (x) =>
                 {
                     Entry.config.Render.Overlays.ESP.Enabled = !Entry.config.Render.Overlays.ESP.Enabled;
+                    Config.SaveToFile(Entry.config, "config.json");
                 });
-                Visuals_RenderModal.AddToggle("Nameplate Overrender", "", "", (x) =>
+                Wallhacks = Visuals_RenderModal.AddToggle("Nameplate Overrender", "", "", (x) =>
                 {
-                    Nameplates.seriously = !Nameplates.seriously;
+                    Entry.config.Render.Overlays.Nameplate_Wallhack = !Entry.config.Render.Overlays.Nameplate_Wallhack;
+                    Config.SaveToFile(Entry.config, "config.json");
                 });
 
                 //     Visuals_RenderModal.AddToggle("<color=#C278A7>[</color><color=#B23E7B>W</color><color=#A30550>I</color><color=#C23E6D>P</color><color=#E1778A>]</color> ESP Pickups", "", "", (x) =>
@@ -218,6 +226,7 @@ internal class QM
             NestedQMVisuals visuals = new(); visuals.Execute();
             NestedQMExploits exploits = new(); exploits.Execute();
 
+          
             #endregion
 
 
@@ -260,8 +269,8 @@ internal class QM
             #endregion
 
 
-            VRCPanelGroupLayout vRCPanelGroupLayout = new(MainPage, 0, "Overhaul");
-            vRCPanelGroupLayout.AddTitle("Test Title");
+            VRCPanelGroupLayout vRCPanelGroupLayout = new(MainPage, 0, "V2");
+            vRCPanelGroupLayout.AddTitle("Beta");
             VRCButtonOperator vRCButtonOperator = new(vRCPanelGroupLayout, new()
             {
                 _title = "Title",
@@ -270,7 +279,12 @@ internal class QM
                 _subtitle = "Subtitle",
                 _tooltip = "tooltip"
 
-            }, null);
+            }, () =>
+            {
+                var manager = GameUtils.UI.HUD.PopUp("Alert", "<color=red>TEST</color>");
+                manager.field_Public_VRCPopupBase_0.field_Private_Color32_0 = EngineUtils.Conversion.HexToColor("##99F846");
+                
+            });
 
             var radial = new BlanketSDK.QM.Elements.Controls.V2.VRCRadialSelect(vRCPanelGroupLayout, "Test");
 
@@ -285,7 +299,7 @@ internal class QM
             new BlanketSDK.QM.Elements.Controls.V2.VRCToggleOperator(vRCPanelFoldout._verticalLayoutGroup, "water", "on", "off", (x) => MelonLogger.Msg($"Bool Set: {x} "));
             vRCPanelFoldout.AddSeperator();
             new BlanketSDK.QM.Elements.Controls.V2.VRCToggleOperator(vRCPanelFoldout._verticalLayoutGroup, "fire", "on", "off", (x) => MelonLogger.Msg($"Bool Set: {x} "));
-
+            Core.CurrentStates();
         }
     }
 

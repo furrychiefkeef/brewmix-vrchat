@@ -35,10 +35,8 @@ public class ESP : MonoBehaviour
     {
         if (FX_Entities == null && FX_Pickups == null)
         {
-
             FX_Entities = GameUtils.Camera.Get.gameObject.AddComponent<HighlightsFXStandalone>();
             FX_Pickups = GameUtils.Camera.Get.gameObject.AddComponent<HighlightsFXStandalone>();
-            
         }
 
     }

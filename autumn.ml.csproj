@@ -621,6 +621,6 @@
   </ItemGroup>
 
  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat\Mods&quot;&#xA;start &quot;&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat\launch.exe&quot; --no-vr --main-thread-priority=2" />
+    <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat\Mods&quot;&#xA;"/>
   </Target>
 </Project>

@@ -188,14 +188,22 @@ namespace brewchat.hybridxcore.bep
         [HarmonyPostfix, HarmonyPatch(typeof(VRCUiManager), nameof(VRCUiManager.LateUpdate))]
         public static void _0UpdateManager(ref VRCUiManager __instance)
         {
-                if (GameUtils.World.IsLoaded())
-                {
-                    ESP.Instance.enabled = Entry.config.Render.Overlays.ESP.Enabled;
-                    QM.Main.Toggles.Player.Fly.SetState(Entry.config.Player.Airborn.Flight.Enabled);
-                    GameUtils.PlayerModel.Motion.Networking.Run_Speed(Entry.config.Player.Grounded.RunSpeed);
-                    GameUtils.PlayerModel.Motion.Networking.Walk_Speed(Entry.config.Player.Grounded.WalkSpeed);
-                    GameUtils.PlayerModel.Motion.Networking.Strafe_Speed(Entry.config.Player.Grounded.StrafeSpeed);
-                }
+
+            if (GameUtils.PlayerModel.VRCPlayerEntity() != null && GameUtils.World.IsLoaded())
+            {
+                ESP.Instance.enabled = Entry.config.Render.Overlays.ESP.Enabled;
+                Nameplates.Overrender = Entry.config.Render.Overlays.Nameplate_Wallhack;
+
+                QM.Main.Toggles.Player.Fly.State(Entry.config.Player.Airborn.Flight.Enabled);
+                GameUtils.PlayerModel.Motion.Networking.Run_Speed(Entry.config.Player.Grounded.RunSpeed);
+                GameUtils.PlayerModel.Motion.Networking.Walk_Speed(Entry.config.Player.Grounded.WalkSpeed);
+                GameUtils.PlayerModel.Motion.Networking.Strafe_Speed(Entry.config.Player.Grounded.StrafeSpeed);
+
+            }
+            else
+            {
+                return;
+            }
           
         }
         /*[HarmonyPostfix, HarmonyPatch(typeof(VRCUiManager), nameof(VRCUiManager.Update), MethodType.Getter)]

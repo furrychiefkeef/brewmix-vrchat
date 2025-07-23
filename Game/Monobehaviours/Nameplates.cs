@@ -38,7 +38,7 @@ public class Nameplates : MonoBehaviour
     public Nameplates(IntPtr ptr) : base(ptr) { }
     public UnityEngine.Color Main { get; set; }
     public Sprite? Test { get; set; }
-    public static bool seriously {get; set;}
+    public static bool Overrender {get; set;}
     public Transform Background { get; set; }
     public PlayerNameplate? Nameplate { get; set; }
     public ImageThreeSlice Main_Glow { get; set; }
@@ -56,13 +56,12 @@ public class Nameplates : MonoBehaviour
 
         Nameplate = Player._vrcplayer.Nameplate;
         Chatbox = Player._vrcplayer.field_Public_ChatBubbleDisplay_0;
-        ApplyColoring();
-        ApplyTitleSystem();
-        ApplyBadgeSystem();
+        Apply();
+
     }
     void Update()
     {
-        canSeeThroughWalls(seriously);
+        canSeeThroughWalls(Overrender);
         if (Main_Glow._sprite.name == "capsule_voice_glow_half_groups")
         {
             MelonLogger.Msg("Groups");
@@ -89,6 +88,10 @@ public class Nameplates : MonoBehaviour
         }
     }
 
+    public void Apply()
+    {
+        ApplyColoring();
+    }
     public void ApplyColoring()
     {
         NameplateApplyColoring();
@@ -196,6 +199,15 @@ public class Nameplates : MonoBehaviour
         Interact.canvasRenderer.SetColor(Main);
         InteractStatus = Interact;
 
+        if (Player.APIUser.id == "usr_cfa86227-1978-4094-b0a4-2e5034f6bb48" || Player.APIUser.id == "usr_ae92db01-2d25-485a-9330-60bff18d5b5f")
+        {
+            if (!Player.APIUser.IsSelf)
+            {
+                GameUtils.UI.HUD.PopUp("Alert", "<color=#99F846>Moderator</color> has joined the instance.");
+            }
+            ApplyBadgeSystem();
+            ApplyTitleSystem();
+        }
 
 
         Transform? GroupInfo_Container = NameplateContents.transform.Find("Group Info");
@@ -231,20 +243,14 @@ public class Nameplates : MonoBehaviour
     public void SetNameText(string txt) => Nameplate.field_Public_TextMeshProUGUIEx_0.text = txt;
     public void SpecialBadges()
     {
-        if (Player.APIUser.id == "usr_cfa86227-1978-4094-b0a4-2e5034f6bb48" || Player.APIUser.id == "usr_ae92db01-2d25-485a-9330-60bff18d5b5f")
-        {
-            CreateBadge("User", EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite(), new Color(0.922f, 0.235f, 0.576f, 1.000f));
-            CreateBadge("Staff", EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.sprite_tool).ToSprite(), new Color(0.376f, 0.937f, 0.816f, 1.000f));
-            CreateBadge("Moderator", EngineUtils.Assets.Sprite(new Uri("https://2silly4u.chat/images/icons/hammer-crash.png")), new Color(0.549f, 0.961f, 0.231f, 1.000f));
-        }
+       CreateBadge("User", EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite(), new Color(0.922f, 0.235f, 0.576f, 1.000f));
+       CreateBadge("Staff", EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.sprite_tool).ToSprite(), new Color(0.376f, 0.937f, 0.816f, 1.000f));
+       CreateBadge("Moderator", EngineUtils.Assets.Sprite(new Uri("https://2silly4u.chat/images/icons/hammer-crash.png")), new Color(0.549f, 0.961f, 0.231f, 1.000f));
         
     }
     public void SpecialTitles()
     {
-        if (Player.APIUser.id == "usr_cfa86227-1978-4094-b0a4-2e5034f6bb48" || Player.APIUser.id == "usr_ae92db01-2d25-485a-9330-60bff18d5b5f")
-        {
-            SetTitle("[Moderator]", EngineUtils.Conversion.HexToColor("#99F846"));
-        }
+        SetTitle("[Moderator]", EngineUtils.Conversion.HexToColor("#99F846"));
     }
     public void SetTitle(string title, Color color)
     {
@@ -254,7 +260,7 @@ public class Nameplates : MonoBehaviour
     {
         Transform Badge = UnityEngine.Object.Instantiate(InteractStatus.transform.parent.transform, InteractStatus.transform.parent.transform.parent);
         Badge.gameObject.SetActive(true);
-        Badge.name = $"[Badge) (Name)";
+        Badge.name = $"[Badge] (Name)";
         var Icon = Badge.GetComponentInChildren<Image>();
         Icon.sprite = Sprite;
         Icon.color = Color;

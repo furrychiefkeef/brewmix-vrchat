@@ -14,7 +14,6 @@ public class AppearanceManager
         public static void SetLoadingBundle()
         {
             LoadingScreen();
-            Config.SaveToFile(Entry.config, "config.json");
         }
         static UnityEngine.GameObject? loadingScreenObj;
         public static void LoadingScreen()

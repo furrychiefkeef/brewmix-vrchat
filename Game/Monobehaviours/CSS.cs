@@ -176,8 +176,14 @@ namespace Brewchat.Cheat.Modules
         }
         public static void ApplyHighlight()
         {
-            var fx = GameUtils.Camera.Get.transform.GetComponents<HighlightsFXStandalone>().ToList();
-            fx[2].field_Protected_Color_0 = Entry.config.Appearance.inGame.VRCUI._lastSelectedColor;
+            GameUtils.Camera.Get.transform.GetComponents<HighlightsFXStandalone>().ToList().ForEach((fx) =>
+            {
+                if (fx.field_Protected_Color_0 != Entry.config.Appearance.inGame.VRCUI._lastSelectedColor)
+                {
+                    fx.field_Protected_Color_0 = Entry.config.Appearance.inGame.VRCUI._lastSelectedColor;
+                }
+            });
+           
         }
         public static void ApplyAdvancedMenuBackgrounds()
         {
