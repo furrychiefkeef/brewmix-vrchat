@@ -151,7 +151,7 @@ namespace Brewchat.Cheat.Modules
         }
         public static void Online()
         {
-            Entry.config.Appearance.inGame.VRCUI._lastSelectedColor = GetCurrentThemeData.Highlight;
+            Entry.config.Appearance.inGame.VRCUI._lastSelectedColor = Color.red;
             Config.SaveToFile(Entry.config, "config.json");
             ApplyActionMenuStyling();
             ApplyAdvancedMenuBackgrounds();
