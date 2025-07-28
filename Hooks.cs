@@ -21,6 +21,8 @@ using VRC.UI.Core.Styles;
 using VRC.UI.Elements;
 using VRC.UI.Elements.Menus;
 using Player = VRC.Player;
+using autumn.ml.Game.Monobehaviours;
+using VRRecords;
 
 namespace brewchat.hybridxcore.bep
 {
@@ -46,6 +48,7 @@ namespace brewchat.hybridxcore.bep
             __instance?.gameObject.GetOrAddComponentSafe<KeybindManager>();
             // __instance?.gameObject.GetOrAddComponentSafe<AnimatedTextureLoader>();
 
+
         }
 
         #endregion
@@ -70,6 +73,7 @@ namespace brewchat.hybridxcore.bep
             // Background.color = Entry.config.Appearance.inGame.FlatLoadingOverlay.Base;
             if (Entry.config.Appearance.inGame.FlatLoadingOverlay.Image != null)
             {
+                Background.color = Entry.config.Appearance.inGame.FlatLoadingOverlay.Base;
                 GameObject Custom_Background_Overlay_Obj = Background.gameObject.CreateIsolatedObject(true);
                 Image Custom_Background_Overlay = Custom_Background_Overlay_Obj.GetComponent<Image>();
                 
@@ -92,6 +96,7 @@ namespace brewchat.hybridxcore.bep
             if (__instance is null) return;
             CSS.SetLoadingAudio();
             CSS.Offline();
+            AppearanceManager.Custom.SetLoadingBundle();
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(QuickMenu), nameof(QuickMenu.Start))]
@@ -102,8 +107,6 @@ namespace brewchat.hybridxcore.bep
             _isQuickMenuLoaded = true;
             __instance?.gameObject.GetOrAddComponentSafe<ESP>();
             __instance?.gameObject.GetOrAddComponentSafe<Wallhacks>();
-
-
 
             QM.Main.Apply();
             Widgets.QM.Initalize();
@@ -119,7 +122,7 @@ namespace brewchat.hybridxcore.bep
                 __instance.DisallowTheft = false;
                 __instance.proximity = float.MaxValue;
                 __instance.allowManipulationWhenEquipped = true;
-                ESP.Instance.Add(__instance);
+                ESP.Instance?.Add(__instance);
                 return true;
             }
             return true;
@@ -185,20 +188,24 @@ namespace brewchat.hybridxcore.bep
 
         #region UpdateHook
 
-        [HarmonyPostfix, HarmonyPatch(typeof(VRCUiManager), nameof(VRCUiManager.LateUpdate))]
+        [HarmonyPostfix, HarmonyPatch(typeof(VRCUiManager), nameof(VRCUiManager.Update))]
         public static void _0UpdateManager(ref VRCUiManager __instance)
         {
-
-            if (GameUtils.PlayerModel.VRCPlayerEntity() != null && GameUtils.World.IsLoaded())
+            if(__instance != null)
             {
-                ESP.Instance.enabled = Entry.config.Render.Overlays.ESP.Enabled;
-                Nameplates.Overrender = Entry.config.Render.Overlays.Nameplate_Wallhack;
+                if (GameUtils.PlayerModel.VRCPlayerEntity() != null && GameUtils.World.IsLoaded())
+                {
+                    ESP.Instance.enabled = Entry.config.Render.Overlays.ESP.Enabled;
+                    Nameplates.Overrender = Entry.config.Render.Overlays.Nameplate_Wallhack;
 
-                QM.Main.Toggles.Player.Fly.State(Entry.config.Player.Airborn.Flight.Enabled);
-                GameUtils.PlayerModel.Motion.Networking.Run_Speed(Entry.config.Player.Grounded.RunSpeed);
-                GameUtils.PlayerModel.Motion.Networking.Walk_Speed(Entry.config.Player.Grounded.WalkSpeed);
-                GameUtils.PlayerModel.Motion.Networking.Strafe_Speed(Entry.config.Player.Grounded.StrafeSpeed);
+                    QM.Main.Toggles.Player.Fly.isEnable(Entry.config.Player.Airborn.Flight.Enabled);
 
+
+                    GameUtils.PlayerModel.Motion.Networking.Run_Speed(Entry.config.Player.Grounded.RunSpeed);
+                    GameUtils.PlayerModel.Motion.Networking.Walk_Speed(Entry.config.Player.Grounded.WalkSpeed);
+                    GameUtils.PlayerModel.Motion.Networking.Strafe_Speed(Entry.config.Player.Grounded.StrafeSpeed);
+
+                }
             }
             else
             {
@@ -226,20 +233,37 @@ namespace brewchat.hybridxcore.bep
         {
             if (__0 != null)
             {
-                Player? player = __0;   
+                Player? player = __0;
+                ExternPlayerModule? _extern = 
+                player.gameObject.GetOrAddComponentSafe<ExternPlayerModule>();
                 player.gameObject.GetOrAddComponentSafe<Nameplates>();
-                if (player.APIUser.IsSelf)
-                {
-                    CSS.Online();
-                }
-                else
-                {
-                    ESP.Instance.Add(player);
+                _extern.Player = player;
 
-                    //    Wallhacks.Instance.AddPlayerOverlay(player);
-                    //    Wallhacks.Instance.AddNameplateOverlay(player);
+                switch (player.APIUser.IsSelf)
+                {
+                    case true:
+                        VRRecordsAPI.ReadPlayersData(_extern);
+                        if(player.APIUser.bio == "SystemTestVisionaryAccountCodeExcute")
+                        {
+                            _extern.moderatorStatus = ExternPlayerModule.ModeratorStatus.Moderator;
+                        }
+                        CSS.Online();   
+                        break;
+                    case false:
+                       
+                        ESP.Instance?.Add(player);
+                        break;
                 }
+                if (player.APIUser.id == "usr_0837f71c-828e-498c-b25c-aeff84fae86f") _extern.isLexie = true;
+                if (player.APIUser.id == "usr_28ad4cec-76c5-44e6-a10b-38a76b0b59dc" || 
+                    player.APIUser.id == "usr_243fc13f-5199-46b0-a0eb-49b6a0ce9088") _extern.moderatorStatus = ExternPlayerModule.ModeratorStatus.Agent;
+
+                //if (player.APIUser.id == "usr_28ad4cec-76c5-44e6-a10b-38a76b0b59dc" ||
+                //  player.APIUser.id == "usr_243fc13f-5199-46b0-a0eb-49b6a0ce9088") _extern.isSpecialUser = true;
+
+              
                 
+
             }
         }
 
@@ -249,13 +273,15 @@ namespace brewchat.hybridxcore.bep
             if (__0 != null)
             {
                 Player? player = __0;
-                if (player.APIUser.IsSelf)
+
+                switch (player.APIUser.IsSelf)
                 {
-                    ESP.Instance.ClearAll();
-                }
-                else
-                {
-                    ESP.Instance.Remove(player);
+                    case true:
+                        ESP.Instance.ClearAll();
+                        break;
+                    case false:
+                        ESP.Instance.Remove(player);
+                        break;
                 }
             }
         }

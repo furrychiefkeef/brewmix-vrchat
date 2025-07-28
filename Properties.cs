@@ -151,7 +151,7 @@ public class Config
             public FlatLoadingOverlayModel FlatLoadingOverlay { get; set; } = new();
             public MenuDynamicColoring VRCUI { get; set; } = new();
 
-            public string? QueueAudio { get; set; }
+            public string? QueueAudio { get; set; } = "https://cdn.2silly4u.chat/storageunit/sounds/magos.mp3";
             public bool HideLoadingOverlay { get; set; }
             public string? Mm_Background { get; set; }
             public string? Qm_Background { get; set; }
@@ -173,7 +173,7 @@ public class Config
                 }
 
                 [JsonIgnore]
-                public Color Base { get; set; } = Color.white;
+                public Color Base { get; set; } = new Color(0.0078f ,0.1569f ,0.2039f ,1f);
 
                 [JsonProperty("Base")]
                 public SerializableColor BaseSerializable
@@ -185,7 +185,8 @@ public class Config
             public class MenuDynamicColoring 
             {
                 [JsonIgnore]
-                public UnityEngine.Color _lastSelectedColor {get; set;}
+                public UnityEngine.Color _lastSelectedColor { get; set; } = Color.red;
+
                 [JsonProperty("_lastSelectedColor")]
 
                 public SerializableColor LastSelectedColorSerializeable
@@ -199,7 +200,7 @@ public class Config
                 public LoadingAssetBundleModel Bundle { get; set; } = new();
                  public class LoadingAssetBundleModel
                  {
-                    public string? URL { get; set; } = "https://2silly4u.chat/storageunit/loading.assetbundle";
+                    public string? URL { get; set; } = "https://2silly4u.chat/storageunit/logo";
                         
                  }   
             }

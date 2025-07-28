@@ -42,9 +42,9 @@ internal class QM
         }
         public static void CurrentStates()
         {
-            Main.Toggles.Player.Fly.SetState(Entry.config.Player.Airborn.Flight.Enabled);
-            Main.NestedQMVisuals.ESP.SetState(Entry.config.Render.Overlays.ESP.Enabled);
-            Main.NestedQMVisuals.ESP.SetState(Entry.config.Render.Overlays.Nameplate_Wallhack);
+            Main.Toggles.Player.Fly?.SetState(Entry.config.Player.Airborn.Flight.Enabled);
+            Main.NestedQMVisuals.ESP?.SetState(Entry.config.Render.Overlays.ESP.Enabled);
+            Main.NestedQMVisuals.ESP?.SetState(Entry.config.Render.Overlays.Nameplate_Wallhack);
         }
     }
     public class Main
@@ -110,6 +110,15 @@ internal class QM
 
                 }, false);
 
+                Group_UI.AddButton("Nameplate Color", $"Send a Udon Event <color=red>(Custom Only NOT NETWORKING)</color>", () =>
+                {
+                    GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter Color", (x) =>
+                    {
+                        GameUtils.PlayerModel.LocalEntity().GetComponent<Nameplates>().Main = EngineUtils.Conversion.HexToColor(x);
+                    }, Placeholder: "Change ur Nameplate Colorrr", MultiLine: false);
+
+                }, false);
+
                 Group_UI.AddButton("Fake Player Name (Local) [Phase 1]", "Phase 1", () =>
                 {
                     GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter A Name", (x) =>
@@ -132,8 +141,8 @@ internal class QM
                 {
                     GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a Pickup Name", (x) =>
                     {
-                        var pickup = GameUtils.World.SDK3.Udon.Pickups.GetPickup(x);
-                        pickup.SetOwnerAndGivePickupToLocalEntity();
+                        VRC.SDK3.Components.VRCPickup? pickup = GameUtils.World.SDK3.Udon.Pickups.GetPickup(x);
+                        pickup?.SetOwnerAndGivePickupToLocalEntity();
                     }, Placeholder: "Such as: Revolver", MultiLine: false);
 
                 }, false);
@@ -220,11 +229,11 @@ internal class QM
             #region Submenus
 
 
-            NestedQMAppearance appearance = new(); appearance.Execute();
-            NestedQMDebug debug = new(); debug.Execute();
-            WorldCheats.NestedQMWorld world = new(); world.Execute();
-            NestedQMVisuals visuals = new(); visuals.Execute();
-            NestedQMExploits exploits = new(); exploits.Execute();
+            NestedQMAppearance? appearance = new(); appearance?.Execute();
+            NestedQMDebug? debug = new(); debug?.Execute();
+            WorldCheats.NestedQMWorld? world = new(); world?.Execute();
+            NestedQMVisuals? visuals = new(); visuals?.Execute();
+            NestedQMExploits? exploits = new(); exploits?.Execute();
 
           
             #endregion

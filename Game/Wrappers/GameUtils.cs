@@ -94,11 +94,7 @@ namespace Brewchat.Game.Wrappers
                     Networking.RPC(0, PlayerModel.GetLocalPlayer().gameObject, "SendEmojiRPC", new Il2CppSystem.Object[] { (Object)emoji });
                 }*/
 
-                public static string Join(string worldId)
-                {
-                    Networking.GoToRoom(worldId);
-                    return worldId;
-                }
+               
             }
 
             public struct PhotonUtils
@@ -303,7 +299,11 @@ namespace Brewchat.Game.Wrappers
                 public static string current_worldName => RoomManager.field_Private_Static_ApiWorldInstance_1.name;
                 public static string current_intanceID => RoomManager.field_Private_Static_ApiWorldInstance_1.instanceId;
             }
-
+            public static string Join(string worldId)
+            {
+                Networking.GoToRoom(worldId);
+                return worldId;
+            }
 
             public class SDK2
             {

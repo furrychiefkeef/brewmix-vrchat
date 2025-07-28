@@ -151,7 +151,7 @@ namespace Brewchat.Cheat.Modules
         }
         public static void Online()
         {
-            Entry.config.Appearance.inGame.VRCUI._lastSelectedColor = Color.red;
+            Entry.config.Appearance.inGame.VRCUI._lastSelectedColor = GetCurrentThemeData.Highlight;
             Config.SaveToFile(Entry.config, "config.json");
             ApplyActionMenuStyling();
             ApplyAdvancedMenuBackgrounds();
@@ -178,10 +178,7 @@ namespace Brewchat.Cheat.Modules
         {
             GameUtils.Camera.Get.transform.GetComponents<HighlightsFXStandalone>().ToList().ForEach((fx) =>
             {
-                if (fx.field_Protected_Color_0 != Entry.config.Appearance.inGame.VRCUI._lastSelectedColor)
-                {
                     fx.field_Protected_Color_0 = Entry.config.Appearance.inGame.VRCUI._lastSelectedColor;
-                }
             });
            
         }

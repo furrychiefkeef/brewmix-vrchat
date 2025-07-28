@@ -22,6 +22,8 @@ public class AppearanceManager
             {
                 loadingScreenObj = EngineUtils.Assets.AssetBundle(new(Entry.config.Appearance.inGame.LoadingScreen.Bundle.URL), true);
                 loadingScreenObj.transform.parent = VRCUiPageLoading.field_Internal_Static_VRCUiPageLoading_0.transform;
+                loadingScreenObj.layer = GameUtils.Gameplay.RenderLayers.InternalUI;
+                loadingScreenObj.transform.localScale = new Vector3(loadingScreenObj.transform.localScale.x - 1000f, loadingScreenObj.transform.localScale.y - 1000f, loadingScreenObj.transform.localScale.z - 1000f);
                 List<GameObject> _3DElements = VRCUiPageLoading.field_Internal_Static_VRCUiPageLoading_0.transform.FindChild("3DElements").transform.GetChildren();
                 _3DElements.ToList().ForEach(x => {  x.gameObject.layer = 0; }); // Overrender (Default Preventing Ur Meshes from being  covered)
                 

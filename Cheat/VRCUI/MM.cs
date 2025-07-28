@@ -29,6 +29,14 @@ internal class MM : IMainMenuElements
                 VRCTab? tab = new VRCTab(Main_Page, Entry.GetEntry().modInfo._currentName, InfoAboutCheat.Tooltips.GetTooltipString("Tab"), sprite: EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
                 tab.SetBadge(true); tab.SetBadgeColor(Color.black); tab.SetText("Nighty");
 
+                VRCSmallButton? smallButton = new VRCSmallButton(Main_Page.navigation_buttons, "Avatar", 0, () =>
+                {
+                    GameUtils.VRChatUtils.VRCKeyboard.InputPopup("Enter a World ID", (worldId) =>
+                    {
+                        GameUtils.World.Join(worldId);
+                    }, MultiLine: false, Placeholder: "wrld_*");
+                }, EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.Logo).ToSprite());
+
                 #region VRCPage_CodeName::Aware
 
                 var VRCTweaks_Container = new VRCCellContainer(Main_Page, "Tweaks");

@@ -9,6 +9,7 @@ using System.Linq;
 using WebSocketSharp;
 using Object = Il2CppSystem.Object;
 using MelonLoader;
+using Mono.CSharp;
 namespace Brewchat.Game.Wrappers;
 
 /// <summary>
@@ -705,7 +706,7 @@ public static class GameObjectExtensions
 #region  ClassExt 
 public static class TextureExtensions
 {
-    public static Sprite ToSprite(this Texture2D? texture)
+    public static Sprite ToSprite(this Texture2D texture)
     {
       
         return Sprite.Create(
@@ -726,6 +727,19 @@ public static class LocalizationExtensions
     }
 }
 
+public static class ImageExtenisions
+{
+    public static Sprite? Replace(this Sprite? image, Texture2D? texture)
+    {
+        return Sprite.Create(texture, 
+            image.rect, 
+            image.pivot, 
+            image.pixelsPerUnit, 
+            0, 
+            SpriteMeshType.FullRect, 
+            image.border);
+    }
+}
 public static class ObjectExtension
 {
     /// <summary>
@@ -742,7 +756,7 @@ public static class ObjectExtension
 
          if(IsOnTop)
          {
-            clone.transform.SetSiblingIndex(x.transform.GetSiblingIndex());
+            clone.transform.SetSiblingIndex(0);
          }      
         return clone;
     }
@@ -786,6 +800,12 @@ public static class ObjectExtension
 
         return component as T;
     }
+    public static void Destory(this UnityEngine.Object x) => UnityEngine.Object.Destroy(x);
+    public static void DestroyImmediate(this UnityEngine.Object x, bool allowDestoryingAssets) => 
+        UnityEngine.Object.DestroyImmediate(x, allowDestoryingAssets);
+
+    public static void DestoryObject(this UnityEngine.Object x) => UnityEngine.Object.DestroyObject(x);
+    public static void DontDestoryOnLoad(this UnityEngine.Object x) => UnityEngine.Object.DontDestroyOnLoad(x);
 }
 
 public static class ComponentExtensions
