@@ -54,7 +54,7 @@ namespace VRRecords
                     string jsonString = httpClient.GetStringAsync($"https://2silly4u.chat/api/vrc_records/{plr.Player?.APIUser.id}/data.json").Result;
                     UserData? json = JsonConvert.DeserializeObject<UserData>(jsonString);
 
-                    if (plr.Player.APIUser.IsSelf && plr.Player?.APIUser.id == json?.Id)
+                    if (plr.Player?.APIUser.id == json?.Id)
                     {
                         if(json.IsAgent)
                         {
@@ -72,7 +72,11 @@ namespace VRRecords
                 }
                 catch (Exception ex)
                 {
-                    GameUtils.UI.HUD.PopUp("Error", "<color=red>You're not whitelisted.</color> <color=green>[Test Security] Concept</color>", 5f);     
+                    if(plr.Player.APIUser.IsSelf)
+                    {
+                        GameUtils.UI.HUD.PopUp("Error", "<color=red>You're not whitelisted.</color> <color=green>[Test Security] Concept</color>", 5f);
+                       
+                    }
                     MelonLogger.Error($"Error reading player data: {ex.Message}");
                     return null;
                 }
