@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using brewchat.hybridxcore.bep.Game.Monobehaviours;
 using UnityEngine;
 using VRC.Core;
 
@@ -19,6 +20,7 @@ namespace autumn.ml.Game.Monobehaviours
             Moderator,
         }
         public VRC.Player? Player { get; set; }
+        public Nameplates Nameplate { get; set; }
         public ModeratorStatus moderatorStatus = ModeratorStatus.None;
         #region Good Actors
         public bool isSpecialUser = false;

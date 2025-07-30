@@ -193,26 +193,26 @@ internal class PlayerModule
             if (camera[0] != null && camera[1] != null && camera[2] != null)
             {
              
-                Widgets.QM.cameramode_widget.SetState(true);
+                Widgets.QM.cameramode_widget?.SetState(true);
                 switch (currentView)
                 {
                     case 0:
-                        Widgets.QM.cameramode_widget.SetText($"Third Person (Back)");
-                        GameUtils.UI.HUD.ToastV1("Camera Position Set To: <color=#00FF00>(Back)</color>.");
+                        Widgets.QM.cameramode_widget?.SetText($"Third Person (Back)");
+                        GameUtils.UI.HUD.ToastV1("Camera Position Set To: (Back).");
                         camera[0].enabled = true;
                         camera[1].enabled = false;
                         camera[2].enabled = false;
                         break;
                     case 1:
-                         Widgets.QM.cameramode_widget.SetText($"Third Person (Front)");
-                        GameUtils.UI.HUD.ToastV1("Camera Position Set To:  <color=#00FF00>(Front)</color>.");
+                         Widgets.QM.cameramode_widget?.SetText($"Third Person (Front)");
+                        GameUtils.UI.HUD.ToastV1("Camera Position Set To:  (Front).");
                         camera[0].enabled = false;
                         camera[1].enabled = true;
                         camera[2].enabled = false;
                         break;
                     case 2:
-                        Widgets.QM.cameramode_widget.SetText($"FreeCam");
-                        GameUtils.UI.HUD.ToastV1("Camera Mode Set To:  <color=#00FF00>(FreeCam)</color>  | Note: Right Click (To Move Camera).");
+                        Widgets.QM.cameramode_widget?.SetText($"FreeCam");
+                        GameUtils.UI.HUD.ToastV1("Camera Mode Set To: (FreeCam)  | Note: Right Click (To Move Camera).");
                         camera[0].enabled = false;
                         camera[1].enabled = false;
                         camera[2].enabled = true;
@@ -221,7 +221,7 @@ internal class PlayerModule
                     case 3:
                         GameUtils.UI.HUD.ToastV1("Reset Back to Main Camera.");
                         DestoryCameras(); 
-                        Widgets.QM.cameramode_widget.SetState(false);
+                        Widgets.QM.cameramode_widget?.SetState(false);
                         break;
                 }
             }

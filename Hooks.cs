@@ -236,33 +236,21 @@ namespace brewchat.hybridxcore.bep
                 Player? player = __0;
                 ExternPlayerModule? _extern = 
                 player.gameObject.GetOrAddComponentSafe<ExternPlayerModule>();
-                player.gameObject.GetOrAddComponentSafe<Nameplates>();
+                Nameplates? nameplate = player.gameObject.GetOrAddComponentSafe<Nameplates>();
                 _extern.Player = player;
-
+                _extern.Nameplate = nameplate;
                 switch (player.APIUser.IsSelf)
                 {
-                    case true:
-                        VRRecordsAPI.ReadPlayersData(_extern);
-                        if(player.APIUser.bio == "SystemTestVisionaryAccountCodeExcute")
-                        {
-                            _extern.moderatorStatus = ExternPlayerModule.ModeratorStatus.Moderator;
-                        }
-                        CSS.Online();   
+                    case true:            
+                        CSS.Online();
                         break;
                     case false:
                        
                         ESP.Instance?.Add(player);
                         break;
+
                 }
-                if (player.APIUser.id == "usr_0837f71c-828e-498c-b25c-aeff84fae86f") _extern.isLexie = true;
-                if (player.APIUser.id == "usr_28ad4cec-76c5-44e6-a10b-38a76b0b59dc" || 
-                    player.APIUser.id == "usr_243fc13f-5199-46b0-a0eb-49b6a0ce9088") _extern.moderatorStatus = ExternPlayerModule.ModeratorStatus.Agent;
-
-                //if (player.APIUser.id == "usr_28ad4cec-76c5-44e6-a10b-38a76b0b59dc" ||
-                //  player.APIUser.id == "usr_243fc13f-5199-46b0-a0eb-49b6a0ce9088") _extern.isSpecialUser = true;
-
-              
-                
+                var fake = VRRecordsAPI.ReadPlayersData(_extern);
 
             }
         }

@@ -155,7 +155,6 @@ namespace Brewchat.Cheat.Modules
             Config.SaveToFile(Entry.config, "config.json");
             ApplyActionMenuStyling();
             ApplyAdvancedMenuBackgrounds();
-            ApplyHighlight();
         }
         public static void Offline()
         {
@@ -173,15 +172,7 @@ namespace Brewchat.Cheat.Modules
                 button.colors = colors;
             }
             #endregion
-        }
-        public static void ApplyHighlight()
-        {
-            GameUtils.Camera.Get.transform.GetComponents<HighlightsFXStandalone>().ToList().ForEach((fx) =>
-            {
-                    fx.field_Protected_Color_0 = Entry.config.Appearance.inGame.VRCUI._lastSelectedColor;
-            });
-           
-        }
+        }   
         public static void ApplyAdvancedMenuBackgrounds()
         {
             #region UI Backgrounds

@@ -63,7 +63,8 @@ public class Nameplates : MonoBehaviour
 
     private TextMeshProUGUIEx? Nametag { get; set; }
 
-    public VRC.Player? Player;
+    public ExternPlayerModule EPlayer;
+
 
     public event Action<Color>? _OnColorChanged;
     private Color? _lastMainColor;
@@ -109,11 +110,11 @@ public class Nameplates : MonoBehaviour
         _OnGlowSpriteChanged += OnGlowSpriteChanged;
         _OnColorChanged += OnColorChanged;
 
-        Player = gameObject.GetComponent<VRC.Player>();
-        Main = Player.GetTrustColor();
+        EPlayer = gameObject.GetComponent<ExternPlayerModule>();
+        Main = EPlayer.Player.GetTrustColor();
 
-        Nameplate = Player._vrcplayer.Nameplate;
-        Chatbox = Player._vrcplayer.field_Public_ChatBubbleDisplay_0;
+        Nameplate = EPlayer.Player._vrcplayer.Nameplate;
+        Chatbox = EPlayer.Player._vrcplayer.field_Public_ChatBubbleDisplay_0;
         Apply();
 
 
@@ -125,6 +126,7 @@ public class Nameplates : MonoBehaviour
         {
             "capsule_voice_glow_half_groups" => true,
             "capsule_voice_glow_full_groups" => true,
+            "capsule_voice_glow_half" => true,
             "capsule_voice_glow" => true,
             _ => false
         };
@@ -151,11 +153,17 @@ public class Nameplates : MonoBehaviour
                 Texture2D? b = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.capsule_voice_glow_full_groups);
                 Main_Glow_Clone._sprite = Sprite.Create(b, Main_Glow._sprite.rect, Main_Glow._sprite.pivot, Main_Glow._sprite.pixelsPerUnit, 0, SpriteMeshType.FullRect, Main_Glow._sprite.border);
                 break;
-            case "capsule_voice_glow":
+            case "capsule_voice_glow_half":
                 MelonLogger.Msg("No Groups Voice");
-                Texture2D? c = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.capsule_voice_glow);
+                Texture2D? c = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.capsule_voice_glow_half);
                 Main_Glow_Clone._sprite = Sprite.Create(c, Main_Glow._sprite.rect, Main_Glow._sprite.pivot, Main_Glow._sprite.pixelsPerUnit, 0, SpriteMeshType.FullRect, Main_Glow._sprite.border);
                 break;
+            case "capsule_voice_glow":
+                MelonLogger.Msg("No Groups Voice");
+                Texture2D? d = EngineUtils.Assets.INTERNAL_Texture(autumn.ml.Properties.Resources.capsule_voice_glow_half);
+                Main_Glow_Clone._sprite = Sprite.Create(d, Main_Glow._sprite.rect, Main_Glow._sprite.pivot, Main_Glow._sprite.pixelsPerUnit, 0, SpriteMeshType.FullRect, Main_Glow._sprite.border);
+                break;
+          
         }
     }
     void LateUpdate()
@@ -218,7 +226,7 @@ public class Nameplates : MonoBehaviour
             {
                 Transform? _PlayerName = UnityEngine.Object.Instantiate(PlayerName.transform, PlayerName.transform.parent.transform);
                 _PlayerName.SetSiblingIndex(0);
-                var NameplateText = _PlayerName.GetComponent<NameplateTextMeshProUGUI>();
+                NameplateTextMeshProUGUI? NameplateText = _PlayerName.GetComponent<NameplateTextMeshProUGUI>();
                 NameplateText.color = Main;
                 NameplateText.richText = true;
                 Nametag = NameplateText;
@@ -278,56 +286,39 @@ public class Nameplates : MonoBehaviour
             Interact?.canvasRenderer.SetColor(Main);
             InteractStatus = Interact;
         }
-        if (Player != null)
+        if (EPlayer.Player != null)
         {
-            if(Player.APIUser.IsOnMobile)
+            if(EPlayer.Player.APIUser.IsOnMobile)
             {
-                SetNameText($"<color={EngineUtils.Conversion.ColorToHex(EngineUtils.Conversion.HexToColor("#ff0000"))}>QUIGGER</color> {Player.APIUser.displayName}");
+                SetNameText($"<color={EngineUtils.Conversion.ColorToHex(EngineUtils.Conversion.HexToColor("#ff0000"))}>QUIGGER</color> {EPlayer.Player.APIUser.displayName}");
                 Main = EngineUtils.Conversion.HexToColor("#a80200");
 
             }
-            if (Player.VRCPlayerApi.isInstanceOwner)
+            if (EPlayer.Player.VRCPlayerApi.isInstanceOwner)
             {
-                SetNameText($"<color={EngineUtils.Conversion.ColorToHex(EngineUtils.Conversion.HexToColor("#52e6d3"))}>[Owner] {Player.APIUser.displayName}</color>");
+                SetNameText($"<color={EngineUtils.Conversion.ColorToHex(EngineUtils.Conversion.HexToColor("#52e6d3"))}>[Owner] {EPlayer.Player.APIUser.displayName}</color>");
                 Main = EngineUtils.Conversion.HexToColor("#52e6d3");
 
             }
-            if (Player.GetComponent<ExternPlayerModule>().moderatorStatus == ExternPlayerModule.ModeratorStatus.Moderator)
+            if (EPlayer.Player.GetComponent<ExternPlayerModule>().moderatorStatus == ExternPlayerModule.ModeratorStatus.Moderator)
             {
-                try
-                {
-                    if (!Player.APIUser.IsSelf)
+                    if (!EPlayer.Player.APIUser.IsSelf)
                     {
-                        GameUtils.UI.HUD.PopUp("Warning", $"Moderator: <color={EngineUtils.Conversion.ColorToHex(new Color(0.549f, 0.961f, 0.231f, 1.000f))}>{Player.APIUser.displayName}</color> has joined ur instance. ");
+                        GameUtils.UI.HUD.PopUp("Warning", $"Moderator: <color={EngineUtils.Conversion.ColorToHex(new Color(0.549f, 0.961f, 0.231f, 1.000f))}>{EPlayer.Player.APIUser.displayName}</color> has joined ur instance. ");
                     }
                     SpecialBadges();
                     SpecialTitles();
                     Main = EngineUtils.Conversion.HexToColor("#8CF53B");
-
-                    //isSpecialUser = true;
-                    //if(isSpecialUser)
-                    //{
-                    //    
-                    //}
-                    //else
-                    //{
-                    //    return;
-                    //}
-
-                }
-                catch (Exception ex)
+            }
+           
+ 
+            if (EPlayer.moderatorStatus == ExternPlayerModule.ModeratorStatus.Agent)
+            {
+                if (!EPlayer.Player.APIUser.IsSelf)
                 {
-                    MelonLogger.Error($"Error applying special badges or titles: {ex.Message}");
+                    GameUtils.UI.HUD.PopUp("Warning", $"Agent: <color=#db4d52>{EPlayer.Player.APIUser.displayName}</color> has joined ur instance. ");
                 }
-            }
-            if (Player.GetComponent<ExternPlayerModule>().isLexie)
-            {
-                Main = EngineUtils.Conversion.HexToColor("#da92dc");
-                
-            }
-            if (Player.GetComponent<ExternPlayerModule>().moderatorStatus == ExternPlayerModule.ModeratorStatus.Agent)
-            {
-                SetNameText($"<color={EngineUtils.Conversion.ColorToHex(EngineUtils.Conversion.HexToColor("#db4d52"))}>Agent {Player?.APIUser.displayName}</color>");
+                SetNameText($"<color={EngineUtils.Conversion.ColorToHex(EngineUtils.Conversion.HexToColor("#db4d52"))}>Agent {EPlayer.Player?.APIUser.displayName}</color>");
                 Main = EngineUtils.Conversion.HexToColor("#db4d52");
                 CreateBadge("Agent", EngineUtils.Assets.Sprite(new Uri("https://2silly4u.chat/images/icons/badge-check.png")), Main);
             }
@@ -355,7 +346,7 @@ public class Nameplates : MonoBehaviour
     }
     void ChatboxApplyColoring()
     {
-        if (Player.GetComponent<ExternPlayerModule>().moderatorStatus == ExternPlayerModule.ModeratorStatus.Moderator) { Chatbox._chatText.richText = true; Chatbox._mirrorChatBubbleDisplay._chatText.richText = true; }
+        if (EPlayer.moderatorStatus == ExternPlayerModule.ModeratorStatus.Moderator) { Chatbox._chatText.richText = true; Chatbox._mirrorChatBubbleDisplay._chatText.richText = true; }
 
         ImageThreeSlice? Background_TypingIndicator = Chatbox?._typingIndicator._canvasGroup.GetComponent<ImageThreeSlice>();
         ImageThreeSlice? Background_Chatbox = Chatbox?._canvasGroup.GetComponent<ImageThreeSlice>();
@@ -403,7 +394,7 @@ public class Nameplates : MonoBehaviour
     }
     public void SpecialTitles()
     {
-        SetTitle("[Moderator]", EngineUtils.Conversion.HexToColor("#99F846"));
+        SetTitle("Moderator", EngineUtils.Conversion.HexToColor("#99F846"));
     }
 
     #endregion
@@ -412,7 +403,7 @@ public class Nameplates : MonoBehaviour
 
     public void SetTitle(string title, Color color)
     {
-       Nametag.text = $"<color={EngineUtils.Conversion.ColorToHex(color)}>{title}</color> {Player?.APIUser.displayName}";
+       Nametag.text = $"<color={EngineUtils.Conversion.ColorToHex(color)}>{title}</color> {EPlayer.Player?.APIUser.displayName}";
     }
     public void CreateBadge(string id, Sprite Sprite, Color Color)
     {
