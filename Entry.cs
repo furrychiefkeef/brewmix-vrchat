@@ -44,7 +44,7 @@ public class Entry : MelonMod
     {
         foreach (Type behaviour in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(MonoBehaviour))))
         {
-            MelonLogger.Msg($"Adding Components: [+] {behaviour.Assembly.EntryPoint}+>::{behaviour.Namespace}");
+            MelonLogger.Msg($"Adding Components: + {behaviour.Assembly.EntryPoint}+>::{behaviour.Namespace}");
             ClassInjector.RegisterTypeInIl2Cpp(behaviour, true);
             continue;
         }
