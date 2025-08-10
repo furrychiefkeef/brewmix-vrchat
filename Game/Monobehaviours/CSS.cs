@@ -2,7 +2,6 @@
 using BlanketSDK.Core;
 using Brewchat.Game.Wrappers;
 using MaterialEditing.UI;
-using MelonLoader;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Core.Styles;

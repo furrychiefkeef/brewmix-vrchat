@@ -13,7 +13,6 @@ using Brewchat.Cheat.Modules;
 using Brewchat.Cheats.World;
 using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
-using MelonLoader;
 using UnityEngine;
 using Valve.VR.InteractionSystem;
 using VRC.Core;

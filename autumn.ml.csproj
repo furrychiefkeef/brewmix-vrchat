@@ -31,6 +31,7 @@
   
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Cheat\Patches\" />
     <Folder Include="Utilities\Blanket.SDK\@VRC\ActionMenu\" />
     <Folder Include="Utilities\Blanket.SDK\@VRC\MM\Controls\Cell\" />
   </ItemGroup>
@@ -40,6 +41,9 @@
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreRuntime">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Runtime\CoreRuntime.dll</HintPath>
     </Reference>
     <Reference Include="DataModel">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Managed\DataModel.dll</HintPath>
@@ -64,6 +68,9 @@
     </Reference>
     <Reference Include="Facepunch.Steamworks.Win64">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Managed\Facepunch.Steamworks.Win64.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppInterop.Runtime">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Runtime\Il2CppInterop.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppMicrosoft.Bcl.TimeProvider">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Managed\Il2CppMicrosoft.Bcl.TimeProvider.dll</HintPath>

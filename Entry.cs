@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using CoreRuntime.Interfaces;
+using CoreRuntime.Manager;
 using Mono.CSharp;
 
 using UnhollowerRuntimeLib;
@@ -29,6 +30,7 @@ public class Entry : HexedMod
         public string? _currentHash { get; set; } = System.Reflection.Assembly.GetExecutingAssembly().GetHashCode().ToString();
         public static Dictionary<string, string>? _custom_properties { get; set; } = new();
     }
+
     public override void OnEntry(string[] args = null)
     {
         foreach (Type behaviour in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(MonoBehaviour))))
@@ -38,21 +40,11 @@ public class Entry : HexedMod
         }
         if (File.Exists("config.json")) config = Config.LoadFromFile("config.json");
         else config = new();
+
+        HooksManager.ApplyAll();
     }
     #region ML
-    public override void OnEarlyInitializeMelon()
-    {
-        // if(modInfo.Enviroment == null) Environment.SetEnvironmentVariable(modInfo.VariableName, modInfo._currentName, EnvironmentVariableTarget.User);
-        // else  modInfo._currentName = modInfo.Enviroment;
 
-       
-    }
-    public override void OnInitializeMelon()
-    {
-       
-    }
-
-    public override void OnLateInitializeMelon() => Hooks.PatchAll();
     public override void OnApplicationQuit() => Config.SaveToFile(config, "config.json");
  
     #endregion
