@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using BlanketSDK.Utilities;
 using Brewchat.Game.Wrappers;
-using MelonLoader;
 using TMPro;
 using UnhollowerBaseLib.Runtime.VersionSpecific.Class;
 using UnityEngine;
