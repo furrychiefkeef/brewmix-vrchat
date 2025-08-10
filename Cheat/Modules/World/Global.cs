@@ -1,5 +1,5 @@
 ﻿using Brewchat.Game.Wrappers;
-using MelonLoader;
+using CoreRuntime.Manager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VRC.Core;
@@ -11,7 +11,7 @@ public class Global
 {
 
 
-    public static object udonNuke; 
+    public static  System.Collections.IEnumerator? udonNuke; 
     private static System.Collections.IEnumerator UdonNuke() 
     {
         foreach(UdonBehaviour key in UnityEngine.Object.FindObjectsOfType<UdonBehaviour>()) 
@@ -28,6 +28,7 @@ public class Global
             }
         }
     }
-    public static void Start() =>  udonNuke = MelonCoroutines.Start(UdonNuke());
-    public static void Stop() => MelonCoroutines.Stop(udonNuke);
+    public static void Start() => CoroutineManager.RunCoroutine(udonNuke = UdonNuke());
+  
+    public static void Stop() => CoroutineManager.StopCoroutine(udonNuke);
 }

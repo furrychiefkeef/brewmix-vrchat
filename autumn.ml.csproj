@@ -35,9 +35,6 @@
     <Folder Include="Utilities\Blanket.SDK\@VRC\MM\Controls\Cell\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="0Harmony">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\MelonLoader\0Harmony.dll</HintPath>
-    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -55,9 +52,6 @@
     </Reference>
     <Reference Include="Depthkit.Studio.Lite">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Managed\Depthkit.Studio.Lite.dll</HintPath>
-    </Reference>
-    <Reference Include="DiscordRPC">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\DiscordRPC.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Managed\DOTween.dll</HintPath>
@@ -152,9 +146,6 @@
     <Reference Include="iOSInfo">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Managed\iOSInfo.dll</HintPath>
     </Reference>
-    <Reference Include="IpcPlugin">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Plugins\IpcPlugin.dll</HintPath>
-    </Reference>
     <Reference Include="Klak.Spout.Runtime">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Managed\Klak.Spout.Runtime.dll</HintPath>
     </Reference>
@@ -170,29 +161,8 @@
     <Reference Include="MeaMod.DNS">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Managed\MeaMod.DNS.dll</HintPath>
     </Reference>
-    <Reference Include="Hexed">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\MelonLoader.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Mono.Cecil.Mdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Mono.Cecil.Rocks.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.CSharp">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Managed\Mono.CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoMod.RuntimeDetour">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\MonoMod.RuntimeDetour.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoMod.Utils">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\MonoMod.Utils.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Newtonsoft.Json.dll</HintPath>
@@ -621,6 +591,6 @@
   </ItemGroup>
 
  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Cheats\&quot;&#xA;"/>
+    <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\VRChat\Hexed\Cheats\&quot;&#xA;" />
   </Target>
 </Project>

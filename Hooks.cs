@@ -6,10 +6,9 @@ using Brewchat.Cheat.Modules;
 using Brewchat.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
 using ExitGames.Client.Photon;
-using HarmonyLib;
-using MelonLoader;
+
 // using ModSupport.AnimatedTextures;
-using MonoMod.RuntimeDetour;
+
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,10 +22,10 @@ using VRC.UI.Elements.Menus;
 using Player = VRC.Player;
 using autumn.ml.Game.Monobehaviours;
 using VRRecords;
-
+using Client
 namespace brewchat.hybridxcore.bep
 {
-    [HarmonyPatch]
+    
     internal class Hooks
     {
         static bool _isVRCApplicationLoaded = false;
@@ -34,7 +33,7 @@ namespace brewchat.hybridxcore.bep
         static bool _isSelectedMenusLoaded = false;
         static bool _isMainMenuLoaded = false;
         static bool _isQuickMenuLoaded = false;
-
+       
         #region INTERNAL_CORE
         [HarmonyPostfix, HarmonyPatch(typeof(VRCApplication), nameof(VRCApplication.Awake))]
         public static void DomainApp_Initialize_HOOK(ref VRCApplication? __instance)
