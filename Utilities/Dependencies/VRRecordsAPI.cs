@@ -10,7 +10,6 @@ using autumn.ml.Game.Monobehaviours;
 using brewchat.hybridxcore.bep.Game.Monobehaviours;
 using Brewchat.Game.Wrappers;
 using FragLabs.Audio.Codecs.Opus;
-using MelonLoader;
 using Newtonsoft.Json;
 using UnityEngine;
 namespace VRRecords

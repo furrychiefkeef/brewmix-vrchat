@@ -1,8 +1,9 @@
-using System;
+/*using System;
 using CoreRuntime.Manager;
 using ExitGames.Client.Photon;
 using MelonLoader;
 using Newtonsoft.Json;
+using Photon.Realtime;
 
 namespace HexedBase.Patches
 {
@@ -13,6 +14,7 @@ namespace HexedBase.Patches
 
         public static void ApplyPatch()
         {
+
             originalMethod = HookManager.Detour<_PhotonOnEventDelegate>(
                 typeof(LoadBalancingClient).GetMethod(nameof(LoadBalancingClient.OnEvent)), 
                 Patch
@@ -47,4 +49,4 @@ namespace HexedBase.Patches
             return result;
         }
     }
-}
+}*/

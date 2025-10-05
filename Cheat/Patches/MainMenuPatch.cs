@@ -2,6 +2,7 @@ using System;
 using CoreRuntime.Manager;
 using VRC.UI.Elements.Menus;
 using Brewchat.VRCUI;
+using VRC.UI.Elements;
 
 namespace HexedBase.Patches
 {
@@ -13,6 +14,7 @@ namespace HexedBase.Patches
 
         public static void ApplyPatch()
         {
+
             originalMethod = HookManager.Detour<_MainMenuStartDelegate>(
                 typeof(MainMenu).GetMethod(nameof(MainMenu.Start)), 
                 Patch

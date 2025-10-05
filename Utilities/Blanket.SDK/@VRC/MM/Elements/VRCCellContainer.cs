@@ -1,7 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using BlanketSDK.Utilities;
 using BlanketSDK.Core;
-using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
 using VRC.UI.Element;
